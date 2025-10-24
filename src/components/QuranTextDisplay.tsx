@@ -95,35 +95,35 @@ const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranText
   const currentVerse = verses.arabic[currentVerseIndex];
 
   return (
-    <Card className="p-6 bg-card/30 backdrop-blur-sm border-2 border-border h-full flex flex-col">
-      <div className="mb-5 text-center border-b-2 border-border pb-4">
-        <h3 className="text-3xl font-amiri text-primary mb-2">{surahArabicName}</h3>
-        <p className="text-lg font-inter text-muted-foreground">
+    <Card className="p-4 bg-card/30 backdrop-blur-sm border border-border h-full flex flex-col">
+      <div className="mb-4 text-center border-b border-border pb-3">
+        <h3 className="text-xl font-amiri text-primary mb-1">{surahArabicName}</h3>
+        <p className="text-sm font-inter text-muted-foreground">
           Surah {surahNumber}: {surahName}
         </p>
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-4">
+      <div className="flex-1 flex items-center justify-center">
         <div className="w-full animate-fade-in">
-          <div className="p-8 rounded-lg border-2 border-primary bg-primary/10 shadow-lg">
-            <div className="flex items-start gap-4 mb-6">
-              <span className="flex-shrink-0 w-14 h-14 rounded-full bg-primary/20 text-primary flex items-center justify-center text-lg font-inter font-bold">
+          <div className="p-6 rounded-lg border border-primary bg-primary/10 shadow-lg">
+            <div className="flex items-start gap-3 mb-4">
+              <span className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-inter font-bold">
                 {currentVerse.numberInSurah}
               </span>
               <p
-                className="text-4xl font-amiri text-right leading-loose text-primary"
+                className="text-3xl font-amiri text-right leading-loose text-primary"
                 dir="rtl"
               >
                 {currentVerse.text}
               </p>
             </div>
 
-            <div className="space-y-4 mt-8 border-t-2 border-border/30 pt-6">
-              <p className="text-xl font-inter leading-relaxed text-primary">
-                <span className="font-semibold text-lg">DE:</span> {verses.german[currentVerseIndex]?.text}
+            <div className="space-y-3 mt-6 border-t border-border/30 pt-4">
+              <p className="text-base font-inter leading-relaxed text-primary">
+                <span className="font-semibold">DE:</span> {verses.german[currentVerseIndex]?.text}
               </p>
-              <p className="text-xl font-inter leading-relaxed text-primary">
-                <span className="font-semibold text-lg">BS:</span> {verses.bosnian[currentVerseIndex]?.text}
+              <p className="text-base font-inter leading-relaxed text-primary">
+                <span className="font-semibold">BS:</span> {verses.bosnian[currentVerseIndex]?.text}
               </p>
             </div>
           </div>
