@@ -193,8 +193,19 @@ const Index = () => {
         </div>
 
         {/* Footer */}
-        <footer className="text-center text-muted-foreground font-inter text-xs py-2 border-t border-border/30">
+        <footer className="text-center text-muted-foreground font-inter text-xs py-2 border-t border-border/30 space-y-1">
           <p>اللهم بارك لنا - Allah segne uns alle</p>
+          <p className="text-[10px]">
+            Developed by{" "}
+            <a 
+              href="https://deverm.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="story-link font-semibold text-primary hover:text-primary/80 transition-colors"
+            >
+              DEVERM
+            </a>
+          </p>
         </footer>
       </div>
     </div>
