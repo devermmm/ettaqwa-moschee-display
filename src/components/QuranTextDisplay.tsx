@@ -103,7 +103,7 @@ const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranText
         </p>
       </div>
 
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex items-start justify-center overflow-y-auto">
         <div className="w-full animate-fade-in">
           <div className="p-6 rounded-lg border border-primary bg-primary/10 shadow-lg">
             <div className="flex items-start gap-3 mb-4">
