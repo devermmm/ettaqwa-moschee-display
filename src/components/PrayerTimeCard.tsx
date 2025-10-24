@@ -11,10 +11,17 @@ const PrayerTimeCard = ({ name, time, isActive, arabicName }: PrayerTimeCardProp
   return (
     <Card className={`p-6 transition-all duration-300 ${
       isActive 
-        ? "bg-primary text-primary-foreground shadow-xl scale-105 border-primary" 
-        : "bg-card hover:shadow-md"
+        ? "bg-primary text-primary-foreground shadow-xl scale-105 border-2 border-primary-glow" 
+        : "bg-card hover:shadow-md border border-border"
     }`}>
       <div className="flex flex-col items-center space-y-2">
+        {isActive && (
+          <div className="w-full text-center mb-2">
+            <span className="inline-block bg-primary-foreground text-primary text-xs font-bold px-3 py-1 rounded-full font-inter">
+              JETZT
+            </span>
+          </div>
+        )}
         {arabicName && (
           <p className={`text-lg font-amiri ${isActive ? "text-primary-foreground" : "text-muted-foreground"}`}>
             {arabicName}
