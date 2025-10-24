@@ -35,7 +35,7 @@ const PrayerTimeCard = ({ name, time, isActive, isPast, isNext, arabicName }: Pr
             {arabicName}
           </p>
         )}
-        <h3 className={`text-xs md:text-sm lg:text-base font-semibold font-inter ${
+        <h3 className={`text-[10px] md:text-xs lg:text-sm font-semibold font-inter ${
           isNext ? "text-accent-foreground" : 
           isPast ? "text-muted-foreground" : 
           "text-foreground"
