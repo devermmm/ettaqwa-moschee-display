@@ -78,6 +78,16 @@ const Index = () => {
     return currentTime > prayerTime;
   };
 
+  const isFriday = () => {
+    const now = new Date();
+    return now.getDay() === 5; // 5 = Friday
+  };
+
+  // Filter out Dhuhr on Fridays
+  const displayedPrayerTimes = isFriday() 
+    ? prayerTimes.filter(prayer => prayer.name !== "Dhuhr")
+    : prayerTimes;
+
   return (
     <div className="h-screen overflow-hidden bg-gradient-to-br from-background via-background to-secondary/20 p-3">
       <BackgroundMusic />
@@ -151,16 +161,19 @@ const Index = () => {
                 Gebetszeiten Wien
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {prayerTimes.map((prayer, index) => (
-                  <PrayerTimeCard
-                    key={prayer.name}
-                    name={prayer.name}
-                    time={prayer.time}
-                    arabicName={prayer.arabicName}
-                    isNext={index === nextPrayer}
-                    isPast={isPrayerPast(index)}
-                  />
-                ))}
+                {displayedPrayerTimes.map((prayer) => {
+                  const originalIndex = prayerTimes.findIndex(p => p.name === prayer.name);
+                  return (
+                    <PrayerTimeCard
+                      key={prayer.name}
+                      name={prayer.name}
+                      time={prayer.time}
+                      arabicName={prayer.arabicName}
+                      isNext={originalIndex === nextPrayer}
+                      isPast={isPrayerPast(originalIndex)}
+                    />
+                  );
+                })}
               </div>
               
               {/* Basmala Section */}
