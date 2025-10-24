@@ -11,17 +11,17 @@ interface PrayerTimeCardProps {
 
 const PrayerTimeCard = ({ name, time, isActive, isPast, isNext, arabicName }: PrayerTimeCardProps) => {
   return (
-    <Card className={`p-2 md:p-3 lg:p-4 transition-all duration-300 ${
+    <Card className={`p-2 md:p-3 lg:p-4 transition-all duration-300 h-[140px] md:h-[160px] lg:h-[180px] ${
       isNext
         ? "bg-accent text-accent-foreground shadow-xl scale-105 border-2 border-accent ring-2 ring-accent/50" 
         : isPast
         ? "bg-muted/50 opacity-60 border border-border"
         : "bg-card border border-border"
     }`}>
-      <div className="flex flex-col items-center space-y-0.5 md:space-y-1">
+      <div className="flex flex-col items-center justify-center h-full space-y-1">
         {isNext && (
-          <div className="w-full text-center mb-0.5 md:mb-1">
-            <span className="inline-block bg-accent-foreground text-accent text-[10px] md:text-xs font-bold px-2 md:px-3 py-0.5 md:py-1 rounded-full font-inter uppercase">
+          <div className="absolute top-1 md:top-2">
+            <span className="inline-block bg-accent-foreground text-accent text-[9px] md:text-[10px] font-bold px-1.5 md:px-2 py-0.5 rounded-full font-inter uppercase">
               Nächstes
             </span>
           </div>
