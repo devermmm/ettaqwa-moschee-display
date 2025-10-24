@@ -16,17 +16,31 @@ const Index = () => {
   const [currentPrayer, setCurrentPrayer] = useState(0);
   const [nextPrayer, setNextPrayer] = useState(0);
 
-  // Prayer times for Vienna
-  const prayerTimes: PrayerTime[] = [
-    { name: "Fajr", arabicName: "الفجر", time: "05:45" },
-    { name: "Sonnenaufgang", arabicName: "الشروق", time: "07:15" },
+  const isFriday = () => {
+    const now = new Date();
+    return now.getDay() === 5; // 5 = Friday
+  };
+
+  // Prayer times for Vienna - replace Dhuhr with Jummah on Fridays
+  const basePrayerTimes: PrayerTime[] = [
+    { name: "Fajr", arabicName: "الفجر", time: "06:01" },
+    { name: "Sonnenaufgang", arabicName: "الشروق", time: "07:27" },
     { name: "Dhuhr", arabicName: "الظهر", time: "12:30" },
-    { name: "Asr", arabicName: "العصر", time: "15:45" },
-    { name: "Maghrib", arabicName: "المغرب", time: "18:20" },
-    { name: "Isha", arabicName: "العشاء", time: "19:50" },
+    { name: "Asr", arabicName: "العصر", time: "15:25" },
+    { name: "Maghrib", arabicName: "المغرب", time: "17:50" },
+    { name: "Isha", arabicName: "العشاء", time: "19:23" },
   ];
 
-  // Jummah (Friday Prayer) time
+  // On Fridays, replace Dhuhr with Jummah
+  const prayerTimes: PrayerTime[] = isFriday()
+    ? basePrayerTimes.map(prayer => 
+        prayer.name === "Dhuhr" 
+          ? { name: "Dschuma", arabicName: "الجمعة", time: "13:00" }
+          : prayer
+      )
+    : basePrayerTimes;
+
+  // Jummah (Friday Prayer) time for the card
   const jummahTime = "13:00";
 
   useEffect(() => {
@@ -77,16 +91,6 @@ const Index = () => {
     const prayerTime = hours * 60 + minutes;
     return currentTime > prayerTime;
   };
-
-  const isFriday = () => {
-    const now = new Date();
-    return now.getDay() === 5; // 5 = Friday
-  };
-
-  // Filter out Dhuhr on Fridays
-  const displayedPrayerTimes = isFriday() 
-    ? prayerTimes.filter(prayer => prayer.name !== "Dhuhr")
-    : prayerTimes;
 
   return (
     <div className="h-screen overflow-hidden bg-gradient-to-br from-background via-background to-secondary/20 p-3">
@@ -161,19 +165,16 @@ const Index = () => {
                 Gebetszeiten Wien
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {displayedPrayerTimes.map((prayer) => {
-                  const originalIndex = prayerTimes.findIndex(p => p.name === prayer.name);
-                  return (
-                    <PrayerTimeCard
-                      key={prayer.name}
-                      name={prayer.name}
-                      time={prayer.time}
-                      arabicName={prayer.arabicName}
-                      isNext={originalIndex === nextPrayer}
-                      isPast={isPrayerPast(originalIndex)}
-                    />
-                  );
-                })}
+                {prayerTimes.map((prayer, index) => (
+                  <PrayerTimeCard
+                    key={prayer.name}
+                    name={prayer.name}
+                    time={prayer.time}
+                    arabicName={prayer.arabicName}
+                    isNext={index === nextPrayer}
+                    isPast={isPrayerPast(index)}
+                  />
+                ))}
               </div>
               
               {/* Basmala Section */}
