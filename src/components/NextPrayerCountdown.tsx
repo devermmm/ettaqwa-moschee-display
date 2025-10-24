@@ -40,8 +40,8 @@ const NextPrayerCountdown = ({ nextPrayerName, nextPrayerTime, nextPrayerArabic 
 
   return (
     <div className="text-center">
-      <p className="text-xs font-inter opacity-90 uppercase tracking-wider mb-1">Zeit verbleibend</p>
-      <div className="text-5xl font-bold font-inter tracking-wider">
+      <p className="text-base font-inter opacity-90 uppercase tracking-wider mb-2">Zeit verbleibend</p>
+      <div className="text-6xl font-bold font-inter tracking-wider">
         {timeLeft}
       </div>
     </div>
