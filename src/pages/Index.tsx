@@ -171,8 +171,8 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Jummah Time - Only show on Fridays */}
-            {isFriday() && (
+            {/* Jummah Time - Only show on Fridays before 13:00 */}
+            {isFriday() && new Date().getHours() < 13 && (
               <Card className="p-3 md:p-4 bg-primary text-primary-foreground border-2 border-primary-glow shadow-lg">
                 <div className="text-center">
                   <h3 className="text-base md:text-lg lg:text-xl font-bold font-inter mb-2 uppercase tracking-wide">Freitagsgebet</h3>
