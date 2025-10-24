@@ -3,6 +3,7 @@ import PrayerTimeCard from "@/components/PrayerTimeCard";
 import CurrentTime from "@/components/CurrentTime";
 import NextPrayerCountdown from "@/components/NextPrayerCountdown";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import QuranTextDisplay from "@/components/QuranTextDisplay";
 import { Card } from "@/components/ui/card";
 import logo from "@/assets/logo.png";
 
@@ -15,6 +16,9 @@ interface PrayerTime {
 const Index = () => {
   const [currentPrayer, setCurrentPrayer] = useState(0);
   const [nextPrayer, setNextPrayer] = useState(0);
+  const [currentSurahNumber, setCurrentSurahNumber] = useState(1);
+  const [currentSurahName, setCurrentSurahName] = useState("Al-Fatihah");
+  const [currentSurahArabicName, setCurrentSurahArabicName] = useState("الفاتحة");
 
   const isFriday = () => {
     const now = new Date();
@@ -94,7 +98,13 @@ const Index = () => {
 
   return (
     <div className="h-screen overflow-hidden bg-gradient-to-br from-background via-background to-secondary/20 p-3">
-      <BackgroundMusic />
+      <BackgroundMusic 
+        onSurahChange={(surahNumber, surahName, surahArabicName) => {
+          setCurrentSurahNumber(surahNumber);
+          setCurrentSurahName(surahName);
+          setCurrentSurahArabicName(surahArabicName);
+        }}
+      />
       
       <div className="h-full max-w-7xl mx-auto flex flex-col">
         {/* Header with Logo */}
@@ -118,8 +128,17 @@ const Index = () => {
 
         {/* Main Content */}
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 py-4 overflow-hidden">
-          {/* Left Column - Time & Info */}
-          <div className="lg:col-span-4 space-y-3">
+          {/* Left Column - Quran Text Display */}
+          <div className="lg:col-span-5 h-full overflow-hidden">
+            <QuranTextDisplay
+              surahNumber={currentSurahNumber}
+              surahName={currentSurahName}
+              surahArabicName={currentSurahArabicName}
+            />
+          </div>
+
+          {/* Middle Column - Time & Info */}
+          <div className="lg:col-span-3 space-y-3">
             {/* Current Time Display */}
             <Card className="p-5 bg-card border-2 border-primary/30 shadow-lg">
               <CurrentTime />
@@ -159,7 +178,7 @@ const Index = () => {
           </div>
 
           {/* Right Column - All Prayer Times */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-4">
             <div className="bg-card/30 backdrop-blur-sm rounded-xl p-4 border border-border">
               <h2 className="text-2xl font-bold text-center mb-4 text-foreground font-inter uppercase tracking-wide">
                 Gebetszeiten Wien

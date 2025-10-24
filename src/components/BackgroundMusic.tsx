@@ -121,7 +121,11 @@ const surahs = [
   { number: 114, name: "An-Nas", arabicName: "الناس", url: "https://server8.mp3quran.net/afs/114.mp3" },
 ];
 
-const BackgroundMusic = () => {
+interface BackgroundMusicProps {
+  onSurahChange?: (surahNumber: number, surahName: string, surahArabicName: string) => void;
+}
+
+const BackgroundMusic = ({ onSurahChange }: BackgroundMusicProps) => {
   const [isMuted, setIsMuted] = useState(false);
   const [currentSurahIndex, setCurrentSurahIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -149,6 +153,13 @@ const BackgroundMusic = () => {
     const nextIndex = (currentSurahIndex + 1) % surahs.length;
     setCurrentSurahIndex(nextIndex);
   };
+
+  useEffect(() => {
+    const currentSurah = surahs[currentSurahIndex];
+    if (onSurahChange) {
+      onSurahChange(currentSurah.number, currentSurah.name, currentSurah.arabicName);
+    }
+  }, [currentSurahIndex, onSurahChange]);
 
   const currentSurah = surahs[currentSurahIndex];
 
