@@ -104,26 +104,26 @@ const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranText
         </p>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
-        <div className="w-full animate-fade-in pb-4">
-          <div className="p-6 rounded-lg border border-primary bg-primary/10 shadow-lg">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="w-full animate-fade-in pb-4 px-2">
+          <div className="p-4 md:p-6 rounded-lg border border-primary bg-primary/10 shadow-lg">
             <div className="flex items-start gap-3 mb-4">
-              <span className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-inter font-bold">
+              <span className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs md:text-sm font-inter font-bold">
                 {currentVerse.numberInSurah}
               </span>
               <p
-                className="text-3xl font-amiri text-right leading-loose text-primary"
+                className="text-2xl md:text-3xl font-amiri text-right leading-loose text-primary break-words"
                 dir="rtl"
               >
                 {currentVerse.text}
               </p>
             </div>
 
-            <div className="space-y-3 mt-6 border-t border-border/30 pt-4">
-              <p className="text-base font-inter leading-relaxed text-primary">
+            <div className="space-y-2 md:space-y-3 mt-4 md:mt-6 border-t border-border/30 pt-3 md:pt-4">
+              <p className="text-sm md:text-base font-inter leading-relaxed text-primary break-words">
                 <span className="font-semibold">DE:</span> {verses.german[currentVerseIndex]?.text}
               </p>
-              <p className="text-base font-inter leading-relaxed text-primary">
+              <p className="text-sm md:text-base font-inter leading-relaxed text-primary break-words">
                 <span className="font-semibold">BS:</span> {verses.bosnian[currentVerseIndex]?.text}
               </p>
             </div>
