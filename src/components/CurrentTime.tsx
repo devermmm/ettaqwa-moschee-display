@@ -30,10 +30,10 @@ const CurrentTime = () => {
 
   return (
     <div className="text-center">
-      <div className="text-4xl font-bold text-primary font-inter">
+      <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary font-inter">
         {formatTime(time)}
       </div>
-      <div className="text-base text-muted-foreground font-inter mt-1">
+      <div className="text-xs md:text-sm lg:text-base text-muted-foreground font-inter mt-1">
         {formatDate(time)}
       </div>
     </div>

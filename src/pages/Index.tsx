@@ -97,7 +97,7 @@ const Index = () => {
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-gradient-to-br from-background via-background to-secondary/20 p-3">
+    <div className="min-h-screen overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/20 p-2 md:p-3 lg:h-screen lg:overflow-hidden">
       <BackgroundMusic 
         onSurahChange={(surahNumber, surahName, surahArabicName) => {
           setCurrentSurahNumber(surahNumber);
@@ -106,20 +106,20 @@ const Index = () => {
         }}
       />
       
-      <div className="h-full max-w-7xl mx-auto flex flex-col">
+      <div className="h-full max-w-[1920px] mx-auto flex flex-col">
         {/* Header with Logo */}
-        <header className="text-center py-2 border-b border-border/30">
-          <div className="flex items-center justify-center gap-3">
+        <header className="text-center py-2 md:py-3 border-b border-border/30">
+          <div className="flex items-center justify-center gap-2 md:gap-3">
             <img 
               src={logo} 
               alt="Et-Taqwa Moschee Logo" 
-              className="h-14 drop-shadow-lg"
+              className="h-10 md:h-12 lg:h-16 drop-shadow-lg"
             />
             <div className="text-left">
-              <h1 className="text-xl font-bold text-primary font-inter leading-tight">
+              <h1 className="text-base md:text-lg lg:text-2xl font-bold text-primary font-inter leading-tight">
                 Et-Taqwa Moschee
               </h1>
-              <p className="text-lg text-primary font-amiri leading-tight">
+              <p className="text-sm md:text-base lg:text-xl text-primary font-amiri leading-tight">
                 مسجد التقوى - Wien
               </p>
             </div>
@@ -127,9 +127,9 @@ const Index = () => {
         </header>
 
         {/* Main Content */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 py-4 overflow-hidden">
-          {/* Left Column - Quran Text Display */}
-          <div className="lg:col-span-5 h-full overflow-hidden">
+        <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 gap-3 md:gap-4 py-3 md:py-4 lg:overflow-hidden">
+          {/* Left Column - Quran Text Display (hidden on mobile) */}
+          <div className="hidden lg:block lg:col-span-5 h-full overflow-hidden">
             <QuranTextDisplay
               surahNumber={currentSurahNumber}
               surahName={currentSurahName}
@@ -140,17 +140,17 @@ const Index = () => {
           {/* Middle Column - Time & Info */}
           <div className="lg:col-span-3 space-y-3">
             {/* Current Time Display */}
-            <Card className="p-5 bg-card border-2 border-primary/30 shadow-lg">
+            <Card className="p-3 md:p-4 lg:p-6 bg-card border-2 border-primary/30 shadow-lg">
               <CurrentTime />
             </Card>
 
             {/* Next Prayer Countdown - Most Important */}
-            <div className="bg-gradient-to-br from-accent via-accent to-primary p-6 rounded-xl shadow-xl border-2 border-accent">
-              <div className="text-center text-accent-foreground space-y-3">
+            <div className="bg-gradient-to-br from-accent via-accent to-primary p-4 md:p-5 lg:p-6 rounded-xl shadow-xl border-2 border-accent">
+              <div className="text-center text-accent-foreground space-y-2 md:space-y-3">
                 <div>
-                  <p className="text-sm font-inter opacity-90 uppercase tracking-wider">Nächstes Gebet</p>
-                  <h2 className="text-3xl font-bold font-inter mt-1">{prayerTimes[nextPrayer].name}</h2>
-                  <p className="text-xl font-amiri mt-1">{prayerTimes[nextPrayer].arabicName}</p>
+                  <p className="text-xs md:text-sm font-inter opacity-90 uppercase tracking-wider">Nächstes Gebet</p>
+                  <h2 className="text-xl md:text-2xl lg:text-3xl font-bold font-inter mt-1">{prayerTimes[nextPrayer].name}</h2>
+                  <p className="text-base md:text-lg lg:text-xl font-amiri mt-1">{prayerTimes[nextPrayer].arabicName}</p>
                 </div>
                 
                 <NextPrayerCountdown
@@ -160,18 +160,18 @@ const Index = () => {
                 />
 
                 <div className="pt-2">
-                  <p className="text-2xl font-bold font-inter">um {prayerTimes[nextPrayer].time} Uhr</p>
+                  <p className="text-lg md:text-xl lg:text-2xl font-bold font-inter">um {prayerTimes[nextPrayer].time} Uhr</p>
                 </div>
               </div>
             </div>
 
             {/* Jummah Time */}
-            <Card className="p-4 bg-primary text-primary-foreground border-2 border-primary-glow shadow-lg">
+            <Card className="p-3 md:p-4 bg-primary text-primary-foreground border-2 border-primary-glow shadow-lg">
               <div className="text-center">
-                <h3 className="text-xl font-bold font-inter mb-2 uppercase tracking-wide">Freitagsgebet</h3>
-                <p className="text-2xl font-amiri mb-3">صلاة الجمعة</p>
-                <div className="bg-primary-foreground/20 rounded-lg p-3 backdrop-blur-sm">
-                  <p className="text-4xl font-bold font-inter">{jummahTime}</p>
+                <h3 className="text-base md:text-lg lg:text-xl font-bold font-inter mb-2 uppercase tracking-wide">Freitagsgebet</h3>
+                <p className="text-lg md:text-xl lg:text-2xl font-amiri mb-2 md:mb-3">صلاة الجمعة</p>
+                <div className="bg-primary-foreground/20 rounded-lg p-2 md:p-3 backdrop-blur-sm">
+                  <p className="text-2xl md:text-3xl lg:text-4xl font-bold font-inter">{jummahTime}</p>
                 </div>
               </div>
             </Card>
@@ -179,11 +179,11 @@ const Index = () => {
 
           {/* Right Column - All Prayer Times */}
           <div className="lg:col-span-4">
-            <div className="bg-card/30 backdrop-blur-sm rounded-xl p-4 border border-border">
-              <h2 className="text-2xl font-bold text-center mb-4 text-foreground font-inter uppercase tracking-wide">
+            <div className="bg-card/30 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-border">
+              <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-3 md:mb-4 text-foreground font-inter uppercase tracking-wide">
                 Gebetszeiten Wien
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 lg:gap-4">
                 {prayerTimes.map((prayer, index) => (
                   <PrayerTimeCard
                     key={prayer.name}
@@ -197,12 +197,12 @@ const Index = () => {
               </div>
               
               {/* Basmala Section */}
-              <div className="mt-4">
-                <Card className="p-4 bg-gradient-to-r from-muted/30 to-muted/50 border border-border/50">
-                  <p className="text-xl text-center text-foreground font-amiri">
+              <div className="mt-3 md:mt-4">
+                <Card className="p-3 md:p-4 bg-gradient-to-r from-muted/30 to-muted/50 border border-border/50">
+                  <p className="text-base md:text-lg lg:text-xl text-center text-foreground font-amiri">
                     بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
                   </p>
-                  <p className="text-sm text-center text-muted-foreground font-inter mt-2">
+                  <p className="text-xs md:text-sm text-center text-muted-foreground font-inter mt-2">
                     Im Namen Allahs, des Allerbarmers, des Barmherzigen
                   </p>
                 </Card>
@@ -213,8 +213,8 @@ const Index = () => {
 
         {/* Footer */}
         <footer className="text-center text-muted-foreground font-inter text-xs py-2 border-t border-border/30 space-y-1">
-          <p>اللهم بارك لنا - Allah segne uns alle</p>
-          <p className="text-[10px]">
+          <p className="text-[10px] md:text-xs">اللهم بارك لنا - Allah segne uns alle</p>
+          <p className="text-[9px] md:text-[10px]">
             Developed by{" "}
             <a 
               href="https://deverm.com/" 
