@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Card } from "./ui/card";
-import { ScrollArea } from "./ui/scroll-area";
 
 interface QuranVerse {
   number: number;
@@ -93,8 +92,10 @@ const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranText
     return null;
   }
 
+  const currentVerse = verses.arabic[currentVerseIndex];
+
   return (
-    <Card className="p-4 bg-card/30 backdrop-blur-sm border border-border h-full">
+    <Card className="p-4 bg-card/30 backdrop-blur-sm border border-border h-full flex flex-col">
       <div className="mb-4 text-center border-b border-border pb-3">
         <h3 className="text-xl font-amiri text-primary mb-1">{surahArabicName}</h3>
         <p className="text-sm font-inter text-muted-foreground">
@@ -102,51 +103,32 @@ const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranText
         </p>
       </div>
 
-      <ScrollArea className="h-[calc(100vh-300px)]">
-        <div className="space-y-6 pr-4">
-          {verses.arabic.map((verse, index) => (
-            <div
-              key={verse.numberInSurah}
-              className={`p-4 rounded-lg border transition-all duration-500 ${
-                index === currentVerseIndex
-                  ? "bg-primary/10 border-primary shadow-lg"
-                  : "bg-card/50 border-border/50"
-              }`}
-            >
-              <div className="flex items-start gap-2 mb-3">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-inter font-bold">
-                  {verse.numberInSurah}
-                </span>
-                <p
-                  className={`text-2xl font-amiri text-right leading-loose transition-colors duration-500 ${
-                    index === currentVerseIndex ? "text-primary" : "text-foreground"
-                  }`}
-                  dir="rtl"
-                >
-                  {verse.text}
-                </p>
-              </div>
-
-              <div className="space-y-2 mt-4 border-t border-border/30 pt-3">
-                <p
-                  className={`text-sm font-inter leading-relaxed transition-colors duration-500 ${
-                    index === currentVerseIndex ? "text-primary" : "text-muted-foreground"
-                  }`}
-                >
-                  <span className="font-semibold">DE:</span> {verses.german[index]?.text}
-                </p>
-                <p
-                  className={`text-sm font-inter leading-relaxed transition-colors duration-500 ${
-                    index === currentVerseIndex ? "text-primary" : "text-muted-foreground"
-                  }`}
-                >
-                  <span className="font-semibold">BS:</span> {verses.bosnian[index]?.text}
-                </p>
-              </div>
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-full animate-fade-in">
+          <div className="p-6 rounded-lg border border-primary bg-primary/10 shadow-lg">
+            <div className="flex items-start gap-3 mb-4">
+              <span className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-inter font-bold">
+                {currentVerse.numberInSurah}
+              </span>
+              <p
+                className="text-3xl font-amiri text-right leading-loose text-primary"
+                dir="rtl"
+              >
+                {currentVerse.text}
+              </p>
             </div>
-          ))}
+
+            <div className="space-y-3 mt-6 border-t border-border/30 pt-4">
+              <p className="text-base font-inter leading-relaxed text-primary">
+                <span className="font-semibold">DE:</span> {verses.german[currentVerseIndex]?.text}
+              </p>
+              <p className="text-base font-inter leading-relaxed text-primary">
+                <span className="font-semibold">BS:</span> {verses.bosnian[currentVerseIndex]?.text}
+              </p>
+            </div>
+          </div>
         </div>
-      </ScrollArea>
+      </div>
     </Card>
   );
 };
