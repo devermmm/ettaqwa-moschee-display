@@ -95,16 +95,16 @@ const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranText
   const currentVerse = verses.arabic[currentVerseIndex];
 
   return (
-    <Card className="p-4 bg-card/30 backdrop-blur-sm border border-border h-full flex flex-col">
-      <div className="mb-4 text-center border-b border-border pb-3">
+    <Card className="p-4 bg-card/30 backdrop-blur-sm border border-border h-full flex flex-col overflow-hidden">
+      <div className="mb-4 text-center border-b border-border pb-3 flex-shrink-0">
         <h3 className="text-xl font-amiri text-primary mb-1">{surahArabicName}</h3>
         <p className="text-sm font-inter text-muted-foreground">
           Surah {surahNumber}: {surahName}
         </p>
       </div>
 
-      <div className="flex-1 flex items-start justify-center overflow-y-auto">
-        <div className="w-full animate-fade-in">
+      <div className="flex-1 overflow-y-auto">
+        <div className="w-full animate-fade-in pb-4">
           <div className="p-6 rounded-lg border border-primary bg-primary/10 shadow-lg">
             <div className="flex items-start gap-3 mb-4">
               <span className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-inter font-bold">
