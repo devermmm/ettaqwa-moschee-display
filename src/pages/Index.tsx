@@ -128,17 +128,8 @@ const Index = () => {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 gap-3 md:gap-4 py-3 md:py-4 lg:overflow-hidden">
-          {/* Left Column - Quran Text Display (hidden on mobile) */}
-          <div className="hidden lg:block lg:col-span-5 h-full overflow-hidden">
-            <QuranTextDisplay
-              surahNumber={currentSurahNumber}
-              surahName={currentSurahName}
-              surahArabicName={currentSurahArabicName}
-            />
-          </div>
-
-          {/* Middle Column - Time & Info */}
-          <div className="lg:col-span-3 space-y-3">
+          {/* Left Column - Prayer Times & Time Info */}
+          <div className="lg:col-span-5 space-y-3">
             {/* Current Time Display */}
             <Card className="p-3 md:p-4 lg:p-6 bg-card border-2 border-primary/30 shadow-lg">
               <CurrentTime />
@@ -175,10 +166,8 @@ const Index = () => {
                 </div>
               </div>
             </Card>
-          </div>
 
-          {/* Right Column - All Prayer Times */}
-          <div className="lg:col-span-4">
+            {/* All Prayer Times */}
             <div className="bg-card/30 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-border">
               <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-3 md:mb-4 text-foreground font-inter uppercase tracking-wide">
                 Gebetszeiten Wien
@@ -208,6 +197,15 @@ const Index = () => {
                 </Card>
               </div>
             </div>
+          </div>
+
+          {/* Right Column - Quran Text Display */}
+          <div className="lg:col-span-7 h-full overflow-hidden">
+            <QuranTextDisplay
+              surahNumber={currentSurahNumber}
+              surahName={currentSurahName}
+              surahArabicName={currentSurahArabicName}
+            />
           </div>
         </div>
 
