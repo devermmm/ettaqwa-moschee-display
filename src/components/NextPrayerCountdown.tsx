@@ -39,23 +39,23 @@ const NextPrayerCountdown = ({ nextPrayerName, nextPrayerTime, nextPrayerArabic 
   }, [nextPrayerTime]);
 
   return (
-    <Card className="p-8 bg-gradient-to-br from-accent to-primary text-accent-foreground shadow-elegant">
-      <div className="text-center space-y-4">
+    <Card className="p-4 bg-gradient-to-br from-accent to-primary text-accent-foreground shadow-elegant">
+      <div className="text-center space-y-2">
         <div>
-          <p className="text-lg font-inter opacity-90">Nächstes Gebet</p>
-          <h2 className="text-4xl font-bold font-inter mt-2">{nextPrayerName}</h2>
-          <p className="text-2xl font-amiri mt-1">{nextPrayerArabic}</p>
+          <p className="text-sm font-inter opacity-90">Nächstes Gebet</p>
+          <h2 className="text-2xl font-bold font-inter">{nextPrayerName}</h2>
+          <p className="text-lg font-amiri">{nextPrayerArabic}</p>
         </div>
         
-        <div className="py-4">
-          <p className="text-lg font-inter opacity-90 mb-2">Zeit bis zum Gebet</p>
-          <div className="text-6xl font-bold font-inter tracking-wider">
+        <div>
+          <p className="text-sm font-inter opacity-90">Zeit bis zum Gebet</p>
+          <div className="text-4xl font-bold font-inter tracking-wider">
             {timeLeft}
           </div>
         </div>
 
-        <div className="pt-2">
-          <p className="text-2xl font-inter">Gebetszeit: {nextPrayerTime}</p>
+        <div>
+          <p className="text-lg font-inter">um {nextPrayerTime}</p>
         </div>
       </div>
     </Card>

@@ -61,76 +61,74 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20 p-4 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="h-screen overflow-hidden bg-gradient-to-br from-background via-background to-secondary/20 p-3">
+      <div className="h-full max-w-7xl mx-auto flex flex-col justify-between">
         {/* Header with Logo */}
-        <header className="text-center space-y-4 py-6">
-          <img 
-            src={logo} 
-            alt="Et-Taqwa Moschee Logo" 
-            className="h-24 md:h-32 mx-auto drop-shadow-lg"
-          />
-          <div>
-            <h1 className="text-3xl md:text-5xl font-bold text-primary font-inter mb-2">
-              Et-Taqwa Moschee
-            </h1>
-            <p className="text-2xl md:text-3xl text-primary font-amiri">
-              مسجد التقوى
-            </p>
-            <p className="text-lg md:text-xl text-muted-foreground font-inter mt-3">
-              Bosnische Moschee Wien
-            </p>
+        <header className="text-center py-2">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <img 
+              src={logo} 
+              alt="Et-Taqwa Moschee Logo" 
+              className="h-16 drop-shadow-lg"
+            />
+            <div className="text-left">
+              <h1 className="text-2xl font-bold text-primary font-inter leading-tight">
+                Et-Taqwa Moschee
+              </h1>
+              <p className="text-xl text-primary font-amiri leading-tight">
+                مسجد التقوى
+              </p>
+            </div>
           </div>
         </header>
 
-        {/* Current Time Display */}
-        <div className="bg-card/50 backdrop-blur-sm rounded-2xl shadow-elegant p-6 md:p-8 border border-border">
-          <CurrentTime />
-        </div>
+        {/* Main Content */}
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-3">
+          {/* Left Column */}
+          <div className="space-y-3">
+            {/* Current Time Display */}
+            <div className="bg-card/50 backdrop-blur-sm rounded-xl shadow-elegant p-4 border border-border">
+              <CurrentTime />
+            </div>
 
-        {/* Next Prayer Countdown */}
-        <NextPrayerCountdown
-          nextPrayerName={prayerTimes[nextPrayer].name}
-          nextPrayerTime={prayerTimes[nextPrayer].time}
-          nextPrayerArabic={prayerTimes[nextPrayer].arabicName}
-        />
+            {/* Next Prayer Countdown */}
+            <NextPrayerCountdown
+              nextPrayerName={prayerTimes[nextPrayer].name}
+              nextPrayerTime={prayerTimes[nextPrayer].time}
+              nextPrayerArabic={prayerTimes[nextPrayer].arabicName}
+            />
 
-        {/* Current Prayer Highlight */}
-        <div className="text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground font-inter mb-4">
-            Aktuelle Gebetszeit
-          </h2>
-          <div className="inline-block">
-            <div className="bg-primary text-primary-foreground px-8 py-4 rounded-xl shadow-elegant">
-              <p className="text-xl font-amiri mb-2">{prayerTimes[currentPrayer].arabicName}</p>
-              <p className="text-3xl font-bold font-inter">{prayerTimes[currentPrayer].name}</p>
-              <p className="text-2xl font-inter mt-2">{prayerTimes[currentPrayer].time}</p>
+            {/* Current Prayer Highlight */}
+            <div className="bg-primary text-primary-foreground p-4 rounded-xl shadow-elegant">
+              <p className="text-sm font-inter opacity-90 text-center">Aktuelle Gebetszeit</p>
+              <p className="text-lg font-amiri text-center mt-1">{prayerTimes[currentPrayer].arabicName}</p>
+              <p className="text-2xl font-bold font-inter text-center">{prayerTimes[currentPrayer].name}</p>
+              <p className="text-xl font-inter text-center mt-1">{prayerTimes[currentPrayer].time}</p>
+            </div>
+          </div>
+
+          {/* Right Column - All Prayer Times */}
+          <div className="lg:col-span-2">
+            <h2 className="text-xl font-bold text-center mb-3 text-foreground font-inter">
+              Alle Gebetszeiten
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {prayerTimes.map((prayer, index) => (
+                <PrayerTimeCard
+                  key={prayer.name}
+                  name={prayer.name}
+                  time={prayer.time}
+                  arabicName={prayer.arabicName}
+                  isActive={index === currentPrayer}
+                />
+              ))}
             </div>
           </div>
         </div>
 
-        {/* All Prayer Times Grid */}
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-foreground font-inter">
-            Alle Gebetszeiten
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {prayerTimes.map((prayer, index) => (
-              <PrayerTimeCard
-                key={prayer.name}
-                name={prayer.name}
-                time={prayer.time}
-                arabicName={prayer.arabicName}
-                isActive={index === currentPrayer}
-              />
-            ))}
-          </div>
-        </div>
-
         {/* Footer */}
-        <footer className="text-center text-muted-foreground font-inter text-sm py-6 border-t border-border mt-8">
-          <p>Gebetszeiten für Wien</p>
-          <p className="mt-2">اللهم بارك لنا - Allah segne uns alle</p>
+        <footer className="text-center text-muted-foreground font-inter text-xs py-2">
+          <p>اللهم بارك لنا - Allah segne uns alle</p>
         </footer>
       </div>
     </div>
