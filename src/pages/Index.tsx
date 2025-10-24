@@ -26,11 +26,8 @@ const Index = () => {
     { name: "Isha", arabicName: "العشاء", time: "19:50" },
   ];
 
-  // Jummah (Friday Prayer) times
-  const jummahTimes = [
-    { time: "12:30", label: "1. Khutbah" },
-    { time: "13:30", label: "2. Khutbah" },
-  ];
+  // Jummah (Friday Prayer) time
+  const jummahTime = "13:00";
 
   useEffect(() => {
     // Determine current and next prayer based on time
@@ -135,18 +132,13 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Jummah Times */}
+            {/* Jummah Time */}
             <Card className="p-4 bg-primary text-primary-foreground border-2 border-primary-glow shadow-lg">
               <div className="text-center">
-                <h3 className="text-lg font-bold font-inter mb-1 uppercase tracking-wide">Freitagsgebet</h3>
-                <p className="text-xl font-amiri mb-3">صلاة الجمعة</p>
-                <div className="space-y-2">
-                  {jummahTimes.map((jummah, idx) => (
-                    <div key={idx} className="bg-primary-foreground/20 rounded-lg p-2 backdrop-blur-sm">
-                      <p className="text-sm font-inter opacity-90">{jummah.label}</p>
-                      <p className="text-2xl font-bold font-inter">{jummah.time}</p>
-                    </div>
-                  ))}
+                <h3 className="text-xl font-bold font-inter mb-2 uppercase tracking-wide">Freitagsgebet</h3>
+                <p className="text-2xl font-amiri mb-3">صلاة الجمعة</p>
+                <div className="bg-primary-foreground/20 rounded-lg p-3 backdrop-blur-sm">
+                  <p className="text-4xl font-bold font-inter">{jummahTime}</p>
                 </div>
               </div>
             </Card>
