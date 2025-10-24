@@ -62,18 +62,19 @@ const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranText
     fetchQuranText();
   }, [surahNumber]);
 
-  // Auto-advance verses (approximate timing)
+  // Auto-advance verses
   useEffect(() => {
-    if (!verses) return;
+    if (!verses || verses.arabic.length === 0) return;
 
     const interval = setInterval(() => {
       setCurrentVerseIndex((prev) => {
-        if (prev < verses.arabic.length - 1) {
-          return prev + 1;
+        // Wenn wir am Ende sind, von vorne beginnen
+        if (prev >= verses.arabic.length - 1) {
+          return 0;
         }
-        return prev;
+        return prev + 1;
       });
-    }, 8000); // Advance every 8 seconds (approximate)
+    }, 8000); // Advance every 8 seconds
 
     return () => clearInterval(interval);
   }, [verses]);
