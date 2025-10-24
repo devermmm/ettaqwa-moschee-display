@@ -19,6 +19,7 @@ const Index = () => {
   const [currentSurahNumber, setCurrentSurahNumber] = useState(1);
   const [currentSurahName, setCurrentSurahName] = useState("Al-Fatihah");
   const [currentSurahArabicName, setCurrentSurahArabicName] = useState("الفاتحة");
+  const [currentVerseIndex, setCurrentVerseIndex] = useState(0);
 
   const isFriday = () => {
     const now = new Date();
@@ -103,6 +104,10 @@ const Index = () => {
           setCurrentSurahNumber(surahNumber);
           setCurrentSurahName(surahName);
           setCurrentSurahArabicName(surahArabicName);
+          setCurrentVerseIndex(0);
+        }}
+        onVerseChange={(verseIndex) => {
+          setCurrentVerseIndex(verseIndex);
         }}
       />
       
@@ -134,6 +139,7 @@ const Index = () => {
               surahNumber={currentSurahNumber}
               surahName={currentSurahName}
               surahArabicName={currentSurahArabicName}
+              currentVerseIndex={currentVerseIndex}
             />
           </div>
 
@@ -165,16 +171,18 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Jummah Time */}
-            <Card className="p-3 md:p-4 bg-primary text-primary-foreground border-2 border-primary-glow shadow-lg">
-              <div className="text-center">
-                <h3 className="text-base md:text-lg lg:text-xl font-bold font-inter mb-2 uppercase tracking-wide">Freitagsgebet</h3>
-                <p className="text-lg md:text-xl lg:text-2xl font-amiri mb-2 md:mb-3">صلاة الجمعة</p>
-                <div className="bg-primary-foreground/20 rounded-lg p-2 md:p-3 backdrop-blur-sm">
-                  <p className="text-2xl md:text-3xl lg:text-4xl font-bold font-inter">{jummahTime}</p>
+            {/* Jummah Time - Only show on Fridays */}
+            {isFriday() && (
+              <Card className="p-3 md:p-4 bg-primary text-primary-foreground border-2 border-primary-glow shadow-lg">
+                <div className="text-center">
+                  <h3 className="text-base md:text-lg lg:text-xl font-bold font-inter mb-2 uppercase tracking-wide">Freitagsgebet</h3>
+                  <p className="text-lg md:text-xl lg:text-2xl font-amiri mb-2 md:mb-3">صلاة الجمعة</p>
+                  <div className="bg-primary-foreground/20 rounded-lg p-2 md:p-3 backdrop-blur-sm">
+                    <p className="text-2xl md:text-3xl lg:text-4xl font-bold font-inter">{jummahTime}</p>
+                  </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            )}
           </div>
 
           {/* Right Column - All Prayer Times */}

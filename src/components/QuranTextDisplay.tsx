@@ -17,11 +17,11 @@ interface QuranTextDisplayProps {
   surahNumber: number;
   surahName: string;
   surahArabicName: string;
+  currentVerseIndex?: number;
 }
 
-const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranTextDisplayProps) => {
+const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName, currentVerseIndex = 0 }: QuranTextDisplayProps) => {
   const [verses, setVerses] = useState<QuranTranslation | null>(null);
-  const [currentVerseIndex, setCurrentVerseIndex] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -51,7 +51,6 @@ const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranText
           german: germanData.data.ayahs,
           bosnian: bosnianData.data.ayahs,
         });
-        setCurrentVerseIndex(0);
       } catch (error) {
         console.error("Error fetching Quran text:", error);
       } finally {
@@ -62,22 +61,6 @@ const QuranTextDisplay = ({ surahNumber, surahName, surahArabicName }: QuranText
     fetchQuranText();
   }, [surahNumber]);
 
-  // Auto-advance verses
-  useEffect(() => {
-    if (!verses || verses.arabic.length === 0) return;
-
-    const interval = setInterval(() => {
-      setCurrentVerseIndex((prev) => {
-        // Wenn wir am Ende sind, von vorne beginnen
-        if (prev >= verses.arabic.length - 1) {
-          return 0;
-        }
-        return prev + 1;
-      });
-    }, 8000); // Advance every 8 seconds
-
-    return () => clearInterval(interval);
-  }, [verses]);
 
   if (loading) {
     return (

@@ -577,13 +577,16 @@ const surahs = [{
 }];
 interface BackgroundMusicProps {
   onSurahChange?: (surahNumber: number, surahName: string, surahArabicName: string) => void;
+  onVerseChange?: (verseIndex: number) => void;
 }
 const BackgroundMusic = ({
-  onSurahChange
+  onSurahChange,
+  onVerseChange
 }: BackgroundMusicProps) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSurahIndex, setCurrentSurahIndex] = useState(0);
+  const [currentVerseIndex, setCurrentVerseIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   
   // Versuche Autoplay beim Laden
@@ -623,13 +626,33 @@ const BackgroundMusic = ({
     // Move to next surah, loop back to beginning if at end
     const nextIndex = (currentSurahIndex + 1) % surahs.length;
     setCurrentSurahIndex(nextIndex);
+    setCurrentVerseIndex(0);
   };
   useEffect(() => {
     const currentSurah = surahs[currentSurahIndex];
     if (onSurahChange) {
       onSurahChange(currentSurah.number, currentSurah.name, currentSurah.arabicName);
     }
+    setCurrentVerseIndex(0);
   }, [currentSurahIndex, onSurahChange]);
+
+  // Auto-advance verses while playing
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const interval = setInterval(() => {
+      setCurrentVerseIndex((prev) => prev + 1);
+    }, 8000); // Advance verse every 8 seconds
+
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  // Notify parent component of verse changes
+  useEffect(() => {
+    if (onVerseChange) {
+      onVerseChange(currentVerseIndex);
+    }
+  }, [currentVerseIndex, onVerseChange]);
   const currentSurah = surahs[currentSurahIndex];
   return <>
       {/* Start Button - wird nur angezeigt wenn nicht abspielt */}
