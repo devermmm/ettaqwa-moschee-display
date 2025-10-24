@@ -183,7 +183,7 @@ const Index = () => {
               <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-3 md:mb-4 text-foreground font-inter uppercase tracking-wide">
                 Gebetszeiten Wien
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 lg:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-2 md:gap-3 lg:gap-4">
                 {prayerTimes.map((prayer, index) => (
                   <PrayerTimeCard
                     key={prayer.name}

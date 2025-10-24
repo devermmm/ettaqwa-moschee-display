@@ -582,15 +582,35 @@ const BackgroundMusic = ({
   onSurahChange
 }: BackgroundMusicProps) => {
   const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [currentSurahIndex, setCurrentSurahIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
+  
+  // Versuche Autoplay beim Laden
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = 0.3;
-      // Auto-play first surah
-      audioRef.current.play().catch(err => console.log("Auto-play prevented:", err));
+      // Versuche automatisch zu starten
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch(() => {
+            // Autoplay wurde blockiert, Nutzer muss klicken
+            setIsPlaying(false);
+          });
+      }
     }
   }, []);
+  
+  const handleStartPlay = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  };
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.muted = isMuted;
@@ -612,16 +632,25 @@ const BackgroundMusic = ({
   }, [currentSurahIndex, onSurahChange]);
   const currentSurah = surahs[currentSurahIndex];
   return <>
+      {/* Start Button - wird nur angezeigt wenn nicht abspielt */}
+      {!isPlaying && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center">
+          <Card className="p-8 text-center bg-card border-2 border-primary shadow-2xl">
+            <h3 className="text-2xl font-bold text-primary mb-4 font-inter">Quran Rezitation starten</h3>
+            <p className="text-muted-foreground mb-6 font-inter">Klicken Sie um die Quran Wiedergabe zu starten</p>
+            <Button onClick={handleStartPlay} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-inter">
+              <Volume2 className="mr-2 h-5 w-5" />
+              Jetzt starten
+            </Button>
+          </Card>
+        </div>
+      )}
+      
       {/* Mute button - bottom right */}
       <div className="fixed bottom-4 right-4 z-50">
         <Button onClick={toggleMute} variant="outline" size="icon" className="rounded-full bg-card/90 backdrop-blur-sm border-primary/30 hover:bg-card shadow-lg h-12 w-12">
           {isMuted ? <VolumeX className="h-5 w-5 text-muted-foreground" /> : <Volume2 className="h-5 w-5 text-primary" />}
         </Button>
-      </div>
-
-      {/* Current Surah Display - bottom right, above button */}
-      <div className="fixed bottom-20 right-4 z-50">
-        
       </div>
 
       <audio ref={audioRef} src={currentSurah.url} onEnded={handleSurahEnded} />
