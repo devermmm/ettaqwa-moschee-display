@@ -91,14 +91,14 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Info Overlay Timer - zeigt alle 15 Sekunden für 8 Sekunden
+  // Info Overlay Timer - zeigt alle 40 Sekunden für 25 Sekunden
   useEffect(() => {
     const overlayInterval = setInterval(() => {
       setShowInfoOverlay(true);
       setTimeout(() => {
         setShowInfoOverlay(false);
-      }, 8000); // 8 Sekunden anzeigen
-    }, 15000); // alle 15 Sekunden
+      }, 25000); // 25 Sekunden anzeigen
+    }, 40000); // alle 40 Sekunden (25s anzeigen + 15s pause)
 
     return () => clearInterval(overlayInterval);
   }, []);
