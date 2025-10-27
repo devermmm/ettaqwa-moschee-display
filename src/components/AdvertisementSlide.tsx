@@ -4,9 +4,9 @@ import logo from "@/assets/logo.png";
 
 const AdvertisementSlide = () => {
   return (
-    <div className="fixed inset-0 z-40 bg-gradient-to-br from-background via-background to-secondary/20 flex items-center justify-center p-12 animate-fade-in">
+    <div className="fixed inset-0 z-40 bg-gradient-to-br from-background via-background to-secondary/20 flex items-center justify-center p-12 animate-slide-in-right">
       {/* Main Card Container */}
-      <Card className="w-full max-w-4xl bg-card border-2 border-primary/30 shadow-2xl overflow-hidden animate-scale-in">
+      <Card className="w-full max-w-4xl bg-card border-2 border-primary/30 shadow-2xl overflow-hidden animate-scale-in transition-all duration-500">
         <div className="p-8 space-y-6">
           {/* Header with Logo */}
           <div className="text-center">

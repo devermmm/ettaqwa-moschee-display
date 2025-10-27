@@ -57,7 +57,7 @@ const Index = () => {
   // Slideshow timer (30 seconds prayer times, then advertisement)
   useEffect(() => {
     const PRAYER_DURATION = 30000; // 30 seconds
-    const AD_DURATION = 10000; // 10 seconds for advertisement
+    const AD_DURATION = 20000; // 20 seconds for advertisement
     const PROGRESS_INTERVAL = 100; // Update every 100ms for smooth progress
     
     let progressInterval: NodeJS.Timeout;
