@@ -4,6 +4,8 @@ import CurrentTime from "@/components/CurrentTime";
 import NextPrayerCountdown from "@/components/NextPrayerCountdown";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import QuranTextDisplay from "@/components/QuranTextDisplay";
+import ProgressBar from "@/components/ProgressBar";
+import AdvertisementSlide from "@/components/AdvertisementSlide";
 import { Card } from "@/components/ui/card";
 import logo from "@/assets/logo.png";
 
@@ -20,6 +22,10 @@ const Index = () => {
   const [currentSurahName, setCurrentSurahName] = useState("Al-Fatihah");
   const [currentSurahArabicName, setCurrentSurahArabicName] = useState("الفاتحة");
   const [currentVerseIndex, setCurrentVerseIndex] = useState(0);
+  
+  // Slideshow state
+  const [showAdvertisement, setShowAdvertisement] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const isFriday = () => {
     const now = new Date();
@@ -47,6 +53,44 @@ const Index = () => {
 
   // Jummah (Friday Prayer) time for the card
   const jummahTime = "13:00";
+
+  // Slideshow timer (30 seconds prayer times, then advertisement)
+  useEffect(() => {
+    const PRAYER_DURATION = 30000; // 30 seconds
+    const AD_DURATION = 10000; // 10 seconds for advertisement
+    const PROGRESS_INTERVAL = 100; // Update every 100ms for smooth progress
+    
+    let progressInterval: NodeJS.Timeout;
+    let slideInterval: NodeJS.Timeout;
+    let startTime = Date.now();
+    let currentDuration = PRAYER_DURATION;
+    
+    const updateProgress = () => {
+      const elapsed = Date.now() - startTime;
+      const newProgress = (elapsed / currentDuration) * 100;
+      
+      if (newProgress >= 100) {
+        setProgress(100);
+        // Switch slides
+        setShowAdvertisement(prev => {
+          const nextShow = !prev;
+          startTime = Date.now();
+          currentDuration = nextShow ? AD_DURATION : PRAYER_DURATION;
+          setProgress(0);
+          return nextShow;
+        });
+      } else {
+        setProgress(newProgress);
+      }
+    };
+    
+    progressInterval = setInterval(updateProgress, PROGRESS_INTERVAL);
+    
+    return () => {
+      clearInterval(progressInterval);
+      if (slideInterval) clearInterval(slideInterval);
+    };
+  }, []);
 
   useEffect(() => {
     // Determine current and next prayer based on time
@@ -99,7 +143,13 @@ const Index = () => {
 
   return (
     <div className="min-h-screen overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/20 p-2 md:p-3 lg:h-screen lg:overflow-hidden">
-      <BackgroundMusic 
+      {/* Progress Bar */}
+      <ProgressBar progress={progress} />
+      
+      {/* Advertisement Overlay */}
+      {showAdvertisement && <AdvertisementSlide />}
+      
+      <BackgroundMusic
         onSurahChange={(surahNumber, surahName, surahArabicName) => {
           setCurrentSurahNumber(surahNumber);
           setCurrentSurahName(surahName);
