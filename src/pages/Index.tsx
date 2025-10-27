@@ -4,7 +4,6 @@ import CurrentTime from "@/components/CurrentTime";
 import NextPrayerCountdown from "@/components/NextPrayerCountdown";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import QuranTextDisplay from "@/components/QuranTextDisplay";
-import MosqueInfoOverlay from "@/components/MosqueInfoOverlay";
 import { Card } from "@/components/ui/card";
 import logo from "@/assets/logo.png";
 
@@ -21,7 +20,6 @@ const Index = () => {
   const [currentSurahName, setCurrentSurahName] = useState("Al-Fatihah");
   const [currentSurahArabicName, setCurrentSurahArabicName] = useState("الفاتحة");
   const [currentVerseIndex, setCurrentVerseIndex] = useState(0);
-  const [showInfoOverlay, setShowInfoOverlay] = useState(false);
 
   const isFriday = () => {
     const now = new Date();
@@ -91,18 +89,6 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Info Overlay Timer - zeigt alle 40 Sekunden für 25 Sekunden
-  useEffect(() => {
-    const overlayInterval = setInterval(() => {
-      setShowInfoOverlay(true);
-      setTimeout(() => {
-        setShowInfoOverlay(false);
-      }, 25000); // 25 Sekunden anzeigen
-    }, 40000); // alle 40 Sekunden (25s anzeigen + 15s pause)
-
-    return () => clearInterval(overlayInterval);
-  }, []);
-
   const isPrayerPast = (index: number) => {
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
@@ -113,10 +99,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/20 p-2 md:p-3 lg:h-screen lg:overflow-hidden">
-      {/* Mosque Info Overlay */}
-      <MosqueInfoOverlay show={showInfoOverlay} />
-      
-      <BackgroundMusic
+      <BackgroundMusic 
         onSurahChange={(surahNumber, surahName, surahArabicName) => {
           setCurrentSurahNumber(surahNumber);
           setCurrentSurahName(surahName);
