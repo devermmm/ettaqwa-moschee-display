@@ -34,25 +34,25 @@ const Index = () => {
 
   // Prayer times for Vienna - replace Dhuhr with Jummah on Fridays
   const basePrayerTimes: PrayerTime[] = [
-    { name: "Fajr", arabicName: "الفجر", time: "05:15" },
-    { name: "Sonnenaufgang", arabicName: "الشروق", time: "06:52" },
-    { name: "Dhuhr", arabicName: "الظهر", time: "12:24" },
-    { name: "Asr", arabicName: "العصر", time: "14:56" },
-    { name: "Maghrib", arabicName: "المغرب", time: "17:42" },
-    { name: "Isha", arabicName: "العشاء", time: "19:14" },
+    { name: "Fajr", arabicName: "الفجر", time: "05:05" },
+    { name: "Sonnenaufgang", arabicName: "الشروق", time: "06:32" },
+    { name: "Dhuhr", arabicName: "الظهر", time: "11:44" },
+    { name: "Asr", arabicName: "العصر", time: "14:21" },
+    { name: "Maghrib", arabicName: "المغرب", time: "16:45" },
+    { name: "Isha", arabicName: "العشاء", time: "18:18" },
   ];
 
   // On Fridays, replace Dhuhr with Jummah
   const prayerTimes: PrayerTime[] = isFriday()
     ? basePrayerTimes.map(prayer => 
         prayer.name === "Dhuhr" 
-          ? { name: "Dschuma", arabicName: "الجمعة", time: "13:00" }
+          ? { name: "Dschuma", arabicName: "الجمعة", time: "12:15" }
           : prayer
       )
     : basePrayerTimes;
 
   // Jummah (Friday Prayer) time for the card
-  const jummahTime = "13:00";
+  const jummahTime = "12:15";
 
   // Slideshow timer (30 seconds prayer times, then advertisement)
   useEffect(() => {
