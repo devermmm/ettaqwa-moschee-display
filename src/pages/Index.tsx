@@ -34,12 +34,12 @@ const Index = () => {
 
   // Prayer times for Vienna - replace Dhuhr with Jummah on Fridays
   const basePrayerTimes: PrayerTime[] = [
-    { name: "Fajr", arabicName: "الفجر", time: "06:01" },
-    { name: "Sonnenaufgang", arabicName: "الشروق", time: "07:27" },
-    { name: "Dhuhr", arabicName: "الظهر", time: "12:30" },
-    { name: "Asr", arabicName: "العصر", time: "15:25" },
-    { name: "Maghrib", arabicName: "المغرب", time: "17:50" },
-    { name: "Isha", arabicName: "العشاء", time: "19:23" },
+    { name: "Fajr", arabicName: "الفجر", time: "05:15" },
+    { name: "Sonnenaufgang", arabicName: "الشروق", time: "06:52" },
+    { name: "Dhuhr", arabicName: "الظهر", time: "12:24" },
+    { name: "Asr", arabicName: "العصر", time: "14:56" },
+    { name: "Maghrib", arabicName: "المغرب", time: "17:42" },
+    { name: "Isha", arabicName: "العشاء", time: "19:14" },
   ];
 
   // On Fridays, replace Dhuhr with Jummah

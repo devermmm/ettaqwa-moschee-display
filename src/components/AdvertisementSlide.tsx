@@ -23,7 +23,7 @@ const AdvertisementSlide = () => {
           {/* Title */}
           <div className="text-center space-y-2">
             <h2 className="text-4xl font-bold text-primary font-inter leading-tight">
-              ŠKOLA KUR&apos;ANA ČASNOG
+              ŠKOLA KUR&apos;ANA
             </h2>
             <p className="text-2xl font-semibold text-accent font-inter">
               ORGANIZUJE
