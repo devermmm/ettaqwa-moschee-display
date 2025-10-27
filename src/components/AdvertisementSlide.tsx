@@ -13,82 +13,79 @@ const AdvertisementSlide = () => {
         }} />
       </div>
 
-      <Card className="relative w-full max-w-7xl h-[85vh] bg-card/95 backdrop-blur-xl border-4 border-primary shadow-2xl animate-scale-in overflow-hidden">
+      <Card className="relative w-full max-w-6xl h-[80vh] bg-card/95 backdrop-blur-xl border-2 border-primary shadow-xl animate-scale-in overflow-hidden">
         {/* Two Column Layout */}
-        <div className="grid grid-cols-2 gap-8 h-full p-8">
+        <div className="grid grid-cols-2 gap-6 h-full p-8">
           {/* Left Column */}
           <div className="flex flex-col justify-between">
             {/* Header with Logo */}
             <div className="text-center">
-              <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="flex items-center justify-center gap-2 mb-3">
                 <img 
                   src={logo} 
                   alt="Et-Taqwa Logo" 
-                  className="h-24 drop-shadow-2xl animate-fade-in"
+                  className="h-16 drop-shadow-lg animate-fade-in"
                 />
               </div>
-              <h1 className="text-4xl font-bold text-primary font-inter mb-2">
+              <h1 className="text-2xl font-semibold text-primary font-inter mb-1">
                 DŽEMAT ET-TAQWA
               </h1>
-              <p className="text-2xl text-muted-foreground font-inter">Wien</p>
+              <p className="text-lg text-muted-foreground font-inter">Wien</p>
             </div>
 
             {/* Title */}
-            <div className="text-center space-y-4">
-              <h2 className="text-7xl font-bold text-primary font-inter leading-tight">
+            <div className="text-center space-y-2">
+              <h2 className="text-5xl font-bold text-primary font-inter leading-tight">
                 ŠKOLA
               </h2>
-              <h2 className="text-7xl font-bold text-primary font-inter leading-tight">
-                KUR&apos;ANA
+              <h2 className="text-5xl font-bold text-primary font-inter leading-tight">
+                KUR&apos;ANA ČASNOG
               </h2>
-              <h2 className="text-7xl font-bold text-primary font-inter leading-tight">
-                ČASNOG
-              </h2>
-              <p className="text-5xl font-bold text-accent font-inter mt-6">
+              <p className="text-3xl font-semibold text-accent font-inter mt-4">
                 ORGANIZUJE
               </p>
             </div>
 
             {/* UPIS Section */}
-            <div className="bg-gradient-to-r from-accent/20 to-primary/20 rounded-2xl p-6 border-4 border-accent">
-              <h3 className="text-8xl font-bold text-center text-accent mb-4 font-inter">
+            <div className="bg-gradient-to-r from-accent/20 to-primary/20 rounded-xl p-5 border-2 border-accent">
+              <h3 className="text-6xl font-bold text-center text-accent mb-3 font-inter">
                 UPIS
               </h3>
-              <p className="text-4xl text-center text-foreground font-inter font-semibold">
+              <p className="text-2xl text-center text-foreground font-inter font-medium">
                 za Djecu, Omladinu, Odrasle
               </p>
             </div>
           </div>
 
           {/* Right Column */}
-          <div className="flex flex-col justify-center space-y-8">
+          <div className="flex flex-col justify-center space-y-6">
             {/* Schedule */}
-            <Card className="bg-primary/10 border-4 border-primary p-8">
-              <h4 className="text-3xl font-bold text-primary mb-6 font-inter">
+            <Card className="bg-primary/10 border-2 border-primary p-6">
+              <h4 className="text-xl font-semibold text-primary mb-3 font-inter">
                 TERMIN ODRŽAVANJA:
               </h4>
-              <p className="text-5xl font-bold text-foreground font-inter">
+              <p className="text-3xl font-bold text-foreground font-inter">
                 SUBOTA I NEDELJA
               </p>
             </Card>
 
             {/* Contact */}
-            <Card className="bg-accent/10 border-4 border-accent p-8 space-y-6">
+            <Card className="bg-accent/10 border-2 border-accent p-6 space-y-5">
               <div>
-                <h4 className="text-3xl font-bold text-accent mb-4 font-inter flex items-center gap-3">
-                  <Phone className="w-10 h-10" />
+                <h4 className="text-xl font-semibold text-accent mb-2 font-inter flex items-center gap-2">
+                  <Phone className="w-6 h-6" />
                   ZA MUŠKARCE:
                 </h4>
-                <p className="text-5xl font-bold text-foreground font-inter">
+                <p className="text-3xl font-bold text-foreground font-inter">
                   +43 660 5515940
                 </p>
               </div>
-              <div className="pt-4 border-t-4 border-accent/30">
-                <h4 className="text-3xl font-bold text-accent mb-4 font-inter flex items-center gap-3">
-                  <Phone className="w-10 h-10" />
+              <div className="pt-3 border-t-2 border-accent/30">
+                <h4 className="text-xl font-semibold text-accent mb-2 font-inter flex items-center gap-2">
+                  <Phone className="w-6 h-6" />
                   ZA ŽENE:
                 </h4>
-                <p className="text-5xl font-bold text-foreground font-inter">
+                <p className="text-3xl font-bold text-foreground font-inter">
                   +43 660 2001711
                 </p>
               </div>
