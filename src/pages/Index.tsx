@@ -183,65 +183,13 @@ const Index = () => {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 gap-3 md:gap-4 py-3 md:py-4 lg:overflow-hidden">
-          {/* Left Column - Quran Text Display (hidden on mobile) */}
-          <div className="hidden lg:block lg:col-span-5 h-full overflow-hidden">
-            <QuranTextDisplay
-              surahNumber={currentSurahNumber}
-              surahName={currentSurahName}
-              surahArabicName={currentSurahArabicName}
-              currentVerseIndex={currentVerseIndex}
-            />
-          </div>
-
-          {/* Middle Column - Time & Info */}
-          <div className="lg:col-span-3 space-y-3">
-            {/* Current Time Display */}
-            <Card className="p-3 md:p-4 lg:p-6 bg-card border-2 border-primary/30 shadow-lg">
-              <CurrentTime />
-            </Card>
-
-            {/* Next Prayer Countdown - Most Important */}
-            <div className="bg-gradient-to-br from-accent via-accent to-primary p-4 md:p-5 lg:p-6 rounded-xl shadow-xl border-2 border-accent">
-              <div className="text-center text-accent-foreground space-y-2 md:space-y-3">
-                <div>
-                  <p className="text-xs md:text-sm font-inter opacity-90 uppercase tracking-wider">Nächstes Gebet</p>
-                  <h2 className="text-xl md:text-2xl lg:text-3xl font-bold font-inter mt-1">{prayerTimes[nextPrayer].name}</h2>
-                  <p className="text-base md:text-lg lg:text-xl font-amiri mt-1">{prayerTimes[nextPrayer].arabicName}</p>
-                </div>
-                
-                <NextPrayerCountdown
-                  nextPrayerName={prayerTimes[nextPrayer].name}
-                  nextPrayerTime={prayerTimes[nextPrayer].time}
-                  nextPrayerArabic={prayerTimes[nextPrayer].arabicName}
-                />
-
-                <div className="pt-2">
-                  <p className="text-lg md:text-xl lg:text-2xl font-bold font-inter">um {prayerTimes[nextPrayer].time} Uhr</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Jummah Time - Only show on Fridays before 13:00 */}
-            {isFriday() && new Date().getHours() < 13 && (
-              <Card className="p-3 md:p-4 bg-primary text-primary-foreground border-2 border-primary-glow shadow-lg">
-                <div className="text-center">
-                  <h3 className="text-base md:text-lg lg:text-xl font-bold font-inter mb-2 uppercase tracking-wide">Freitagsgebet</h3>
-                  <p className="text-lg md:text-xl lg:text-2xl font-amiri mb-2 md:mb-3">صلاة الجمعة</p>
-                  <div className="bg-primary-foreground/20 rounded-lg p-2 md:p-3 backdrop-blur-sm">
-                    <p className="text-2xl md:text-3xl lg:text-4xl font-bold font-inter">{jummahTime}</p>
-                  </div>
-                </div>
-              </Card>
-            )}
-          </div>
-
-          {/* Right Column - All Prayer Times */}
+          {/* Left Column - Prayer Times */}
           <div className="lg:col-span-4">
-            <div className="bg-card/30 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-border">
+            <div className="bg-card/30 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-border h-full">
               <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-3 md:mb-4 text-foreground font-inter uppercase tracking-wide">
                 Gebetszeiten Wien
               </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-2 md:gap-3 lg:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2 md:gap-3">
                 {prayerTimes.map((prayer, index) => (
                   <PrayerTimeCard
                     key={prayer.name}
@@ -266,6 +214,58 @@ const Index = () => {
                 </Card>
               </div>
             </div>
+          </div>
+
+          {/* Center Column - Main Focus: Time & Next Prayer */}
+          <div className="lg:col-span-4 space-y-3 flex flex-col justify-center">
+            {/* Current Time Display */}
+            <Card className="p-4 md:p-5 lg:p-8 bg-card border-2 border-primary/30 shadow-lg">
+              <CurrentTime />
+            </Card>
+
+            {/* Next Prayer Countdown - Most Important */}
+            <div className="bg-gradient-to-br from-accent via-accent to-primary p-5 md:p-6 lg:p-8 rounded-xl shadow-xl border-2 border-accent">
+              <div className="text-center text-accent-foreground space-y-3 md:space-y-4">
+                <div>
+                  <p className="text-sm md:text-base font-inter opacity-90 uppercase tracking-wider">Nächstes Gebet</p>
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-inter mt-2">{prayerTimes[nextPrayer].name}</h2>
+                  <p className="text-lg md:text-xl lg:text-2xl font-amiri mt-2">{prayerTimes[nextPrayer].arabicName}</p>
+                </div>
+                
+                <NextPrayerCountdown
+                  nextPrayerName={prayerTimes[nextPrayer].name}
+                  nextPrayerTime={prayerTimes[nextPrayer].time}
+                  nextPrayerArabic={prayerTimes[nextPrayer].arabicName}
+                />
+
+                <div className="pt-3">
+                  <p className="text-xl md:text-2xl lg:text-3xl font-bold font-inter">um {prayerTimes[nextPrayer].time} Uhr</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Jummah Time - Only show on Fridays before 13:00 */}
+            {isFriday() && new Date().getHours() < 13 && (
+              <Card className="p-4 md:p-5 bg-primary text-primary-foreground border-2 border-primary-glow shadow-lg">
+                <div className="text-center">
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold font-inter mb-2 uppercase tracking-wide">Freitagsgebet</h3>
+                  <p className="text-xl md:text-2xl lg:text-3xl font-amiri mb-3">صلاة الجمعة</p>
+                  <div className="bg-primary-foreground/20 rounded-lg p-3 md:p-4 backdrop-blur-sm">
+                    <p className="text-3xl md:text-4xl lg:text-5xl font-bold font-inter">{jummahTime}</p>
+                  </div>
+                </div>
+              </Card>
+            )}
+          </div>
+
+          {/* Right Column - Quran Text Display (hidden on mobile) */}
+          <div className="hidden lg:block lg:col-span-4 h-full overflow-hidden">
+            <QuranTextDisplay
+              surahNumber={currentSurahNumber}
+              surahName={currentSurahName}
+              surahArabicName={currentSurahArabicName}
+              currentVerseIndex={currentVerseIndex}
+            />
           </div>
         </div>
 
