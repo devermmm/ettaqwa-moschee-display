@@ -2,58 +2,88 @@ import { MapPin, Phone, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-muted to-background border-t border-border/50">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-3 gap-8">
+    <footer className="relative bg-gradient-to-b from-emerald-950 via-emerald-900 to-emerald-950 text-white overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-emerald-300 rounded-full blur-3xl" />
+      </div>
+      
+      <div className="relative container mx-auto px-4 py-16">
+        <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Kontakt */}
-          <div>
-            <h3 className="text-xl font-bold mb-4 text-foreground">Kontakt</h3>
-            <div className="space-y-3 text-muted-foreground">
-              <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 mt-1 text-primary" />
-                <div>
-                  <p className="font-semibold">Bosniakischer Kulturverein El Taqwa</p>
-                  <p>Dzemat Et-Taqwa</p>
-                  <p className="mt-1">Voitgasse 21, 1220 Wien</p>
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-white to-emerald-200 bg-clip-text text-transparent">
+              Kontakt
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-start gap-4 group">
+                <div className="p-2 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors">
+                  <MapPin className="w-6 h-6 text-emerald-300" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold text-white text-lg">Bosniakischer Kulturverein El Taqwa</p>
+                  <p className="text-emerald-100 font-medium">Dzemat Et-Taqwa</p>
+                  <p className="text-emerald-200 mt-1">Voitgasse 21, 1220 Wien</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-primary" />
-                <p>+43 XXX XXXXXXX</p>
+              <div className="flex items-center gap-4 group">
+                <div className="p-2 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors">
+                  <Phone className="w-6 h-6 text-emerald-300" />
+                </div>
+                <p className="text-emerald-100">+43 XXX XXXXXXX</p>
               </div>
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-primary" />
-                <p>dzematettaqwa@gmail.com</p>
+              <div className="flex items-center gap-4 group">
+                <div className="p-2 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors">
+                  <Mail className="w-6 h-6 text-emerald-300" />
+                </div>
+                <p className="text-emerald-100">dzematettaqwa@gmail.com</p>
               </div>
             </div>
           </div>
 
           {/* Über uns */}
-          <div>
-            <h3 className="text-xl font-bold mb-4 text-foreground">Über uns</h3>
-            <p className="text-muted-foreground leading-relaxed">
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-white to-emerald-200 bg-clip-text text-transparent">
+              Über uns
+            </h3>
+            <p className="text-emerald-100 leading-relaxed text-lg">
               Teil der Bosniakischen Kultusgemeinde Mitte. Gegründet am 17. März 2015. 
               Ein Ort des Friedens, der Gemeinschaft und des Gebets.
             </p>
+            <div className="pt-4">
+              <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                <p className="text-emerald-200 text-sm font-semibold">🕌 مسجد التقوى</p>
+              </div>
+            </div>
           </div>
 
           {/* Gebetszeiten */}
-          <div>
-            <h3 className="text-xl font-bold mb-4 text-foreground">Gebetszeiten</h3>
-            <p className="text-muted-foreground mb-4">
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-white to-emerald-200 bg-clip-text text-transparent">
+              Gebetszeiten
+            </h3>
+            <p className="text-emerald-100 leading-relaxed mb-6">
               Regelmäßig finden in unseren Räumlichkeiten Freitagsgebete statt.
             </p>
             <a 
               href="/gebetszeiten" 
-              className="inline-block px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+              className="inline-block px-8 py-3 bg-gradient-to-r from-white to-emerald-100 text-emerald-900 rounded-xl hover:scale-105 transition-all duration-300 font-bold shadow-xl hover:shadow-2xl"
             >
-              Zu den Gebetszeiten
+              Zu den Gebetszeiten →
             </a>
           </div>
         </div>
 
-        <div className="border-t border-border/50 mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Bosniakischer Kulturverein El Taqwa. Alle Rechte vorbehalten.</p>
+        <div className="border-t border-white/20 pt-8">
+          <div className="text-center space-y-2">
+            <p className="text-emerald-200 text-lg font-medium">
+              &copy; {new Date().getFullYear()} Bosniakischer Kulturverein El Taqwa
+            </p>
+            <p className="text-emerald-300 text-sm">
+              Alle Rechte vorbehalten
+            </p>
+          </div>
         </div>
       </div>
     </footer>
