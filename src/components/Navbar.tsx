@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Menu, X, Clock } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "Gebetszeiten", path: "/gebetszeiten", icon: Clock },
+    { name: "Gebetszeiten", path: "/gebetszeiten" },
     { name: "Über uns", path: "/about" },
     { name: "Projekte", path: "/projects" },
     { name: "Kurse", path: "/courses" },
@@ -42,7 +42,6 @@ const Navbar = () => {
                   }`
                 }
               >
-                {item.icon && <item.icon className="h-4 w-4" />}
                 {item.name}
               </NavLink>
             ))}
@@ -75,7 +74,6 @@ const Navbar = () => {
                   }`
                 }
               >
-                {item.icon && <item.icon className="h-4 w-4" />}
                 {item.name}
               </NavLink>
             ))}
