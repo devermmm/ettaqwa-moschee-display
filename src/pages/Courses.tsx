@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { BookOpen, Users, Clock, Calendar, Phone, CheckCircle2, Award } from "lucide-react";
 import quranSchoolPoster from "@/assets/quran-school-poster.png";
+import mektebRegistration from "@/assets/mekteb-registration.png";
 
 const Courses = () => {
   const courses = [
@@ -161,6 +162,77 @@ const Courses = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </motion.div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Mekteb Einschreibung Banner */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4 }}
+            className="mb-20"
+          >
+            <div className="bg-gradient-to-br from-accent/10 via-primary/5 to-accent/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl border border-accent/20">
+              <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
+                {/* Left: Mekteb Poster */}
+                <div className="flex items-center justify-center order-2 md:order-1">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.7 }}
+                    className="relative group"
+                  >
+                    <img 
+                      src={mektebRegistration} 
+                      alt="Mekteb Einschreibung" 
+                      className="rounded-2xl shadow-2xl w-full max-w-md group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-accent/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </motion.div>
+                </div>
+
+                {/* Right: Mekteb Info */}
+                <div className="flex flex-col justify-center space-y-6 order-1 md:order-2">
+                  <div>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+                      Melden Sie Ihr Kind an!
+                    </h2>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      Liebe Eltern, der Mekteb ist der erste Ort nach dem familiären Umfeld, wo Kinder über Glauben, Liebe und Respekt lernen.
+                    </p>
+                  </div>
+
+                  <div className="bg-card/50 backdrop-blur-sm rounded-2xl p-6 border border-border/50">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Calendar className="w-6 h-6 text-accent" />
+                      <div>
+                        <p className="text-sm text-muted-foreground font-medium">Einschreibung:</p>
+                        <p className="text-xl font-bold text-foreground">6. & 7. September 2025</p>
+                        <p className="text-base text-muted-foreground">(Samstag & Sonntag)</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Clock className="w-6 h-6 text-accent" />
+                      <div>
+                        <p className="text-sm text-muted-foreground font-medium">Uhrzeit:</p>
+                        <p className="text-xl font-bold text-foreground">11:00 - 13:00 Uhr</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <p className="text-base text-muted-foreground leading-relaxed">
+                      Im Mekteb erwerben sie Wissen über den Islam, neue Freundschaften und ein Gefühl der Zugehörigkeit zur Gemeinschaft.
+                    </p>
+                    <p className="text-lg font-semibold text-primary">
+                      Indem Sie Ihr Kind im Mekteb anmelden, geben Sie ihm das beste Geschenk, das es ein Leben lang begleiten wird – Wissen und Erziehung im Geiste des Islam.
+                    </p>
+                    <p className="text-xl font-bold text-accent">
+                      Mekteb – Investition in die Zukunft unserer Kinder!
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
