@@ -123,7 +123,7 @@ const NewHome = () => {
                 repeat: Infinity,
                 ease: "linear",
               }}
-              className="inline-block"
+              className="inline-block relative"
             >
               <svg width="150" height="150" viewBox="0 0 100 100" className="drop-shadow-2xl">
                 <circle cx="50" cy="50" r="45" fill="none" stroke="white" strokeWidth="1" opacity="0.3" />
@@ -134,6 +134,11 @@ const NewHome = () => {
                   opacity="0.9"
                 />
               </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-white text-2xl font-bold drop-shadow-2xl" style={{ transform: 'rotate(0deg)' }}>
+                  ET TAQWA
+                </span>
+              </div>
             </motion.div>
           </motion.div>
 
