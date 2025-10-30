@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { BookOpen, Users, Clock, Calendar } from "lucide-react";
+import { BookOpen, Users, Clock, Calendar, Phone, CheckCircle2, Award } from "lucide-react";
+import quranSchoolPoster from "@/assets/quran-school-poster.png";
 
 const Courses = () => {
   const courses = [
@@ -7,8 +8,8 @@ const Courses = () => {
       title: "Koran-Unterricht",
       description: "Lernen Sie die korrekte Rezitation des Heiligen Korans mit Tajweed",
       schedule: "Samstag & Sonntag",
-      time: "14:00 - 16:00 Uhr",
-      target: "Kinder & Jugendliche",
+      time: "Nach den Gebetszeiten",
+      target: "Kinder, Jugendliche & Erwachsene",
     },
     {
       title: "Arabisch für Anfänger",
@@ -33,9 +34,23 @@ const Courses = () => {
     },
   ];
 
+  const benefits = [
+    "Die Koranschrift beherrschen",
+    "Den Koran richtig lesen lernen",
+    "Tajweed und die Schönheit des Koranlesens perfektionieren",
+    "Den Weg des Auswendiglernens beginnen oder fortsetzen",
+    "Gemeinsam in Wissen, Glauben und Anbetung wachsen",
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted">
-      <div className="container mx-auto px-4 py-20">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background/95 to-muted/50 relative overflow-hidden">
+      {/* Decorative Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-40 left-10 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 py-20 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -43,12 +58,12 @@ const Courses = () => {
           className="max-w-7xl mx-auto"
         >
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent"
+              className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
             >
               Unsere Kurse
             </motion.h1>
@@ -56,58 +71,146 @@ const Courses = () => {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="h-1 w-32 mx-auto bg-gradient-to-r from-primary to-accent rounded-full mb-6"
+              className="h-1.5 w-40 mx-auto bg-gradient-to-r from-primary via-accent to-primary rounded-full mb-8 shadow-lg shadow-primary/20"
             />
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="text-xl text-muted-foreground max-w-2xl mx-auto"
+              className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
             >
               Bildungsangebote für alle Altersgruppen und Wissensstufen
             </motion.p>
           </div>
 
-          {/* Courses Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {courses.map((course, index) => (
-              <motion.div
-                key={course.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 * index }}
-                className="bg-card/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-border/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-              >
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-primary to-accent shadow-lg">
-                    <BookOpen className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-foreground mb-2">
-                      {course.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {course.description}
+          {/* Featured: Koranschule Banner */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className="mb-20"
+          >
+            <div className="bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl border border-primary/20">
+              <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
+                {/* Left: Welcome Text */}
+                <div className="flex flex-col justify-center space-y-6">
+                  <div>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                      Willkommen in der Koranschule
+                    </h2>
+                    <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                      Liebe Gemeindemitglieder, vor uns liegt ein neues Schuljahr in der Koranschule - eine neue Gelegenheit zu:
                     </p>
+                  </div>
+
+                  <div className="space-y-3">
+                    {benefits.map((benefit, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5 + index * 0.1 }}
+                        className="flex items-start gap-3"
+                      >
+                        <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-base text-foreground">{benefit}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <div className="pt-6">
+                    <p className="text-lg font-semibold text-primary mb-4">
+                      Verpassen Sie nicht noch eine Gelegenheit zum Lernen, Wachsen und sich Allah näherzukommen!
+                    </p>
+                    <p className="text-2xl font-bold text-accent">
+                      Die Einschreibung läuft!
+                    </p>
+                  </div>
+
+                  {/* Contact Info */}
+                  <div className="grid gap-4 pt-4">
+                    <div className="flex items-center gap-3 bg-card/50 backdrop-blur-sm rounded-xl p-4 border border-border/50">
+                      <Phone className="w-5 h-5 text-primary" />
+                      <div>
+                        <p className="text-sm text-muted-foreground font-medium">Für Männer:</p>
+                        <p className="text-lg font-bold text-foreground">+43 660 5515940</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 bg-card/50 backdrop-blur-sm rounded-xl p-4 border border-border/50">
+                      <Phone className="w-5 h-5 text-accent" />
+                      <div>
+                        <p className="text-sm text-muted-foreground font-medium">Für Frauen:</p>
+                        <p className="text-lg font-bold text-foreground">+43 660 2001711</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-3 bg-muted/30 rounded-xl p-4">
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Calendar className="w-5 h-5 text-primary" />
-                    <span className="font-medium">{course.schedule}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Clock className="w-5 h-5 text-primary" />
-                    <span className="font-medium">{course.time}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Users className="w-5 h-5 text-primary" />
-                    <span className="font-medium">{course.target}</span>
-                  </div>
+                {/* Right: Poster Image */}
+                <div className="flex items-center justify-center">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.6 }}
+                    className="relative group"
+                  >
+                    <img 
+                      src={quranSchoolPoster} 
+                      alt="Koranschule Einschreibung" 
+                      className="rounded-2xl shadow-2xl w-full max-w-md group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </motion.div>
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Courses Grid */}
+          <div className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
+              Alle Kursangebote
+            </h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              {courses.map((course, index) => (
+                <motion.div
+                  key={course.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 * index }}
+                  className="group bg-card/60 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-border/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                >
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-primary to-accent shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <BookOpen className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                        {course.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {course.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 bg-muted/30 rounded-xl p-4">
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Calendar className="w-5 h-5 text-primary" />
+                      <span className="font-medium">{course.schedule}</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Clock className="w-5 h-5 text-primary" />
+                      <span className="font-medium">{course.time}</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Users className="w-5 h-5 text-primary" />
+                      <span className="font-medium">{course.target}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* Info Cards */}
@@ -116,30 +219,42 @@ const Courses = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
-              className="bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-primary/20"
+              className="relative bg-card/60 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-primary/20 overflow-hidden group"
             >
-              <h3 className="text-2xl font-bold mb-4 text-foreground">
-                Anmeldung
-              </h3>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                Die Teilnahme an unseren Kursen ist kostenlos. Melden Sie sich einfach 
-                vor Ort oder kontaktieren Sie uns für weitere Informationen.
-              </p>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl" />
+              <div className="relative">
+                <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-primary to-accent mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <BookOpen className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-foreground">
+                  Anmeldung
+                </h3>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Die Teilnahme an unseren Kursen ist kostenlos. Melden Sie sich einfach 
+                  vor Ort oder kontaktieren Sie uns für weitere Informationen.
+                </p>
+              </div>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.7 }}
-              className="bg-gradient-to-br from-accent/10 to-primary/10 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-accent/20"
+              className="relative bg-card/60 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-accent/20 overflow-hidden group"
             >
-              <h3 className="text-2xl font-bold mb-4 text-foreground">
-                Qualifizierte Lehrer
-              </h3>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                Unsere Kurse werden von erfahrenen und qualifizierten Lehrern geleitet, 
-                die mit Herz und Engagement bei der Sache sind.
-              </p>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl" />
+              <div className="relative">
+                <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-accent to-primary mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <Award className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-foreground">
+                  Qualifizierte Lehrer
+                </h3>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Unsere Kurse werden von erfahrenen und qualifizierten Lehrern geleitet, 
+                  die mit Herz und Engagement bei der Sache sind.
+                </p>
+              </div>
             </motion.div>
           </div>
 
@@ -148,17 +263,22 @@ const Courses = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.8 }}
-            className="bg-card/50 backdrop-blur-sm rounded-2xl p-12 text-center shadow-xl border border-border/50"
+            className="relative bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 backdrop-blur-sm rounded-3xl p-12 md:p-16 text-center shadow-2xl border border-primary/20 overflow-hidden"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Haben Sie Fragen?
-            </h2>
-            <p className="text-xl text-muted-foreground mb-6">
-              Kontaktieren Sie uns für eine persönliche Beratung zu unseren Bildungsangeboten
-            </p>
-            <p className="text-lg text-primary font-semibold">
-              Wir freuen uns auf Ihre Teilnahme!
-            </p>
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-accent/10 rounded-full blur-2xl" />
+            
+            <div className="relative">
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Haben Sie Fragen?
+              </h2>
+              <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+                Kontaktieren Sie uns für eine persönliche Beratung zu unseren Bildungsangeboten
+              </p>
+              <p className="text-lg md:text-xl text-primary font-semibold">
+                Wir freuen uns auf Ihre Teilnahme!
+              </p>
+            </div>
           </motion.div>
         </motion.div>
       </div>
