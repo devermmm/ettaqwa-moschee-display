@@ -173,21 +173,6 @@ const NewHome = () => {
           </motion.div>
         </div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="w-6 h-10 border-2 border-white/50 rounded-full p-1"
-          >
-            <motion.div className="w-1.5 h-2 bg-white/50 rounded-full mx-auto" />
-          </motion.div>
-        </motion.div>
       </div>
 
       {/* Quick Links Section */}
