@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Heart, BookOpen, Users, Sparkles, HandHeart, GraduationCap } from "lucide-react";
+import { Heart, BookOpen, Users, Sparkles, HandHeart, GraduationCap, Mail } from "lucide-react";
 
 const Projects = () => {
   const projects = [
@@ -147,9 +147,13 @@ const Projects = () => {
               <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
                 Wir freuen uns über jede Unterstützung und Teilnahme an unseren Projekten und Initiativen
               </p>
-              <p className="text-lg md:text-xl text-primary font-semibold">
-                Kontaktieren Sie uns für weitere Informationen
-              </p>
+              <a
+                href="mailto:info@et-taqwa.at"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              >
+                <Mail className="w-5 h-5" />
+                Kontaktieren Sie uns per E-Mail
+              </a>
             </div>
           </motion.div>
         </motion.div>
