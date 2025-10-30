@@ -15,9 +15,7 @@ const Home = () => {
         
         <div className="relative z-10 text-center text-white px-4 space-y-8 max-w-5xl mx-auto">
           <div className="space-y-4 animate-fade-in">
-            <div className="inline-block px-6 py-2 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 mb-4">
-              
-            </div>
+            
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-inter drop-shadow-2xl leading-tight">
               HERZLICH WILLKOMMEN
             </h1>
