@@ -8,6 +8,7 @@ import ProgressBar from "@/components/ProgressBar";
 import AdvertisementSlide from "@/components/AdvertisementSlide";
 import { Card } from "@/components/ui/card";
 import logo from "@/assets/logo.png";
+import mosqueInterior from "@/assets/mosque-interior.png";
 
 interface PrayerTime {
   name: string;
@@ -142,7 +143,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-y-auto bg-gradient-to-br from-background via-background to-secondary/20 p-2 md:p-3 lg:h-screen lg:overflow-hidden">
+    <div className="min-h-screen overflow-y-auto relative p-2 md:p-3 lg:h-screen lg:overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-20"
+        style={{ backgroundImage: `url(${mosqueInterior})` }}
+      />
+      <div className="fixed inset-0 z-0 bg-gradient-to-br from-background/95 via-background/90 to-secondary/80" />
       {/* Progress Bar */}
       <ProgressBar progress={progress} />
       
@@ -161,7 +168,7 @@ const Index = () => {
         }}
       />
       
-      <div className="h-full max-w-[1920px] mx-auto flex flex-col">
+      <div className="h-full max-w-[1920px] mx-auto flex flex-col relative z-10">
         {/* Header with Logo */}
         <header className="text-center py-2 md:py-3 border-b border-border/30">
           <div className="flex items-center justify-center gap-2 md:gap-3">
