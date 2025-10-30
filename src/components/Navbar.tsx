@@ -8,10 +8,11 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: "Willkommen", path: "/" },
+    { name: "Home", path: "/" },
     { name: "Gebetszeiten", path: "/gebetszeiten", icon: Clock },
-    { name: "Die Moschee", path: "/moschee" },
-    { name: "Kontakte", path: "/kontakte" },
+    { name: "Über uns", path: "/about" },
+    { name: "Projekte", path: "/projects" },
+    { name: "Kurse", path: "/courses" },
   ];
 
   return (

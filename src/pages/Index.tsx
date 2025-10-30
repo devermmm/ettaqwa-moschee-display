@@ -1,13 +1,7 @@
-import Navbar from "@/components/Navbar";
-import Home from "./Home";
+import NewHome from "./NewHome";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen">
-      <Navbar />
-      <Home />
-    </div>
-  );
+  return <NewHome />;
 };
 
 export default Index;
