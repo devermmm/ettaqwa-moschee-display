@@ -172,7 +172,6 @@ const Courses = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4 }}
-            className="mb-20"
           >
             <div className="bg-gradient-to-br from-accent/10 via-primary/5 to-accent/10 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl border border-accent/20">
               <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
@@ -235,121 +234,6 @@ const Courses = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-
-          {/* Courses Grid */}
-          <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-              Alle Kursangebote
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {courses.map((course, index) => (
-                <motion.div
-                  key={course.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 * index }}
-                  className="group bg-card/60 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-border/50 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-                >
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-primary to-accent shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <BookOpen className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                        {course.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {course.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 bg-muted/30 rounded-xl p-4">
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <Calendar className="w-5 h-5 text-primary" />
-                      <span className="font-medium">{course.schedule}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <Clock className="w-5 h-5 text-primary" />
-                      <span className="font-medium">{course.time}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <Users className="w-5 h-5 text-primary" />
-                      <span className="font-medium">{course.target}</span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Info Cards */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6 }}
-              className="relative bg-card/60 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-primary/20 overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl" />
-              <div className="relative">
-                <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-primary to-accent mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <BookOpen className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-foreground">
-                  Anmeldung
-                </h3>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  Die Teilnahme an unseren Kursen ist kostenlos. Melden Sie sich einfach 
-                  vor Ort oder kontaktieren Sie uns für weitere Informationen.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.7 }}
-              className="relative bg-card/60 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-accent/20 overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl" />
-              <div className="relative">
-                <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-accent to-primary mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <Award className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-foreground">
-                  Qualifizierte Lehrer
-                </h3>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  Unsere Kurse werden von erfahrenen und qualifizierten Lehrern geleitet, 
-                  die mit Herz und Engagement bei der Sache sind.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Call to Action */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8 }}
-            className="relative bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 backdrop-blur-sm rounded-3xl p-12 md:p-16 text-center shadow-2xl border border-primary/20 overflow-hidden"
-          >
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-accent/10 rounded-full blur-2xl" />
-            
-            <div className="relative">
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Haben Sie Fragen?
-              </h2>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-                Kontaktieren Sie uns für eine persönliche Beratung zu unseren Bildungsangeboten
-              </p>
-              <p className="text-lg md:text-xl text-primary font-semibold">
-                Wir freuen uns auf Ihre Teilnahme!
-              </p>
             </div>
           </motion.div>
         </motion.div>
