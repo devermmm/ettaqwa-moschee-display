@@ -30,34 +30,40 @@ const AboutUs = () => {
             />
           </div>
 
-          {/* Community Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="mb-16 rounded-2xl overflow-hidden shadow-2xl"
-          >
-            <img 
-              src={communityImage} 
-              alt="Unsere Gemeinschaft" 
-              className="w-full h-auto"
-            />
-          </motion.div>
+          {/* Images Grid */}
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
+            >
+              <img 
+                src={communityImage} 
+                alt="Unsere Gemeinschaft" 
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-4 bg-card/50 backdrop-blur-sm">
+                <p className="text-center text-foreground font-semibold">Unsere Gemeinschaft</p>
+              </div>
+            </motion.div>
 
-          {/* Mosque Interior Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mb-16 rounded-2xl overflow-hidden shadow-2xl"
-          >
-            <img 
-              src={mosqueInteriorImage} 
-              alt="Das Innere unserer Moschee" 
-              className="w-full h-auto"
-            />
-            <p className="text-center text-muted-foreground mt-4 text-lg italic">Das Innere unserer Moschee</p>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
+            >
+              <img 
+                src={mosqueInteriorImage} 
+                alt="Das Innere unserer Moschee" 
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-4 bg-card/50 backdrop-blur-sm">
+                <p className="text-center text-foreground font-semibold">Das Innere unserer Moschee</p>
+              </div>
+            </motion.div>
+          </div>
 
           {/* Content Sections */}
           <div className="space-y-12">
