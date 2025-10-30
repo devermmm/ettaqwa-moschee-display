@@ -1,30 +1,147 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Clock, BookOpen, Users, Heart } from "lucide-react";
-import mosqueHeroImage from "@/assets/mosque-hero.png";
 
 const NewHome = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0">
-          <img 
-            src={mosqueHeroImage} 
-            alt="Moschee" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900">
+        {/* Animated Islamic Geometric Patterns */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Rotating Stars */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={`star-${i}`}
+              className="absolute"
+              style={{
+                left: `${15 + i * 12}%`,
+                top: `${20 + (i % 3) * 25}%`,
+              }}
+              animate={{
+                rotate: 360,
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 20 + i * 2,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            >
+              <svg width="60" height="60" viewBox="0 0 100 100" className="opacity-20">
+                <path
+                  d="M50,10 L55,40 L85,40 L60,60 L70,90 L50,70 L30,90 L40,60 L15,40 L45,40 Z"
+                  fill="white"
+                />
+              </svg>
+            </motion.div>
+          ))}
+
+          {/* Floating Circles */}
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={`circle-${i}`}
+              className="absolute rounded-full border-2 border-white/10"
+              style={{
+                width: `${100 + i * 50}px`,
+                height: `${100 + i * 50}px`,
+                left: `${60 + i * 5}%`,
+                top: `${10 + i * 15}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{
+                duration: 8 + i * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+
+          {/* Geometric Islamic Pattern */}
+          <motion.div
+            className="absolute top-20 left-10"
+            animate={{
+              rotate: [0, 360],
+            }}
+            transition={{
+              duration: 30,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          >
+            <svg width="120" height="120" viewBox="0 0 100 100" className="opacity-10">
+              <pattern id="pattern1" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="10" cy="10" r="2" fill="white" />
+              </pattern>
+              <rect width="100" height="100" fill="url(#pattern1)" />
+              <circle cx="50" cy="50" r="40" fill="none" stroke="white" strokeWidth="2" />
+              <circle cx="50" cy="50" r="30" fill="none" stroke="white" strokeWidth="2" />
+              <circle cx="50" cy="50" r="20" fill="none" stroke="white" strokeWidth="2" />
+            </svg>
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-20 right-10"
+            animate={{
+              rotate: [360, 0],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          >
+            <svg width="100" height="100" viewBox="0 0 100 100" className="opacity-10">
+              <path
+                d="M50,10 L90,50 L50,90 L10,50 Z"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+              />
+              <circle cx="50" cy="50" r="25" fill="none" stroke="white" strokeWidth="2" />
+            </svg>
+          </motion.div>
         </div>
 
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="mb-8"
+          >
+            <motion.div
+              animate={{
+                rotate: [0, 360],
+              }}
+              transition={{
+                duration: 40,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="inline-block"
+            >
+              <svg width="150" height="150" viewBox="0 0 100 100" className="drop-shadow-2xl">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="white" strokeWidth="1" opacity="0.3" />
+                <circle cx="50" cy="50" r="35" fill="none" stroke="white" strokeWidth="1" opacity="0.5" />
+                <path
+                  d="M50,5 L55,45 L95,45 L60,70 L75,95 L50,75 L25,95 L40,70 L5,45 L45,45 Z"
+                  fill="white"
+                  opacity="0.9"
+                />
+              </svg>
+            </motion.div>
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg"
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-2xl"
           >
             Willkommen
           </motion.h1>
@@ -32,8 +149,17 @@ const NewHome = () => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-2xl md:text-3xl text-white/90 mb-12 drop-shadow-lg font-light"
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="text-2xl md:text-3xl text-white/90 mb-4 drop-shadow-lg font-light"
+          >
+            Bosniakischer Kulturverein El Taqwa
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
+            className="text-xl md:text-2xl text-white/80 mb-12 drop-shadow-lg font-light italic"
           >
             Ein Ort des Friedens und der Gemeinschaft
           </motion.p>
@@ -41,23 +167,23 @@ const NewHome = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
+            transition={{ delay: 0.9, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
             <Link to="/gebetszeiten">
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(255,255,255,0.2)" }}
                 whileTap={{ scale: 0.95 }}
-                className="px-10 py-4 bg-white text-primary rounded-full text-lg font-semibold shadow-2xl hover:shadow-white/20 transition-all duration-300"
+                className="px-10 py-4 bg-white text-emerald-800 rounded-full text-lg font-semibold shadow-2xl transition-all duration-300"
               >
                 Gebetszeiten
               </motion.button>
             </Link>
             <Link to="/about">
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.25)" }}
                 whileTap={{ scale: 0.95 }}
-                className="px-10 py-4 bg-white/10 backdrop-blur-md text-white border-2 border-white rounded-full text-lg font-semibold shadow-2xl hover:bg-white/20 transition-all duration-300"
+                className="px-10 py-4 bg-white/15 backdrop-blur-md text-white border-2 border-white/50 rounded-full text-lg font-semibold shadow-2xl transition-all duration-300"
               >
                 Über uns
               </motion.button>
