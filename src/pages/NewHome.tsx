@@ -114,32 +114,9 @@ const NewHome = () => {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="mb-8"
           >
-            <motion.div
-              animate={{
-                rotate: [0, 360],
-              }}
-              transition={{
-                duration: 40,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="inline-block relative"
-            >
-              <svg width="150" height="150" viewBox="0 0 100 100" className="drop-shadow-2xl">
-                <circle cx="50" cy="50" r="45" fill="none" stroke="white" strokeWidth="1" opacity="0.3" />
-                <circle cx="50" cy="50" r="35" fill="none" stroke="white" strokeWidth="1" opacity="0.5" />
-                <path
-                  d="M50,5 L55,45 L95,45 L60,70 L75,95 L50,75 L25,95 L40,70 L5,45 L45,45 Z"
-                  fill="white"
-                  opacity="0.9"
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-white text-2xl font-bold drop-shadow-2xl" style={{ transform: 'rotate(0deg)' }}>
-                  ET TAQWA
-                </span>
-              </div>
-            </motion.div>
+            <h2 className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl tracking-wider">
+              ET TAQWA
+            </h2>
           </motion.div>
 
           <motion.h1
