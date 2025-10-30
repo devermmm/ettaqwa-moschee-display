@@ -32,6 +32,12 @@ const ReviewsSection = () => {
       rating: 5,
       text: "Eine der besten Moscheen in Wien. Sehr gepflegt und organisiert.",
       date: "vor 2 Wochen"
+    },
+    {
+      name: "Ibrahim L.",
+      rating: 5,
+      text: "Herzliche Atmosphäre und gut organisierte Veranstaltungen. Man fühlt sich sofort willkommen.",
+      date: "vor 1 Woche"
     }
   ];
 
