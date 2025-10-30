@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Clock, Sunrise, Sun, Sunset, Moon } from "lucide-react";
+import { Clock, Sunrise, Sun, Sunset, Moon, Maximize2, Minimize2 } from "lucide-react";
 
 interface PrayerTime {
   name: string;
@@ -12,6 +12,26 @@ interface PrayerTime {
 const PrayerTimes = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [nextPrayerIndex, setNextPrayerIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
 
   const isFriday = () => currentTime.getDay() === 5;
 
@@ -73,6 +93,19 @@ const PrayerTimes = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 relative overflow-hidden">
+      {/* Fullscreen Toggle Button */}
+      <button
+        onClick={toggleFullscreen}
+        className="fixed top-4 right-4 z-50 p-3 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl border border-white/30 transition-all duration-300 group"
+        aria-label="Toggle Fullscreen"
+      >
+        {isFullscreen ? (
+          <Minimize2 className="w-6 h-6 text-white" />
+        ) : (
+          <Maximize2 className="w-6 h-6 text-white" />
+        )}
+      </button>
+
       {/* Animated Background Patterns */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(6)].map((_, i) => (
@@ -98,18 +131,18 @@ const PrayerTimes = () => {
         ))}
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-12">
+      <div className="relative z-10 container mx-auto px-4 py-8 md:py-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-12"
         >
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 drop-shadow-2xl">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-3 drop-shadow-2xl">
             ET TAQWA
           </h1>
-          <p className="text-xl md:text-2xl text-white/80 mb-2">مسجد التقوى</p>
-          <p className="text-lg text-white/70">Wien</p>
+          <p className="text-lg md:text-xl text-white/80 mb-1">مسجد التقوى</p>
+          <p className="text-base text-white/70">Wien</p>
         </motion.div>
 
         {/* Current Time */}
@@ -117,18 +150,18 @@ const PrayerTimes = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <div className="inline-block bg-white/10 backdrop-blur-md rounded-3xl px-12 py-6 border border-white/20">
-            <p className="text-white/70 text-sm mb-2">Aktuelle Zeit</p>
-            <p className="text-5xl md:text-6xl font-bold text-white">
+          <div className="inline-block bg-white/10 backdrop-blur-md rounded-2xl px-8 py-4 border border-white/20">
+            <p className="text-white/70 text-xs mb-1">Aktuelle Zeit</p>
+            <p className="text-3xl md:text-5xl font-bold text-white">
               {currentTime.toLocaleTimeString("de-DE", {
                 hour: "2-digit",
                 minute: "2-digit",
                 second: "2-digit",
               })}
             </p>
-            <p className="text-white/60 text-sm mt-2">
+            <p className="text-white/60 text-xs mt-1">
               {currentTime.toLocaleDateString("de-DE", {
                 weekday: "long",
                 day: "numeric",
@@ -144,30 +177,30 @@ const PrayerTimes = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="max-w-2xl mx-auto mb-16"
+          className="max-w-2xl mx-auto mb-8"
         >
-          <div className="bg-white/15 backdrop-blur-lg rounded-3xl p-8 border-2 border-white/30 shadow-2xl">
-            <p className="text-white/80 text-center text-sm uppercase tracking-widest mb-4">
+          <div className="bg-white/15 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/30 shadow-2xl">
+            <p className="text-white/80 text-center text-xs uppercase tracking-widest mb-3">
               Nächstes Gebet
             </p>
             <div className="text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
                 {prayerTimes[nextPrayerIndex].name}
               </h2>
-              <p className="text-3xl md:text-4xl text-white/90 mb-6 font-arabic">
+              <p className="text-2xl md:text-3xl text-white/90 mb-4 font-arabic">
                 {prayerTimes[nextPrayerIndex].arabicName}
               </p>
-              <div className="flex items-center justify-center gap-8">
+              <div className="flex items-center justify-center gap-6">
                 <div>
-                  <p className="text-white/70 text-sm mb-1">Zeit</p>
-                  <p className="text-3xl font-bold text-white">
+                  <p className="text-white/70 text-xs mb-1">Zeit</p>
+                  <p className="text-2xl md:text-3xl font-bold text-white">
                     {prayerTimes[nextPrayerIndex].time}
                   </p>
                 </div>
-                <div className="h-12 w-px bg-white/30" />
+                <div className="h-10 w-px bg-white/30" />
                 <div>
-                  <p className="text-white/70 text-sm mb-1">In</p>
-                  <p className="text-2xl font-bold text-white">
+                  <p className="text-white/70 text-xs mb-1">In</p>
+                  <p className="text-xl md:text-2xl font-bold text-white">
                     {getTimeUntilPrayer(prayerTimes[nextPrayerIndex].time)}
                   </p>
                 </div>
@@ -181,12 +214,12 @@ const PrayerTimes = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="max-w-5xl mx-auto"
+          className="max-w-6xl mx-auto"
         >
-          <h3 className="text-2xl font-bold text-white text-center mb-8">
+          <h3 className="text-xl md:text-2xl font-bold text-white text-center mb-6">
             Alle Gebetszeiten
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {prayerTimes.map((prayer, index) => {
               const Icon = prayer.icon;
               const isNext = index === nextPrayerIndex;
@@ -198,33 +231,33 @@ const PrayerTimes = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
                   whileHover={{ y: -5 }}
-                  className={`relative overflow-hidden rounded-2xl p-6 transition-all duration-300 ${
+                  className={`relative overflow-hidden rounded-xl p-4 transition-all duration-300 ${
                     isNext
                       ? "bg-white/25 border-2 border-white/50 shadow-2xl"
                       : "bg-white/10 border border-white/20"
                   } backdrop-blur-md`}
                 >
                   {isNext && (
-                    <div className="absolute top-3 right-3">
-                      <span className="inline-block px-3 py-1 bg-white/30 rounded-full text-xs text-white font-semibold">
+                    <div className="absolute top-2 right-2">
+                      <span className="inline-block px-2 py-0.5 bg-white/30 rounded-full text-[10px] text-white font-semibold">
                         Nächstes
                       </span>
                     </div>
                   )}
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="p-3 bg-white/20 rounded-xl">
-                      <Icon className="w-6 h-6 text-white" />
+                  <div className="flex flex-col items-center text-center mb-3">
+                    <div className="p-2 bg-white/20 rounded-lg mb-2">
+                      <Icon className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold text-white">
+                      <h4 className="text-lg font-bold text-white">
                         {prayer.name}
                       </h4>
-                      <p className="text-white/70 text-sm font-arabic">
+                      <p className="text-white/70 text-xs font-arabic">
                         {prayer.arabicName}
                       </p>
                     </div>
                   </div>
-                  <p className="text-3xl font-bold text-white">{prayer.time}</p>
+                  <p className="text-2xl font-bold text-white text-center">{prayer.time}</p>
                 </motion.div>
               );
             })}
@@ -236,13 +269,13 @@ const PrayerTimes = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="text-center mt-16 mb-8"
+          className="text-center mt-8 mb-6"
         >
-          <div className="inline-block bg-white/10 backdrop-blur-md rounded-2xl px-8 py-6 border border-white/20">
-            <p className="text-2xl md:text-3xl text-white font-arabic mb-3">
+          <div className="inline-block bg-white/10 backdrop-blur-md rounded-xl px-6 py-4 border border-white/20">
+            <p className="text-xl md:text-2xl text-white font-arabic mb-2">
               بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
             </p>
-            <p className="text-sm text-white/70">
+            <p className="text-xs text-white/70">
               Im Namen Allahs, des Allerbarmers, des Barmherzigen
             </p>
           </div>
