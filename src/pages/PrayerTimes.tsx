@@ -26,11 +26,25 @@ const PrayerTimes = () => {
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      const isInFullscreen = !!document.fullscreenElement;
+      setIsFullscreen(isInFullscreen);
+      
+      // Hide navbar in fullscreen mode
+      const navbar = document.querySelector('nav');
+      if (navbar) {
+        navbar.style.display = isInFullscreen ? 'none' : '';
+      }
     };
 
     document.addEventListener("fullscreenchange", handleFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      // Restore navbar on unmount
+      const navbar = document.querySelector('nav');
+      if (navbar) {
+        navbar.style.display = '';
+      }
+    };
   }, []);
 
   const isFriday = () => currentTime.getDay() === 5;
@@ -95,17 +109,28 @@ const PrayerTimes = () => {
     <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 relative overflow-hidden">
       {/* Fullscreen Toggle Button */}
       <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        whileHover={{ scale: 1.1 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         onClick={toggleFullscreen}
-        className="fixed top-4 right-4 z-50 p-3 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-xl border-2 border-white/30 transition-all duration-300 shadow-2xl"
+        className="fixed bottom-6 right-6 z-50 px-6 py-4 bg-white/90 hover:bg-white backdrop-blur-md rounded-2xl border-2 border-emerald-600/50 transition-all duration-300 shadow-2xl flex items-center gap-3 group"
         aria-label="Toggle Fullscreen"
       >
         {isFullscreen ? (
-          <Minimize2 className="w-6 h-6 text-white" />
+          <>
+            <Minimize2 className="w-7 h-7 text-emerald-800" />
+            <span className="text-emerald-900 font-semibold text-lg hidden sm:inline">
+              Vollbild beenden
+            </span>
+          </>
         ) : (
-          <Maximize2 className="w-6 h-6 text-white" />
+          <>
+            <Maximize2 className="w-7 h-7 text-emerald-800" />
+            <span className="text-emerald-900 font-semibold text-lg hidden sm:inline">
+              Vollbild
+            </span>
+          </>
         )}
       </motion.button>
 
