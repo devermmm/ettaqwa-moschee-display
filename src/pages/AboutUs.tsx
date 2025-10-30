@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import communityImage from "@/assets/community.png";
+import mosqueInteriorImage from "@/assets/mosque-interior.png";
 
 const AboutUs = () => {
   return (
@@ -43,6 +44,21 @@ const AboutUs = () => {
             />
           </motion.div>
 
+          {/* Mosque Interior Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="mb-16 rounded-2xl overflow-hidden shadow-2xl"
+          >
+            <img 
+              src={mosqueInteriorImage} 
+              alt="Das Innere unserer Moschee" 
+              className="w-full h-auto"
+            />
+            <p className="text-center text-muted-foreground mt-4 text-lg italic">Das Innere unserer Moschee</p>
+          </motion.div>
+
           {/* Content Sections */}
           <div className="space-y-12">
             <motion.div
@@ -55,6 +71,12 @@ const AboutUs = () => {
                 Willkommen in unserer Gemeinschaft
               </h2>
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
+                <p>
+                  Der Bosniakische Kulturverein El Taqwa ist Teil der Bosniakischen Kultusgemeinde Mitte. 
+                  Der Verein wurde am 17. März 2015 erstmals vereinsrechtlich registriert. Er ist auch unter 
+                  dem Namen Dzemat Et-Taqwa bekannt. Regelmäßig finden in den Räumlichkeiten des Vereins 
+                  Freitagsgebete statt.
+                </p>
                 <p>
                   Unsere Moschee ist ein Ort des Friedens, der Gemeinschaft und des spirituellen Wachstums. 
                   Als bosnische Moschee pflegen wir unsere kulturellen Wurzeln und öffnen gleichzeitig 

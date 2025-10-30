@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Clock, BookOpen, Users, Heart } from "lucide-react";
-import logoImage from "@/assets/logo.png";
 import mosqueHeroImage from "@/assets/mosque-hero.png";
 
 const NewHome = () => {
@@ -21,19 +20,6 @@ const NewHome = () => {
 
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="mb-12"
-          >
-            <img 
-              src={logoImage} 
-              alt="Moschee Logo" 
-              className="w-48 h-48 md:w-64 md:h-64 mx-auto mb-8 drop-shadow-2xl"
-            />
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
