@@ -32,14 +32,14 @@ const PrayerTimes = () => {
     return now.getDay() === 5; // 5 = Friday
   };
 
-  // Prayer times for Vienna - replace Dhuhr with Jummah on Fridays
+  // Prayer times for Vienna (IZ Wien) - replace Dhuhr with Jummah on Fridays
   const basePrayerTimes: PrayerTime[] = [
-    { name: "Fajr", arabicName: "الفجر", time: "05:05" },
-    { name: "Sonnenaufgang", arabicName: "الشروق", time: "06:32" },
-    { name: "Dhuhr", arabicName: "الظهر", time: "11:44" },
-    { name: "Asr", arabicName: "العصر", time: "14:21" },
-    { name: "Maghrib", arabicName: "المغرب", time: "16:45" },
-    { name: "Isha", arabicName: "العشاء", time: "18:18" },
+    { name: "Fajr", arabicName: "الفجر", time: "05:09" },
+    { name: "Sonnenaufgang", arabicName: "الشروق", time: "06:37" },
+    { name: "Dhuhr", arabicName: "الظهر", time: "11:43" },
+    { name: "Asr", arabicName: "العصر", time: "14:17" },
+    { name: "Maghrib", arabicName: "المغرب", time: "16:40" },
+    { name: "Isha", arabicName: "العشاء", time: "18:13" },
   ];
 
   // On Fridays, replace Dhuhr with Jummah
@@ -142,13 +142,13 @@ const PrayerTimes = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-y-auto relative p-2 md:p-3 lg:h-screen lg:overflow-hidden">
+    <div className="min-h-screen overflow-y-auto relative p-3 md:p-4 lg:p-6 lg:h-screen lg:overflow-hidden">
       {/* Background Image */}
       <div 
-        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-20"
+        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-10"
         style={{ backgroundImage: `url(${logo})` }}
       />
-      <div className="fixed inset-0 z-0 bg-gradient-to-br from-background/95 via-background/90 to-secondary/80" />
+      <div className="fixed inset-0 z-0 bg-gradient-to-br from-background via-background/98 to-secondary/50" />
       
       {/* Progress Bar */}
       <ProgressBar progress={progress} />
@@ -170,18 +170,18 @@ const PrayerTimes = () => {
       
       <div className="h-full max-w-[1920px] mx-auto flex flex-col relative z-10">
         {/* Header with Logo */}
-        <header className="text-center py-2 md:py-3 border-b border-border/30">
-          <div className="flex items-center justify-center gap-2 md:gap-3">
+        <header className="text-center py-4 md:py-5 border-b-2 border-primary/20 bg-card/30 backdrop-blur-sm rounded-t-2xl">
+          <div className="flex items-center justify-center gap-3 md:gap-4">
             <img 
               src={logo} 
               alt="Et-Taqwa Moschee Logo" 
-              className="h-10 md:h-12 lg:h-16 drop-shadow-lg"
+              className="h-12 md:h-16 lg:h-20 drop-shadow-2xl"
             />
             <div className="text-left">
-              <h1 className="text-base md:text-lg lg:text-2xl font-bold text-primary font-inter leading-tight">
+              <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text-primary font-inter leading-tight">
                 Et-Taqwa Moschee
               </h1>
-              <p className="text-sm md:text-base lg:text-xl text-primary font-amiri leading-tight">
+              <p className="text-base md:text-xl lg:text-2xl text-primary font-amiri leading-tight">
                 مسجد التقوى - Wien
               </p>
             </div>
@@ -189,14 +189,14 @@ const PrayerTimes = () => {
         </header>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 gap-3 md:gap-4 py-3 md:py-4 lg:overflow-hidden">
+        <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 gap-4 md:gap-6 py-4 md:py-6 lg:overflow-hidden">
           {/* Left Column - Prayer Times */}
           <div className="lg:col-span-4">
-            <div className="bg-card/30 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-border h-full">
-              <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-3 md:mb-4 text-foreground font-inter uppercase tracking-wide">
+            <div className="bg-gradient-to-br from-card via-card to-card/80 backdrop-blur-md rounded-2xl p-4 md:p-6 border-2 border-primary/20 shadow-xl h-full">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-6 text-primary font-inter uppercase tracking-wider">
                 Gebetszeiten Wien
               </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2 md:gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-3 md:gap-4">
                 {prayerTimes.map((prayer, index) => (
                   <PrayerTimeCard
                     key={prayer.name}
@@ -210,12 +210,12 @@ const PrayerTimes = () => {
               </div>
               
               {/* Basmala Section */}
-              <div className="mt-3 md:mt-4">
-                <Card className="p-3 md:p-4 bg-gradient-to-r from-muted/30 to-muted/50 border border-border/50">
-                  <p className="text-base md:text-lg lg:text-xl text-center text-foreground font-amiri">
+              <div className="mt-4 md:mt-6">
+                <Card className="p-4 md:p-5 bg-gradient-to-br from-primary/5 via-primary/10 to-accent/5 border-2 border-primary/30 shadow-lg">
+                  <p className="text-lg md:text-xl lg:text-2xl text-center text-foreground font-amiri leading-relaxed">
                     بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
                   </p>
-                  <p className="text-xs md:text-sm text-center text-muted-foreground font-inter mt-2">
+                  <p className="text-xs md:text-sm text-center text-muted-foreground font-inter mt-3">
                     Im Namen Allahs, des Allerbarmers, des Barmherzigen
                   </p>
                 </Card>
@@ -224,19 +224,19 @@ const PrayerTimes = () => {
           </div>
 
           {/* Center Column - Main Focus: Time & Next Prayer */}
-          <div className="lg:col-span-4 space-y-3 flex flex-col justify-center">
+          <div className="lg:col-span-4 space-y-4 md:space-y-5 flex flex-col justify-center">
             {/* Current Time Display */}
-            <Card className="p-4 md:p-5 lg:p-8 bg-card border-2 border-primary/30 shadow-lg">
+            <Card className="p-5 md:p-6 lg:p-10 bg-gradient-to-br from-card via-card/95 to-primary/5 border-2 border-primary/40 shadow-2xl">
               <CurrentTime />
             </Card>
 
             {/* Next Prayer Countdown - Most Important */}
-            <div className="bg-gradient-to-br from-accent via-accent to-primary p-5 md:p-6 lg:p-8 rounded-xl shadow-xl border-2 border-accent">
-              <div className="text-center text-accent-foreground space-y-3 md:space-y-4">
+            <div className="bg-gradient-to-br from-accent via-accent to-accent/90 p-6 md:p-8 lg:p-10 rounded-2xl shadow-2xl border-2 border-accent-foreground/20">
+              <div className="text-center text-accent-foreground space-y-4 md:space-y-5">
                 <div>
-                  <p className="text-sm md:text-base font-inter opacity-90 uppercase tracking-wider">Nächstes Gebet</p>
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold font-inter mt-2">{prayerTimes[nextPrayer].name}</h2>
-                  <p className="text-lg md:text-xl lg:text-2xl font-amiri mt-2">{prayerTimes[nextPrayer].arabicName}</p>
+                  <p className="text-sm md:text-base lg:text-lg font-inter opacity-95 uppercase tracking-widest font-semibold">Nächstes Gebet</p>
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-inter mt-3">{prayerTimes[nextPrayer].name}</h2>
+                  <p className="text-xl md:text-2xl lg:text-3xl font-amiri mt-3">{prayerTimes[nextPrayer].arabicName}</p>
                 </div>
                 
                 <NextPrayerCountdown
@@ -245,20 +245,20 @@ const PrayerTimes = () => {
                   nextPrayerArabic={prayerTimes[nextPrayer].arabicName}
                 />
 
-                <div className="pt-3">
-                  <p className="text-xl md:text-2xl lg:text-3xl font-bold font-inter">um {prayerTimes[nextPrayer].time} Uhr</p>
+                <div className="pt-4">
+                  <p className="text-2xl md:text-3xl lg:text-4xl font-bold font-inter">um {prayerTimes[nextPrayer].time} Uhr</p>
                 </div>
               </div>
             </div>
 
             {/* Jummah Time - Only show on Fridays before 13:00 */}
             {isFriday() && new Date().getHours() < 13 && (
-              <Card className="p-4 md:p-5 bg-primary text-primary-foreground border-2 border-primary-glow shadow-lg">
+              <Card className="p-5 md:p-6 bg-gradient-to-br from-primary to-primary/90 text-primary-foreground border-2 border-primary-foreground/30 shadow-2xl">
                 <div className="text-center">
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold font-inter mb-2 uppercase tracking-wide">Freitagsgebet</h3>
-                  <p className="text-xl md:text-2xl lg:text-3xl font-amiri mb-3">صلاة الجمعة</p>
-                  <div className="bg-primary-foreground/20 rounded-lg p-3 md:p-4 backdrop-blur-sm">
-                    <p className="text-3xl md:text-4xl lg:text-5xl font-bold font-inter">{jummahTime}</p>
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold font-inter mb-3 uppercase tracking-wider">Freitagsgebet</h3>
+                  <p className="text-2xl md:text-3xl lg:text-4xl font-amiri mb-4">صلاة الجمعة</p>
+                  <div className="bg-primary-foreground/20 rounded-xl p-4 md:p-5 backdrop-blur-sm border border-primary-foreground/20">
+                    <p className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter">{jummahTime}</p>
                   </div>
                 </div>
               </Card>
@@ -277,9 +277,9 @@ const PrayerTimes = () => {
         </div>
 
         {/* Footer */}
-        <footer className="text-center text-muted-foreground font-inter text-xs py-2 border-t border-border/30 space-y-1">
-          <p className="text-[10px] md:text-xs">اللهم بارك لنا - Allah segne uns alle</p>
-          <p className="text-[9px] md:text-[10px]">
+        <footer className="text-center text-muted-foreground font-inter text-xs py-3 md:py-4 border-t-2 border-primary/20 bg-card/20 backdrop-blur-sm rounded-b-2xl space-y-1.5">
+          <p className="text-xs md:text-sm font-amiri">اللهم بارك لنا - Allah segne uns alle</p>
+          <p className="text-[10px] md:text-xs">
             Developed by{" "}
             <a 
               href="https://deverm.com/" 
