@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Clock, BookOpen, Users, Heart } from "lucide-react";
+import ReviewsSection from "@/components/ReviewsSection";
 
 const NewHome = () => {
   return (
@@ -239,6 +240,9 @@ const NewHome = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Reviews & Location Section */}
+      <ReviewsSection />
     </div>
   );
 };
