@@ -12,7 +12,6 @@ const Navbar = () => {
     { name: "Gebetszeiten", path: "/gebetszeiten", icon: Clock },
     { name: "Die Moschee", path: "/moschee" },
     { name: "Kontakte", path: "/kontakte" },
-    { name: "Service", path: "/service" },
   ];
 
   return (

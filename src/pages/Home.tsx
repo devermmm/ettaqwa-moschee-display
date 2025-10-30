@@ -95,7 +95,7 @@ const Home = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card className="group p-8 hover:shadow-2xl hover:scale-105 transition-all duration-300 border-2 hover:border-primary/30 bg-gradient-to-br from-card to-card/50">
               <div className="space-y-5">
                 <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
@@ -122,26 +122,110 @@ const Home = () => {
                 <p className="text-muted-foreground leading-relaxed">
                   Besuchen Sie uns in der Et-Taqwa Moschee Wien. Wir freuen uns auf Ihren Besuch
                 </p>
-                <Button variant="outline" className="w-full mt-4 group-hover:border-accent">
-                  Mehr erfahren
-                </Button>
+                <NavLink to="/kontakte">
+                  <Button variant="outline" className="w-full mt-4 group-hover:border-accent">
+                    Mehr erfahren
+                  </Button>
+                </NavLink>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Location Section */}
+      <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-background to-muted/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Besuchen Sie uns
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Dzemat Et-Taqwa - Moschee - مسجد
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Map Embed */}
+            <Card className="p-0 overflow-hidden border-2 border-border hover:border-primary/30 transition-colors">
+              <div className="relative h-[400px] lg:h-[500px]">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2658.6845791707543!2d16.457846!3d48.2626393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476d05d00086649f%3A0x7f459c880e35de51!2sDzemat%20Et-Taqwa%20-%20Moschee%20-%20%D9%85%D8%B3%D8%AC%D8%AF!5e0!3m2!1sde!2sat!4v1234567890"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Moschee Standort"
+                />
               </div>
             </Card>
 
-            <Card className="group p-8 hover:shadow-2xl hover:scale-105 transition-all duration-300 border-2 hover:border-primary/30 bg-gradient-to-br from-card to-card/50">
-              <div className="space-y-5">
-                <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-secondary to-secondary/70 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-                  <Calendar className="h-8 w-8 text-secondary-foreground" />
+            {/* Location Info & Links */}
+            <div className="space-y-6">
+              <Card className="p-8 bg-gradient-to-br from-card to-card/50 border-2 hover:border-primary/30 transition-colors">
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                      <MapPin className="h-6 w-6 text-primary" />
+                      Adresse
+                    </h3>
+                    <p className="text-lg text-foreground/90">
+                      Dzemat Et-Taqwa Moschee<br />
+                      Wien, Österreich
+                    </p>
+                  </div>
+
+                  <div className="pt-6 border-t border-border space-y-4">
+                    <h4 className="font-semibold text-lg mb-4">Navigation & Ansichten</h4>
+                    
+                    <a
+                      href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x476d05d00086649f:0x7f459c880e35de51"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <Button variant="outline" className="w-full justify-start hover:bg-primary/10 hover:border-primary group">
+                        <svg className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        In Google Maps öffnen
+                      </Button>
+                    </a>
+
+                    <a
+                      href="https://maps.apple.com/?address=Wien,Austria&ll=48.2626393,16.4600349&q=Dzemat%20Et-Taqwa%20Moschee"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <Button variant="outline" className="w-full justify-start hover:bg-primary/10 hover:border-primary group">
+                        <svg className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        In Apple Maps öffnen
+                      </Button>
+                    </a>
+
+                    <a
+                      href="https://www.google.com/maps/@48.2621943,16.4599273,3a,75y,9.4h,90t/data=!3m7!1e1!3m5!1szCmzkBdoHD8vAApzjVqWZQ!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DzCmzkBdoHD8vAApzjVqWZQ%26yaw%3D9.4012165!7i13312!8i6656"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <Button variant="outline" className="w-full justify-start hover:bg-primary/10 hover:border-primary group">
+                        <svg className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <circle cx="12" cy="12" r="10"/>
+                          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                        360° Ansicht
+                      </Button>
+                    </a>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">Veranstaltungen</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Kommende Events, Vorträge und Programme in unserer Gemeinde
-                </p>
-                <Button variant="outline" className="w-full mt-4 group-hover:border-secondary">
-                  Events ansehen
-                </Button>
-              </div>
-            </Card>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
