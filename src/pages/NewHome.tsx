@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Clock, BookOpen, Users, Heart } from "lucide-react";
+import { Clock, BookOpen, Users, Heart, HandHeart, Copy } from "lucide-react";
 import ReviewsSection from "@/components/ReviewsSection";
 import { useLanguage } from "@/contexts/LanguageContext";
+import donationHelp from "@/assets/donation-help.jpg";
+import donationFamilies from "@/assets/donation-families.jpg";
+import { toast } from "sonner";
 
 const NewHome = () => {
   const { t, language } = useLanguage();
@@ -181,6 +184,102 @@ const NewHome = () => {
               }
               </p>
               <p className="text-center text-primary font-bold mt-8 text-lg">{language === "bs" ? "- Kur'an 49:13" : "- Quran 49:13"}</p>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Donation Section for Palestine */}
+      <div className="py-24 bg-gradient-to-b from-background to-muted">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-3 mb-6">
+              <HandHeart className="w-12 h-12 text-primary" />
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              {language === "bs" ? "Donacije za Palestinu" : "Spenden für Palästina"}
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              {language === "bs" 
+                ? "Vaša podrška pruža nadu i pomoć onima kojima je najpotrebnija. Svaka donacija čini razliku."
+                : "Ihre Unterstützung gibt Hoffnung und Hilfe für diejenigen, die sie am meisten brauchen. Jede Spende macht einen Unterschied."
+              }
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative rounded-3xl overflow-hidden shadow-2xl"
+            >
+              <img 
+                src={donationHelp} 
+                alt="Humanitarian help"
+                className="w-full h-[400px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative rounded-3xl overflow-hidden shadow-2xl"
+            >
+              <img 
+                src={donationFamilies} 
+                alt="Families receiving aid"
+                className="w-full h-[400px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-2xl mx-auto"
+          >
+            <div className="backdrop-blur-md rounded-3xl p-10 border border-primary/30 overflow-hidden"
+              style={{ boxShadow: 'var(--shadow-card)', background: 'var(--gradient-card)' }}
+            >
+              <h3 className="text-2xl font-bold mb-6 text-center text-foreground">
+                {language === "bs" ? "Bankovni podaci za donaciju" : "Bankverbindung für Spenden"}
+              </h3>
+              
+              <div className="bg-background/50 rounded-2xl p-6 mb-6">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-muted-foreground font-medium">IBAN:</span>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText("AT582011182674140900");
+                      toast.success(language === "bs" ? "IBAN kopiran!" : "IBAN kopiert!");
+                    }}
+                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                  >
+                    <Copy className="w-4 h-4" />
+                    <span className="text-sm">{language === "bs" ? "Kopiraj" : "Kopieren"}</span>
+                  </button>
+                </div>
+                <p className="text-2xl font-mono font-bold text-foreground text-center tracking-wider">
+                  AT58 2011 1826 7414 0900
+                </p>
+              </div>
+
+              <p className="text-center text-muted-foreground italic">
+                {language === "bs" 
+                  ? "Hvala vam na vašoj podršci i velikodušnosti. Svaka donacija direktno pomaže porodicama u nevolji."
+                  : "Vielen Dank für Ihre Unterstützung und Großzügigkeit. Jede Spende hilft direkt den Familien in Not."
+                }
+              </p>
             </div>
           </motion.div>
         </div>
