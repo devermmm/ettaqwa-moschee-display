@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Clock, Sunrise, Sun, Sunset, Moon, Maximize2, Minimize2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import AdvertisementSlide from "@/components/AdvertisementSlide";
 
 interface PrayerTime {
   name: string;
@@ -65,8 +66,8 @@ const PrayerTimes = () => {
       setTimeout(() => {
         setShowAd(false);
         setCurrentAdIndex((prev) => (prev + 1) % 2); // Toggle between ads
-      }, 10000); // Show ad for 10 seconds
-    }, 15000); // Every 15 seconds
+      }, 15000); // Show ad for 15 seconds
+    }, 30000); // Every 30 seconds (15s ad + 15s prayer times)
 
     return () => clearInterval(adInterval);
   }, [isFullscreen]);
@@ -346,35 +347,7 @@ const PrayerTimes = () => {
       </div>
 
       {/* Advertisement Overlay */}
-      {showAd && isFullscreen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          className="fixed inset-0 z-50 bg-gradient-to-br from-emerald-900/95 via-emerald-800/95 to-teal-900/95 backdrop-blur-sm flex items-center justify-center p-8"
-        >
-          {currentAdIndex === 0 ? (
-            <motion.img
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              src="/src/assets/quran-school-poster.png"
-              alt="Quran School"
-              className="max-w-5xl max-h-[90vh] object-contain rounded-3xl shadow-2xl"
-            />
-          ) : (
-            <motion.img
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              src="/src/assets/mekteb-registration.png"
-              alt="Mekteb Registration"
-              className="max-w-5xl max-h-[90vh] object-contain rounded-3xl shadow-2xl"
-            />
-          )}
-        </motion.div>
-      )}
+      {showAd && isFullscreen && <AdvertisementSlide />}
     </div>
   );
 };

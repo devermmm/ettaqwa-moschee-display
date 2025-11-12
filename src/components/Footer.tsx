@@ -93,6 +93,17 @@ const Footer = () => {
             <p className="text-emerald-300 text-sm">
               {language === "bs" ? "Sva prava zadržana" : "Alle Rechte vorbehalten"}
             </p>
+            <p className="text-emerald-300 text-sm mt-3">
+              {language === "bs" ? "Webseiten Ersteller:" : "Webseiten Ersteller:"}{" "}
+              <a 
+                href="https://deverm.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="font-bold text-white hover:text-emerald-200 transition-colors"
+              >
+                DEVERM.COM
+              </a>
+            </p>
           </div>
         </div>
       </div>
