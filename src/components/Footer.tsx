@@ -1,5 +1,6 @@
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Sparkles } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   const { language } = useLanguage();
@@ -86,24 +87,93 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-white/20 pt-8">
-          <div className="text-center space-y-2">
+          <div className="text-center space-y-4">
             <p className="text-emerald-200 text-lg font-medium">
               &copy; {new Date().getFullYear()} {language === "bs" ? "Bošnjačko kulturno društvo El Taqwa" : "Bosniakischer Kulturverein El Taqwa"}
             </p>
             <p className="text-emerald-300 text-sm">
               {language === "bs" ? "Sva prava zadržana" : "Alle Rechte vorbehalten"}
             </p>
-            <p className="text-emerald-300 text-sm mt-3">
-              {language === "bs" ? "Webseiten Ersteller:" : "Webseiten Ersteller:"}{" "}
-              <a 
-                href="https://deverm.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="font-bold text-white hover:text-emerald-200 transition-colors"
+            
+            {/* Animated DEVERM.COM Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex justify-center items-center gap-2 mt-6"
+            >
+              <motion.a
+                href="https://deverm.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-white/10 to-emerald-500/20 backdrop-blur-sm rounded-xl border border-white/30 hover:border-white/60 transition-all duration-300 overflow-hidden"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
               >
-                DEVERM.COM
-              </a>
-            </p>
+                {/* Animated Background Gradient */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-white/20 to-emerald-400/20"
+                  animate={{
+                    x: ['-100%', '100%'],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+                
+                {/* Content */}
+                <motion.div
+                  animate={{
+                    rotate: [0, 10, -10, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <Sparkles className="w-5 h-5 text-emerald-300 relative z-10" />
+                </motion.div>
+                
+                <div className="relative z-10 flex flex-col items-start">
+                  <span className="text-[10px] text-emerald-300/80 uppercase tracking-wider font-medium">
+                    {language === "bs" ? "Webseiten Ersteller" : "Webseiten Ersteller"}
+                  </span>
+                  <span className="text-lg font-bold bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent group-hover:from-emerald-200 group-hover:via-white group-hover:to-emerald-200 transition-all duration-300">
+                    DEVERM.COM
+                  </span>
+                </div>
+                
+                <motion.div
+                  animate={{
+                    x: [0, 5, 0],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="relative z-10"
+                >
+                  <svg
+                    className="w-5 h-5 text-emerald-300"
+                    fill="none"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M13 7l5 5m0 0l-5 5m5-5H6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </motion.div>
+
+                {/* Glow Effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent blur-xl" />
+                </div>
+              </motion.a>
+            </motion.div>
           </div>
         </div>
       </div>
