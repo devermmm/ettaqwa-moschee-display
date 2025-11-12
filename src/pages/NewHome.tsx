@@ -2,8 +2,11 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Clock, BookOpen, Users, Heart } from "lucide-react";
 import ReviewsSection from "@/components/ReviewsSection";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const NewHome = () => {
+  const { t, language } = useLanguage();
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -126,7 +129,7 @@ const NewHome = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-2xl"
           >
-            Willkommen
+            {t("home.welcome")}
           </motion.h1>
 
           <motion.p
@@ -135,7 +138,7 @@ const NewHome = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="text-2xl md:text-3xl text-white/90 mb-4 drop-shadow-lg font-light"
           >
-            Bosniakischer Kulturverein El Taqwa
+            {language === "bs" ? "Bošnjački kulturni centar El Taqwa" : "Bosniakischer Kulturverein El Taqwa"}
           </motion.p>
 
           <motion.p
@@ -144,7 +147,7 @@ const NewHome = () => {
             transition={{ delay: 0.7, duration: 0.8 }}
             className="text-xl md:text-2xl text-white/80 mb-12 drop-shadow-lg font-light italic"
           >
-            Ein Ort des Friedens und der Gemeinschaft
+            {language === "bs" ? "Mjesto mira i zajedništva" : "Ein Ort des Friedens und der Gemeinschaft"}
           </motion.p>
 
           <motion.div
@@ -159,7 +162,7 @@ const NewHome = () => {
                 whileTap={{ scale: 0.95 }}
                 className="px-10 py-4 bg-white text-emerald-800 rounded-full text-lg font-semibold shadow-2xl transition-all duration-300"
               >
-                Gebetszeiten
+                {t("nav.prayerTimes")}
               </motion.button>
             </Link>
             <Link to="/about">
@@ -168,7 +171,7 @@ const NewHome = () => {
                 whileTap={{ scale: 0.95 }}
                 className="px-10 py-4 bg-white/15 backdrop-blur-md text-white border-2 border-white/50 rounded-full text-lg font-semibold shadow-2xl transition-all duration-300"
               >
-                Über uns
+                {t("nav.about")}
               </motion.button>
             </Link>
           </motion.div>
@@ -185,15 +188,15 @@ const NewHome = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
           >
-            Unsere Angebote
+            {t("home.offers")}
           </motion.h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Clock, title: "Gebetszeiten", desc: "Aktuelle Zeiten", link: "/gebetszeiten" },
-              { icon: BookOpen, title: "Kurse", desc: "Bildungsangebote", link: "/courses" },
-              { icon: Users, title: "Projekte", desc: "Gemeinschaft", link: "/projects" },
-              { icon: Heart, title: "Über uns", desc: "Unsere Mission", link: "/about" },
+              { icon: Clock, title: t("nav.prayerTimes"), desc: t("home.prayerTimesTitle"), link: "/gebetszeiten" },
+              { icon: BookOpen, title: t("nav.courses"), desc: t("courses.subtitle"), link: "/courses" },
+              { icon: Users, title: t("nav.projects"), desc: t("projects.community"), link: "/projects" },
+              { icon: Heart, title: t("nav.about"), desc: t("about.missionTitle"), link: "/about" },
             ].map((item, index) => {
               const Icon = item.icon;
               return (
@@ -233,10 +236,12 @@ const NewHome = () => {
             </p>
             <div className="h-1 w-32 mx-auto bg-gradient-to-r from-primary to-accent rounded-full mb-6" />
             <p className="text-xl text-center text-muted-foreground italic">
-              "O ihr Menschen, Wir haben euch von einem männlichen und einem weiblichen Wesen erschaffen, 
-              und Wir haben euch zu Völkern und Stämmen gemacht, damit ihr einander kennenlernt."
+              {language === "bs" 
+                ? '"O ljudi, Mi vas stvorismo od muškarca i žene i učinismo vas narodima i plemenima da se međusobno upoznate."'
+                : '"O ihr Menschen, Wir haben euch von einem männlichen und einem weiblichen Wesen erschaffen, und Wir haben euch zu Völkern und Stämmen gemacht, damit ihr einander kennenlernt."'
+              }
             </p>
-            <p className="text-center text-primary font-semibold mt-6">- Quran 49:13</p>
+            <p className="text-center text-primary font-semibold mt-6">{language === "bs" ? "- Kur'an 49:13" : "- Quran 49:13"}</p>
           </motion.div>
         </div>
       </div>

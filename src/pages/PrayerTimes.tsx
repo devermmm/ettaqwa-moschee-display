@@ -59,13 +59,17 @@ const PrayerTimes = () => {
     { name: t("prayerTimes.isha"), arabicName: "العشاء", time: "17:57", icon: Moon },
   ];
 
-  const prayerTimes: PrayerTime[] = isFriday()
-    ? basePrayerTimes.map(prayer =>
-        prayer.arabicName === "الظهر"
-          ? { ...prayer, name: t("prayerTimes.jummah"), arabicName: "الجمعة", time: "11:44" }
-          : prayer
-      )
-    : basePrayerTimes;
+  const fridayPrayerTimes: PrayerTime[] = [
+    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: "05:08", icon: Sunrise },
+    { name: t("prayerTimes.jummah"), arabicName: "الجمعة", time: "12:00", icon: Sun },
+    { name: "Termin 1", arabicName: "موعد ١", time: "13:00", icon: Clock },
+    { name: "Termin 2", arabicName: "موعد ٢", time: "13:00", icon: Clock },
+    { name: t("prayerTimes.asr"), arabicName: "العصر", time: "14:02", icon: Sun },
+    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: "16:28", icon: Sunset },
+    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: "17:57", icon: Moon },
+  ];
+
+  const prayerTimes: PrayerTime[] = isFriday() ? fridayPrayerTimes : basePrayerTimes;
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -212,7 +216,7 @@ const PrayerTimes = () => {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center mb-4 md:mb-6 lg:mb-8 uppercase tracking-wider">
             {t("nav.prayerTimes")}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 lg:gap-6">
+          <div className={`grid gap-3 md:gap-4 lg:gap-6 ${isFriday() ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-7' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'}`}>
             {prayerTimes.map((prayer, index) => {
               const Icon = prayer.icon;
               const isNext = index === nextPrayerIndex;

@@ -1,43 +1,58 @@
 import { Star, MapPin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ReviewsSection = () => {
+  const { t, language } = useLanguage();
+  
   const reviews = [
     {
       name: "Haris M.",
       rating: 5,
-      text: "Sehr schöne Moschee mit einer warmen und einladenden Atmosphäre. Die Gemeinschaft ist freundlich und hilfsbereit.",
-      date: "vor 2 Monaten"
+      text: language === "bs" 
+        ? "Vrlo lijepa džamija sa toplom i gostoljubivom atmosferom. Zajednica je prijateljska i susretljiva."
+        : "Sehr schöne Moschee mit einer warmen und einladenden Atmosphäre. Die Gemeinschaft ist freundlich und hilfsbereit.",
+      date: language === "bs" ? "prije 2 mjeseca" : "vor 2 Monaten"
     },
     {
       name: "Enes K.",
       rating: 5,
-      text: "Wunderbare Moschee! Saubere Gebetsräume und eine aktive Gemeinde. Sehr zu empfehlen.",
-      date: "vor 3 Monaten"
+      text: language === "bs"
+        ? "Prekrasna džamija! Čiste prostorije za namaz i aktivna zajednica. Toplo preporučujem."
+        : "Wunderbare Moschee! Saubere Gebetsräume und eine aktive Gemeinde. Sehr zu empfehlen.",
+      date: language === "bs" ? "prije 3 mjeseca" : "vor 3 Monaten"
     },
     {
       name: "Amina S.",
       rating: 5,
-      text: "Friedlicher Ort zum Beten. Die Freitagsgebete sind sehr inspirierend.",
-      date: "vor 1 Monat"
+      text: language === "bs"
+        ? "Mirno mjesto za molitvu. Džuma namazi su jako inspirativni."
+        : "Friedlicher Ort zum Beten. Die Freitagsgebete sind sehr inspirierend.",
+      date: language === "bs" ? "prije 1 mjesec" : "vor 1 Monat"
     },
     {
       name: "Mehmed A.",
       rating: 5,
-      text: "Tolle Gemeinschaft und ausgezeichnete Programme für Kinder und Jugendliche.",
-      date: "vor 4 Monaten"
+      text: language === "bs"
+        ? "Odlična zajednica i izvrsni programi za djecu i mlade."
+        : "Tolle Gemeinschaft und ausgezeichnete Programme für Kinder und Jugendliche.",
+      date: language === "bs" ? "prije 4 mjeseca" : "vor 4 Monaten"
     },
     {
       name: "Fatima B.",
       rating: 5,
-      text: "Eine der besten Moscheen in Wien. Sehr gepflegt und organisiert.",
-      date: "vor 2 Wochen"
+      text: language === "bs"
+        ? "Jedna od najboljih džamija u Beču. Vrlo uredna i organizovana."
+        : "Eine der besten Moscheen in Wien. Sehr gepflegt und organisiert.",
+      date: language === "bs" ? "prije 2 sedmice" : "vor 2 Wochen"
     },
     {
       name: "Ibrahim L.",
       rating: 5,
-      text: "Herzliche Atmosphäre und gut organisierte Veranstaltungen. Man fühlt sich sofort willkommen.",
-      date: "vor 1 Woche"
+      text: language === "bs"
+        ? "Topla atmosfera i dobro organizovani događaji. Čovjek se odmah osjeća dobrodošao."
+        : "Herzliche Atmosphäre und gut organisierte Veranstaltungen. Man fühlt sich sofort willkommen.",
+      date: language === "bs" ? "prije 1 sedmicu" : "vor 1 Woche"
     }
   ];
 
@@ -48,7 +63,7 @@ const ReviewsSection = () => {
         <div className="mb-16">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              Besuchen Sie uns
+              {language === "bs" ? "Posjetite nas" : "Besuchen Sie uns"}
             </h2>
             <div className="flex items-center justify-center gap-2 text-muted-foreground">
               <MapPin className="w-5 h-5 text-primary" />
@@ -76,7 +91,7 @@ const ReviewsSection = () => {
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-secondary text-secondary-foreground rounded-xl hover:bg-secondary/80 transition-all hover:scale-105 font-semibold shadow-lg"
               >
-                Apple Maps öffnen
+                {language === "bs" ? "Otvori Apple Maps" : "Apple Maps öffnen"}
               </a>
               <a
                 href="https://www.google.com/maps/place/Dzemat+Et-Taqwa+-+Moschee+-+%D9%85%D8%B3%D8%AC%D8%AF%E2%80%AD/@48.2626393,16.4600349,17z"
@@ -84,7 +99,7 @@ const ReviewsSection = () => {
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-primary text-white rounded-xl hover:bg-primary/90 transition-all hover:scale-105 font-semibold shadow-lg"
               >
-                Google Maps öffnen
+                {language === "bs" ? "Otvori Google Maps" : "Google Maps öffnen"}
               </a>
             </div>
           </div>
@@ -94,7 +109,7 @@ const ReviewsSection = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              Was unsere Besucher sagen
+              {language === "bs" ? "Što naši posjetioci kažu" : "Was unsere Besucher sagen"}
             </h2>
             <div className="flex items-center justify-center gap-3 mb-2">
               <div className="flex">
@@ -104,7 +119,7 @@ const ReviewsSection = () => {
               </div>
               <span className="text-2xl font-bold text-foreground">5.0</span>
             </div>
-            <p className="text-muted-foreground">Basierend auf Google Bewertungen</p>
+            <p className="text-muted-foreground">{language === "bs" ? "Na osnovu Google recenzija" : "Basierend auf Google Bewertungen"}</p>
           </div>
 
           {/* Reviews Grid */}
@@ -138,7 +153,7 @@ const ReviewsSection = () => {
               className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-xl hover:bg-primary/90 transition-all hover:scale-105 font-bold text-lg shadow-xl"
             >
               <Star className="w-6 h-6" />
-              Bewertung auf Google abgeben
+              {language === "bs" ? "Ostavite recenziju na Googleu" : "Bewertung auf Google abgeben"}
             </a>
           </div>
         </div>
