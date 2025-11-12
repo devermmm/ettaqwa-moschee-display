@@ -7,9 +7,10 @@ import Index from "./pages/Index";
 import PrayerTimesLayout from "./pages/PrayerTimesLayout";
 import AboutUs from "./pages/AboutUs";
 import Projects from "./pages/Projects";
-import Courses from "./pages/Courses";
+import News from "./pages/News";
 import Auth from "./pages/Auth";
 import AdminPanel from "./pages/AdminPanel";
+import AdminPostManagement from "./pages/AdminPostManagement";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -28,9 +29,10 @@ const App = () => (
           <Route path="/gebetszeiten" element={<PrayerTimesLayout />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/courses" element={<Courses />} />
+          <Route path="/news" element={<News />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin/posts" element={<AdminPostManagement />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
