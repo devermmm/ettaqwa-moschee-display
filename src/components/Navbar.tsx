@@ -28,7 +28,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <NavLink to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <Logo className="h-12 w-12" />
+            <Logo className="h-12 w-12" animated={false} />
             <div className="hidden md:block">
               <div className="text-lg font-bold text-[#2d7b7f]">Et-Taqwa Moschee</div>
               <div className="text-sm text-[#2d7b7f] font-amiri">مسجد التقوى - Wien</div>
