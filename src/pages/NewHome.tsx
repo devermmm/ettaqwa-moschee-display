@@ -10,7 +10,7 @@ const NewHome = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900">
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
         {/* Animated Islamic Geometric Patterns */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Rotating Stars */}
@@ -158,18 +158,19 @@ const NewHome = () => {
           >
             <Link to="/gebetszeiten">
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(255,255,255,0.2)" }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-10 py-4 bg-white text-emerald-800 rounded-full text-lg font-semibold shadow-2xl transition-all duration-300"
+                className="px-12 py-5 bg-white text-primary rounded-full text-lg font-bold shadow-2xl hover:shadow-[0_25px_50px_rgba(255,255,255,0.25)] transition-all duration-300"
+                style={{ boxShadow: 'var(--shadow-glow)' }}
               >
                 {t("nav.prayerTimes")}
               </motion.button>
             </Link>
             <Link to="/about">
               <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.25)" }}
+                whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255,255,255,0.25)" }}
                 whileTap={{ scale: 0.95 }}
-                className="px-10 py-4 bg-white/15 backdrop-blur-md text-white border-2 border-white/50 rounded-full text-lg font-semibold shadow-2xl transition-all duration-300"
+                className="px-12 py-5 bg-white/10 backdrop-blur-lg text-white border-2 border-white/40 rounded-full text-lg font-bold shadow-2xl hover:shadow-[0_25px_50px_rgba(255,255,255,0.15)] transition-all duration-300"
               >
                 {t("nav.about")}
               </motion.button>
@@ -186,7 +187,7 @@ const NewHome = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+            className="text-4xl md:text-6xl font-bold text-center mb-20 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
           >
             {t("home.offers")}
           </motion.h2>
@@ -206,14 +207,18 @@ const NewHome = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    whileHover={{ y: -10 }}
-                    className="bg-card/50 backdrop-blur-sm rounded-2xl p-8 text-center shadow-xl border border-border/50 hover:shadow-2xl transition-all duration-300 group"
+                    whileHover={{ y: -12, scale: 1.02 }}
+                    className="relative bg-card/80 backdrop-blur-md rounded-3xl p-10 text-center border border-border/30 transition-all duration-300 group overflow-hidden"
+                    style={{ boxShadow: 'var(--shadow-card)' }}
                   >
-                    <div className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-primary to-accent mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="w-8 h-8 text-white" />
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'var(--gradient-card)' }} />
+                    <div className="relative z-10">
+                      <div className="inline-flex p-5 rounded-3xl bg-gradient-to-br from-primary to-accent mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                        <Icon className="w-10 h-10 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3 text-foreground">{item.title}</h3>
+                      <p className="text-muted-foreground text-base">{item.desc}</p>
                     </div>
-                    <h3 className="text-2xl font-bold mb-2 text-foreground">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.desc}</p>
                   </motion.div>
                 </Link>
               );
@@ -229,19 +234,23 @@ const NewHome = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-primary/20"
+            className="relative max-w-4xl mx-auto backdrop-blur-md rounded-3xl p-14 border border-primary/30 overflow-hidden"
+            style={{ boxShadow: 'var(--shadow-card)', background: 'var(--gradient-card)' }}
           >
-            <p className="text-3xl md:text-4xl text-center mb-8 text-foreground font-arabic leading-relaxed">
-              "يَا أَيُّهَا النَّاسُ إِنَّا خَلَقْنَاكُم مِّن ذَكَرٍ وَأُنثَىٰ وَجَعَلْنَاكُمْ شُعُوبًا وَقَبَائِلَ لِتَعَارَفُوا"
-            </p>
-            <div className="h-1 w-32 mx-auto bg-gradient-to-r from-primary to-accent rounded-full mb-6" />
-            <p className="text-xl text-center text-muted-foreground italic">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5" />
+            <div className="relative z-10">
+              <p className="text-3xl md:text-4xl text-center mb-8 text-foreground font-arabic leading-relaxed">
+                "يَا أَيُّهَا النَّاسُ إِنَّا خَلَقْنَاكُم مِّن ذَكَرٍ وَأُنثَىٰ وَجَعَلْنَاكُمْ شُعُوبًا وَقَبَائِلَ لِتَعَارَفُوا"
+              </p>
+              <div className="h-1 w-40 mx-auto bg-gradient-to-r from-primary via-accent to-primary rounded-full mb-8 shadow-lg" />
+              <p className="text-xl text-center text-muted-foreground italic leading-relaxed">
               {language === "bs" 
                 ? '"O ljudi, Mi vas stvorismo od muškarca i žene i učinismo vas narodima i plemenima da se međusobno upoznate."'
                 : '"O ihr Menschen, Wir haben euch von einem männlichen und einem weiblichen Wesen erschaffen, und Wir haben euch zu Völkern und Stämmen gemacht, damit ihr einander kennenlernt."'
               }
-            </p>
-            <p className="text-center text-primary font-semibold mt-6">{language === "bs" ? "- Kur'an 49:13" : "- Quran 49:13"}</p>
+              </p>
+              <p className="text-center text-primary font-bold mt-8 text-lg">{language === "bs" ? "- Kur'an 49:13" : "- Quran 49:13"}</p>
+            </div>
           </motion.div>
         </div>
       </div>
