@@ -87,7 +87,7 @@ const translations: Record<Language, any> = {
     prayerTimes: {
       fullscreen: "Cjelokupni ekran",
       exitFullscreen: "Izlaz iz cijelog ekrana",
-      mosque: "Islamski centar u Beču",
+      mosque: "Bosanska džamija ET TAQWA",
       location: "Beč, Austrija",
       today: "Danas",
       nextPrayer: "Sljedeći",
@@ -184,7 +184,7 @@ const translations: Record<Language, any> = {
     prayerTimes: {
       fullscreen: "Vollbildmodus",
       exitFullscreen: "Vollbild verlassen",
-      mosque: "Islamisches Zentrum in Wien",
+      mosque: "Bosnische Moschee ET TAQWA",
       location: "Wien, Österreich",
       today: "Heute",
       nextPrayer: "Nächstes",
