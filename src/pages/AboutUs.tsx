@@ -8,7 +8,7 @@ const AboutUs = () => {
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted">
-      <div className="container mx-auto px-4 py-20">
+      <div className="container mx-auto px-4 py-12 sm:py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -16,12 +16,12 @@ const AboutUs = () => {
           className="max-w-6xl mx-auto"
         >
           {/* Header Section */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 sm:mb-16">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent"
+              className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent"
             >
               {t("about.title")}
             </motion.h1>
@@ -34,7 +34,7 @@ const AboutUs = () => {
           </div>
 
           {/* Images Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -44,10 +44,10 @@ const AboutUs = () => {
               <img 
                 src={communityImage} 
                 alt="Unsere Gemeinschaft" 
-                className="w-full h-64 object-cover"
+                className="w-full h-48 sm:h-64 object-cover"
               />
-              <div className="p-4 bg-card/50 backdrop-blur-sm">
-                <p className="text-center text-foreground font-semibold">Unsere Gemeinschaft</p>
+              <div className="p-3 sm:p-4 bg-card/50 backdrop-blur-sm">
+                <p className="text-center text-foreground font-semibold text-sm sm:text-base">Unsere Gemeinschaft</p>
               </div>
             </motion.div>
 
@@ -60,26 +60,26 @@ const AboutUs = () => {
               <img 
                 src={mosqueInteriorImage} 
                 alt="Das Innere unserer Moschee" 
-                className="w-full h-64 object-cover"
+                className="w-full h-48 sm:h-64 object-cover"
               />
-              <div className="p-4 bg-card/50 backdrop-blur-sm">
-                <p className="text-center text-foreground font-semibold">Das Innere unserer Moschee</p>
+              <div className="p-3 sm:p-4 bg-card/50 backdrop-blur-sm">
+                <p className="text-center text-foreground font-semibold text-sm sm:text-base">Das Innere unserer Moschee</p>
               </div>
             </motion.div>
           </div>
 
           {/* Content Sections */}
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="bg-card/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-border/50"
+              className="bg-card/50 backdrop-blur-sm rounded-2xl p-6 sm:p-8 md:p-12 shadow-xl border border-border/50"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-foreground">
                 {t("about.welcomeTitle")}
               </h2>
-              <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
+              <div className="space-y-3 sm:space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
                 <p>
                   {t("about.welcomeText1")}
                 </p>
@@ -93,12 +93,12 @@ const AboutUs = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="bg-card/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-border/50"
+              className="bg-card/50 backdrop-blur-sm rounded-2xl p-6 sm:p-8 md:p-12 shadow-xl border border-border/50"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-foreground">
                 {t("about.everyoneTitle")}
               </h2>
-              <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
+              <div className="space-y-3 sm:space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
                 <p>
                   {t("about.everyoneText")}
                 </p>
@@ -109,12 +109,12 @@ const AboutUs = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-primary/20"
+              className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 md:p-12 shadow-xl border border-primary/20"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-foreground">
                 {t("about.missionTitle")}
               </h2>
-              <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
+              <div className="space-y-3 sm:space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
                 <p>
                   {t("about.missionText1")}
                 </p>

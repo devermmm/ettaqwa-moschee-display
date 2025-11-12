@@ -7,7 +7,7 @@ const Courses = () => {
   const {
     language
   } = useLanguage();
-  return <div className="min-h-screen bg-gradient-to-b from-background to-muted pt-8 pb-16">
+  return <div className="min-h-screen bg-gradient-to-b from-background to-muted pt-4 sm:pt-8 pb-8 sm:pb-16">
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div initial={{
@@ -16,17 +16,17 @@ const Courses = () => {
       }} animate={{
         opacity: 1,
         y: 0
-      }} className="text-center mb-12 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-foreground">
+      }} className="text-center mb-8 sm:mb-12 max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-foreground">
             {language === "bs" ? "Mekteb Program" : "Mekteb Programm"}
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground">
+          <p className="text-base sm:text-xl md:text-2xl text-muted-foreground">
             {language === "bs" ? "Islamsko obrazovanje za djecu i mlade" : "Islamische Bildung für Kinder und Jugendliche"}
           </p>
         </motion.div>
 
         {/* Course Images with Descriptions */}
-        <div className="space-y-12 max-w-5xl mx-auto">
+        <div className="space-y-8 sm:space-y-12 max-w-5xl mx-auto">
           {/* Mekteb Registration */}
           <motion.div initial={{
           opacity: 0,
@@ -38,16 +38,16 @@ const Courses = () => {
           delay: 0.2
         }}>
             <Card className="overflow-hidden shadow-xl">
-              <div className="grid md:grid-cols-2 gap-8 p-8">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-8 p-4 sm:p-8">
                 <div className="flex items-center justify-center">
                   <img src={mektebRegistration} alt="Mekteb Registration" className="max-w-sm w-full h-auto object-cover rounded-lg shadow-md" />
                 </div>
-                <div className="flex flex-col justify-center space-y-4">
-                  <h2 className="text-3xl font-bold text-foreground">
+                <div className="flex flex-col justify-center space-y-3 sm:space-y-4">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
                     {language === "bs" ? "Upis u Mekteb 2024/2025" : "Mekteb Anmeldung 2024/2025"}
                   </h2>
-                  <div className="space-y-3 text-muted-foreground">
-                    <p className="text-lg leading-relaxed">
+                  <div className="space-y-2 sm:space-y-3 text-muted-foreground">
+                    <p className="text-sm sm:text-base md:text-lg leading-relaxed">
                       {language === "bs" ? "Počinje nova školska godina mekteba! Prijavite svoju djecu za kvalitetno islamsko obrazovanje gdje će naučiti osnove vjere, arapski jezik i pravilno učenje Kur'ana." : "Das neue Mekteb-Schuljahr beginnt! Melden Sie Ihre Kinder für eine hochwertige islamische Bildung an, wo sie die Grundlagen des Glaubens, Arabisch und das korrekte Lernen des Qurans erlernen."}
                     </p>
                     <div className="space-y-2">
@@ -85,13 +85,13 @@ const Courses = () => {
           delay: 0.3
         }}>
             <Card className="overflow-hidden shadow-xl">
-              <div className="grid md:grid-cols-2 gap-8 p-8">
-                <div className="flex flex-col justify-center space-y-4 order-2 md:order-1">
-                  <h2 className="text-3xl font-bold text-foreground">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-8 p-4 sm:p-8">
+                <div className="flex flex-col justify-center space-y-3 sm:space-y-4 order-2 md:order-1">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
                     {language === "bs" ? "Kur'anska Škola" : "Quran-Schule"}
                   </h2>
-                  <div className="space-y-3 text-muted-foreground">
-                    <p className="text-lg leading-relaxed">
+                  <div className="space-y-2 sm:space-y-3 text-muted-foreground">
+                    <p className="text-sm sm:text-base md:text-lg leading-relaxed">
                       {language === "bs" ? "Naša kur'anska škola nudi sveobuhvatan program učenja Kur'ana sa iskusnim i kvalificiranim učiteljima. Fokusiramo se na pravilnu recitaciju, učenje tedžvida i razumijevanje značenja ajeta." : "Unsere Quran-Schule bietet ein umfassendes Programm zum Lernen des Qurans mit erfahrenen und qualifizierten Lehrern. Wir konzentrieren uns auf korrekte Rezitation, Tajweed-Lernen und das Verständnis der Bedeutung der Verse."}
                     </p>
                     <div className="space-y-2">
@@ -132,7 +132,7 @@ const Courses = () => {
       }} transition={{
         delay: 0.4
       }} className="mt-16 max-w-2xl mx-auto">
-          <Card className="p-10 bg-gradient-to-br from-primary/5 to-accent/5">
+          <Card className="p-6 sm:p-10 bg-gradient-to-br from-primary/5 to-accent/5">
             
             
             
