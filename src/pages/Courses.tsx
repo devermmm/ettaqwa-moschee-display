@@ -7,7 +7,7 @@ const Courses = () => {
   const {
     language
   } = useLanguage();
-  return <div className="min-h-screen bg-gradient-to-b from-background to-muted py-16">
+  return <div className="min-h-screen bg-gradient-to-b from-background to-muted pt-8 pb-16">
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div initial={{
@@ -16,7 +16,7 @@ const Courses = () => {
       }} animate={{
         opacity: 1,
         y: 0
-      }} className="text-center mb-16 max-w-4xl mx-auto">
+      }} className="text-center mb-12 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             {language === "bs" ? "Mekteb Program" : "Mekteb Programm"}
           </h1>
