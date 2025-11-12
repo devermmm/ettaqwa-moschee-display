@@ -9,6 +9,7 @@ import AboutUs from "./pages/AboutUs";
 import Projects from "./pages/Projects";
 import Courses from "./pages/Courses";
 import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
 import Auth from "./pages/Auth";
 import AdminPanel from "./pages/AdminPanel";
 import AdminPostManagement from "./pages/AdminPostManagement";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/projects" element={<Projects />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/news" element={<News />} />
+          <Route path="/news/:id" element={<NewsDetail />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/admin/posts" element={<AdminPostManagement />} />

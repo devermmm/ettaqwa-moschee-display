@@ -154,34 +154,23 @@ const AdminPanel = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <Link to="/admin/posts">
-                <Card className="p-6 hover:bg-accent transition-colors cursor-pointer">
-                  <h3 className="font-semibold mb-2">Neuigkeiten verwalten</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Posts erstellen, bearbeiten und löschen
-                  </p>
-                </Card>
-              </Link>
-              <Card className="p-6">
-                <h3 className="font-semibold mb-2">Benutzer verwalten</h3>
-                <p className="text-sm text-muted-foreground">
-                  Benutzer anzeigen und verwalten
-                </p>
+          <Link to="/admin/posts" className="block">
+              <Card className="p-8 hover:bg-accent transition-all hover:shadow-lg cursor-pointer border-2 hover:border-primary">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-primary/10 rounded-lg">
+                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mb-1">Neuigkeiten verwalten</h3>
+                    <p className="text-muted-foreground">
+                      News-Posts erstellen, bearbeiten und löschen
+                    </p>
+                  </div>
+                </div>
               </Card>
-              <Card className="p-6">
-                <h3 className="font-semibold mb-2">Gebetszeiten</h3>
-                <p className="text-sm text-muted-foreground">
-                  Gebetszeiten aktualisieren
-                </p>
-              </Card>
-              <Card className="p-6">
-                <h3 className="font-semibold mb-2">Einstellungen</h3>
-                <p className="text-sm text-muted-foreground">
-                  System-Einstellungen verwalten
-                </p>
-              </Card>
-            </div>
+            </Link>
           </div>
         </Card>
       </div>

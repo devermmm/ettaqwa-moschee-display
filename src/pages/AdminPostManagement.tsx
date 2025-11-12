@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { User, Session } from "@supabase/supabase-js";
-import { ArrowLeft, Plus, Edit, Trash2, Upload, X } from "lucide-react";
+import { ArrowLeft, Plus, Edit, Trash2, Upload, Image as ImageIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { z } from "zod";
 
@@ -37,6 +37,8 @@ const AdminPostManagement = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -126,16 +128,57 @@ const AdminPostManagement = () => {
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
+      processImageFile(file);
+    }
+  };
+
+  const processImageFile = (file: File) => {
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "Fehler",
+        description: "Bild darf maximal 5MB groß sein",
+        variant: "destructive",
+      });
+      return;
+    }
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      if (file.type.startsWith('image/')) {
+        processImageFile(file);
+      } else {
         toast({
           title: "Fehler",
-          description: "Bild darf maximal 5MB groß sein",
+          description: "Bitte nur Bilddateien hochladen.",
           variant: "destructive",
         });
-        return;
       }
-      setImageFile(file);
-      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -288,122 +331,201 @@ const AdminPostManagement = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted py-8">
-      <div className="container mx-auto px-4">
-        <div className="mb-8 flex items-center justify-between">
+      <div className="container mx-auto px-4 max-w-6xl">
+        <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link to="/admin">
-              <Button variant="outline" size="icon">
-                <ArrowLeft className="w-4 h-4" />
+              <Button variant="outline" size="sm">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Zurück
               </Button>
             </Link>
-            <h1 className="text-3xl font-bold">Post-Verwaltung</h1>
+            <h1 className="text-2xl md:text-3xl font-bold">Neuigkeiten verwalten</h1>
           </div>
-          {!showForm && (
-            <Button onClick={() => setShowForm(true)}>
-              <Plus className="w-4 h-4 mr-2" />
-              Neuer Post
-            </Button>
-          )}
+          <Button onClick={() => setShowForm(!showForm)} className="w-full sm:w-auto">
+            <Plus className="w-4 h-4 mr-2" />
+            {showForm ? "Formular schließen" : "Neue Neuigkeit"}
+          </Button>
         </div>
 
         {showForm && (
-          <Card className="p-6 mb-8">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold">
-                {editingPost ? "Post bearbeiten" : "Neuer Post"}
-              </h2>
-              <Button variant="ghost" size="icon" onClick={resetForm}>
-                <X className="w-4 h-4" />
-              </Button>
-            </div>
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <Card className="p-6 mb-8 bg-gradient-to-br from-muted/30 to-muted/50 border-2 shadow-lg">
+            <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+              {editingPost ? (
+                <>
+                  <Edit className="w-5 h-5" />
+                  Neuigkeit bearbeiten
+                </>
+              ) : (
+                <>
+                  <Plus className="w-5 h-5" />
+                  Neue Neuigkeit erstellen
+                </>
+              )}
+            </h2>
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium mb-2">Titel</label>
                 <Input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Post-Titel eingeben"
+                  placeholder="Titel eingeben..."
+                  className="text-base"
                   required
                   maxLength={200}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Text</label>
+                <label className="block text-sm font-medium mb-2">Inhalt</label>
                 <Textarea
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  placeholder="Post-Text eingeben"
+                  placeholder="Inhalt eingeben..."
+                  rows={6}
+                  className="text-base resize-none"
                   required
                   maxLength={5000}
-                  rows={6}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Bild</label>
-                <div className="flex items-center gap-4">
-                  <Input
+                <label className="block text-sm font-medium mb-2">Bild (optional)</label>
+                <div
+                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-all cursor-pointer ${
+                    isDragging
+                      ? 'border-primary bg-primary/5 scale-[1.02]'
+                      : 'border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50'
+                  }`}
+                  onDragEnter={handleDragEnter}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <input
+                    ref={fileInputRef}
                     type="file"
                     accept="image/*"
                     onChange={handleImageSelect}
-                    className="flex-1"
+                    className="hidden"
                   />
-                  {imagePreview && (
-                    <img
-                      src={imagePreview}
-                      alt="Vorschau"
-                      className="w-20 h-20 object-cover rounded"
-                    />
-                  )}
+                  <div className="flex flex-col items-center gap-3">
+                    {imagePreview ? (
+                      <div className="relative">
+                        <img
+                          src={imagePreview}
+                          alt="Vorschau"
+                          className="max-w-full h-48 object-cover rounded-lg"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="sm"
+                          className="absolute top-2 right-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setImageFile(null);
+                            setImagePreview(null);
+                            if (fileInputRef.current) {
+                              fileInputRef.current.value = '';
+                            }
+                          }}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="p-4 bg-primary/10 rounded-full">
+                          <Upload className="w-8 h-8 text-primary" />
+                        </div>
+                        <div>
+                          <p className="text-base font-medium mb-1">
+                            Bild hier ablegen oder klicken
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            PNG, JPG bis zu 5MB
+                          </p>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="flex gap-2">
-                <Button type="submit" disabled={submitting}>
-                  {submitting ? "Speichern..." : editingPost ? "Aktualisieren" : "Erstellen"}
+              <div className="flex gap-3 pt-2">
+                <Button type="submit" disabled={submitting} className="flex-1 sm:flex-none">
+                  {submitting ? "Wird gespeichert..." : editingPost ? "Aktualisieren" : "Erstellen"}
                 </Button>
-                <Button type="button" variant="outline" onClick={resetForm}>
-                  Abbrechen
-                </Button>
+                {editingPost && (
+                  <Button type="button" variant="outline" onClick={resetForm} className="flex-1 sm:flex-none">
+                    Abbrechen
+                  </Button>
+                )}
               </div>
             </form>
           </Card>
         )}
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map((post) => (
-            <Card key={post.id} className="overflow-hidden">
-              {post.image_url && (
-                <img
-                  src={post.image_url}
-                  alt={post.title}
-                  className="w-full h-48 object-cover"
-                />
-              )}
-              <div className="p-4">
-                <h3 className="text-xl font-bold mb-2">{post.title}</h3>
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                  {post.content}
-                </p>
-                <div className="flex gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleEdit(post)}
-                  >
-                    <Edit className="w-4 h-4 mr-1" />
-                    Bearbeiten
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => handleDelete(post.id)}
-                  >
-                    <Trash2 className="w-4 h-4 mr-1" />
-                    Löschen
-                  </Button>
-                </div>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <ImageIcon className="w-5 h-5" />
+            Alle Neuigkeiten ({posts.length})
+          </h2>
+          {posts.length === 0 ? (
+            <Card className="p-12 text-center">
+              <div className="flex flex-col items-center gap-3 text-muted-foreground">
+                <ImageIcon className="w-12 h-12" />
+                <p className="text-lg">Noch keine Neuigkeiten vorhanden</p>
+                <p className="text-sm">Erstellen Sie Ihre erste Neuigkeit</p>
               </div>
             </Card>
-          ))}
+          ) : (
+            posts.map((post) => (
+              <Card key={post.id} className="p-6 hover:shadow-md transition-shadow">
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-semibold mb-3">{post.title}</h3>
+                    <p className="text-muted-foreground mb-4 whitespace-pre-wrap line-clamp-3">
+                      {post.content}
+                    </p>
+                    {post.image_url && (
+                      <img
+                        src={post.image_url}
+                        alt={post.title}
+                        className="max-w-full sm:max-w-md rounded-lg mb-4 shadow-sm"
+                      />
+                    )}
+                    <p className="text-sm text-muted-foreground">
+                      Erstellt am: {new Date(post.created_at).toLocaleDateString("de-DE", {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
+                  </div>
+                  <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
+                    <Button
+                      onClick={() => handleEdit(post)}
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 sm:flex-none"
+                    >
+                      <Edit className="w-4 h-4 mr-2" />
+                      Bearbeiten
+                    </Button>
+                    <Button
+                      onClick={() => handleDelete(post.id)}
+                      variant="destructive"
+                      size="sm"
+                      className="flex-1 sm:flex-none"
+                    >
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Löschen
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </div>

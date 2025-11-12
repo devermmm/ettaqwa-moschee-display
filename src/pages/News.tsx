@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Calendar } from "lucide-react";
+import { Calendar, ArrowRight } from "lucide-react";
 
 interface Post {
   id: string;
@@ -17,6 +18,7 @@ const News = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const { language } = useLanguage();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPosts();
@@ -102,13 +104,16 @@ const News = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="overflow-hidden h-full hover:shadow-xl transition-shadow duration-300">
+                <Card 
+                  className="overflow-hidden h-full hover:shadow-xl transition-all cursor-pointer hover:scale-[1.02] group"
+                  onClick={() => navigate(`/news/${post.id}`)}
+                >
                   {post.image_url && (
                     <div className="relative h-48 overflow-hidden">
                       <img
                         src={post.image_url}
                         alt={post.title}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        className="w-full h-full object-cover transition-transform group-hover:scale-105"
                       />
                     </div>
                   )}
@@ -117,12 +122,16 @@ const News = () => {
                       <Calendar className="w-4 h-4" />
                       <span>{formatDate(post.created_at)}</span>
                     </div>
-                    <h2 className="text-2xl font-bold mb-3 text-foreground">
+                    <h2 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
                       {post.title}
                     </h2>
-                    <p className="text-muted-foreground whitespace-pre-wrap">
+                    <p className="text-muted-foreground whitespace-pre-wrap line-clamp-3 mb-4">
                       {post.content}
                     </p>
+                    <div className="flex items-center text-primary font-medium">
+                      {language === "bs" ? "Pročitaj više" : "Mehr lesen"}
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </Card>
               </motion.div>
