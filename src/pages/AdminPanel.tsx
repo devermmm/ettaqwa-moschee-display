@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -155,16 +155,18 @@ const AdminPanel = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
+              <Link to="/admin/posts">
+                <Card className="p-6 hover:bg-accent transition-colors cursor-pointer">
+                  <h3 className="font-semibold mb-2">Neuigkeiten verwalten</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Posts erstellen, bearbeiten und löschen
+                  </p>
+                </Card>
+              </Link>
               <Card className="p-6">
                 <h3 className="font-semibold mb-2">Benutzer verwalten</h3>
                 <p className="text-sm text-muted-foreground">
                   Benutzer anzeigen und verwalten
-                </p>
-              </Card>
-              <Card className="p-6">
-                <h3 className="font-semibold mb-2">Inhalte verwalten</h3>
-                <p className="text-sm text-muted-foreground">
-                  Website-Inhalte bearbeiten
                 </p>
               </Card>
               <Card className="p-6">
