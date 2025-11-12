@@ -10,274 +10,105 @@ const NewHome = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
-        {/* Animated Islamic Geometric Patterns */}
+      <div className="relative min-h-screen flex items-center overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
+        {/* Subtle Arabic Calligraphy Background */}
         <div className="absolute inset-0 overflow-hidden">
-          {/* Islamic Geometric Pattern Background */}
-          <div className="absolute inset-0 opacity-10">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="islamicPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-                  {/* 8-pointed star (Rub el Hizb) */}
-                  <g transform="translate(100, 100)">
-                    <path d="M 0,-40 L 10,-10 L 40,0 L 10,10 L 0,40 L -10,10 L -40,0 L -10,-10 Z" 
-                          fill="white" opacity="0.6"/>
-                    <circle cx="0" cy="0" r="30" fill="none" stroke="white" strokeWidth="2"/>
-                    <circle cx="0" cy="0" r="20" fill="none" stroke="white" strokeWidth="1.5"/>
-                    <circle cx="0" cy="0" r="10" fill="none" stroke="white" strokeWidth="1"/>
-                  </g>
-                  {/* Decorative corner elements */}
-                  <circle cx="0" cy="0" r="8" fill="white" opacity="0.4"/>
-                  <circle cx="200" cy="0" r="8" fill="white" opacity="0.4"/>
-                  <circle cx="0" cy="200" r="8" fill="white" opacity="0.4"/>
-                  <circle cx="200" cy="200" r="8" fill="white" opacity="0.4"/>
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#islamicPattern)"/>
-            </svg>
+          {/* Large Bismillah in background */}
+          <div className="absolute top-20 right-10 opacity-5 pointer-events-none">
+            <p className="text-[12rem] md:text-[20rem] font-arabic text-white leading-none whitespace-nowrap">
+              بسم الله
+            </p>
           </div>
-
-          {/* Animated Rotating Islamic Stars */}
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={`star-${i}`}
-              className="absolute"
-              style={{
-                left: `${10 + i * 15}%`,
-                top: `${15 + (i % 3) * 30}%`,
-              }}
-              animate={{
-                rotate: 360,
-                scale: [1, 1.3, 1],
-              }}
-              transition={{
-                duration: 25 + i * 3,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            >
-              <svg width="80" height="80" viewBox="0 0 100 100" className="opacity-15">
-                <g transform="translate(50, 50)">
-                  {/* 8-pointed Islamic star */}
-                  <path d="M 0,-35 L 8,-8 L 35,0 L 8,8 L 0,35 L -8,8 L -35,0 L -8,-8 Z" 
-                        fill="white"/>
-                  <circle cx="0" cy="0" r="25" fill="none" stroke="white" strokeWidth="2.5"/>
-                  <path d="M 0,-20 L 5,-5 L 20,0 L 5,5 L 0,20 L -5,5 L -20,0 L -5,-5 Z" 
-                        fill="none" stroke="white" strokeWidth="2"/>
-                </g>
-              </svg>
-            </motion.div>
-          ))}
-
-          {/* Floating Islamic Medallions */}
-          {[...Array(4)].map((_, i) => (
-            <motion.div
-              key={`medallion-${i}`}
-              className="absolute"
-              style={{
-                left: `${65 + i * 8}%`,
-                top: `${20 + i * 20}%`,
-              }}
-              animate={{
-                y: [0, -40, 0],
-                rotate: [0, 180, 360],
-                opacity: [0.1, 0.25, 0.1],
-              }}
-              transition={{
-                duration: 15 + i * 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <svg width="100" height="100" viewBox="0 0 100 100">
-                <g transform="translate(50, 50)">
-                  <circle cx="0" cy="0" r="40" fill="none" stroke="white" strokeWidth="2" opacity="0.6"/>
-                  <circle cx="0" cy="0" r="30" fill="none" stroke="white" strokeWidth="1.5" opacity="0.5"/>
-                  <path d="M 0,-30 Q 30,0 0,30 Q -30,0 0,-30" fill="none" stroke="white" strokeWidth="2" opacity="0.4"/>
-                  <path d="M -30,0 Q 0,30 30,0 Q 0,-30 -30,0" fill="none" stroke="white" strokeWidth="2" opacity="0.4"/>
-                  {/* Inner star */}
-                  <path d="M 0,-15 L 4,-4 L 15,0 L 4,4 L 0,15 L -4,4 L -15,0 L -4,-4 Z" 
-                        fill="white" opacity="0.5"/>
-                </g>
-              </svg>
-            </motion.div>
-          ))}
-
-          {/* Large Rotating Mandala - Top Left */}
-          <motion.div
-            className="absolute top-10 left-10"
-            animate={{
-              rotate: 360,
-            }}
-            transition={{
-              duration: 40,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          >
-            <svg width="180" height="180" viewBox="0 0 100 100" className="opacity-8">
-              <g transform="translate(50, 50)">
-                <circle cx="0" cy="0" r="45" fill="none" stroke="white" strokeWidth="1.5"/>
-                <circle cx="0" cy="0" r="35" fill="none" stroke="white" strokeWidth="2"/>
-                <circle cx="0" cy="0" r="25" fill="none" stroke="white" strokeWidth="1.5"/>
-                <circle cx="0" cy="0" r="15" fill="none" stroke="white" strokeWidth="2"/>
-                {/* 12 petals */}
-                {[...Array(12)].map((_, i) => {
-                  const angle = (i * 30 * Math.PI) / 180;
-                  const x1 = Math.cos(angle) * 15;
-                  const y1 = Math.sin(angle) * 15;
-                  const x2 = Math.cos(angle) * 40;
-                  const y2 = Math.sin(angle) * 40;
-                  return (
-                    <line
-                      key={i}
-                      x1={x1}
-                      y1={y1}
-                      x2={x2}
-                      y2={y2}
-                      stroke="white"
-                      strokeWidth="1.5"
-                    />
-                  );
-                })}
-              </g>
-            </svg>
-          </motion.div>
-
-          {/* Large Rotating Mandala - Bottom Right */}
-          <motion.div
-            className="absolute bottom-10 right-10"
-            animate={{
-              rotate: -360,
-            }}
-            transition={{
-              duration: 35,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          >
-            <svg width="160" height="160" viewBox="0 0 100 100" className="opacity-8">
-              <g transform="translate(50, 50)">
-                {/* Octagon base */}
-                <path
-                  d="M 0,-40 L 28,-28 L 40,0 L 28,28 L 0,40 L -28,28 L -40,0 L -28,-28 Z"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                />
-                {/* Inner octagon */}
-                <path
-                  d="M 0,-25 L 18,-18 L 25,0 L 18,18 L 0,25 L -18,18 L -25,0 L -18,-18 Z"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="1.5"
-                />
-                {/* Center star */}
-                <path
-                  d="M 0,-15 L 4,-4 L 15,0 L 4,4 L 0,15 L -4,4 L -15,0 L -4,-4 Z"
-                  fill="white"
-                  opacity="0.6"
-                />
-              </g>
-            </svg>
-          </motion.div>
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          {/* Bismillah Calligraphy - Top */}
-          <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 1 }}
-            className="mb-6"
-          >
-            <p className="text-4xl md:text-6xl font-arabic text-white drop-shadow-2xl leading-relaxed">
-              بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-            </p>
-            <p className="text-sm md:text-base text-white/70 mt-2 font-light italic">
-              Im Namen Allahs, des Allerbarmers, des Barmherzigen
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="mb-8"
-          >
-            <h2 className="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl tracking-wider">
-              ET TAQWA
-            </h2>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-2xl"
-          >
-            {t("home.welcome")}
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-2xl md:text-3xl text-white/90 mb-4 drop-shadow-lg font-light"
-          >
-            {language === "bs" ? "Bošnjački kulturni centar El Taqwa" : "Bosniakischer Kulturverein El Taqwa"}
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="text-xl md:text-2xl text-white/80 mb-4 drop-shadow-lg font-light italic"
-          >
-            {language === "bs" ? "Mjesto mira i zajedništva" : "Ein Ort des Friedens und der Gemeinschaft"}
-          </motion.p>
-
-          {/* Mashallah Calligraphy */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="mb-12"
-          >
-            <p className="text-2xl md:text-4xl font-arabic text-white/80 drop-shadow-lg">
+          
+          {/* Mashallah bottom left */}
+          <div className="absolute bottom-20 left-10 opacity-5 pointer-events-none">
+            <p className="text-[8rem] md:text-[12rem] font-arabic text-white leading-none">
               ما شاء الله
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center"
-          >
-            <Link to="/gebetszeiten">
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-12 py-5 bg-white text-primary rounded-full text-lg font-bold shadow-2xl hover:shadow-[0_25px_50px_rgba(255,255,255,0.25)] transition-all duration-300"
-                style={{ boxShadow: 'var(--shadow-glow)' }}
-              >
-                {t("nav.prayerTimes")}
-              </motion.button>
-            </Link>
-            <Link to="/about">
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(255,255,255,0.25)" }}
-                whileTap={{ scale: 0.95 }}
-                className="px-12 py-5 bg-white/10 backdrop-blur-lg text-white border-2 border-white/40 rounded-full text-lg font-bold shadow-2xl hover:shadow-[0_25px_50px_rgba(255,255,255,0.15)] transition-all duration-300"
-              >
-                {t("nav.about")}
-              </motion.button>
-            </Link>
-          </motion.div>
+          {/* Simple Islamic Pattern - Very Subtle */}
+          <div className="absolute inset-0 opacity-5">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="subtlePattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                  <circle cx="50" cy="50" r="30" fill="none" stroke="white" strokeWidth="1"/>
+                  <circle cx="50" cy="50" r="20" fill="none" stroke="white" strokeWidth="0.5"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#subtlePattern)"/>
+            </svg>
+          </div>
         </div>
 
+        {/* Content - Left Aligned */}
+        <div className="relative z-10 container mx-auto px-8 md:px-16 max-w-7xl">
+          <div className="max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="mb-6"
+            >
+              <h2 className="text-7xl md:text-9xl font-bold text-white drop-shadow-2xl tracking-wider">
+                ET TAQWA
+              </h2>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg"
+            >
+              {t("home.welcome")}
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="text-xl md:text-2xl text-white/90 mb-3 font-light"
+            >
+              {language === "bs" ? "Bošnjački kulturni centar El Taqwa" : "Bosniakischer Kulturverein El Taqwa"}
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="text-lg md:text-xl text-white/80 mb-12 font-light italic"
+            >
+              {language === "bs" ? "Mjesto mira i zajedništva" : "Ein Ort des Friedens und der Gemeinschaft"}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.0, duration: 0.8 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <Link to="/gebetszeiten">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-10 py-4 bg-white text-primary rounded-lg text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300"
+                >
+                  {t("nav.prayerTimes")}
+                </motion.button>
+              </Link>
+              <Link to="/about">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-10 py-4 bg-white/10 backdrop-blur-sm text-white border border-white/30 rounded-lg text-lg font-semibold hover:bg-white/20 transition-all duration-300"
+                >
+                  {t("nav.about")}
+                </motion.button>
+              </Link>
+            </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Quick Links Section */}
