@@ -51,6 +51,12 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             ))}
+            <NavLink
+              to="/auth"
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Admin
+            </NavLink>
             <Button
               variant="ghost"
               size="sm"
@@ -92,6 +98,13 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             ))}
+            <NavLink
+              to="/auth"
+              onClick={() => setIsOpen(false)}
+              className="block px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Admin
+            </NavLink>
             <Button
               variant="ghost"
               size="sm"
