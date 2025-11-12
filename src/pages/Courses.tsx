@@ -11,39 +11,39 @@ const Courses = () => {
     {
       title: t("courses.quranTitle"),
       description: t("courses.quranDesc"),
-      schedule: "Samstag & Sonntag",
-      time: "Nach den Gebetszeiten",
-      target: "Kinder, Jugendliche & Erwachsene",
+      schedule: t("courses.satSun"),
+      time: t("courses.afterPrayer"),
+      target: t("courses.kidsYouthAdults"),
     },
     {
-      title: "Arabisch für Anfänger",
-      description: "Grundlagen der arabischen Sprache für ein besseres Verständnis",
-      schedule: "Mittwoch",
-      time: "18:00 - 19:30 Uhr",
-      target: "Erwachsene",
+      title: t("courses.arabicTitle"),
+      description: t("courses.arabicDesc"),
+      schedule: t("courses.wednesday"),
+      time: "18:00 - 19:30",
+      target: t("courses.adults"),
     },
     {
-      title: "Islamische Studien",
-      description: "Vertiefen Sie Ihr Wissen über islamische Geschichte und Lehre",
-      schedule: "Freitag",
-      time: "19:00 - 20:30 Uhr",
-      target: "Alle Altersgruppen",
+      title: t("courses.islamicTitle"),
+      description: t("courses.islamicDesc"),
+      schedule: t("courses.friday"),
+      time: "19:00 - 20:30",
+      target: t("courses.allAges"),
     },
     {
-      title: "Bosnisch-Unterricht",
-      description: "Bewahren Sie die Verbindung zu Ihrer Muttersprache und Kultur",
-      schedule: "Sonntag",
-      time: "10:00 - 12:00 Uhr",
-      target: "Kinder & Jugendliche",
+      title: t("courses.bosnianTitle"),
+      description: t("courses.bosnianDesc"),
+      schedule: t("courses.sunday"),
+      time: "10:00 - 12:00",
+      target: t("courses.kidsYouth"),
     },
   ];
 
   const benefits = [
-    "Die Koranschrift beherrschen",
-    "Den Koran richtig lesen lernen",
-    "Tajweed und die Schönheit des Koranlesens perfektionieren",
-    "Den Weg des Auswendiglernens beginnen oder fortsetzen",
-    "Gemeinsam in Wissen, Glauben und Anbetung wachsen",
+    t("courses.benefit1"),
+    t("courses.benefit2"),
+    t("courses.benefit3"),
+    t("courses.benefit4"),
+    t("courses.benefit5"),
   ];
 
   return (
@@ -100,10 +100,10 @@ const Courses = () => {
                 <div className="flex flex-col justify-center space-y-6">
                   <div>
                     <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                      Willkommen in der Koranschule
+                      {t("courses.welcomeTitle")}
                     </h2>
                     <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                      Liebe Gemeindemitglieder, vor uns liegt ein neues Schuljahr in der Koranschule - eine neue Gelegenheit zu:
+                      {t("courses.welcomeText")}
                     </p>
                   </div>
 
@@ -124,10 +124,10 @@ const Courses = () => {
 
                   <div className="pt-6">
                     <p className="text-lg font-semibold text-primary mb-4">
-                      Verpassen Sie nicht noch eine Gelegenheit zum Lernen, Wachsen und sich Allah näherzukommen!
+                      {t("courses.dontMiss")}
                     </p>
                     <p className="text-2xl font-bold text-accent">
-                      Die Einschreibung läuft!
+                      {t("courses.enrollmentOpen")}
                     </p>
                   </div>
 
@@ -136,14 +136,14 @@ const Courses = () => {
                     <div className="flex items-center gap-3 bg-card/50 backdrop-blur-sm rounded-xl p-4 border border-border/50">
                       <Phone className="w-5 h-5 text-primary" />
                       <div>
-                        <p className="text-sm text-muted-foreground font-medium">Für Männer:</p>
+                        <p className="text-sm text-muted-foreground font-medium">{t("courses.forMen")}</p>
                         <p className="text-lg font-bold text-foreground">+43 660 5515940</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 bg-card/50 backdrop-blur-sm rounded-xl p-4 border border-border/50">
                       <Phone className="w-5 h-5 text-accent" />
                       <div>
-                        <p className="text-sm text-muted-foreground font-medium">Für Frauen:</p>
+                        <p className="text-sm text-muted-foreground font-medium">{t("courses.forWomen")}</p>
                         <p className="text-lg font-bold text-foreground">+43 660 2001711</p>
                       </div>
                     </div>
@@ -199,10 +199,10 @@ const Courses = () => {
                 <div className="flex flex-col justify-center space-y-6 order-1 md:order-2">
                   <div>
                     <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-                      Melden Sie Ihr Kind an!
+                      {t("courses.mektebTitle")}
                     </h2>
                     <p className="text-lg text-muted-foreground leading-relaxed">
-                      Liebe Eltern, der Mekteb ist der erste Ort nach dem familiären Umfeld, wo Kinder über Glauben, Liebe und Respekt lernen.
+                      {t("courses.mektebText")}
                     </p>
                   </div>
 
@@ -210,29 +210,29 @@ const Courses = () => {
                     <div className="flex items-center gap-3 mb-4">
                       <Calendar className="w-6 h-6 text-accent" />
                       <div>
-                        <p className="text-sm text-muted-foreground font-medium">Einschreibung:</p>
-                        <p className="text-xl font-bold text-foreground">6. & 7. September 2025</p>
-                        <p className="text-base text-muted-foreground">(Samstag & Sonntag)</p>
+                        <p className="text-sm text-muted-foreground font-medium">{t("courses.mektebEnrollment")}</p>
+                        <p className="text-xl font-bold text-foreground">{t("courses.mektebDate")}</p>
+                        <p className="text-base text-muted-foreground">{t("courses.mektebDays")}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Clock className="w-6 h-6 text-accent" />
                       <div>
-                        <p className="text-sm text-muted-foreground font-medium">Uhrzeit:</p>
-                        <p className="text-xl font-bold text-foreground">11:00 - 13:00 Uhr</p>
+                        <p className="text-sm text-muted-foreground font-medium">{t("courses.mektebTime")}</p>
+                        <p className="text-xl font-bold text-foreground">{t("courses.mektebHours")}</p>
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-4">
                     <p className="text-base text-muted-foreground leading-relaxed">
-                      Im Mekteb erwerben sie Wissen über den Islam, neue Freundschaften und ein Gefühl der Zugehörigkeit zur Gemeinschaft.
+                      {t("courses.mektebBenefit")}
                     </p>
                     <p className="text-lg font-semibold text-primary">
-                      Indem Sie Ihr Kind im Mekteb anmelden, geben Sie ihm das beste Geschenk, das es ein Leben lang begleiten wird – Wissen und Erziehung im Geiste des Islam.
+                      {t("courses.mektebGift")}
                     </p>
                     <p className="text-xl font-bold text-accent">
-                      Mekteb – Investition in die Zukunft unserer Kinder!
+                      {t("courses.mektebInvestment")}
                     </p>
                   </div>
                 </div>
