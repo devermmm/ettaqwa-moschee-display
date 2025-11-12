@@ -13,99 +13,172 @@ const NewHome = () => {
       <div className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
         {/* Animated Islamic Geometric Patterns */}
         <div className="absolute inset-0 overflow-hidden">
-          {/* Rotating Stars */}
-          {[...Array(8)].map((_, i) => (
+          {/* Islamic Geometric Pattern Background */}
+          <div className="absolute inset-0 opacity-10">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="islamicPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+                  {/* 8-pointed star (Rub el Hizb) */}
+                  <g transform="translate(100, 100)">
+                    <path d="M 0,-40 L 10,-10 L 40,0 L 10,10 L 0,40 L -10,10 L -40,0 L -10,-10 Z" 
+                          fill="white" opacity="0.6"/>
+                    <circle cx="0" cy="0" r="30" fill="none" stroke="white" strokeWidth="2"/>
+                    <circle cx="0" cy="0" r="20" fill="none" stroke="white" strokeWidth="1.5"/>
+                    <circle cx="0" cy="0" r="10" fill="none" stroke="white" strokeWidth="1"/>
+                  </g>
+                  {/* Decorative corner elements */}
+                  <circle cx="0" cy="0" r="8" fill="white" opacity="0.4"/>
+                  <circle cx="200" cy="0" r="8" fill="white" opacity="0.4"/>
+                  <circle cx="0" cy="200" r="8" fill="white" opacity="0.4"/>
+                  <circle cx="200" cy="200" r="8" fill="white" opacity="0.4"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#islamicPattern)"/>
+            </svg>
+          </div>
+
+          {/* Animated Rotating Islamic Stars */}
+          {[...Array(6)].map((_, i) => (
             <motion.div
               key={`star-${i}`}
               className="absolute"
               style={{
-                left: `${15 + i * 12}%`,
-                top: `${20 + (i % 3) * 25}%`,
+                left: `${10 + i * 15}%`,
+                top: `${15 + (i % 3) * 30}%`,
               }}
               animate={{
                 rotate: 360,
-                scale: [1, 1.2, 1],
+                scale: [1, 1.3, 1],
               }}
               transition={{
-                duration: 20 + i * 2,
+                duration: 25 + i * 3,
                 repeat: Infinity,
                 ease: "linear",
               }}
             >
-              <svg width="60" height="60" viewBox="0 0 100 100" className="opacity-20">
-                <path
-                  d="M50,10 L55,40 L85,40 L60,60 L70,90 L50,70 L30,90 L40,60 L15,40 L45,40 Z"
-                  fill="white"
-                />
+              <svg width="80" height="80" viewBox="0 0 100 100" className="opacity-15">
+                <g transform="translate(50, 50)">
+                  {/* 8-pointed Islamic star */}
+                  <path d="M 0,-35 L 8,-8 L 35,0 L 8,8 L 0,35 L -8,8 L -35,0 L -8,-8 Z" 
+                        fill="white"/>
+                  <circle cx="0" cy="0" r="25" fill="none" stroke="white" strokeWidth="2.5"/>
+                  <path d="M 0,-20 L 5,-5 L 20,0 L 5,5 L 0,20 L -5,5 L -20,0 L -5,-5 Z" 
+                        fill="none" stroke="white" strokeWidth="2"/>
+                </g>
               </svg>
             </motion.div>
           ))}
 
-          {/* Floating Circles */}
-          {[...Array(6)].map((_, i) => (
+          {/* Floating Islamic Medallions */}
+          {[...Array(4)].map((_, i) => (
             <motion.div
-              key={`circle-${i}`}
-              className="absolute rounded-full border-2 border-white/10"
+              key={`medallion-${i}`}
+              className="absolute"
               style={{
-                width: `${100 + i * 50}px`,
-                height: `${100 + i * 50}px`,
-                left: `${60 + i * 5}%`,
-                top: `${10 + i * 15}%`,
+                left: `${65 + i * 8}%`,
+                top: `${20 + i * 20}%`,
               }}
               animate={{
-                y: [0, -30, 0],
-                opacity: [0.1, 0.2, 0.1],
+                y: [0, -40, 0],
+                rotate: [0, 180, 360],
+                opacity: [0.1, 0.25, 0.1],
               }}
               transition={{
-                duration: 8 + i * 2,
+                duration: 15 + i * 3,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-            />
+            >
+              <svg width="100" height="100" viewBox="0 0 100 100">
+                <g transform="translate(50, 50)">
+                  <circle cx="0" cy="0" r="40" fill="none" stroke="white" strokeWidth="2" opacity="0.6"/>
+                  <circle cx="0" cy="0" r="30" fill="none" stroke="white" strokeWidth="1.5" opacity="0.5"/>
+                  <path d="M 0,-30 Q 30,0 0,30 Q -30,0 0,-30" fill="none" stroke="white" strokeWidth="2" opacity="0.4"/>
+                  <path d="M -30,0 Q 0,30 30,0 Q 0,-30 -30,0" fill="none" stroke="white" strokeWidth="2" opacity="0.4"/>
+                  {/* Inner star */}
+                  <path d="M 0,-15 L 4,-4 L 15,0 L 4,4 L 0,15 L -4,4 L -15,0 L -4,-4 Z" 
+                        fill="white" opacity="0.5"/>
+                </g>
+              </svg>
+            </motion.div>
           ))}
 
-          {/* Geometric Islamic Pattern */}
+          {/* Large Rotating Mandala - Top Left */}
           <motion.div
-            className="absolute top-20 left-10"
+            className="absolute top-10 left-10"
             animate={{
-              rotate: [0, 360],
+              rotate: 360,
             }}
             transition={{
-              duration: 30,
+              duration: 40,
               repeat: Infinity,
               ease: "linear",
             }}
           >
-            <svg width="120" height="120" viewBox="0 0 100 100" className="opacity-10">
-              <pattern id="pattern1" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="10" cy="10" r="2" fill="white" />
-              </pattern>
-              <rect width="100" height="100" fill="url(#pattern1)" />
-              <circle cx="50" cy="50" r="40" fill="none" stroke="white" strokeWidth="2" />
-              <circle cx="50" cy="50" r="30" fill="none" stroke="white" strokeWidth="2" />
-              <circle cx="50" cy="50" r="20" fill="none" stroke="white" strokeWidth="2" />
+            <svg width="180" height="180" viewBox="0 0 100 100" className="opacity-8">
+              <g transform="translate(50, 50)">
+                <circle cx="0" cy="0" r="45" fill="none" stroke="white" strokeWidth="1.5"/>
+                <circle cx="0" cy="0" r="35" fill="none" stroke="white" strokeWidth="2"/>
+                <circle cx="0" cy="0" r="25" fill="none" stroke="white" strokeWidth="1.5"/>
+                <circle cx="0" cy="0" r="15" fill="none" stroke="white" strokeWidth="2"/>
+                {/* 12 petals */}
+                {[...Array(12)].map((_, i) => {
+                  const angle = (i * 30 * Math.PI) / 180;
+                  const x1 = Math.cos(angle) * 15;
+                  const y1 = Math.sin(angle) * 15;
+                  const x2 = Math.cos(angle) * 40;
+                  const y2 = Math.sin(angle) * 40;
+                  return (
+                    <line
+                      key={i}
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                      stroke="white"
+                      strokeWidth="1.5"
+                    />
+                  );
+                })}
+              </g>
             </svg>
           </motion.div>
 
+          {/* Large Rotating Mandala - Bottom Right */}
           <motion.div
-            className="absolute bottom-20 right-10"
+            className="absolute bottom-10 right-10"
             animate={{
-              rotate: [360, 0],
+              rotate: -360,
             }}
             transition={{
-              duration: 25,
+              duration: 35,
               repeat: Infinity,
               ease: "linear",
             }}
           >
-            <svg width="100" height="100" viewBox="0 0 100 100" className="opacity-10">
-              <path
-                d="M50,10 L90,50 L50,90 L10,50 Z"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-              />
-              <circle cx="50" cy="50" r="25" fill="none" stroke="white" strokeWidth="2" />
+            <svg width="160" height="160" viewBox="0 0 100 100" className="opacity-8">
+              <g transform="translate(50, 50)">
+                {/* Octagon base */}
+                <path
+                  d="M 0,-40 L 28,-28 L 40,0 L 28,28 L 0,40 L -28,28 L -40,0 L -28,-28 Z"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+                {/* Inner octagon */}
+                <path
+                  d="M 0,-25 L 18,-18 L 25,0 L 18,18 L 0,25 L -18,18 L -25,0 L -18,-18 Z"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="1.5"
+                />
+                {/* Center star */}
+                <path
+                  d="M 0,-15 L 4,-4 L 15,0 L 4,4 L 0,15 L -4,4 L -15,0 L -4,-4 Z"
+                  fill="white"
+                  opacity="0.6"
+                />
+              </g>
             </svg>
           </motion.div>
         </div>
