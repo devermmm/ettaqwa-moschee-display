@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import PrayerTimesLayout from "./pages/PrayerTimesLayout";
 import AboutUs from "./pages/AboutUs";
 import Projects from "./pages/Projects";
+import Courses from "./pages/Courses";
 import News from "./pages/News";
 import Auth from "./pages/Auth";
 import AdminPanel from "./pages/AdminPanel";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/gebetszeiten" element={<PrayerTimesLayout />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/courses" element={<Courses />} />
           <Route path="/news" element={<News />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<AdminPanel />} />
