@@ -15,6 +15,9 @@ const PrayerTimes = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [nextPrayerIndex, setNextPrayerIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showFullscreenButton, setShowFullscreenButton] = useState(true);
+  const [currentAdIndex, setCurrentAdIndex] = useState(0);
+  const [showAd, setShowAd] = useState(false);
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -25,6 +28,48 @@ const PrayerTimes = () => {
       setIsFullscreen(false);
     }
   };
+
+  // Auto-hide fullscreen button on mouse inactivity
+  useEffect(() => {
+    if (!isFullscreen) return;
+
+    let timeoutId: NodeJS.Timeout;
+    
+    const handleMouseMove = () => {
+      setShowFullscreenButton(true);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setShowFullscreenButton(false);
+      }, 3000);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    
+    // Initial timeout
+    timeoutId = setTimeout(() => {
+      setShowFullscreenButton(false);
+    }, 3000);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(timeoutId);
+    };
+  }, [isFullscreen]);
+
+  // Advertisement slideshow - every 15 seconds
+  useEffect(() => {
+    if (!isFullscreen) return;
+
+    const adInterval = setInterval(() => {
+      setShowAd(true);
+      setTimeout(() => {
+        setShowAd(false);
+        setCurrentAdIndex((prev) => (prev + 1) % 2); // Toggle between ads
+      }, 10000); // Show ad for 10 seconds
+    }, 15000); // Every 15 seconds
+
+    return () => clearInterval(adInterval);
+  }, [isFullscreen]);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -116,11 +161,12 @@ const PrayerTimes = () => {
       {/* Fullscreen Toggle Button */}
       <motion.button
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={{ opacity: showFullscreenButton ? 1 : 0, y: 0 }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={toggleFullscreen}
-        className="fixed bottom-6 right-6 z-50 px-6 py-4 bg-white/90 hover:bg-white backdrop-blur-md rounded-2xl border-2 border-emerald-600/50 transition-all duration-300 shadow-2xl flex items-center gap-3 group"
+        className="fixed bottom-6 right-6 z-50 px-6 py-4 bg-white/90 hover:bg-white backdrop-blur-md rounded-2xl border-2 border-emerald-600/50 transition-all duration-700 shadow-2xl flex items-center gap-3 group"
+        style={{ pointerEvents: showFullscreenButton ? 'auto' : 'none' }}
         aria-label="Toggle Fullscreen"
       >
         {isFullscreen ? (
@@ -298,6 +344,37 @@ const PrayerTimes = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Advertisement Overlay */}
+      {showAd && isFullscreen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className="fixed inset-0 z-50 bg-gradient-to-br from-emerald-900/95 via-emerald-800/95 to-teal-900/95 backdrop-blur-sm flex items-center justify-center p-8"
+        >
+          {currentAdIndex === 0 ? (
+            <motion.img
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              src="/src/assets/quran-school-poster.png"
+              alt="Quran School"
+              className="max-w-5xl max-h-[90vh] object-contain rounded-3xl shadow-2xl"
+            />
+          ) : (
+            <motion.img
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              src="/src/assets/mekteb-registration.png"
+              alt="Mekteb Registration"
+              className="max-w-5xl max-h-[90vh] object-contain rounded-3xl shadow-2xl"
+            />
+          )}
+        </motion.div>
+      )}
     </div>
   );
 };
