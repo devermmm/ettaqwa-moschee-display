@@ -1,14 +1,52 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Clock, BookOpen, Users, Heart, HandHeart, Copy } from "lucide-react";
+import { Clock, BookOpen, Users, Heart, HandHeart, Copy, TrendingUp } from "lucide-react";
 import ReviewsSection from "@/components/ReviewsSection";
 import { useLanguage } from "@/contexts/LanguageContext";
 import palestineJerusalem from "@/assets/palestine-jerusalem.jpg";
 import palestineChildren from "@/assets/palestine-children.jpg";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const NewHome = () => {
   const { t, language } = useLanguage();
+  const [donationStats, setDonationStats] = useState({ count: 0, total: 0 });
+  
+  useEffect(() => {
+    const fetchDonationStats = async () => {
+      const { data, error } = await supabase
+        .from('donations')
+        .select('amount')
+        .eq('campaign', 'palestine');
+      
+      if (data && !error) {
+        const total = data.reduce((sum, donation) => sum + Number(donation.amount), 0);
+        setDonationStats({ count: data.length, total });
+      }
+    };
+    
+    fetchDonationStats();
+    
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel('donations-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'donations',
+          filter: 'campaign=eq.palestine'
+        },
+        () => fetchDonationStats()
+      )
+      .subscribe();
+    
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
   
   return (
     <div className="min-h-screen">
@@ -248,6 +286,44 @@ const NewHome = () => {
             viewport={{ once: true }}
             className="max-w-2xl mx-auto"
           >
+            {/* Donation Stats */}
+            <div className="grid grid-cols-2 gap-6 mb-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="backdrop-blur-md rounded-2xl p-6 border border-primary/30 text-center"
+                style={{ boxShadow: 'var(--shadow-card)', background: 'var(--gradient-card)' }}
+              >
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/20 mb-3">
+                  <TrendingUp className="w-6 h-6 text-primary" />
+                </div>
+                <p className="text-3xl font-bold text-foreground mb-1">
+                  €{donationStats.total.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {language === "bs" ? "Ukupno prikupljeno" : "Gesamt gesammelt"}
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="backdrop-blur-md rounded-2xl p-6 border border-primary/30 text-center"
+                style={{ boxShadow: 'var(--shadow-card)', background: 'var(--gradient-card)' }}
+              >
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/20 mb-3">
+                  <HandHeart className="w-6 h-6 text-accent" />
+                </div>
+                <p className="text-3xl font-bold text-foreground mb-1">{donationStats.count}</p>
+                <p className="text-sm text-muted-foreground">
+                  {language === "bs" ? "Broj donacija" : "Anzahl Spenden"}
+                </p>
+              </motion.div>
+            </div>
+
             <div className="backdrop-blur-md rounded-3xl p-10 border border-primary/30 overflow-hidden"
               style={{ boxShadow: 'var(--shadow-card)', background: 'var(--gradient-card)' }}
             >
