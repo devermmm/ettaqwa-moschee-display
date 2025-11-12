@@ -1,19 +1,25 @@
 import { NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Languages } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Gebetszeiten", path: "/gebetszeiten" },
-    { name: "Über uns", path: "/about" },
-    { name: "Projekte", path: "/projects" },
-    { name: "Kurse", path: "/courses" },
+    { name: t("nav.home"), path: "/" },
+    { name: t("nav.prayerTimes"), path: "/gebetszeiten" },
+    { name: t("nav.about"), path: "/about" },
+    { name: t("nav.projects"), path: "/projects" },
+    { name: t("nav.courses"), path: "/courses" },
   ];
+
+  const toggleLanguage = () => {
+    setLanguage(language === "bs" ? "de" : "bs");
+  };
 
   return (
     <nav className="bg-card/95 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-sm">
@@ -45,6 +51,15 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             ))}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleLanguage}
+              className="ml-2 flex items-center gap-2"
+            >
+              <Languages className="h-4 w-4" />
+              {language === "bs" ? "DE" : "BS"}
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -77,6 +92,15 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             ))}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleLanguage}
+              className="w-full flex items-center justify-center gap-2"
+            >
+              <Languages className="h-4 w-4" />
+              {language === "bs" ? "Deutsch" : "Bosanski"}
+            </Button>
           </div>
         )}
       </div>

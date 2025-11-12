@@ -1,13 +1,16 @@
 import { motion } from "framer-motion";
-import { BookOpen, Users, Clock, Calendar, Phone, CheckCircle2, Award } from "lucide-react";
+import { BookOpen, Users, Clock, Calendar, Phone, CheckCircle2, Award, Mail } from "lucide-react";
 import quranSchoolPoster from "@/assets/quran-school-poster.png";
 import mektebRegistration from "@/assets/mekteb-registration.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Courses = () => {
+  const { t } = useLanguage();
+  
   const courses = [
     {
-      title: "Koran-Unterricht",
-      description: "Lernen Sie die korrekte Rezitation des Heiligen Korans mit Tajweed",
+      title: t("courses.quranTitle"),
+      description: t("courses.quranDesc"),
       schedule: "Samstag & Sonntag",
       time: "Nach den Gebetszeiten",
       target: "Kinder, Jugendliche & Erwachsene",
@@ -66,7 +69,7 @@ const Courses = () => {
               transition={{ delay: 0.2 }}
               className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
             >
-              Unsere Kurse
+              {t("courses.title")}
             </motion.h1>
             <motion.div
               initial={{ scaleX: 0 }}
@@ -80,7 +83,7 @@ const Courses = () => {
               transition={{ delay: 0.5 }}
               className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
             >
-              Bildungsangebote für alle Altersgruppen und Wissensstufen
+              {t("courses.subtitle")}
             </motion.p>
           </div>
 

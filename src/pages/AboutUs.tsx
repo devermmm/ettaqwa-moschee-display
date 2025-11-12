@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import communityImage from "@/assets/community.png";
 import mosqueInteriorImage from "@/assets/mosque-interior.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const AboutUs = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted">
       <div className="container mx-auto px-4 py-20">
@@ -20,7 +23,7 @@ const AboutUs = () => {
               transition={{ delay: 0.2 }}
               className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent"
             >
-              Über Uns
+              {t("about.title")}
             </motion.h1>
             <motion.div
               initial={{ scaleX: 0 }}
@@ -74,24 +77,14 @@ const AboutUs = () => {
               className="bg-card/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-border/50"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-                Willkommen in unserer Gemeinschaft
+                {t("about.welcomeTitle")}
               </h2>
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  Der Bosniakische Kulturverein El Taqwa ist Teil der Bosniakischen Kultusgemeinde Mitte. 
-                  Der Verein wurde am 17. März 2015 erstmals vereinsrechtlich registriert. Er ist auch unter 
-                  dem Namen Dzemat Et-Taqwa bekannt. Regelmäßig finden in den Räumlichkeiten des Vereins 
-                  Freitagsgebete statt.
+                  {t("about.welcomeText1")}
                 </p>
                 <p>
-                  Unsere Moschee ist ein Ort des Friedens, der Gemeinschaft und des spirituellen Wachstums. 
-                  Als bosnische Moschee pflegen wir unsere kulturellen Wurzeln und öffnen gleichzeitig 
-                  unsere Türen für alle Menschen, unabhängig von ihrer Herkunft.
-                </p>
-                <p>
-                  Wir sind eine lebendige Gemeinschaft, die sich den islamischen Werten verpflichtet fühlt 
-                  und diese im täglichen Leben praktiziert. Unsere Moschee dient nicht nur als Ort des Gebets, 
-                  sondern auch als Zentrum für Bildung, soziale Aktivitäten und gemeinschaftliches Engagement.
+                  {t("about.welcomeText2")}
                 </p>
               </div>
             </motion.div>
@@ -103,17 +96,11 @@ const AboutUs = () => {
               className="bg-card/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-border/50"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-                Jeder ist willkommen
+                {t("about.everyoneTitle")}
               </h2>
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  Bei uns ist jeder herzlich willkommen – ob Muslim oder Nicht-Muslim, ob jung oder alt, 
-                  ob Sie zum ersten Mal eine Moschee besuchen oder bereits Teil unserer Gemeinschaft sind. 
-                  Wir glauben an Dialog, gegenseitigen Respekt und das gemeinsame Streben nach Verständnis.
-                </p>
-                <p>
-                  Unsere Türen stehen offen für alle, die mehr über den Islam erfahren möchten, die einen 
-                  Ort der Ruhe und des Gebets suchen oder einfach nur unsere Gemeinschaft kennenlernen möchten.
+                  {t("about.everyoneText")}
                 </p>
               </div>
             </motion.div>
@@ -125,17 +112,14 @@ const AboutUs = () => {
               className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-primary/20"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-                Unsere Mission
+                {t("about.missionTitle")}
               </h2>
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  Wir streben danach, einen Raum zu schaffen, in dem Menschen ihren Glauben leben können, 
-                  sich gegenseitig unterstützen und gemeinsam wachsen. Durch Bildungsprogramme, soziale 
-                  Projekte und regelmäßige Veranstaltungen fördern wir das Verständnis für islamische Werte 
-                  und stärken den Zusammenhalt in unserer Gemeinschaft.
+                  {t("about.missionText1")}
                 </p>
-                <p className="text-primary font-semibold text-xl">
-                  Besuchen Sie uns und werden Sie Teil unserer Familie!
+                <p>
+                  {t("about.missionText2")}
                 </p>
               </div>
             </motion.div>

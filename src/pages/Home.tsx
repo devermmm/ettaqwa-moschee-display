@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { NavLink } from "react-router-dom";
 import { Clock, MapPin, Calendar } from "lucide-react";
 import mosqueInterior from "@/assets/mosque-interior.png";
+import { useLanguage } from "@/contexts/LanguageContext";
+
 const Home = () => {
+  const { t } = useLanguage();
+  
   return <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
@@ -17,13 +21,13 @@ const Home = () => {
           <div className="space-y-4 animate-fade-in">
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-inter drop-shadow-2xl leading-tight">
-              HERZLICH WILLKOMMEN
+              {t("home.welcome")}
             </h1>
             <p className="text-3xl md:text-5xl lg:text-6xl font-amiri text-primary-glow drop-shadow-2xl leading-relaxed">
               المركز الاسلامي في فيينا
             </p>
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold font-inter drop-shadow-2xl tracking-wide">
-              ET-TAQWA MOSCHEE
+              {t("home.mosque")}
             </h2>
           </div>
           
@@ -31,7 +35,7 @@ const Home = () => {
             <NavLink to="/gebetszeiten">
               <Button size="lg" className="text-lg font-semibold shadow-2xl hover:scale-105 transition-transform px-8 py-6 bg-primary hover:bg-primary/90">
                 <Clock className="mr-2 h-5 w-5" />
-                Gebetszeiten anzeigen
+                {t("home.viewPrayerTimes")}
               </Button>
             </NavLink>
           </div>
@@ -48,7 +52,7 @@ const Home = () => {
                   <p className="text-sm font-inter text-primary font-semibold tracking-wider">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
                 </div>
                 <p className="text-base md:text-lg text-muted-foreground font-inter italic">
-                  Im Namen Allahs, des Allerbarmers, des Barmherzigen
+                  {t("home.blessing")}
                 </p>
               </div>
               
@@ -83,10 +87,10 @@ const Home = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Unsere Angebote
+              {t("home.offers")}
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Entdecken Sie unsere vielfältigen Angebote und Services für die Gemeinde
+              {t("home.offersDesc")}
             </p>
           </div>
           
@@ -96,13 +100,13 @@ const Home = () => {
                 <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
                   <Clock className="h-8 w-8 text-primary-foreground" />
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">Gebetszeiten</h3>
+                <h3 className="text-2xl font-bold text-foreground">{t("home.prayerTimesTitle")}</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Aktuelle Gebetszeiten für Wien mit Live-Countdown zum nächsten Gebet und Vollbild-Modus für die Moschee
+                  {t("home.prayerTimesDesc")}
                 </p>
                 <NavLink to="/gebetszeiten">
                   <Button variant="default" className="w-full mt-4 group-hover:bg-primary/90">
-                    Gebetszeiten anzeigen
+                    {t("home.viewPrayerTimes")}
                   </Button>
                 </NavLink>
               </div>
@@ -113,13 +117,13 @@ const Home = () => {
                 <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-accent to-accent/70 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
                   <MapPin className="h-8 w-8 text-accent-foreground" />
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">Kontakt & Anfahrt</h3>
+                <h3 className="text-2xl font-bold text-foreground">{t("home.contactTitle")}</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Besuchen Sie uns in der Et-Taqwa Moschee Wien. Wir freuen uns auf Ihren Besuch
+                  {t("home.contactDesc")}
                 </p>
                 <NavLink to="/kontakte">
                   <Button variant="outline" className="w-full mt-4 group-hover:border-accent">
-                    Mehr erfahren
+                    {t("home.learnMore")}
                   </Button>
                 </NavLink>
               </div>
@@ -133,7 +137,7 @@ const Home = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Besuchen Sie uns
+              {t("home.visitUs")}
             </h2>
             <p className="text-muted-foreground text-lg">
               Dzemat Et-Taqwa - Moschee - مسجد
@@ -157,7 +161,7 @@ const Home = () => {
                   <div>
                     <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
                       <MapPin className="h-6 w-6 text-primary" />
-                      Adresse
+                      {t("home.address")}
                     </h3>
                     <p className="text-lg text-foreground/90">
                       Dzemat Et-Taqwa Moschee<br />
@@ -166,14 +170,14 @@ const Home = () => {
                   </div>
 
                   <div className="pt-6 border-t border-border space-y-4">
-                    <h4 className="font-semibold text-lg mb-4">Navigation & Ansichten</h4>
+                    <h4 className="font-semibold text-lg mb-4">{t("home.navigation")}</h4>
                     
                     <a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x476d05d00086649f:0x7f459c880e35de51" target="_blank" rel="noopener noreferrer" className="block">
                       <Button variant="outline" className="w-full justify-start hover:bg-primary/10 hover:border-primary group">
                         <svg className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                         </svg>
-                        In Google Maps öffnen
+                        {t("home.openInGoogleMaps")}
                       </Button>
                     </a>
 
@@ -182,7 +186,7 @@ const Home = () => {
                         <svg className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                         </svg>
-                        In Apple Maps öffnen
+                        {t("home.openInAppleMaps")}
                       </Button>
                     </a>
 
@@ -192,7 +196,7 @@ const Home = () => {
                           <circle cx="12" cy="12" r="10" />
                           <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                         </svg>
-                        360° Ansicht
+                        {t("home.view360")}
                       </Button>
                     </a>
                   </div>
@@ -209,15 +213,15 @@ const Home = () => {
           <div className="text-center space-y-4">
             <div className="space-y-2">
               <p className="text-lg md:text-xl text-foreground font-amiri">
-                اللهم بارك لنا
+                {t("home.blessing")}
               </p>
               <p className="text-sm md:text-base text-muted-foreground font-inter">
-                Allah segne uns alle
+                {t("home.blessingTranslation")}
               </p>
             </div>
             <div className="pt-4 border-t border-border/30">
               <p className="text-xs text-muted-foreground">
-                Developed by{" "}
+                {t("footer.developed")}{" "}
                 <a href="https://deverm.com/" target="_blank" rel="noopener noreferrer" className="story-link font-semibold text-primary hover:text-primary/80 transition-colors">
                   DEVERM
                 </a>

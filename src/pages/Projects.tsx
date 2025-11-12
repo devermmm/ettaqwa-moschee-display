@@ -1,47 +1,50 @@
 import { motion } from "framer-motion";
 import { Heart, BookOpen, Users, Sparkles, HandHeart, GraduationCap, Mail } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Projects = () => {
+  const { t } = useLanguage();
+  
   const projects = [
     {
       icon: BookOpen,
-      title: "Islamische Bildung",
-      description: "Förderung von Wissen und Verständnis durch Korankurse, Arabischunterricht und Seminare für alle Altersgruppen.",
+      title: t("projects.education"),
+      description: t("projects.educationDesc"),
       color: "from-emerald-500 to-teal-500",
       gradient: "from-emerald-500/20 to-teal-500/20",
     },
     {
       icon: Heart,
-      title: "Soziale Projekte",
-      description: "Unterstützung bedürftiger Menschen in unserer Gemeinschaft durch Hilfsprogramme und wohltätige Initiativen.",
+      title: t("projects.social"),
+      description: t("projects.socialDesc"),
       color: "from-rose-500 to-pink-500",
       gradient: "from-rose-500/20 to-pink-500/20",
     },
     {
       icon: Users,
-      title: "Gemeinschaftsaktivitäten",
-      description: "Regelmäßige Veranstaltungen, gemeinsame Iftare und kulturelle Programme zur Stärkung des Zusammenhalts.",
+      title: t("projects.community"),
+      description: t("projects.communityDesc"),
       color: "from-purple-500 to-indigo-500",
       gradient: "from-purple-500/20 to-indigo-500/20",
     },
     {
       icon: GraduationCap,
-      title: "Jugendarbeit",
-      description: "Programme, Workshops und sportliche Aktivitäten speziell für unsere junge Generation und ihre Entwicklung.",
+      title: t("projects.youth"),
+      description: t("projects.youthDesc"),
       color: "from-amber-500 to-orange-500",
       gradient: "from-amber-500/20 to-orange-500/20",
     },
     {
       icon: HandHeart,
-      title: "Humanitäre Hilfe",
-      description: "Internationale Hilfsprojekte und Unterstützung in Notlagen für Menschen in Not weltweit.",
+      title: t("projects.charity"),
+      description: t("projects.charityDesc"),
       color: "from-blue-500 to-cyan-500",
       gradient: "from-blue-500/20 to-cyan-500/20",
     },
     {
       icon: Sparkles,
-      title: "Kulturelle Programme",
-      description: "Bewahrung und Förderung des kulturellen Erbes durch Veranstaltungen, Vorträge und Feste.",
+      title: t("projects.islamic"),
+      description: t("projects.islamicDesc"),
       color: "from-violet-500 to-fuchsia-500",
       gradient: "from-violet-500/20 to-fuchsia-500/20",
     },
@@ -70,7 +73,7 @@ const Projects = () => {
               transition={{ delay: 0.2 }}
               className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
             >
-              Unsere Projekte
+              {t("projects.title")}
             </motion.h1>
             <motion.div
               initial={{ scaleX: 0 }}
@@ -84,7 +87,7 @@ const Projects = () => {
               transition={{ delay: 0.5 }}
               className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
             >
-              Entdecken Sie unsere vielfältigen Initiativen und Aktivitäten für die Gemeinschaft
+              {t("projects.subtitle")}
             </motion.p>
           </div>
 
@@ -142,17 +145,17 @@ const Projects = () => {
             
             <div className="relative">
               <h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Möchten Sie sich engagieren?
+                {t("projects.getInvolvedTitle")}
               </h2>
               <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-                Wir freuen uns über jede Unterstützung und Teilnahme an unseren Projekten und Initiativen
+                {t("projects.getInvolvedDesc")}
               </p>
               <a
                 href="mailto:info@et-taqwa.at"
                 className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
               >
                 <Mail className="w-5 h-5" />
-                Kontaktieren Sie uns per E-Mail
+                {t("projects.contactEmail")}
               </a>
             </div>
           </motion.div>

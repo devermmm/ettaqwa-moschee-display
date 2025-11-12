@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Clock, Sunrise, Sun, Sunset, Moon, Maximize2, Minimize2 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PrayerTime {
   name: string;
@@ -10,6 +11,7 @@ interface PrayerTime {
 }
 
 const PrayerTimes = () => {
+  const { t } = useLanguage();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [nextPrayerIndex, setNextPrayerIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -50,17 +52,17 @@ const PrayerTimes = () => {
   const isFriday = () => currentTime.getDay() === 5;
 
   const basePrayerTimes: PrayerTime[] = [
-    { name: "Fajr", arabicName: "الفجر", time: "05:09", icon: Sunrise },
-    { name: "Dhuhr", arabicName: "الظهر", time: "11:43", icon: Sun },
-    { name: "Asr", arabicName: "العصر", time: "14:17", icon: Sun },
-    { name: "Maghrib", arabicName: "المغرب", time: "16:40", icon: Sunset },
-    { name: "Isha", arabicName: "العشاء", time: "18:13", icon: Moon },
+    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: "05:08", icon: Sunrise },
+    { name: t("prayerTimes.dhuhr"), arabicName: "الظهر", time: "11:44", icon: Sun },
+    { name: t("prayerTimes.asr"), arabicName: "العصر", time: "14:02", icon: Sun },
+    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: "16:28", icon: Sunset },
+    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: "17:57", icon: Moon },
   ];
 
   const prayerTimes: PrayerTime[] = isFriday()
     ? basePrayerTimes.map(prayer =>
-        prayer.name === "Dhuhr"
-          ? { ...prayer, name: "Jummah", arabicName: "الجمعة", time: "12:15" }
+        prayer.arabicName === "الظهر"
+          ? { ...prayer, name: t("prayerTimes.jummah"), arabicName: "الجمعة", time: "11:44" }
           : prayer
       )
     : basePrayerTimes;
@@ -121,14 +123,14 @@ const PrayerTimes = () => {
           <>
             <Minimize2 className="w-7 h-7 text-emerald-800" />
             <span className="text-emerald-900 font-semibold text-lg hidden sm:inline">
-              Vollbild beenden
+              {t("prayerTimes.exitFullscreen")}
             </span>
           </>
         ) : (
           <>
             <Maximize2 className="w-7 h-7 text-emerald-800" />
             <span className="text-emerald-900 font-semibold text-lg hidden sm:inline">
-              Vollbild
+              {t("prayerTimes.fullscreen")}
             </span>
           </>
         )}
@@ -169,8 +171,8 @@ const PrayerTimes = () => {
           <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-2 md:mb-3 lg:mb-4 drop-shadow-2xl tracking-wide">
             ET TAQWA
           </h1>
-          <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white/90 mb-1 md:mb-2 font-arabic">مسجد التقوى</p>
-          <p className="text-base md:text-xl lg:text-2xl text-white/80">Wien</p>
+          <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white/90 mb-1 md:mb-2 font-arabic">{t("prayerTimes.mosque")}</p>
+          <p className="text-base md:text-xl lg:text-2xl text-white/80">{t("prayerTimes.location")}</p>
         </motion.div>
 
         {/* Current Time */}
@@ -181,7 +183,7 @@ const PrayerTimes = () => {
           className="text-center mb-6 md:mb-8 lg:mb-12"
         >
           <div className="inline-block bg-white/15 backdrop-blur-lg rounded-2xl md:rounded-3xl px-6 md:px-12 lg:px-16 py-4 md:py-6 lg:py-8 border-2 border-white/30 shadow-2xl">
-            <p className="text-white/80 text-xs md:text-sm lg:text-lg mb-1 md:mb-2 uppercase tracking-wider">Aktuelle Zeit</p>
+            <p className="text-white/80 text-xs md:text-sm lg:text-lg mb-1 md:mb-2 uppercase tracking-wider">{t("prayerTimes.today")}</p>
             <p className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white tabular-nums">
               {currentTime.toLocaleTimeString("de-DE", {
                 hour: "2-digit",
@@ -208,7 +210,7 @@ const PrayerTimes = () => {
           className="max-w-7xl mx-auto mb-6 md:mb-8 lg:mb-12"
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center mb-4 md:mb-6 lg:mb-8 uppercase tracking-wider">
-            Gebetszeiten
+            {t("nav.prayerTimes")}
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 lg:gap-6">
             {prayerTimes.map((prayer, index) => {
@@ -235,7 +237,7 @@ const PrayerTimes = () => {
                       className="absolute top-2 md:top-3 lg:top-4 left-1/2 -translate-x-1/2"
                     >
                       <span className="inline-block px-2 md:px-3 lg:px-4 py-1 md:py-1.5 lg:py-2 bg-white/40 rounded-full text-[10px] md:text-xs lg:text-sm text-white font-bold uppercase tracking-wider shadow-lg">
-                        Nächstes
+                        {t("prayerTimes.nextPrayer")}
                       </span>
                     </motion.div>
                   )}
