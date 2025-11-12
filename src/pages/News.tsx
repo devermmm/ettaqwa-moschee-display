@@ -122,7 +122,7 @@ const News = () => {
                       <Calendar className="w-4 h-4" />
                       <span>{formatDate(post.created_at)}</span>
                     </div>
-                    <h2 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+                    <h2 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2 min-h-[4rem]">
                       {post.title}
                     </h2>
                     <p className="text-muted-foreground whitespace-pre-wrap line-clamp-3 mb-4">
