@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { Menu, X, Languages } from "lucide-react";
 import { useState } from "react";
+import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import Logo from "./Logo";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,10 +28,10 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <NavLink to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <Logo className="h-12 w-12" animated={false} />
+            <img src={logo} alt="Et-Taqwa Moschee" className="h-10 w-auto" />
             <div className="hidden md:block">
-              <div className="text-lg font-bold text-[#2d7b7f]">Et-Taqwa Moschee</div>
-              <div className="text-sm text-[#2d7b7f] font-amiri">مسجد التقوى - Wien</div>
+              <div className="text-lg font-bold text-primary">Et-Taqwa Moschee</div>
+              <div className="text-sm text-primary font-amiri">مسجد التقوى - Wien</div>
             </div>
           </NavLink>
 

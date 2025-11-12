@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Clock, BookOpen, Users, Heart } from "lucide-react";
 import ReviewsSection from "@/components/ReviewsSection";
 import { useLanguage } from "@/contexts/LanguageContext";
-import Logo from "@/components/Logo";
 
 const NewHome = () => {
   const { t, language } = useLanguage();
@@ -45,16 +44,6 @@ const NewHome = () => {
         {/* Content - Left Aligned */}
         <div className="relative z-10 container mx-auto px-8 md:px-16 max-w-7xl">
           <div className="max-w-3xl">
-            {/* Animated Logo */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="mb-8 flex justify-start"
-            >
-              <Logo className="w-32 h-32 md:w-40 md:h-40 drop-shadow-2xl" animated={true} />
-            </motion.div>
-
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
