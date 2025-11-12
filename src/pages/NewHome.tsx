@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Clock, BookOpen, Users, Heart, HandHeart, Copy } from "lucide-react";
 import ReviewsSection from "@/components/ReviewsSection";
 import { useLanguage } from "@/contexts/LanguageContext";
-import donationHelp from "@/assets/donation-help.jpg";
-import donationFamilies from "@/assets/donation-families.jpg";
+import palestineJerusalem from "@/assets/palestine-jerusalem.jpg";
+import palestineChildren from "@/assets/palestine-children.jpg";
 import { toast } from "sonner";
 
 const NewHome = () => {
@@ -220,8 +220,8 @@ const NewHome = () => {
               className="relative rounded-3xl overflow-hidden shadow-2xl"
             >
               <img 
-                src={donationHelp} 
-                alt="Humanitarian help"
+                src={palestineJerusalem} 
+                alt="Jerusalem with Dome of the Rock"
                 className="w-full h-[400px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -234,8 +234,8 @@ const NewHome = () => {
               className="relative rounded-3xl overflow-hidden shadow-2xl"
             >
               <img 
-                src={donationFamilies} 
-                alt="Families receiving aid"
+                src={palestineChildren} 
+                alt="Palestinian children"
                 className="w-full h-[400px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
