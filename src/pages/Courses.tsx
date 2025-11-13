@@ -132,11 +132,7 @@ const Courses = () => {
       }} transition={{
         delay: 0.4
       }} className="mt-16 max-w-2xl mx-auto">
-          <Card className="p-6 sm:p-10 bg-gradient-to-br from-primary/5 to-accent/5">
-            
-            
-            
-          </Card>
+          
         </motion.div>
       </div>
     </div>;
