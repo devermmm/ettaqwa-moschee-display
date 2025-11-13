@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Clock, BookOpen, Users, Heart, HandHeart, Copy, TrendingUp } from "lucide-react";
 import ReviewsSection from "@/components/ReviewsSection";
 import { useLanguage } from "@/contexts/LanguageContext";
-import palestineJerusalem from "@/assets/palestine-jerusalem.jpg";
-import palestineChildren from "@/assets/palestine-children.jpg";
+import mosqueInterior from "@/assets/mosque-interior.png";
+import community from "@/assets/community.png";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -18,7 +18,7 @@ const NewHome = () => {
       const { data, error } = await supabase
         .from('donations')
         .select('amount')
-        .eq('campaign', 'palestine');
+        .eq('campaign', 'mosque');
       
       if (data && !error) {
         const total = data.reduce((sum, donation) => sum + Number(donation.amount), 0);
@@ -37,7 +37,7 @@ const NewHome = () => {
           event: '*',
           schema: 'public',
           table: 'donations',
-          filter: 'campaign=eq.palestine'
+          filter: 'campaign=eq.mosque'
         },
         () => fetchDonationStats()
       )
@@ -227,7 +227,7 @@ const NewHome = () => {
         </div>
       </div>
 
-      {/* Donation Section for Palestine */}
+      {/* Donation Section for Mosque */}
       <div className="py-12 sm:py-24 bg-gradient-to-b from-background to-muted">
         <div className="container mx-auto px-4">
           <motion.div
@@ -240,12 +240,12 @@ const NewHome = () => {
               <HandHeart className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              {language === "bs" ? "Donacije za Palestinu" : "Spenden für Palästina"}
+              {language === "bs" ? "Donacije za džamiju" : "Spenden für die Moschee"}
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
               {language === "bs" 
-                ? "Vaša podrška pruža nadu i pomoć onima kojima je najpotrebnija. Svaka donacija čini razliku."
-                : "Ihre Unterstützung gibt Hoffnung und Hilfe für diejenigen, die sie am meisten brauchen. Jede Spende macht einen Unterschied."
+                ? "Vaša podrška pomaže u održavanju i razvoju naše džamije i zajednice. Svaka donacija čini razliku."
+                : "Ihre Unterstützung hilft bei der Erhaltung und Entwicklung unserer Moschee und Gemeinde. Jede Spende macht einen Unterschied."
               }
             </p>
           </motion.div>
@@ -258,8 +258,8 @@ const NewHome = () => {
               className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
             >
               <img 
-                src={palestineJerusalem} 
-                alt="Jerusalem with Dome of the Rock"
+                src={mosqueInterior} 
+                alt="Mosque Interior"
                 className="w-full h-[250px] sm:h-[300px] md:h-[400px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -272,8 +272,8 @@ const NewHome = () => {
               className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
             >
               <img 
-                src={palestineChildren} 
-                alt="Palestinian children"
+                src={community} 
+                alt="Community gathering"
                 className="w-full h-[250px] sm:h-[300px] md:h-[400px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -352,8 +352,8 @@ const NewHome = () => {
 
               <p className="text-sm sm:text-base text-center text-muted-foreground italic">
                 {language === "bs" 
-                  ? "Hvala vam na vašoj podršci i velikodušnosti. Svaka donacija direktno pomaže porodicama u nevolji."
-                  : "Vielen Dank für Ihre Unterstützung und Großzügigkeit. Jede Spende hilft direkt den Familien in Not."
+                  ? "Hvala vam na vašoj podršci i velikodušnosti. Vaša donacija pomaže u održavanju naše džamije i zajedničkih aktivnosti."
+                  : "Vielen Dank für Ihre Unterstützung und Großzügigkeit. Ihre Spende hilft bei der Erhaltung unserer Moschee und gemeinschaftlichen Aktivitäten."
                 }
               </p>
             </div>
