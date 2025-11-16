@@ -97,46 +97,15 @@ const PrayerTimes = () => {
 
   const isFriday = () => currentTime.getDay() === 5;
 
-  const [prayerTimesData, setPrayerTimesData] = useState({
+  // Manual prayer times from icebuhanife.com
+  const prayerTimesData = {
     fajr: "05:13",
     sunrise: "06:55",
     dhuhr: "11:44",
     asr: "13:58",
     maghrib: "16:23",
     isha: "17:53",
-  });
-
-  // Fetch prayer times from Aladhan API
-  useEffect(() => {
-    const fetchPrayerTimes = async () => {
-      try {
-        const today = new Date();
-        const response = await fetch(
-          `https://api.aladhan.com/v1/timings/${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}?latitude=47.0708&longitude=15.4382&method=3`
-        );
-        const data = await response.json();
-        
-        if (data.code === 200 && data.data.timings) {
-          const timings = data.data.timings;
-          setPrayerTimesData({
-            fajr: timings.Fajr,
-            sunrise: timings.Sunrise,
-            dhuhr: timings.Dhuhr,
-            asr: timings.Asr,
-            maghrib: timings.Maghrib,
-            isha: timings.Isha,
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching prayer times:", error);
-      }
-    };
-
-    fetchPrayerTimes();
-    // Refresh every hour
-    const interval = setInterval(fetchPrayerTimes, 3600000);
-    return () => clearInterval(interval);
-  }, []);
+  };
 
   const basePrayerTimes: PrayerTime[] = [
     { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: prayerTimesData.fajr, icon: Sunrise },
