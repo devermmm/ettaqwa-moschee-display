@@ -97,21 +97,64 @@ const PrayerTimes = () => {
 
   const isFriday = () => currentTime.getDay() === 5;
 
+  const [prayerTimesData, setPrayerTimesData] = useState({
+    fajr: "05:13",
+    sunrise: "06:55",
+    dhuhr: "11:44",
+    asr: "13:58",
+    maghrib: "16:23",
+    isha: "17:53",
+  });
+
+  // Fetch prayer times from Aladhan API
+  useEffect(() => {
+    const fetchPrayerTimes = async () => {
+      try {
+        const today = new Date();
+        const response = await fetch(
+          `https://api.aladhan.com/v1/timings/${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}?latitude=47.0708&longitude=15.4382&method=3`
+        );
+        const data = await response.json();
+        
+        if (data.code === 200 && data.data.timings) {
+          const timings = data.data.timings;
+          setPrayerTimesData({
+            fajr: timings.Fajr,
+            sunrise: timings.Sunrise,
+            dhuhr: timings.Dhuhr,
+            asr: timings.Asr,
+            maghrib: timings.Maghrib,
+            isha: timings.Isha,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching prayer times:", error);
+      }
+    };
+
+    fetchPrayerTimes();
+    // Refresh every hour
+    const interval = setInterval(fetchPrayerTimes, 3600000);
+    return () => clearInterval(interval);
+  }, []);
+
   const basePrayerTimes: PrayerTime[] = [
-    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: "05:08", icon: Sunrise },
-    { name: t("prayerTimes.dhuhr"), arabicName: "الظهر", time: "11:44", icon: Sun },
-    { name: t("prayerTimes.asr"), arabicName: "العصر", time: "14:02", icon: Sun },
-    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: "16:28", icon: Sunset },
-    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: "17:57", icon: Moon },
+    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: prayerTimesData.fajr, icon: Sunrise },
+    { name: t("prayerTimes.sunrise"), arabicName: "الشروق", time: prayerTimesData.sunrise, icon: Sunrise },
+    { name: t("prayerTimes.dhuhr"), arabicName: "الظهر", time: prayerTimesData.dhuhr, icon: Sun },
+    { name: t("prayerTimes.asr"), arabicName: "العصر", time: prayerTimesData.asr, icon: Sun },
+    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: prayerTimesData.maghrib, icon: Sunset },
+    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: prayerTimesData.isha, icon: Moon },
   ];
 
   const fridayPrayerTimes: PrayerTime[] = [
-    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: "05:08", icon: Sunrise },
+    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: prayerTimesData.fajr, icon: Sunrise },
+    { name: t("prayerTimes.sunrise"), arabicName: "الشروق", time: prayerTimesData.sunrise, icon: Sunrise },
     { name: "Jumu'ah 1", arabicName: "الجمعة ١", time: "12:00", icon: Sun },
     { name: "Jumu'ah 2", arabicName: "الجمعة ٢", time: "13:00", icon: Sun },
-    { name: t("prayerTimes.asr"), arabicName: "العصر", time: "14:02", icon: Sun },
-    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: "16:28", icon: Sunset },
-    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: "17:57", icon: Moon },
+    { name: t("prayerTimes.asr"), arabicName: "العصر", time: prayerTimesData.asr, icon: Sun },
+    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: prayerTimesData.maghrib, icon: Sunset },
+    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: prayerTimesData.isha, icon: Moon },
   ];
 
   const prayerTimes: PrayerTime[] = isFriday() ? fridayPrayerTimes : basePrayerTimes;
@@ -262,7 +305,7 @@ const PrayerTimes = () => {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center mb-4 md:mb-6 lg:mb-8 uppercase tracking-wider">
             {t("nav.prayerTimes")}
           </h2>
-          <div className={`grid gap-3 md:gap-4 lg:gap-6 ${isFriday() ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'}`}>
+          <div className={`grid gap-3 md:gap-4 lg:gap-6 ${isFriday() ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-7' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6'}`}>
             {prayerTimes.map((prayer, index) => {
               const Icon = prayer.icon;
               const isNext = index === nextPrayerIndex;
