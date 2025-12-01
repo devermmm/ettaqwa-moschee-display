@@ -147,15 +147,15 @@ const PrayerTimes = () => {
     setNextPrayerIndex(foundNext);
   }, [currentTime, prayerTimesList]);
 
-  const getTimeUntilPrayer = (prayerTime: string) => {
+  const getTimeUntilPrayer = (prayerTime: string, isPast: boolean) => {
+    if (isPast) {
+      return "Prije";
+    }
+    
     const [hours, minutes] = prayerTime.split(":").map(Number);
     const now = currentTime;
     const prayer = new Date(now);
     prayer.setHours(hours, minutes, 0, 0);
-
-    if (prayer < now) {
-      prayer.setDate(prayer.getDate() + 1);
-    }
 
     const diff = prayer.getTime() - now.getTime();
     const hoursLeft = Math.floor(diff / (1000 * 60 * 60));
@@ -318,7 +318,7 @@ const PrayerTimes = () => {
                   <span className={`text-xs ${
                     isNext ? "text-emerald-200" : "text-emerald-100/40"
                   }`}>
-                    {getTimeUntilPrayer(prayer.time)}
+                    {getTimeUntilPrayer(prayer.time, isPast)}
                   </span>
                 </div>
                 <span className={`text-2xl md:text-3xl font-semibold tabular-nums ${
