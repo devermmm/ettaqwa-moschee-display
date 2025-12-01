@@ -19,7 +19,7 @@ export const usePrayerTimes = (date: Date) => {
           .from("prayer_times")
           .select("fajr, sunrise, dhuhr, asr, maghrib, isha")
           .eq("date", dateString)
-          .single();
+          .maybeSingle();
 
         if (data && !error) {
           setPrayerTimes({
