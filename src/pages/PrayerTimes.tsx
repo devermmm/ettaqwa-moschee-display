@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Clock, Sunrise, Sun, Sunset, Moon, Maximize2, Minimize2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import AdvertisementSlide from "@/components/AdvertisementSlide";
-import { getPrayerTimesForDate } from "@/data/prayerTimes2025";
+import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 
 interface PrayerTime {
   name: string;
@@ -98,28 +98,36 @@ const PrayerTimes = () => {
 
   const isFriday = () => currentTime.getDay() === 5;
 
-  // Prayer times from Vaktija-Wien-2025.pdf - updates daily
-  const prayerTimesData = useMemo(() => {
-    return getPrayerTimesForDate(currentTime);
-  }, [currentTime.getDate(), currentTime.getMonth()]);
+  // Fetch prayer times from database (with fallback to PDF data)
+  const { prayerTimes: prayerTimesData } = usePrayerTimes(currentTime);
+
+  // Default values while loading
+  const safePrayerTimesData = prayerTimesData || {
+    fajr: "--:--",
+    sunrise: "--:--",
+    dhuhr: "--:--",
+    asr: "--:--",
+    maghrib: "--:--",
+    isha: "--:--",
+  };
 
   const basePrayerTimes: PrayerTime[] = [
-    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: prayerTimesData.fajr, icon: Sunrise },
-    { name: t("prayerTimes.sunrise"), arabicName: "الشروق", time: prayerTimesData.sunrise, icon: Sunrise },
-    { name: t("prayerTimes.dhuhr"), arabicName: "الظهر", time: prayerTimesData.dhuhr, icon: Sun },
-    { name: t("prayerTimes.asr"), arabicName: "العصر", time: prayerTimesData.asr, icon: Sun },
-    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: prayerTimesData.maghrib, icon: Sunset },
-    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: prayerTimesData.isha, icon: Moon },
+    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: safePrayerTimesData.fajr, icon: Sunrise },
+    { name: t("prayerTimes.sunrise"), arabicName: "الشروق", time: safePrayerTimesData.sunrise, icon: Sunrise },
+    { name: t("prayerTimes.dhuhr"), arabicName: "الظهر", time: safePrayerTimesData.dhuhr, icon: Sun },
+    { name: t("prayerTimes.asr"), arabicName: "العصر", time: safePrayerTimesData.asr, icon: Sun },
+    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: safePrayerTimesData.maghrib, icon: Sunset },
+    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: safePrayerTimesData.isha, icon: Moon },
   ];
 
   const fridayPrayerTimes: PrayerTime[] = [
-    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: prayerTimesData.fajr, icon: Sunrise },
-    { name: t("prayerTimes.sunrise"), arabicName: "الشروق", time: prayerTimesData.sunrise, icon: Sunrise },
+    { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: safePrayerTimesData.fajr, icon: Sunrise },
+    { name: t("prayerTimes.sunrise"), arabicName: "الشروق", time: safePrayerTimesData.sunrise, icon: Sunrise },
     { name: "Jumu'ah 1", arabicName: "الجمعة ١", time: "12:00", icon: Sun },
     { name: "Jumu'ah 2", arabicName: "الجمعة ٢", time: "13:00", icon: Sun },
-    { name: t("prayerTimes.asr"), arabicName: "العصر", time: prayerTimesData.asr, icon: Sun },
-    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: prayerTimesData.maghrib, icon: Sunset },
-    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: prayerTimesData.isha, icon: Moon },
+    { name: t("prayerTimes.asr"), arabicName: "العصر", time: safePrayerTimesData.asr, icon: Sun },
+    { name: t("prayerTimes.maghrib"), arabicName: "المغرب", time: safePrayerTimesData.maghrib, icon: Sunset },
+    { name: t("prayerTimes.isha"), arabicName: "العشاء", time: safePrayerTimesData.isha, icon: Moon },
   ];
 
   const prayerTimes: PrayerTime[] = isFriday() ? fridayPrayerTimes : basePrayerTimes;

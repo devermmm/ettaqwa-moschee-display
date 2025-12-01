@@ -13,6 +13,7 @@ import NewsDetail from "./pages/NewsDetail";
 import Auth from "./pages/Auth";
 import AdminPanel from "./pages/AdminPanel";
 import AdminPostManagement from "./pages/AdminPostManagement";
+import AdminPrayerTimes from "./pages/AdminPrayerTimes";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/admin/posts" element={<AdminPostManagement />} />
+          <Route path="/admin/prayer-times" element={<AdminPrayerTimes />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
