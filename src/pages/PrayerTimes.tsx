@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Clock, Sunrise, Sun, Sunset, Moon, Maximize2, Minimize2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import AdvertisementSlide from "@/components/AdvertisementSlide";
+import { getPrayerTimesForDate } from "@/data/prayerTimes2025";
 
 interface PrayerTime {
   name: string;
@@ -97,15 +98,10 @@ const PrayerTimes = () => {
 
   const isFriday = () => currentTime.getDay() === 5;
 
-  // Manual prayer times from icebuhanife.com
-  const prayerTimesData = {
-    fajr: "05:13",
-    sunrise: "06:55",
-    dhuhr: "11:44",
-    asr: "13:58",
-    maghrib: "16:23",
-    isha: "17:53",
-  };
+  // Prayer times from Vaktija-Wien-2025.pdf - updates daily
+  const prayerTimesData = useMemo(() => {
+    return getPrayerTimesForDate(currentTime);
+  }, [currentTime.getDate(), currentTime.getMonth()]);
 
   const basePrayerTimes: PrayerTime[] = [
     { name: t("prayerTimes.fajr"), arabicName: "الفجر", time: prayerTimesData.fajr, icon: Sunrise },
