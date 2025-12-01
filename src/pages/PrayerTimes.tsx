@@ -12,7 +12,7 @@ interface PrayerTime {
 }
 
 const PrayerTimes = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [nextPrayerIndex, setNextPrayerIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -104,22 +104,22 @@ const PrayerTimes = () => {
   };
 
   const basePrayerTimes: PrayerTime[] = [
-    { name: "Sabah", bosnianName: "Sabah", time: safePrayerTimesData.fajr },
-    { name: "Izlazak Sunca", bosnianName: "Izlazak Sunca", time: safePrayerTimesData.sunrise },
-    { name: "Podne", bosnianName: "Podne", time: safePrayerTimesData.dhuhr },
-    { name: "Ikindija", bosnianName: "Ikindija", time: safePrayerTimesData.asr },
-    { name: "Akšam", bosnianName: "Akšam", time: safePrayerTimesData.maghrib },
-    { name: "Jacija", bosnianName: "Jacija", time: safePrayerTimesData.isha },
+    { name: "Sabah", bosnianName: t("prayerTimes.sabah"), time: safePrayerTimesData.fajr },
+    { name: "Izlazak Sunca", bosnianName: t("prayerTimes.sunriseLabel"), time: safePrayerTimesData.sunrise },
+    { name: "Podne", bosnianName: t("prayerTimes.podne"), time: safePrayerTimesData.dhuhr },
+    { name: "Ikindija", bosnianName: t("prayerTimes.ikindija"), time: safePrayerTimesData.asr },
+    { name: "Akšam", bosnianName: t("prayerTimes.aksam"), time: safePrayerTimesData.maghrib },
+    { name: "Jacija", bosnianName: t("prayerTimes.jacija"), time: safePrayerTimesData.isha },
   ];
 
   const fridayPrayerTimes: PrayerTime[] = [
-    { name: "Sabah", bosnianName: "Sabah", time: safePrayerTimesData.fajr },
-    { name: "Izlazak Sunca", bosnianName: "Izlazak Sunca", time: safePrayerTimesData.sunrise },
-    { name: "Džuma 1", bosnianName: "Džuma 1", time: "12:00" },
-    { name: "Džuma 2", bosnianName: "Džuma 2", time: "13:00" },
-    { name: "Ikindija", bosnianName: "Ikindija", time: safePrayerTimesData.asr },
-    { name: "Akšam", bosnianName: "Akšam", time: safePrayerTimesData.maghrib },
-    { name: "Jacija", bosnianName: "Jacija", time: safePrayerTimesData.isha },
+    { name: "Sabah", bosnianName: t("prayerTimes.sabah"), time: safePrayerTimesData.fajr },
+    { name: "Izlazak Sunca", bosnianName: t("prayerTimes.sunriseLabel"), time: safePrayerTimesData.sunrise },
+    { name: "Džuma 1", bosnianName: t("prayerTimes.dzuma1"), time: "12:00" },
+    { name: "Džuma 2", bosnianName: t("prayerTimes.dzuma2"), time: "13:00" },
+    { name: "Ikindija", bosnianName: t("prayerTimes.ikindija"), time: safePrayerTimesData.asr },
+    { name: "Akšam", bosnianName: t("prayerTimes.aksam"), time: safePrayerTimesData.maghrib },
+    { name: "Jacija", bosnianName: t("prayerTimes.jacija"), time: safePrayerTimesData.isha },
   ];
 
   const prayerTimesList: PrayerTime[] = isFriday() ? fridayPrayerTimes : basePrayerTimes;
@@ -149,7 +149,7 @@ const PrayerTimes = () => {
 
   const getTimeUntilPrayer = (prayerTime: string, isPast: boolean) => {
     if (isPast) {
-      return "Prije";
+      return t("prayerTimes.passed");
     }
     
     const [hours, minutes] = prayerTime.split(":").map(Number);
@@ -162,29 +162,26 @@ const PrayerTimes = () => {
     const minutesLeft = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
     if (hoursLeft === 0) {
-      return `za ${minutesLeft} min`;
+      return t("prayerTimes.inMinutes").replace("{min}", minutesLeft.toString());
     }
     if (minutesLeft === 0) {
-      return `za ${hoursLeft} sat${hoursLeft > 1 ? 'a' : ''}`;
+      return (hoursLeft > 1 ? t("prayerTimes.inHoursPlural") : t("prayerTimes.inHours")).replace("{h}", hoursLeft.toString());
     }
-    return `za ${hoursLeft}h ${minutesLeft}min`;
+    return t("prayerTimes.inHoursMinutes").replace("{h}", hoursLeft.toString()).replace("{min}", minutesLeft.toString());
   };
 
   const getHijriDate = () => {
     const day = currentTime.getDate();
-    const monthNames = [
-      "muharrem", "safer", "rebiu-l-evvel", "rebiu-l-ahir",
-      "džumade-l-ula", "džumade-l-uhra", "redžeb", "ša'ban",
-      "ramazan", "ševval", "zu-l-ka'de", "zu-l-hidždže"
-    ];
+    const monthNames = language === "bs" 
+      ? ["muharrem", "safer", "rebiu-l-evvel", "rebiu-l-ahir", "džumade-l-ula", "džumade-l-uhra", "redžeb", "ša'ban", "ramazan", "ševval", "zu-l-ka'de", "zu-l-hidždže"]
+      : ["Muharram", "Safar", "Rabi al-Awwal", "Rabi al-Thani", "Jumada al-Ula", "Jumada al-Thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"];
     return `${day}. ${monthNames[5]} 1447`;
   };
 
   const getGregorianDate = () => {
-    const months = [
-      "januar", "februar", "mart", "april", "maj", "juni",
-      "juli", "august", "septembar", "oktobar", "novembar", "decembar"
-    ];
+    const monthsBs = ["januar", "februar", "mart", "april", "maj", "juni", "juli", "august", "septembar", "oktobar", "novembar", "decembar"];
+    const monthsDe = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+    const months = language === "bs" ? monthsBs : monthsDe;
     const day = currentTime.getDate();
     const month = months[currentTime.getMonth()];
     const year = currentTime.getFullYear();
@@ -254,7 +251,7 @@ const PrayerTimes = () => {
         >
           <div className="inline-flex items-center gap-2 text-emerald-200/80">
             <MapPin className="w-4 h-4" />
-            <span className="text-sm uppercase tracking-widest">Wien, Österreich</span>
+            <span className="text-sm uppercase tracking-widest">{t("prayerTimes.location")}</span>
           </div>
         </motion.div>
 
@@ -339,10 +336,10 @@ const PrayerTimes = () => {
           className="text-center mt-8"
         >
           <p className="text-emerald-300/60 text-xl font-arabic mb-2">
-            بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
+            {t("prayerTimes.basmala")}
           </p>
           <p className="text-emerald-200/40 text-xs">
-            Im Namen Allahs, des Allerbarmers, des Barmherzigen
+            {t("prayerTimes.basmalaTranslation")}
           </p>
         </motion.div>
       </div>
