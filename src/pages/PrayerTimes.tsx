@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Maximize2, Minimize2 } from "lucide-react";
+import { Maximize2, Minimize2, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import AdvertisementSlide from "@/components/AdvertisementSlide";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
@@ -30,7 +30,6 @@ const PrayerTimes = () => {
     }
   };
 
-  // Auto-hide fullscreen button on mouse inactivity
   useEffect(() => {
     if (!isFullscreen) return;
 
@@ -56,7 +55,6 @@ const PrayerTimes = () => {
     };
   }, [isFullscreen]);
 
-  // Advertisement slideshow
   useEffect(() => {
     if (!isFullscreen) return;
 
@@ -94,7 +92,6 @@ const PrayerTimes = () => {
 
   const isFriday = () => currentTime.getDay() === 5;
 
-  // Fetch prayer times from database (with fallback to PDF data)
   const { prayerTimes: prayerTimesData } = usePrayerTimes(currentTime);
 
   const safePrayerTimesData = prayerTimesData || {
@@ -170,20 +167,16 @@ const PrayerTimes = () => {
     if (minutesLeft === 0) {
       return `za ${hoursLeft} sat${hoursLeft > 1 ? 'a' : ''}`;
     }
-    return `za ${hoursLeft} sat${hoursLeft > 1 ? 'a' : ''} ${minutesLeft} min`;
+    return `za ${hoursLeft}h ${minutesLeft}min`;
   };
 
-  // Get Hijri date approximation
   const getHijriDate = () => {
-    // Simple approximation - in production use a proper library
-    const gregorianDate = currentTime;
-    const day = gregorianDate.getDate();
+    const day = currentTime.getDate();
     const monthNames = [
       "muharrem", "safer", "rebiu-l-evvel", "rebiu-l-ahir",
       "džumade-l-ula", "džumade-l-uhra", "redžeb", "ša'ban",
       "ramazan", "ševval", "zu-l-ka'de", "zu-l-hidždže"
     ];
-    // This is a simplified approximation
     return `${day}. ${monthNames[5]} 1447`;
   };
 
@@ -199,7 +192,28 @@ const PrayerTimes = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a2e] relative overflow-hidden flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950 relative overflow-hidden flex items-center justify-center">
+      {/* Islamic Geometric Pattern Background */}
+      <div className="absolute inset-0 opacity-5">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="islamic-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M30 0L60 30L30 60L0 30Z" fill="none" stroke="white" strokeWidth="0.5"/>
+              <circle cx="30" cy="30" r="15" fill="none" stroke="white" strokeWidth="0.5"/>
+              <path d="M15 15L45 15L45 45L15 45Z" fill="none" stroke="white" strokeWidth="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#islamic-pattern)"/>
+        </svg>
+      </div>
+
+      {/* Mosque Silhouette */}
+      <div className="absolute bottom-0 left-0 right-0 opacity-10">
+        <svg viewBox="0 0 1200 200" className="w-full h-auto" fill="white">
+          <path d="M0 200 L0 180 L100 180 L100 120 L120 120 L130 80 L140 120 L160 120 L160 180 L200 180 L200 140 L220 140 L240 100 L260 140 L280 140 L280 180 L400 180 L400 150 L420 150 L430 60 L440 150 L460 150 L460 180 L500 180 L500 160 L550 160 L550 100 L570 100 L600 30 L630 100 L650 100 L650 160 L700 160 L700 180 L800 180 L800 140 L820 140 L830 90 L840 140 L860 140 L860 180 L950 180 L950 150 L970 150 L980 70 L990 150 L1010 150 L1010 180 L1100 180 L1100 130 L1120 130 L1140 80 L1160 130 L1180 130 L1180 180 L1200 180 L1200 200 Z"/>
+        </svg>
+      </div>
+
       {/* Fullscreen Toggle Button */}
       <motion.button
         initial={{ opacity: 0, y: 20 }}
@@ -207,55 +221,71 @@ const PrayerTimes = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={toggleFullscreen}
-        className="fixed bottom-6 right-6 z-50 p-4 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full border border-white/20 transition-all duration-700"
+        className="fixed bottom-6 right-6 z-50 p-4 bg-emerald-800/50 hover:bg-emerald-700/50 backdrop-blur-md rounded-full border border-emerald-500/30 transition-all duration-700 shadow-lg shadow-emerald-900/50"
         style={{ pointerEvents: showFullscreenButton ? 'auto' : 'none' }}
         aria-label="Toggle Fullscreen"
       >
         {isFullscreen ? (
-          <Minimize2 className="w-6 h-6 text-white" />
+          <Minimize2 className="w-6 h-6 text-emerald-200" />
         ) : (
-          <Maximize2 className="w-6 h-6 text-white" />
+          <Maximize2 className="w-6 h-6 text-emerald-200" />
         )}
       </motion.button>
 
-      <div className="relative z-10 w-full max-w-md mx-auto px-6 py-8">
-        {/* Location */}
+      <div className="relative z-10 w-full max-w-lg mx-auto px-6 py-8">
+        {/* Mosque Logo/Name */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-6"
+        >
+          <h1 className="text-3xl md:text-4xl font-bold text-white tracking-wide mb-1">
+            ET-TAQWA
+          </h1>
+          <p className="text-emerald-300 text-lg font-arabic">مسجد التقوى</p>
+        </motion.div>
+
+        {/* Location with Vienna styling */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
           className="text-center mb-2"
         >
-          <h1 className="text-4xl md:text-5xl font-light text-white tracking-wide">
-            Graz
-          </h1>
+          <div className="inline-flex items-center gap-2 text-emerald-200/80">
+            <MapPin className="w-4 h-4" />
+            <span className="text-sm uppercase tracking-widest">Wien, Österreich</span>
+          </div>
         </motion.div>
 
         {/* Date */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: 0.15 }}
           className="text-center mb-8"
         >
-          <p className="text-white/60 text-sm md:text-base">
+          <p className="text-emerald-100/60 text-sm">
             {getGregorianDate()} / {getHijriDate()}
           </p>
         </motion.div>
 
-        {/* Current Time */}
+        {/* Current Time with elegant styling */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-center mb-12"
+          className="text-center mb-10"
         >
-          <p className="text-6xl md:text-7xl lg:text-8xl font-extralight text-white tabular-nums tracking-tight">
-            {currentTime.toLocaleTimeString("de-DE", {
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-            })}
-          </p>
+          <div className="inline-block px-8 py-4 rounded-2xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
+            <p className="text-5xl md:text-6xl lg:text-7xl font-light text-white tabular-nums tracking-tight">
+              {currentTime.toLocaleTimeString("de-DE", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })}
+            </p>
+          </div>
         </motion.div>
 
         {/* Prayer Times List */}
@@ -263,7 +293,7 @@ const PrayerTimes = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="space-y-0"
+          className="bg-emerald-900/40 backdrop-blur-sm rounded-2xl border border-emerald-500/20 overflow-hidden"
         >
           {prayerTimesList.map((prayer, index) => {
             const isNext = index === nextPrayerIndex;
@@ -275,29 +305,24 @@ const PrayerTimes = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 + index * 0.05 }}
-                className={`flex items-center justify-between py-4 border-b border-white/10 ${
-                  isNext ? "bg-white/5 -mx-4 px-4 rounded-lg border-transparent" : ""
+                className={`flex items-center justify-between px-6 py-4 border-b border-emerald-500/10 last:border-b-0 transition-all duration-300 ${
+                  isNext ? "bg-gradient-to-r from-emerald-600/40 to-teal-600/40" : ""
                 }`}
               >
                 <div className="flex flex-col">
                   <span className={`text-lg md:text-xl font-medium ${
-                    isNext ? "text-emerald-400" : isPast ? "text-white/40" : "text-white"
+                    isNext ? "text-white" : isPast ? "text-emerald-100/40" : "text-emerald-100"
                   }`}>
                     {prayer.bosnianName}
                   </span>
-                  {isNext && (
-                    <span className="text-emerald-400/70 text-sm">
-                      {getTimeUntilPrayer(prayer.time)}
-                    </span>
-                  )}
-                  {!isNext && !isPast && (
-                    <span className="text-white/40 text-sm">
-                      {getTimeUntilPrayer(prayer.time)}
-                    </span>
-                  )}
+                  <span className={`text-xs ${
+                    isNext ? "text-emerald-200" : "text-emerald-100/40"
+                  }`}>
+                    {getTimeUntilPrayer(prayer.time)}
+                  </span>
                 </div>
-                <span className={`text-2xl md:text-3xl font-light tabular-nums ${
-                  isNext ? "text-emerald-400" : isPast ? "text-white/40" : "text-white"
+                <span className={`text-2xl md:text-3xl font-semibold tabular-nums ${
+                  isNext ? "text-white" : isPast ? "text-emerald-100/40" : "text-emerald-100"
                 }`}>
                   {prayer.time}
                 </span>
@@ -306,15 +331,18 @@ const PrayerTimes = () => {
           })}
         </motion.div>
 
-        {/* Mosque Name */}
+        {/* Footer with Basmala */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="text-center mt-12"
+          className="text-center mt-8"
         >
-          <p className="text-white/40 text-sm uppercase tracking-widest">
-            Et-Taqwa Moschee
+          <p className="text-emerald-300/60 text-xl font-arabic mb-2">
+            بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
+          </p>
+          <p className="text-emerald-200/40 text-xs">
+            Im Namen Allahs, des Allerbarmers, des Barmherzigen
           </p>
         </motion.div>
       </div>
