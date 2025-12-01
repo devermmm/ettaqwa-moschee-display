@@ -71,6 +71,45 @@ export type Database = {
         }
         Relationships: []
       }
+      prayer_times: {
+        Row: {
+          asr: string
+          created_at: string
+          date: string
+          dhuhr: string
+          fajr: string
+          id: string
+          isha: string
+          maghrib: string
+          sunrise: string
+          updated_at: string
+        }
+        Insert: {
+          asr: string
+          created_at?: string
+          date: string
+          dhuhr: string
+          fajr: string
+          id?: string
+          isha: string
+          maghrib: string
+          sunrise: string
+          updated_at?: string
+        }
+        Update: {
+          asr?: string
+          created_at?: string
+          date?: string
+          dhuhr?: string
+          fajr?: string
+          id?: string
+          isha?: string
+          maghrib?: string
+          sunrise?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
