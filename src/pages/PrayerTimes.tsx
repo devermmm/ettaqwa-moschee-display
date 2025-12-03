@@ -58,15 +58,29 @@ const PrayerTimes = () => {
   useEffect(() => {
     if (!isFullscreen) return;
 
-    const adInterval = setInterval(() => {
+    // Show ad every 15 seconds, stays for 15 seconds
+    const showAdCycle = () => {
       setShowAd(true);
       setTimeout(() => {
         setShowAd(false);
         setCurrentAdIndex((prev) => (prev + 1) % 2);
-      }, 15000);
+      }, 15000); // Ad stays for 15 seconds
+    };
+
+    // Initial delay before first ad
+    const initialDelay = setTimeout(() => {
+      showAdCycle();
+    }, 15000);
+
+    // Then show ad every 30 seconds (15s visible + 15s hidden = 30s cycle)
+    const adInterval = setInterval(() => {
+      showAdCycle();
     }, 30000);
 
-    return () => clearInterval(adInterval);
+    return () => {
+      clearTimeout(initialDelay);
+      clearInterval(adInterval);
+    };
   }, [isFullscreen]);
 
   useEffect(() => {

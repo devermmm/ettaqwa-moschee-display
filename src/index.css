@@ -2,50 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Professional Islamic Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 175 80% 15%;
+    --background: 40 20% 98%;
+    --foreground: 160 30% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 175 80% 15%;
+    --card-foreground: 160 30% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 175 80% 15%;
+    --popover-foreground: 160 30% 15%;
 
-    --primary: 175 60% 35%;
+    --primary: 158 64% 32%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 175 55% 45%;
+    --primary-glow: 158 55% 42%;
 
-    --secondary: 175 20% 92%;
-    --secondary-foreground: 175 80% 15%;
+    --secondary: 40 30% 94%;
+    --secondary-foreground: 160 30% 15%;
 
-    --muted: 175 15% 94%;
-    --muted-foreground: 175 20% 45%;
+    --muted: 40 15% 93%;
+    --muted-foreground: 160 15% 45%;
 
-    --accent: 175 50% 40%;
+    --accent: 36 80% 50%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 175 20% 88%;
-    --input: 175 20% 88%;
-    --ring: 175 60% 35%;
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 158 64% 32%;
 
-    --radius: 0.75rem;
+    --radius: 0.625rem;
 
-    --gradient-primary: linear-gradient(135deg, hsl(175 60% 35%), hsl(175 55% 45%));
-    --gradient-hero: linear-gradient(135deg, hsl(175 70% 25%), hsl(175 65% 35%), hsl(165 60% 40%));
-    --gradient-card: linear-gradient(145deg, hsl(175 60% 35% / 0.05), hsl(175 55% 45% / 0.1));
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 98%), hsl(175 30% 96%));
-    --shadow-elegant: 0 10px 30px -10px hsl(175 60% 35% / 0.2);
-    --shadow-glow: 0 0 40px hsl(175 55% 45% / 0.3);
-    --shadow-card: 0 20px 60px -15px hsl(175 60% 35% / 0.25);
+    /* Premium Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(158 64% 32%), hsl(158 55% 42%));
+    --gradient-hero: linear-gradient(160deg, hsl(160 40% 12%), hsl(158 50% 20%), hsl(155 45% 28%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(40 30% 98%));
+    --gradient-subtle: linear-gradient(180deg, hsl(40 20% 98%), hsl(40 25% 96%));
+    --gradient-gold: linear-gradient(135deg, hsl(36 80% 50%), hsl(42 75% 55%));
+    
+    /* Elegant Shadows */
+    --shadow-sm: 0 1px 2px hsl(160 30% 15% / 0.04);
+    --shadow-md: 0 4px 12px hsl(160 30% 15% / 0.06);
+    --shadow-lg: 0 12px 32px hsl(160 30% 15% / 0.08);
+    --shadow-xl: 0 24px 48px hsl(160 30% 15% / 0.12);
+    --shadow-glow: 0 0 40px hsl(158 55% 42% / 0.2);
+    --shadow-gold: 0 8px 24px hsl(36 80% 50% / 0.25);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -58,42 +63,47 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 175 80% 8%;
-    --foreground: 0 0% 98%;
+    --background: 160 35% 6%;
+    --foreground: 40 20% 95%;
 
-    --card: 175 70% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 160 30% 9%;
+    --card-foreground: 40 20% 95%;
 
-    --popover: 175 70% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 160 30% 9%;
+    --popover-foreground: 40 20% 95%;
 
-    --primary: 175 55% 45%;
-    --primary-foreground: 175 80% 8%;
-    --primary-glow: 175 60% 55%;
+    --primary: 158 50% 45%;
+    --primary-foreground: 160 35% 6%;
+    --primary-glow: 158 55% 55%;
 
-    --secondary: 175 40% 18%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 160 25% 15%;
+    --secondary-foreground: 40 20% 95%;
 
-    --muted: 175 35% 20%;
-    --muted-foreground: 175 20% 65%;
+    --muted: 160 20% 18%;
+    --muted-foreground: 160 15% 60%;
 
-    --accent: 175 50% 40%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 36 75% 55%;
+    --accent-foreground: 160 35% 6%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 40 20% 95%;
 
-    --border: 175 40% 18%;
-    --input: 175 40% 18%;
-    --ring: 175 55% 45%;
+    --border: 160 25% 16%;
+    --input: 160 25% 16%;
+    --ring: 158 50% 45%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(175 55% 45%), hsl(175 60% 55%));
-    --gradient-hero: linear-gradient(135deg, hsl(175 80% 12%), hsl(175 70% 18%), hsl(165 65% 22%));
-    --gradient-card: linear-gradient(145deg, hsl(175 55% 45% / 0.08), hsl(175 60% 55% / 0.15));
-    --gradient-subtle: linear-gradient(180deg, hsl(175 80% 8%), hsl(175 70% 12%));
-    --shadow-elegant: 0 10px 30px -10px hsl(175 55% 45% / 0.3);
-    --shadow-glow: 0 0 40px hsl(175 60% 55% / 0.4);
-    --shadow-card: 0 20px 60px -15px hsl(175 55% 45% / 0.35);
+    --gradient-primary: linear-gradient(135deg, hsl(158 50% 45%), hsl(158 55% 55%));
+    --gradient-hero: linear-gradient(160deg, hsl(160 40% 8%), hsl(158 45% 14%), hsl(155 40% 20%));
+    --gradient-card: linear-gradient(145deg, hsl(160 30% 9%), hsl(160 28% 12%));
+    --gradient-subtle: linear-gradient(180deg, hsl(160 35% 6%), hsl(160 32% 10%));
+    --gradient-gold: linear-gradient(135deg, hsl(36 75% 55%), hsl(42 70% 60%));
+    
+    --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.2);
+    --shadow-md: 0 4px 12px hsl(0 0% 0% / 0.3);
+    --shadow-lg: 0 12px 32px hsl(0 0% 0% / 0.4);
+    --shadow-xl: 0 24px 48px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 40px hsl(158 55% 55% / 0.3);
+    --shadow-gold: 0 8px 24px hsl(36 75% 55% / 0.35);
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -112,6 +122,126 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Professional Card Styles */
+  .card-elevated {
+    @apply bg-card rounded-lg border border-border/50;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-elevated:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  /* Glass Effect */
+  .glass {
+    @apply bg-card/80 backdrop-blur-xl border border-border/30;
+  }
+
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-gold);
+  }
+
+  /* Section Spacing */
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  /* Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+  }
+
+  .animate-slide-out-right {
+    animation: slideOutRight 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeInUp {
+    from { 
+      opacity: 0; 
+      transform: translateY(20px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  @keyframes scaleIn {
+    from { 
+      opacity: 0; 
+      transform: scale(0.95); 
+    }
+    to { 
+      opacity: 1; 
+      transform: scale(1); 
+    }
+  }
+
+  @keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+
+  @keyframes slideOutRight {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+  }
+
+  /* Hover underline effect */
+  .hover-underline {
+    @apply relative;
+  }
+
+  .hover-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 origin-right transition-transform duration-300;
+  }
+
+  .hover-underline:hover::after {
+    @apply scale-x-100 origin-left;
   }
 }

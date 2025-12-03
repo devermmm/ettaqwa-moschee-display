@@ -4,78 +4,82 @@ import logo from "@/assets/logo.png";
 
 const AdvertisementSlide = () => {
   return (
-    <div className="fixed inset-0 z-40 bg-gradient-to-br from-background via-background to-secondary/20 flex items-center justify-center p-12 animate-slide-in-right">
+    <div className="fixed inset-0 z-40 bg-gradient-to-br from-background via-background to-primary/10 flex items-center justify-center p-8 animate-slide-in-right">
       {/* Main Card Container */}
-      <Card className="w-full max-w-4xl bg-card border-2 border-primary/30 shadow-2xl overflow-hidden animate-scale-in transition-all duration-500">
-        <div className="p-8 space-y-6">
+      <Card className="w-full max-w-3xl bg-card border border-border/50 shadow-2xl overflow-hidden animate-scale-in rounded-2xl">
+        <div className="p-10 space-y-8">
           {/* Header with Logo */}
           <div className="text-center">
             <img 
               src={logo} 
               alt="Et-Taqwa Logo" 
-              className="h-16 mx-auto drop-shadow-lg mb-3"
+              className="h-20 mx-auto drop-shadow-lg mb-4"
             />
-            <h1 className="text-xl font-bold text-primary font-inter">
+            <h1 className="text-lg font-bold text-primary tracking-wide">
               DŽEMAT ET-TAQWA
             </h1>
           </div>
 
           {/* Title */}
-          <div className="text-center space-y-2">
-            <h2 className="text-4xl font-bold text-primary font-inter leading-tight">
-              ŠKOLA KUR&apos;ANA
+          <div className="text-center space-y-3">
+            <h2 className="text-5xl font-bold text-foreground tracking-tight">
+              ŠKOLA KUR'ANA
             </h2>
-            <p className="text-2xl font-semibold text-accent font-inter">
+            <p className="text-xl font-semibold text-accent">
               ORGANIZUJE
             </p>
           </div>
 
           {/* UPIS - Main CTA */}
-          <div className="bg-gradient-to-br from-accent to-accent/80 rounded-xl p-6 text-center">
-            <h3 className="text-6xl font-bold text-accent-foreground font-inter mb-3">
+          <div className="bg-gradient-to-br from-accent to-accent/90 rounded-2xl p-8 text-center shadow-gold">
+            <h3 className="text-6xl font-bold text-accent-foreground mb-4 tracking-tight">
               UPIS
             </h3>
-            <p className="text-xl text-accent-foreground/90 font-inter font-medium">
+            <p className="text-xl text-accent-foreground/90 font-medium">
               za Djecu, Omladinu, Odrasle
             </p>
           </div>
 
           {/* Details Grid */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-6">
             {/* Schedule */}
-            <Card className="bg-primary/10 border border-primary/30 p-5">
-              <h4 className="text-sm font-semibold text-primary/70 font-inter uppercase tracking-wide mb-2">
+            <Card className="bg-primary/5 border border-primary/20 p-6 rounded-xl">
+              <h4 className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">
                 Termin održavanja:
               </h4>
-              <p className="text-2xl font-bold text-foreground font-inter">
+              <p className="text-2xl font-bold text-foreground">
                 SUBOTA I NEDELJA
               </p>
             </Card>
 
-            {/* Contact - Split in two rows */}
+            {/* Contact */}
             <div className="space-y-4">
-              <Card className="bg-accent/10 border border-accent/30 p-4">
-                <div className="flex items-center gap-2">
-                  <Phone className="w-5 h-5 text-accent flex-shrink-0" />
+              <Card className="bg-accent/5 border border-accent/20 p-4 rounded-xl">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                    <Phone className="w-5 h-5 text-accent" />
+                  </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-accent/70 font-inter uppercase">
+                    <h4 className="text-xs font-semibold text-accent uppercase tracking-wider">
                       Za muškarce:
                     </h4>
-                    <p className="text-lg font-bold text-foreground font-inter">
+                    <p className="text-lg font-bold text-foreground">
                       +43 660 5515940
                     </p>
                   </div>
                 </div>
               </Card>
 
-              <Card className="bg-accent/10 border border-accent/30 p-4">
-                <div className="flex items-center gap-2">
-                  <Phone className="w-5 h-5 text-accent flex-shrink-0" />
+              <Card className="bg-accent/5 border border-accent/20 p-4 rounded-xl">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                    <Phone className="w-5 h-5 text-accent" />
+                  </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-accent/70 font-inter uppercase">
+                    <h4 className="text-xs font-semibold text-accent uppercase tracking-wider">
                       Za žene:
                     </h4>
-                    <p className="text-lg font-bold text-foreground font-inter">
+                    <p className="text-lg font-bold text-foreground">
                       +43 660 2001711
                     </p>
                   </div>
