@@ -4,6 +4,7 @@ import { useState } from "react";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,15 +60,18 @@ const Navbar = () => {
             >
               Admin
             </NavLink>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={toggleLanguage}
-              className="ml-2 gap-2 border-border/50 hover:border-primary hover:bg-primary/5"
-            >
-              <Languages className="h-4 w-4" />
-              {language === "bs" ? "DE" : "BS"}
-            </Button>
+            <div className="flex items-center gap-2 ml-2">
+              <ThemeToggle />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={toggleLanguage}
+                className="gap-2 border-border/50 hover:border-primary hover:bg-primary/5"
+              >
+                <Languages className="h-4 w-4" />
+                {language === "bs" ? "DE" : "BS"}
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -107,12 +111,13 @@ const Navbar = () => {
             >
               Admin
             </NavLink>
-            <div className="pt-2 px-4">
+            <div className="pt-2 px-4 flex gap-2">
+              <ThemeToggle />
               <Button
                 variant="outline"
                 size="sm"
                 onClick={toggleLanguage}
-                className="w-full gap-2"
+                className="flex-1 gap-2"
               >
                 <Languages className="h-4 w-4" />
                 {language === "bs" ? "Deutsch" : "Bosanski"}
