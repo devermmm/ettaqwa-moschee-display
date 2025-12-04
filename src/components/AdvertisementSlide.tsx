@@ -1,90 +1,101 @@
 import { Phone } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import logo from "@/assets/logo.png";
 
 const AdvertisementSlide = () => {
   return (
-    <div className="fixed inset-0 z-40 bg-gradient-to-br from-background via-background to-secondary/20 flex items-center justify-center p-12 animate-slide-in-right">
-      {/* Main Card Container */}
-      <Card className="w-full max-w-4xl bg-card border-2 border-primary/30 shadow-2xl overflow-hidden animate-scale-in transition-all duration-500">
-        <div className="p-8 space-y-6">
-          {/* Header with Logo */}
-          <div className="text-center">
-            <img 
-              src={logo} 
-              alt="Et-Taqwa Logo" 
-              className="h-16 mx-auto drop-shadow-lg mb-3"
-            />
-            <h1 className="text-xl font-bold text-primary font-inter">
-              DŽEMAT ET-TAQWA
-            </h1>
-          </div>
+    <div className="fixed inset-0 z-40 bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950 flex items-center justify-center p-12 animate-fade-in">
+      {/* Islamic Geometric Pattern Background */}
+      <div className="absolute inset-0 opacity-5">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="islamic-pattern-ad" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M30 0L60 30L30 60L0 30Z" fill="none" stroke="white" strokeWidth="0.5"/>
+              <circle cx="30" cy="30" r="15" fill="none" stroke="white" strokeWidth="0.5"/>
+              <path d="M15 15L45 15L45 45L15 45Z" fill="none" stroke="white" strokeWidth="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#islamic-pattern-ad)"/>
+        </svg>
+      </div>
 
-          {/* Title */}
-          <div className="text-center space-y-2">
-            <h2 className="text-4xl font-bold text-primary font-inter leading-tight">
-              ŠKOLA KUR&apos;ANA
-            </h2>
-            <p className="text-2xl font-semibold text-accent font-inter">
-              ORGANIZUJE
+      {/* Main Content */}
+      <div className="relative z-10 w-full max-w-5xl mx-auto text-center space-y-8">
+        {/* Header with Logo */}
+        <div className="space-y-2">
+          <img 
+            src={logo} 
+            alt="Et-Taqwa Logo" 
+            className="h-20 mx-auto drop-shadow-lg"
+          />
+          <h1 className="text-2xl font-bold text-emerald-200 tracking-wide">
+            DŽEMAT ET-TAQWA
+          </h1>
+          <p className="text-emerald-300 text-lg font-arabic">مسجد التقوى</p>
+        </div>
+
+        {/* Title */}
+        <div className="space-y-3">
+          <h2 className="text-5xl md:text-6xl font-bold text-white tracking-wide">
+            ŠKOLA KUR'ANA
+          </h2>
+          <p className="text-2xl font-semibold text-emerald-300">
+            ORGANIZUJE
+          </p>
+        </div>
+
+        {/* UPIS - Main CTA */}
+        <div className="inline-block px-16 py-8 rounded-2xl bg-emerald-800/40 backdrop-blur-sm border border-emerald-500/30">
+          <h3 className="text-7xl md:text-8xl font-bold text-white mb-3">
+            UPIS
+          </h3>
+          <p className="text-2xl text-emerald-200">
+            za Djecu, Omladinu, Odrasle
+          </p>
+        </div>
+
+        {/* Details Grid */}
+        <div className="flex flex-wrap justify-center gap-6 mt-8">
+          {/* Schedule */}
+          <div className="px-8 py-5 rounded-xl bg-emerald-900/40 backdrop-blur-sm border border-emerald-500/20">
+            <h4 className="text-sm font-semibold text-emerald-300/70 uppercase tracking-wide mb-2">
+              Termin održavanja:
+            </h4>
+            <p className="text-2xl font-bold text-white">
+              SUBOTA I NEDELJA
             </p>
           </div>
 
-          {/* UPIS - Main CTA */}
-          <div className="bg-gradient-to-br from-accent to-accent/80 rounded-xl p-6 text-center">
-            <h3 className="text-6xl font-bold text-accent-foreground font-inter mb-3">
-              UPIS
-            </h3>
-            <p className="text-xl text-accent-foreground/90 font-inter font-medium">
-              za Djecu, Omladinu, Odrasle
-            </p>
+          {/* Contact Men */}
+          <div className="px-8 py-5 rounded-xl bg-emerald-900/40 backdrop-blur-sm border border-emerald-500/20">
+            <div className="flex items-center gap-3">
+              <Phone className="w-6 h-6 text-emerald-400" />
+              <div className="text-left">
+                <h4 className="text-xs font-semibold text-emerald-300/70 uppercase">
+                  Za muškarce:
+                </h4>
+                <p className="text-xl font-bold text-white">
+                  +43 660 5515940
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Details Grid */}
-          <div className="grid grid-cols-2 gap-4">
-            {/* Schedule */}
-            <Card className="bg-primary/10 border border-primary/30 p-5">
-              <h4 className="text-sm font-semibold text-primary/70 font-inter uppercase tracking-wide mb-2">
-                Termin održavanja:
-              </h4>
-              <p className="text-2xl font-bold text-foreground font-inter">
-                SUBOTA I NEDELJA
-              </p>
-            </Card>
-
-            {/* Contact - Split in two rows */}
-            <div className="space-y-4">
-              <Card className="bg-accent/10 border border-accent/30 p-4">
-                <div className="flex items-center gap-2">
-                  <Phone className="w-5 h-5 text-accent flex-shrink-0" />
-                  <div>
-                    <h4 className="text-xs font-semibold text-accent/70 font-inter uppercase">
-                      Za muškarce:
-                    </h4>
-                    <p className="text-lg font-bold text-foreground font-inter">
-                      +43 660 5515940
-                    </p>
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="bg-accent/10 border border-accent/30 p-4">
-                <div className="flex items-center gap-2">
-                  <Phone className="w-5 h-5 text-accent flex-shrink-0" />
-                  <div>
-                    <h4 className="text-xs font-semibold text-accent/70 font-inter uppercase">
-                      Za žene:
-                    </h4>
-                    <p className="text-lg font-bold text-foreground font-inter">
-                      +43 660 2001711
-                    </p>
-                  </div>
-                </div>
-              </Card>
+          {/* Contact Women */}
+          <div className="px-8 py-5 rounded-xl bg-emerald-900/40 backdrop-blur-sm border border-emerald-500/20">
+            <div className="flex items-center gap-3">
+              <Phone className="w-6 h-6 text-emerald-400" />
+              <div className="text-left">
+                <h4 className="text-xs font-semibold text-emerald-300/70 uppercase">
+                  Za žene:
+                </h4>
+                <p className="text-xl font-bold text-white">
+                  +43 660 2001711
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };
