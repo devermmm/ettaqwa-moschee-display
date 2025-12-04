@@ -17,7 +17,6 @@ const PrayerTimes = () => {
   const [nextPrayerIndex, setNextPrayerIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showFullscreenButton, setShowFullscreenButton] = useState(true);
-  const [currentAdIndex, setCurrentAdIndex] = useState(0);
   const [showAd, setShowAd] = useState(false);
 
   const toggleFullscreen = () => {
@@ -62,7 +61,6 @@ const PrayerTimes = () => {
       setShowAd(true);
       setTimeout(() => {
         setShowAd(false);
-        setCurrentAdIndex((prev) => (prev + 1) % 2);
       }, 15000);
     }, 30000);
 
@@ -90,8 +88,6 @@ const PrayerTimes = () => {
     };
   }, []);
 
-  const isFriday = () => currentTime.getDay() === 5;
-
   const { prayerTimes: prayerTimesData } = usePrayerTimes(currentTime);
 
   const safePrayerTimesData = prayerTimesData || {
@@ -112,17 +108,13 @@ const PrayerTimes = () => {
     { name: "Jacija", bosnianName: t("prayerTimes.jacija"), time: safePrayerTimesData.isha },
   ];
 
-  const fridayPrayerTimes: PrayerTime[] = [
-    { name: "Sabah", bosnianName: t("prayerTimes.sabah"), time: safePrayerTimesData.fajr },
-    { name: "Izlazak Sunca", bosnianName: t("prayerTimes.sunriseLabel"), time: safePrayerTimesData.sunrise },
+  const prayerTimesList: PrayerTime[] = basePrayerTimes;
+
+  // Dzuma (Friday prayer) times - always shown
+  const dzumaTimes = [
     { name: "Džuma 1", bosnianName: t("prayerTimes.dzuma1"), time: "12:00" },
     { name: "Džuma 2", bosnianName: t("prayerTimes.dzuma2"), time: "13:00" },
-    { name: "Ikindija", bosnianName: t("prayerTimes.ikindija"), time: safePrayerTimesData.asr },
-    { name: "Akšam", bosnianName: t("prayerTimes.aksam"), time: safePrayerTimesData.maghrib },
-    { name: "Jacija", bosnianName: t("prayerTimes.jacija"), time: safePrayerTimesData.isha },
   ];
-
-  const prayerTimesList: PrayerTime[] = isFriday() ? fridayPrayerTimes : basePrayerTimes;
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -229,68 +221,65 @@ const PrayerTimes = () => {
         )}
       </motion.button>
 
-      <div className="relative z-10 w-full max-w-lg mx-auto px-6 py-8">
-        {/* Mosque Logo/Name */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-6"
-        >
-          <h1 className="text-3xl md:text-4xl font-bold text-white tracking-wide mb-1">
-            ET-TAQWA
-          </h1>
-          <p className="text-emerald-300 text-lg font-arabic">مسجد التقوى</p>
-        </motion.div>
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-8">
+        {/* Header Row: Logo, Time, Date */}
+        <div className="flex items-center justify-between mb-8">
+          {/* Mosque Logo/Name */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-left"
+          >
+            <h1 className="text-3xl md:text-4xl font-bold text-white tracking-wide mb-1">
+              ET-TAQWA
+            </h1>
+            <p className="text-emerald-300 text-lg font-arabic">مسجد التقوى</p>
+            <div className="flex items-center gap-2 text-emerald-200/80 mt-1">
+              <MapPin className="w-4 h-4" />
+              <span className="text-sm uppercase tracking-widest">{t("prayerTimes.location")}</span>
+            </div>
+          </motion.div>
 
-        {/* Location with Vienna styling */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="text-center mb-2"
-        >
-          <div className="inline-flex items-center gap-2 text-emerald-200/80">
-            <MapPin className="w-4 h-4" />
-            <span className="text-sm uppercase tracking-widest">{t("prayerTimes.location")}</span>
-          </div>
-        </motion.div>
+          {/* Current Time */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-center"
+          >
+            <div className="inline-block px-8 py-4 rounded-2xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
+              <p className="text-5xl md:text-6xl lg:text-7xl font-light text-white tabular-nums tracking-tight">
+                {currentTime.toLocaleTimeString("de-DE", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })}
+              </p>
+            </div>
+          </motion.div>
 
-        {/* Date */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.15 }}
-          className="text-center mb-8"
-        >
-          <p className="text-emerald-100/60 text-sm">
-            {getGregorianDate()} / {getHijriDate()}
-          </p>
-        </motion.div>
-
-        {/* Current Time with elegant styling */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-center mb-10"
-        >
-          <div className="inline-block px-8 py-4 rounded-2xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
-            <p className="text-5xl md:text-6xl lg:text-7xl font-light text-white tabular-nums tracking-tight">
-              {currentTime.toLocaleTimeString("de-DE", {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-              })}
+          {/* Date */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.15 }}
+            className="text-right"
+          >
+            <p className="text-emerald-100 text-lg font-medium">
+              {getGregorianDate()}
             </p>
-          </div>
-        </motion.div>
+            <p className="text-emerald-300/80 text-sm mt-1">
+              {getHijriDate()}
+            </p>
+          </motion.div>
+        </div>
 
-        {/* Prayer Times List */}
+        {/* Prayer Times - Horizontal Grid */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-emerald-900/40 backdrop-blur-sm rounded-2xl border border-emerald-500/20 overflow-hidden"
+          className="grid grid-cols-6 gap-4 mb-6"
         >
           {prayerTimesList.map((prayer, index) => {
             const isNext = index === nextPrayerIndex;
@@ -299,33 +288,51 @@ const PrayerTimes = () => {
             return (
               <motion.div
                 key={prayer.name}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + index * 0.05 }}
-                className={`flex items-center justify-between px-6 py-4 border-b border-emerald-500/10 last:border-b-0 transition-all duration-300 ${
-                  isNext ? "bg-gradient-to-r from-emerald-600/40 to-teal-600/40" : ""
+                className={`text-center px-4 py-6 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
+                  isNext 
+                    ? "bg-gradient-to-b from-emerald-600/50 to-teal-600/50 border-emerald-400/50 scale-105" 
+                    : "bg-emerald-900/40 border-emerald-500/20"
                 }`}
               >
-                <div className="flex flex-col">
-                  <span className={`text-lg md:text-xl font-medium ${
-                    isNext ? "text-white" : isPast ? "text-emerald-100/40" : "text-emerald-100"
-                  }`}>
-                    {prayer.bosnianName}
-                  </span>
-                  <span className={`text-xs ${
-                    isNext ? "text-emerald-200" : "text-emerald-100/40"
-                  }`}>
-                    {getTimeUntilPrayer(prayer.time, isPast)}
-                  </span>
-                </div>
-                <span className={`text-2xl md:text-3xl font-semibold tabular-nums ${
+                <span className={`block text-lg md:text-xl font-medium mb-2 ${
+                  isNext ? "text-white" : isPast ? "text-emerald-100/40" : "text-emerald-100"
+                }`}>
+                  {prayer.bosnianName}
+                </span>
+                <span className={`block text-3xl md:text-4xl font-bold tabular-nums mb-2 ${
                   isNext ? "text-white" : isPast ? "text-emerald-100/40" : "text-emerald-100"
                 }`}>
                   {prayer.time}
                 </span>
+                <span className={`block text-xs ${
+                  isNext ? "text-emerald-200" : "text-emerald-100/40"
+                }`}>
+                  {getTimeUntilPrayer(prayer.time, isPast)}
+                </span>
               </motion.div>
             );
           })}
+        </motion.div>
+
+        {/* Dzuma Times - Always visible */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="flex justify-center gap-6"
+        >
+          <div className="inline-flex items-center gap-6 px-8 py-4 rounded-2xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
+            <span className="text-emerald-300 text-lg font-semibold">{t("prayerTimes.dzumaLabel")}:</span>
+            {dzumaTimes.map((dzuma) => (
+              <div key={dzuma.name} className="text-center">
+                <span className="text-emerald-100/80 text-sm block">{dzuma.bosnianName}</span>
+                <span className="text-white text-2xl font-bold tabular-nums">{dzuma.time}</span>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Footer with Basmala */}

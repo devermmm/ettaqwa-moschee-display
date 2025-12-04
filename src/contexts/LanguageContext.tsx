@@ -112,6 +112,7 @@ const translations: Record<Language, any> = {
       jacija: "Jacija",
       dzuma1: "Džuma 1",
       dzuma2: "Džuma 2",
+      dzumaLabel: "Džuma Termini",
       basmala: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم",
       basmalaTranslation: "U ime Allaha, Milostivog, Samilosnog"
     },
@@ -253,6 +254,7 @@ const translations: Record<Language, any> = {
       jacija: "Isha",
       dzuma1: "Jummah 1",
       dzuma2: "Jummah 2",
+      dzumaLabel: "Freitagsgebet",
       basmala: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم",
       basmalaTranslation: "Im Namen Allahs, des Allerbarmers, des Barmherzigen"
     },
