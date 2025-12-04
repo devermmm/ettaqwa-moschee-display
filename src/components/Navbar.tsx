@@ -4,7 +4,6 @@ import { useState } from "react";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,80 +23,76 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-card/98 backdrop-blur-md border-b border-border/40 sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <nav className="bg-card/95 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-sm">
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <NavLink to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+          <NavLink to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <img src={logo} alt="Et-Taqwa Moschee" className="h-10 w-auto" />
             <div className="hidden md:block">
-              <div className="text-base font-semibold text-foreground">Et-Taqwa Moschee</div>
-              <div className="text-xs text-primary font-arabic">مسجد التقوى</div>
+              <div className="text-lg font-bold text-primary">Et-Taqwa Moschee</div>
+              <div className="text-sm text-primary font-amiri">مسجد التقوى - Wien</div>
             </div>
           </NavLink>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-0.5">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  `px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
                     isActive
                       ? "bg-primary text-primary-foreground"
-                      : "text-foreground/70 hover:text-foreground hover:bg-muted/60"
+                      : "text-foreground hover:bg-accent hover:text-accent-foreground"
                   }`
                 }
               >
                 {item.name}
               </NavLink>
             ))}
-            <div className="w-px h-5 bg-border/60 mx-2" />
             <NavLink
               to="/auth"
-              className="px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-muted-foreground hover:text-foreground"
             >
               Admin
             </NavLink>
-            <div className="flex items-center gap-1.5 ml-2">
-              <ThemeToggle />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={toggleLanguage}
-                className="gap-1.5 h-9 border-border/50 hover:border-primary/30 hover:bg-primary/5 text-sm"
-              >
-                <Languages className="h-4 w-4" />
-                {language === "bs" ? "DE" : "BS"}
-              </Button>
-            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleLanguage}
+              className="ml-2 flex items-center gap-2"
+            >
+              <Languages className="h-4 w-4" />
+              {language === "bs" ? "DE" : "BS"}
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden h-9 w-9"
+            className="md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
         </div>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden py-3 space-y-1 animate-fade-in border-t border-border/40">
+          <div className="md:hidden py-4 space-y-2">
             {navItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `block px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+                  `block px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
                     isActive
                       ? "bg-primary text-primary-foreground"
-                      : "text-foreground/70 hover:text-foreground hover:bg-muted/60"
+                      : "text-foreground hover:bg-accent hover:text-accent-foreground"
                   }`
                 }
               >
@@ -107,22 +102,19 @@ const Navbar = () => {
             <NavLink
               to="/auth"
               onClick={() => setIsOpen(false)}
-              className="block px-3 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+              className="block px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               Admin
             </NavLink>
-            <div className="pt-2 px-3 flex gap-2">
-              <ThemeToggle />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={toggleLanguage}
-                className="flex-1 gap-1.5 h-9 border-border/50"
-              >
-                <Languages className="h-4 w-4" />
-                {language === "bs" ? "Deutsch" : "Bosanski"}
-              </Button>
-            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleLanguage}
+              className="w-full flex items-center justify-center gap-2"
+            >
+              <Languages className="h-4 w-4" />
+              {language === "bs" ? "Deutsch" : "Bosanski"}
+            </Button>
           </div>
         )}
       </div>
