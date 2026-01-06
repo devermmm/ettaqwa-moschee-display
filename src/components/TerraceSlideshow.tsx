@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/contexts/LanguageContext";
 import terrace1 from "@/assets/terrace-1.jpg";
 import terrace2 from "@/assets/terrace-2.jpg";
 import terrace3 from "@/assets/terrace-3.jpg";
@@ -11,9 +10,10 @@ import terrace6 from "@/assets/terrace-6.jpg";
 const terraceImages = [terrace1, terrace2, terrace3, terrace4, terrace5, terrace6];
 
 const TerraceSlideshow = () => {
-  const { language } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showGerman, setShowGerman] = useState(true);
 
+  // Cycle images every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % terraceImages.length);
@@ -22,10 +22,20 @@ const TerraceSlideshow = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const title = language === "bs" ? "USKORO NOVA TERASA" : "BALD NEUE TERRASSE";
-  const subtitle = language === "bs" 
-    ? "Uljepšavamo naš prostor za zajednicu" 
-    : "Wir verschönern unseren Raum für die Gemeinschaft";
+  // Toggle language every 30 seconds (German -> Bosnian -> German...)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowGerman((prev) => !prev);
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const title = showGerman ? "BALD NEUE TERRASSE" : "USKORO NOVA TERASA";
+  const subtitle = showGerman 
+    ? "Wir verschönern unseren Raum für die Gemeinschaft"
+    : "Uljepšavamo naš prostor za zajednicu";
+  const badge = showGerman ? "Demnächst" : "Uskoro";
 
   return (
     <div className="fixed inset-0 z-40 bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950 flex items-center justify-center overflow-hidden">
@@ -59,7 +69,7 @@ const TerraceSlideshow = () => {
           className="inline-block mb-6"
         >
           <span className="px-6 py-2 bg-amber-500/20 border border-amber-400/40 rounded-full text-amber-300 text-sm font-semibold uppercase tracking-widest">
-            {language === "bs" ? "Uskoro" : "Demnächst"}
+            {badge}
           </span>
         </motion.div>
 
