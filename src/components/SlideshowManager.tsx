@@ -10,9 +10,10 @@ interface SlideshowManagerProps {
 const SlideshowManager = ({ isActive }: SlideshowManagerProps) => {
   const [currentSlideshow, setCurrentSlideshow] = useState(0);
   
-  // Cycle through 2 slideshows
-  // 0 = Terrace Portfolio (30 sec - 6 images × 5 sec)
-  // 1 = Quran (60 sec)
+  // Cycle through 3 phases:
+  // 0 = Prayer Times (no overlay - 60 sec)
+  // 1 = Terrace Portfolio (60 sec)
+  // 2 = Quran/Surah (60 sec)
   
   useEffect(() => {
     if (!isActive) {
@@ -20,20 +21,23 @@ const SlideshowManager = ({ isActive }: SlideshowManagerProps) => {
       return;
     }
 
-    const durations = [30000, 60000]; // milliseconds for each slideshow
+    const durations = [60000, 60000, 60000]; // 1 minute each
     
     const timer = setTimeout(() => {
-      setCurrentSlideshow((prev) => (prev + 1) % 2);
+      setCurrentSlideshow((prev) => (prev + 1) % 3);
     }, durations[currentSlideshow]);
 
     return () => clearTimeout(timer);
   }, [isActive, currentSlideshow]);
 
   if (!isActive) return null;
+  
+  // Phase 0 = show nothing (prayer times visible behind)
+  if (currentSlideshow === 0) return null;
 
   return (
     <AnimatePresence mode="wait">
-      {currentSlideshow === 0 && (
+      {currentSlideshow === 1 && (
         <motion.div
           key="terrace"
           initial={{ opacity: 0 }}
@@ -44,7 +48,7 @@ const SlideshowManager = ({ isActive }: SlideshowManagerProps) => {
           <TerraceSlideshow />
         </motion.div>
       )}
-      {currentSlideshow === 1 && (
+      {currentSlideshow === 2 && (
         <motion.div
           key="quran"
           initial={{ opacity: 0 }}
