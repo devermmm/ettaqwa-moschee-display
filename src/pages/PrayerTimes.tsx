@@ -55,16 +55,11 @@ const PrayerTimes = () => {
   }, [isFullscreen]);
 
   useEffect(() => {
-    if (!isFullscreen) return;
-
-    const adInterval = setInterval(() => {
+    if (isFullscreen) {
       setShowAd(true);
-      setTimeout(() => {
-        setShowAd(false);
-      }, 15000);
-    }, 30000);
-
-    return () => clearInterval(adInterval);
+    } else {
+      setShowAd(false);
+    }
   }, [isFullscreen]);
 
   useEffect(() => {
