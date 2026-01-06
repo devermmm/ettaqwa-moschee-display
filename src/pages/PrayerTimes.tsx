@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Maximize2, Minimize2, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import AdvertisementSlide from "@/components/AdvertisementSlide";
+import SlideshowManager from "@/components/SlideshowManager";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 
 interface PrayerTime {
@@ -351,8 +351,8 @@ const PrayerTimes = () => {
         </motion.div>
       </div>
 
-      {/* Advertisement Overlay */}
-      {showAd && isFullscreen && <AdvertisementSlide />}
+      {/* Slideshow Manager - cycles through all 3 slideshows */}
+      <SlideshowManager isActive={showAd && isFullscreen} />
     </div>
   );
 };
