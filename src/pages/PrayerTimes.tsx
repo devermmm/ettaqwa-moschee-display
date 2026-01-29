@@ -343,6 +343,18 @@ const PrayerTimes = () => {
             {t("prayerTimes.basmalaTranslation")}
           </p>
         </motion.div>
+
+        {/* Watermark */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="text-center mt-auto pt-4"
+        >
+          <p className="text-emerald-300/30 text-xs uppercase tracking-widest">
+            MADE BY ERMIN
+          </p>
+        </motion.div>
       </div>
 
       {/* Slideshow Manager - cycles through all 3 slideshows */}
