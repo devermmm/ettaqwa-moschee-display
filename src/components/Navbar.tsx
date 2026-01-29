@@ -56,7 +56,7 @@ const Navbar = () => {
               to="/auth"
               className="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-muted-foreground hover:text-foreground"
             >
-              Admin
+              Login
             </NavLink>
             <Button
               variant="ghost"
@@ -104,7 +104,7 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
               className="block px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-              Admin
+              Login
             </NavLink>
             <Button
               variant="ghost"
