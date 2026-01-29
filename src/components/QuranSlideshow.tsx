@@ -1,75 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/contexts/LanguageContext";
 
-interface QuranVerse {
-  arabic: string;
-  german: string;
-  bosnian: string;
-  verseNumber: number;
-}
-
-// Surah Al-Fatiha with translations
-const alFatiha: QuranVerse[] = [
-  {
-    verseNumber: 1,
-    arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
-    german: "Im Namen Allahs, des Allerbarmers, des Barmherzigen.",
-    bosnian: "U ime Allaha, Milostivog, Samilosnog!"
-  },
-  {
-    verseNumber: 2,
-    arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
-    german: "Alles Lob gebührt Allah, dem Herrn der Welten,",
-    bosnian: "Tebe, Allaha, Gospodara svjetova, hvalimo,"
-  },
-  {
-    verseNumber: 3,
-    arabic: "الرَّحْمَٰنِ الرَّحِيمِ",
-    german: "dem Allerbarmer, dem Barmherzigen,",
-    bosnian: "Milostivog, Samilosnog,"
-  },
-  {
-    verseNumber: 4,
-    arabic: "مَالِكِ يَوْمِ الدِّينِ",
-    german: "dem Herrscher am Tage des Gerichts.",
-    bosnian: "Vladara Dana sudnjeg,"
-  },
-  {
-    verseNumber: 5,
-    arabic: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
-    german: "Dir allein dienen wir, und Dich allein bitten wir um Hilfe.",
-    bosnian: "Tebi se klanjamo i od Tebe pomoć tražimo!"
-  },
-  {
-    verseNumber: 6,
-    arabic: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
-    german: "Führe uns den geraden Weg,",
-    bosnian: "Uputi nas na Pravi put,"
-  },
-  {
-    verseNumber: 7,
-    arabic: "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
-    german: "den Weg derer, denen Du Gnade erwiesen hast, nicht derer, die Deinen Zorn erregt haben, und nicht der Irregehenden.",
-    bosnian: "put onih kojima si milost Svoju darovao, a ne onih koji su protiv sebe srdžbu izazvali, niti onih koji su zalutali!"
-  }
-];
+// Ayat al-Kursi (The Throne Verse) - Surah Al-Baqarah 2:255
+const ayatAlKursi = {
+  arabic: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+  german: "Allah - es gibt keinen Gott außer Ihm, dem Lebendigen, dem Beständigen. Ihn überkommt weder Schlummer noch Schlaf. Ihm gehört, was in den Himmeln und was auf der Erde ist. Wer ist es, der bei Ihm Fürsprache einlegen könnte außer mit Seiner Erlaubnis? Er weiß, was vor ihnen und was hinter ihnen liegt, und sie umfassen nichts von Seinem Wissen, außer was Er will. Sein Thron umfasst die Himmel und die Erde, und ihre Bewahrung fällt Ihm nicht schwer. Er ist der Erhabene, der Gewaltige.",
+  bosnian: "Allah je – nema boga osim Njega – Živi i Vječni! Ne obuzima Ga ni drijemež ni san! Njegovo je ono što je na nebesima i ono što je na Zemlji! Ko se može pred Njim zauzimati za nekoga bez dopuštenja Njegova?! On zna šta je bilo i prije njih i šta će biti poslije njih, a oni ne mogu obuhvatiti od Njegova znanja osim koliko On želi. Njegova Kursija obuhvaća i nebesa i Zemlju i Njemu ne dojadi njihovo čuvanje; On je Svevišnji, Veličanstveni!"
+};
 
 const QuranSlideshow = () => {
-  const { language } = useLanguage();
-  const [currentVerseIndex, setCurrentVerseIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Auto-advance verses every 6 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentVerseIndex((prev) => (prev + 1) % alFatiha.length);
-    }, 6000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const currentVerse = alFatiha[currentVerseIndex];
 
   return (
     <div className="fixed inset-0 z-40 bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950 flex flex-col items-center justify-center overflow-hidden p-8">
@@ -95,36 +35,27 @@ const QuranSlideshow = () => {
         className="text-center mb-8 relative z-10"
       >
         <h2 className="text-2xl md:text-3xl font-bold text-emerald-200 mb-2">
-          سورة الفاتحة
+          آية الكرسي
         </h2>
         <p className="text-emerald-300/70 text-lg">
-          {language === "bs" ? "Sura El-Fatiha" : "Surah Al-Fatiha"}
+          Ayat al-Kursi (Al-Baqarah 2:255)
         </p>
       </motion.div>
 
-      {/* Current Verse Container */}
+      {/* Verse Container */}
       <div ref={containerRef} className="relative z-10 w-full max-w-5xl">
         <motion.div
-          key={currentVerseIndex}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          {/* Verse Number Badge */}
-          <div className="flex justify-center mb-6">
-            <span className="w-14 h-14 rounded-full bg-emerald-700/50 border border-emerald-400/30 flex items-center justify-center text-emerald-200 text-xl font-bold">
-              {currentVerse.verseNumber}
-            </span>
-          </div>
-
           {/* Arabic Text */}
           <p
-            className="text-4xl md:text-5xl lg:text-6xl font-amiri text-white leading-relaxed mb-8 px-4"
+            className="text-3xl md:text-4xl lg:text-5xl font-amiri text-white leading-loose mb-8 px-4"
             dir="rtl"
           >
-            {currentVerse.arabic}
+            {ayatAlKursi.arabic}
           </p>
 
           {/* Translations Container */}
@@ -132,42 +63,21 @@ const QuranSlideshow = () => {
             {/* German Translation */}
             <div className="p-4 rounded-xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
               <span className="text-emerald-400 text-sm font-semibold uppercase tracking-wide">DE</span>
-              <p className="text-xl md:text-2xl text-emerald-100 mt-2 leading-relaxed">
-                {currentVerse.german}
+              <p className="text-lg md:text-xl text-emerald-100 mt-2 leading-relaxed">
+                {ayatAlKursi.german}
               </p>
             </div>
 
             {/* Bosnian Translation */}
             <div className="p-4 rounded-xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
               <span className="text-emerald-400 text-sm font-semibold uppercase tracking-wide">BS</span>
-              <p className="text-xl md:text-2xl text-emerald-100 mt-2 leading-relaxed">
-                {currentVerse.bosnian}
+              <p className="text-lg md:text-xl text-emerald-100 mt-2 leading-relaxed">
+                {ayatAlKursi.bosnian}
               </p>
             </div>
           </div>
         </motion.div>
       </div>
-
-      {/* Verse Progress Indicators */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="flex justify-center gap-2 mt-8 relative z-10"
-      >
-        {alFatiha.map((_, index) => (
-          <div
-            key={index}
-            className={`h-1.5 rounded-full transition-all duration-500 ${
-              index === currentVerseIndex 
-                ? "w-8 bg-emerald-400" 
-                : index < currentVerseIndex 
-                  ? "w-3 bg-emerald-500/50" 
-                  : "w-3 bg-emerald-700/50"
-            }`}
-          />
-        ))}
-      </motion.div>
 
       {/* Mosque Name */}
       <motion.div
