@@ -94,38 +94,45 @@ const MobileApp = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* iOS-style Header */}
-      <div className="bg-background/80 backdrop-blur-xl sticky top-0 z-40 border-b border-border/50">
+      {/* Clean iOS-style Header */}
+      <div className="bg-background sticky top-0 z-40">
         <div className="safe-area-inset-top" />
-        <div className="flex items-center justify-between px-5 py-3">
-          <div className="flex items-center gap-3">
-            <img src={logo} alt="Et-Taqwa" className="w-10 h-10 rounded-xl" />
-            <div>
-              <h1 className="text-lg font-semibold text-foreground">Et-Taqwa</h1>
-              <p className="text-xs text-muted-foreground flex items-center gap-1">
-                <MapPin className="w-3 h-3" />
-                Wien
-              </p>
+        <div className="px-5 pt-4 pb-3">
+          {/* Top Row - Logo & Language */}
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary to-accent p-0.5 shadow-lg shadow-primary/20">
+                <img 
+                  src={logo} 
+                  alt="Et-Taqwa" 
+                  className="w-full h-full rounded-[14px] object-cover bg-white" 
+                />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-foreground tracking-tight">Et-Taqwa</h1>
+                <div className="flex items-center gap-1 text-muted-foreground">
+                  <MapPin className="w-3 h-3" />
+                  <span className="text-xs">Wien, Österreich</span>
+                </div>
+              </div>
             </div>
+            <button
+              onClick={() => setLanguage(language === "bs" ? "de" : "bs")}
+              className="w-10 h-10 rounded-xl bg-secondary/80 flex items-center justify-center text-lg border border-border/50 active:scale-95 transition-transform"
+            >
+              {language === "bs" ? "🇧🇦" : "🇩🇪"}
+            </button>
           </div>
-          <button
-            onClick={() => setLanguage(language === "bs" ? "de" : "bs")}
-            className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-lg"
-          >
-            {language === "bs" ? "🇧🇦" : "🇩🇪"}
-          </button>
+          
+          {/* Date Row */}
+          <p className="text-muted-foreground text-sm">
+            {getFormattedDate()}
+          </p>
         </div>
+        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       </div>
 
-      <div className="px-5 pb-8">
-        {/* Date */}
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-muted-foreground text-sm mt-4 mb-2"
-        >
-          {getFormattedDate()}
-        </motion.p>
+      <div className="px-5 pb-8 pt-4">
 
         {/* Next Prayer Card - iOS Widget Style */}
         <motion.div
