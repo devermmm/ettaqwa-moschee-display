@@ -7,7 +7,7 @@ import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 import { usePrayerNotifications } from "@/hooks/usePrayerNotifications";
 import { supabase } from "@/integrations/supabase/client";
 import SplashScreen from "@/components/SplashScreen";
-import logo from "@/assets/logo-new.png";
+import logo from "@/assets/logo.png";
 import terrace1 from "@/assets/terrace-1.jpg";
 import terrace2 from "@/assets/terrace-2.jpg";
 import terrace3 from "@/assets/terrace-3.jpg";
@@ -171,22 +171,18 @@ const MobileApp = () => {
         <div className="safe-area-inset-top" />
         <div className="px-5 pt-4 pb-3">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3.5">
-              {/* Logo: no cropping + strong contrast */}
-              <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border border-white/20 shadow-xl shadow-primary/20 p-2">
-                <img
-                  src={logo}
-                  alt="Et-Taqwa Logo"
-                  className="w-full h-full object-contain"
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-accent p-0.5 shadow-lg shadow-primary/20">
+                <img 
+                  src={logo} 
+                  alt="Et-Taqwa" 
+                  className="w-full h-full rounded-[14px] object-cover bg-white" 
                 />
               </div>
-
-              <div className="leading-tight">
-                <h1 className="text-xl font-extrabold tracking-tight text-foreground">
-                  ET-TAQWA
-                </h1>
+              <div>
+                <h1 className="text-xl font-bold text-foreground tracking-tight">Et-Taqwa</h1>
                 <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <MapPin className="w-3.5 h-3.5" />
+                  <MapPin className="w-3 h-3" />
                   <span className="text-xs font-medium">Wien, Österreich</span>
                 </div>
               </div>
