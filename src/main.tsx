@@ -2,6 +2,9 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { enableBootDiagnostics } from "./lib/bootDiagnostics";
+
+enableBootDiagnostics();
 
 // Apply saved settings on startup (defensive: in some native WebViews storage can throw)
 try {
