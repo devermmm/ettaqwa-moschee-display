@@ -110,9 +110,9 @@ const MobileApp = () => {
           </div>
           <button
             onClick={() => setLanguage(language === "bs" ? "de" : "bs")}
-            className="px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-xs font-medium"
+            className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-lg"
           >
-            {language === "bs" ? "🇧🇦 BS" : "🇩🇪 DE"}
+            {language === "bs" ? "🇧🇦" : "🇩🇪"}
           </button>
         </div>
       </div>
