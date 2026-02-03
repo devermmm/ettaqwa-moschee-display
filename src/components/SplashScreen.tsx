@@ -46,7 +46,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
 
   return (
     <motion.div 
-      className="fixed inset-0 bg-gradient-to-b from-primary via-primary to-accent flex flex-col items-center z-50"
+      className="fixed inset-0 bg-gradient-to-b from-primary via-primary to-accent flex flex-col z-50"
       initial={{ opacity: 1 }}
       animate={{ opacity: isExiting ? 0 : 1 }}
       transition={{ duration: 0.4 }}
@@ -67,38 +67,50 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       {/* Safe area top */}
       <div className="safe-area-inset-top" />
 
-      {/* Content centered */}
-      <div className="flex-1 flex flex-col items-center justify-center px-8 w-full max-w-sm">
-        {/* Logo */}
-        <motion.img 
+      {/* Header with Logo - Top Left */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="px-6 pt-6 flex items-center gap-3"
+      >
+        <img 
           src={logo} 
           alt="Et-Taqwa" 
-          className="w-28 h-28 rounded-[1.75rem] shadow-2xl shadow-black/30"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          className="w-14 h-14 rounded-xl shadow-lg shadow-black/20"
         />
+        <div>
+          <h1 className="text-xl font-bold text-white tracking-tight">ET-TAQWA</h1>
+          <p className="text-white/50 text-xs font-arabic">مسجد التقوى</p>
+        </div>
+      </motion.div>
 
-        {/* Title */}
+      {/* Main Content - Centered */}
+      <div className="flex-1 flex flex-col items-center justify-center px-8 w-full max-w-sm mx-auto">
+        {/* Welcome Text */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="mt-5 text-center"
+          transition={{ delay: 0.2 }}
+          className="text-center mb-10"
         >
-          <h1 className="text-4xl font-bold text-white tracking-tight">ET-TAQWA</h1>
-          <p className="text-white/50 text-sm mt-1.5 font-arabic">مسجد التقوى</p>
+          <h2 className="text-3xl font-bold text-white mb-2">
+            Willkommen
+          </h2>
+          <p className="text-white/60 text-base">
+            Dobrodošli
+          </p>
         </motion.div>
 
         {/* Language Selection */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="mt-14 w-full"
+          transition={{ delay: 0.3 }}
+          className="w-full"
         >
-          <p className="text-white/60 text-center text-sm mb-6">
-            Wählen Sie Ihre Sprache / Izaberite jezik
+          <p className="text-white/50 text-center text-sm mb-5">
+            Wählen Sie Ihre Sprache
           </p>
 
           <div className="space-y-3">
