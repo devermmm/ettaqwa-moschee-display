@@ -3,14 +3,17 @@ import App from "./App.tsx";
 import "./index.css";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
-// Apply saved font size on startup
-const savedFontSize = localStorage.getItem("app-font-size") || "medium";
-document.documentElement.setAttribute("data-font-size", savedFontSize);
+// Apply saved settings on startup (defensive: in some native WebViews storage can throw)
+try {
+  const savedFontSize = localStorage.getItem("app-font-size") || "medium";
+  document.documentElement.setAttribute("data-font-size", savedFontSize);
 
-// Apply saved dark mode on startup
-const savedDarkMode = localStorage.getItem("app-dark-mode") === "true";
-if (savedDarkMode) {
-  document.documentElement.classList.add("dark");
+  const savedDarkMode = localStorage.getItem("app-dark-mode") === "true";
+  if (savedDarkMode) {
+    document.documentElement.classList.add("dark");
+  }
+} catch {
+  // ignore
 }
 
 createRoot(document.getElementById("root")!).render(
