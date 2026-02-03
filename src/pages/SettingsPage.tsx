@@ -8,12 +8,13 @@ import {
   Moon, 
   Sun, 
   Bell, 
-  Globe, 
   Smartphone,
   Info,
-  Heart
+  Heart,
+  Clock
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -31,7 +32,20 @@ const SettingsPage = () => {
     return localStorage.getItem("prayer-notifications") === "true";
   });
 
+  const [widgetEnabled, setWidgetEnabled] = useState(() => {
+    return localStorage.getItem("widget-enabled") === "true";
+  });
+
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const { prayerTimes } = usePrayerTimes(currentTime);
+
   const goBack = () => navigate("/app");
+
+  // Update time every second for widget preview
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const fontSizes = [
     { id: "small", label: language === "bs" ? "Mala" : "Klein", scale: "text-sm" },
@@ -99,6 +113,87 @@ const SettingsPage = () => {
       )}
     </button>
   );
+
+  // Widget Preview Component
+  const WidgetPreview = ({ 
+    language, 
+    prayerTimes, 
+    currentTime 
+  }: { 
+    language: string; 
+    prayerTimes: any; 
+    currentTime: Date;
+  }) => {
+    const prayerTimesList = [
+      { id: "fajr", name: "Fajr", nameBs: "Sabah", time: prayerTimes?.fajr || "--:--" },
+      { id: "sunrise", name: "Sunrise", nameBs: "Izlazak", time: prayerTimes?.sunrise || "--:--" },
+      { id: "dhuhr", name: "Dhuhr", nameBs: "Podne", time: prayerTimes?.dhuhr || "--:--" },
+      { id: "asr", name: "Asr", nameBs: "Ikindija", time: prayerTimes?.asr || "--:--" },
+      { id: "maghrib", name: "Maghrib", nameBs: "Akšam", time: prayerTimes?.maghrib || "--:--" },
+      { id: "isha", name: "Isha", nameBs: "Jacija", time: prayerTimes?.isha || "--:--" },
+    ];
+
+    const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
+    
+    let nextPrayerIndex = 0;
+    for (let i = 0; i < prayerTimesList.length; i++) {
+      const [hours, minutes] = prayerTimesList[i].time.split(":").map(Number);
+      if (!isNaN(hours) && !isNaN(minutes)) {
+        const prayerMinutes = hours * 60 + minutes;
+        if (currentMinutes < prayerMinutes) {
+          nextPrayerIndex = i;
+          break;
+        }
+      }
+    }
+
+    const nextPrayer = prayerTimesList[nextPrayerIndex];
+    
+    const getCountdown = () => {
+      if (!nextPrayer || nextPrayer.time === "--:--") return { hours: 0, minutes: 0, seconds: 0 };
+      const [hours, minutes] = nextPrayer.time.split(":").map(Number);
+      if (isNaN(hours) || isNaN(minutes)) return { hours: 0, minutes: 0, seconds: 0 };
+      
+      const prayerDate = new Date(currentTime);
+      prayerDate.setHours(hours, minutes, 0, 0);
+      const diff = prayerDate.getTime() - currentTime.getTime();
+      if (diff <= 0) return { hours: 0, minutes: 0, seconds: 0 };
+
+      return {
+        hours: Math.floor(diff / (1000 * 60 * 60)),
+        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((diff % (1000 * 60)) / 1000),
+      };
+    };
+
+    const countdown = getCountdown();
+
+    return (
+      <div className="bg-gradient-to-br from-primary to-accent rounded-2xl p-4 shadow-lg">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-white/70 text-xs">
+              {language === "bs" ? "Sljedeći namaz" : "Nächstes Gebet"}
+            </p>
+            <p className="text-xl font-bold text-white mt-0.5">
+              {language === "bs" ? nextPrayer?.nameBs : nextPrayer?.name}
+            </p>
+            <p className="text-white/80 text-sm tabular-nums">{nextPrayer?.time}</p>
+          </div>
+          <div className="text-right">
+            <div className="flex items-center gap-1 text-white/70 mb-1">
+              <Clock className="w-3 h-3" />
+              <span className="text-xs">{language === "bs" ? "preostalo" : "verbleibend"}</span>
+            </div>
+            <p className="text-2xl font-bold text-white tabular-nums">
+              {countdown.hours > 0 && `${countdown.hours}:`}
+              {String(countdown.minutes).padStart(2, '0')}:{String(countdown.seconds).padStart(2, '0')}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -265,7 +360,7 @@ const SettingsPage = () => {
           </div>
         </motion.div>
 
-        {/* Widget Info */}
+        {/* Widget Section */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -276,43 +371,31 @@ const SettingsPage = () => {
             {language === "bs" ? "Widget" : "Widget"}
           </h3>
           <div className="bg-card rounded-2xl border border-border overflow-hidden">
-            <div className="p-4">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                  <Smartphone className="w-5 h-5 text-blue-500" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">
-                    {language === "bs" ? "Dodaj Widget" : "Widget hinzufügen"}
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {language === "bs" 
-                      ? "Dugo pritisni na početni ekran → Widgeti → Et-Taqwa" 
-                      : "Lange auf Startbildschirm drücken → Widgets → Et-Taqwa"}
-                  </p>
-                </div>
-              </div>
-
-              {/* Widget Preview */}
-              <div className="mt-4 p-4 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-muted-foreground">
-                      {language === "bs" ? "Sljedeći namaz" : "Nächstes Gebet"}
-                    </p>
-                    <p className="text-lg font-bold text-foreground">Dhuhr</p>
-                    <p className="text-sm text-muted-foreground">12:30</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-2xl font-bold text-primary tabular-nums">2:15:30</p>
-                    <p className="text-xs text-muted-foreground">
-                      {language === "bs" ? "preostalo" : "verbleibend"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <SettingRow
+              icon={Smartphone}
+              label={language === "bs" ? "Widget aktiviran" : "Widget aktiviert"}
+              toggle
+              isOn={widgetEnabled}
+              onClick={() => {
+                setWidgetEnabled(!widgetEnabled);
+                localStorage.setItem("widget-enabled", String(!widgetEnabled));
+              }}
+            />
           </div>
+
+          {/* Live Widget Preview */}
+          {widgetEnabled && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mt-3"
+            >
+              <p className="text-xs text-muted-foreground mb-2 px-4">
+                {language === "bs" ? "Widget pregled" : "Widget-Vorschau"}
+              </p>
+              <WidgetPreview language={language} prayerTimes={prayerTimes} currentTime={currentTime} />
+            </motion.div>
+          )}
         </motion.div>
 
         {/* About Section */}
