@@ -294,16 +294,16 @@ const DuaPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* iOS Navigation Bar */}
-      <div className="bg-background/80 backdrop-blur-xl sticky top-0 z-40 border-b border-border/50">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/30">
+      {/* Header with Glass Effect */}
+      <div className="sticky top-0 z-50 backdrop-blur-2xl bg-background/70 border-b border-white/10">
         <div className="safe-area-inset-top" />
-        <div className="flex items-center justify-between px-4 py-3">
-          <button onClick={goBack} className="flex items-center gap-1 text-primary font-medium">
+        <div className="flex items-center justify-between px-5 py-4">
+          <button onClick={goBack} className="flex items-center gap-1.5 text-primary font-semibold active:opacity-70 transition-opacity">
             <ChevronLeft className="w-5 h-5" />
             <span>{language === "bs" ? "Nazad" : "Zurück"}</span>
           </button>
-          <h1 className="font-semibold text-foreground">
+          <h1 className="text-lg font-bold text-foreground">
             {selectedDua 
               ? (language === "bs" ? selectedDua.titleBs : selectedDua.title)
               : (language === "bs" ? "Dove" : "Bittgebete")}
@@ -313,7 +313,6 @@ const DuaPage = () => {
       </div>
 
       <AnimatePresence mode="wait">
-        {/* Dua List */}
         {!selectedDua && (
           <motion.div
             key="list"
@@ -322,8 +321,8 @@ const DuaPage = () => {
             exit={{ opacity: 0 }}
             className="pb-8"
           >
-            {/* Category Filter - Grid Style */}
-            <div className="px-4 pt-4">
+            {/* Category Filter */}
+            <div className="px-5 pt-5">
               <div className="grid grid-cols-3 gap-2">
                 {categories.map((cat) => {
                   const Icon = cat.icon;
@@ -332,14 +331,14 @@ const DuaPage = () => {
                     <button
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`flex flex-col items-center gap-1 py-3 px-2 rounded-xl transition-all ${
+                      className={`flex flex-col items-center gap-1.5 py-3.5 px-2 rounded-2xl transition-all ${
                         isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-card border border-border text-foreground"
+                          ? "bg-gradient-to-br from-primary to-accent text-white shadow-lg shadow-primary/25"
+                          : "backdrop-blur-xl bg-card/60 dark:bg-card/40 border border-white/20 text-foreground"
                       }`}
                     >
-                      <Icon className={`w-5 h-5 ${isSelected ? "text-primary-foreground" : "text-muted-foreground"}`} />
-                      <span className="text-xs font-medium">
+                      <Icon className={`w-5 h-5 ${isSelected ? "text-white" : "text-muted-foreground"}`} />
+                      <span className="text-xs font-semibold">
                         {language === "bs" ? cat.labelBs : cat.label}
                       </span>
                     </button>
@@ -349,90 +348,88 @@ const DuaPage = () => {
             </div>
 
             {/* Dua Count */}
-            <div className="px-4 pt-4">
-              <p className="text-xs text-muted-foreground">
+            <div className="px-5 pt-5">
+              <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                 {filteredDuas.length} {language === "bs" ? "dova" : "Duas"}
               </p>
             </div>
 
             {/* Dua List */}
-            <div className="mt-2 space-y-2 px-4">
+            <div className="mt-3 space-y-3 px-5">
               {filteredDuas.map((dua) => {
                 const Icon = dua.icon;
                 return (
-                  <motion.button
+                  <button
                     key={dua.id}
-                    whileTap={{ scale: 0.98 }}
                     onClick={() => setSelectedDua(dua)}
-                    className="w-full bg-card rounded-2xl border border-border p-4 text-left"
+                    className="w-full backdrop-blur-xl bg-card/60 dark:bg-card/40 rounded-3xl border border-white/20 dark:border-white/10 p-4 text-left shadow-lg active:scale-[0.98] transition-transform"
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
                         <Icon className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-foreground">
+                        <p className="font-bold text-foreground">
                           {language === "bs" ? dua.titleBs : dua.title}
                         </p>
                         <p className="text-sm text-muted-foreground font-arabic mt-1 line-clamp-1">
                           {dua.arabic}
                         </p>
                         {dua.source && (
-                          <p className="text-xs text-muted-foreground/60 mt-1">
+                          <p className="text-xs text-muted-foreground/60 mt-1 font-medium">
                             {dua.source}
                           </p>
                         )}
                       </div>
-                      <ChevronRight className="w-5 h-5 text-muted-foreground/50 flex-shrink-0" />
+                      <ChevronRight className="w-5 h-5 text-muted-foreground/40 flex-shrink-0 mt-1" />
                     </div>
-                  </motion.button>
+                  </button>
                 );
               })}
             </div>
           </motion.div>
         )}
 
-        {/* Dua Detail */}
         {selectedDua && (
           <motion.div
             key="detail"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="p-4 pb-8"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="px-5 pt-5 pb-8"
           >
             {/* Header Card */}
-            <div className="bg-gradient-to-br from-primary to-accent rounded-2xl p-5 mb-4">
-              <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-br from-primary via-accent to-primary rounded-3xl p-5 mb-5 shadow-xl shadow-primary/25">
+              <div className="flex items-center gap-4">
                 {(() => {
                   const Icon = selectedDua.icon;
                   return (
-                    <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
                       <Icon className="w-7 h-7 text-white" />
                     </div>
                   );
                 })()}
                 <div>
-                  <p className="text-white font-semibold text-lg">
+                  <p className="text-white font-bold text-lg">
                     {language === "bs" ? selectedDua.titleBs : selectedDua.title}
                   </p>
                   {selectedDua.source && (
-                    <p className="text-white/70 text-sm">{selectedDua.source}</p>
+                    <p className="text-white/70 text-sm font-medium">{selectedDua.source}</p>
                   )}
                 </div>
               </div>
             </div>
 
             {/* Arabic */}
-            <div className="bg-card rounded-2xl border border-border overflow-hidden mb-3">
+            <div className="backdrop-blur-xl bg-card/60 dark:bg-card/40 rounded-3xl border border-white/20 dark:border-white/10 overflow-hidden mb-4 shadow-lg">
               <div className="p-5">
                 <div className="flex items-center justify-between mb-4">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                     {language === "bs" ? "Arapski" : "Arabisch"}
                   </p>
                   <button
                     onClick={() => copyToClipboard(selectedDua.arabic, `${selectedDua.id}-ar`)}
-                    className="flex items-center gap-1.5 text-primary text-sm font-medium"
+                    className="flex items-center gap-1.5 text-primary text-sm font-semibold"
                   >
                     {copiedId === `${selectedDua.id}-ar` ? (
                       <Check className="w-4 h-4" />
@@ -449,9 +446,9 @@ const DuaPage = () => {
             </div>
 
             {/* Transliteration */}
-            <div className="bg-card rounded-2xl border border-border overflow-hidden mb-3">
+            <div className="backdrop-blur-xl bg-card/60 dark:bg-card/40 rounded-3xl border border-white/20 dark:border-white/10 overflow-hidden mb-4 shadow-lg">
               <div className="p-5">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">
                   {language === "bs" ? "Izgovor" : "Aussprache"}
                 </p>
                 <p className="text-foreground italic leading-relaxed">
@@ -461,9 +458,9 @@ const DuaPage = () => {
             </div>
 
             {/* Translation */}
-            <div className="bg-card rounded-2xl border border-border overflow-hidden">
+            <div className="backdrop-blur-xl bg-card/60 dark:bg-card/40 rounded-3xl border border-white/20 dark:border-white/10 overflow-hidden shadow-lg">
               <div className="p-5">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">
                   {language === "bs" ? "Prijevod" : "Übersetzung"}
                 </p>
                 <p className="text-foreground leading-relaxed">
