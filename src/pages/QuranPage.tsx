@@ -424,58 +424,20 @@ const QuranPage = () => {
               />
             </div>
 
-            {/* Ayat al-Kursi Card */}
-            <div className="px-4 pt-4">
-              <motion.button
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setShowAyatKursi(true)}
-                className="w-full p-4 rounded-2xl bg-gradient-to-r from-amber-500/20 to-amber-600/10 border border-amber-500/30 text-left"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-amber-600 font-medium mb-1">
-                      {language === "bs" ? "Posebna dova" : "Besonderer Vers"}
-                    </p>
-                    <p className="text-lg font-semibold text-foreground">Ayat al-Kursi</p>
-                    <p className="text-sm text-muted-foreground font-arabic mt-1">آية الكرسي</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-amber-600" />
-                </div>
-              </motion.button>
-            </div>
-
-            {/* Juz Amma Quick Access */}
-            <div className="px-4 pt-4">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-                {language === "bs" ? "Juz 'Amma (Kratke sure)" : "Juz 'Amma (Kurze Suren)"}
-              </p>
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {allSurahs.slice(77).map((surah) => (
-                  <button
-                    key={surah.number}
-                    onClick={() => setSelectedSurah(surah)}
-                    className="flex-shrink-0 px-3 py-2 bg-primary/10 rounded-xl text-sm font-medium text-primary"
-                  >
-                    {surah.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* All Surahs */}
+            {/* All Surahs - Clean List */}
             <div className="mt-4 bg-card mx-4 rounded-2xl overflow-hidden border border-border">
               <div className="px-4 py-3 border-b border-border">
                 <p className="text-sm font-semibold text-foreground">
                   {language === "bs" ? "Sve sure" : "Alle Suren"} ({filteredSurahs.length})
                 </p>
               </div>
-              <div className="max-h-[60vh] overflow-y-auto">
+              <div className="divide-y divide-border/50">
                 {filteredSurahs.map((surah) => (
                   <motion.button
                     key={surah.number}
                     whileTap={{ backgroundColor: "rgba(0,0,0,0.05)" }}
                     onClick={() => setSelectedSurah(surah)}
-                    className="w-full flex items-center px-4 py-3 border-b border-border/50 last:border-b-0"
+                    className="w-full flex items-center px-4 py-3"
                   >
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mr-3">
                       <span className="text-sm font-bold text-primary">{surah.number}</span>
