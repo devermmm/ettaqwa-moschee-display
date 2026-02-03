@@ -275,16 +275,16 @@ const HadithPage = () => {
   const favoriteHadiths = hadithCollection.filter(h => favorites.includes(h.id));
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* iOS Navigation Bar */}
-      <div className="bg-background/80 backdrop-blur-xl sticky top-0 z-40 border-b border-border/50">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/30">
+      {/* Header with Glass Effect */}
+      <div className="sticky top-0 z-50 backdrop-blur-2xl bg-background/70 border-b border-white/10">
         <div className="safe-area-inset-top" />
-        <div className="flex items-center justify-between px-4 py-3">
-          <button onClick={goBack} className="flex items-center gap-1 text-primary font-medium">
+        <div className="flex items-center justify-between px-5 py-4">
+          <button onClick={goBack} className="flex items-center gap-1.5 text-primary font-semibold active:opacity-70 transition-opacity">
             <ChevronLeft className="w-5 h-5" />
             <span>{language === "bs" ? "Nazad" : "Zurück"}</span>
           </button>
-          <h1 className="font-semibold text-foreground">
+          <h1 className="text-lg font-bold text-foreground">
             {showFavorites 
               ? (language === "bs" ? "Omiljeni" : "Favoriten")
               : (language === "bs" ? "Hadisi" : "Hadithe")
@@ -292,8 +292,10 @@ const HadithPage = () => {
           </h1>
           <button 
             onClick={() => setShowFavorites(!showFavorites)}
-            className={`w-10 h-10 rounded-full flex items-center justify-center ${
-              showFavorites ? "bg-primary text-primary-foreground" : "text-primary"
+            className={`w-11 h-11 rounded-2xl flex items-center justify-center transition-all ${
+              showFavorites 
+                ? "bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-lg shadow-rose-500/25" 
+                : "backdrop-blur-xl bg-card/60 border border-white/20 text-rose-500"
             }`}
           >
             <Heart className={`w-5 h-5 ${showFavorites ? "fill-current" : ""}`} />
@@ -303,18 +305,19 @@ const HadithPage = () => {
 
       <AnimatePresence mode="wait">
         {showFavorites ? (
-          /* Favorites List */
           <motion.div
             key="favorites"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="p-4 pb-8"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="px-5 pt-5 pb-8"
           >
             {favoriteHadiths.length === 0 ? (
               <div className="text-center py-16">
-                <Heart className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
-                <p className="text-muted-foreground">
+                <div className="w-16 h-16 rounded-3xl bg-rose-500/10 flex items-center justify-center mx-auto mb-4">
+                  <Heart className="w-8 h-8 text-rose-500/50" />
+                </div>
+                <p className="text-muted-foreground font-medium">
                   {language === "bs" 
                     ? "Još nemaš omiljenih hadisa" 
                     : "Du hast noch keine Favoriten"}
@@ -327,21 +330,21 @@ const HadithPage = () => {
                     key={hadith.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-card rounded-2xl border border-border p-4"
+                    className="backdrop-blur-xl bg-card/60 dark:bg-card/40 rounded-3xl border border-white/20 dark:border-white/10 shadow-lg p-5"
                   >
                     <p className="text-lg font-arabic text-right text-foreground leading-loose mb-3">
                       {hadith.arabic}
                     </p>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-2">
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                       {language === "bs" ? hadith.bosnian : hadith.german}
                     </p>
                     <div className="flex items-center justify-between">
-                      <p className="text-xs text-primary font-medium">
+                      <p className="text-xs text-primary font-semibold">
                         {hadith.source} • {hadith.number}
                       </p>
                       <button
                         onClick={() => toggleFavorite(hadith.id)}
-                        className="text-rose-500"
+                        className="w-10 h-10 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-500"
                       >
                         <Heart className="w-5 h-5 fill-current" />
                       </button>
@@ -352,21 +355,20 @@ const HadithPage = () => {
             )}
           </motion.div>
         ) : (
-          /* Main Hadith View */
           <motion.div
             key="main"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="p-4 pb-8"
+            className="px-5 pt-5 pb-8"
           >
             {/* Source Tabs */}
-            <div className="flex gap-2 mb-6">
-              <div className="flex-1 py-2 px-4 rounded-xl bg-primary/10 text-center">
-                <p className="text-xs text-primary font-medium">Sahih Bukhari</p>
+            <div className="flex gap-3 mb-6">
+              <div className="flex-1 py-3 px-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 text-center">
+                <p className="text-sm text-primary font-bold">Sahih Bukhari</p>
               </div>
-              <div className="flex-1 py-2 px-4 rounded-xl bg-primary/10 text-center">
-                <p className="text-xs text-primary font-medium">Sahih Muslim</p>
+              <div className="flex-1 py-3 px-4 rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 text-center">
+                <p className="text-sm text-primary font-bold">Sahih Muslim</p>
               </div>
             </div>
 
@@ -375,44 +377,46 @@ const HadithPage = () => {
               {currentHadith && !isLoading && (
                 <motion.div
                   key={currentHadith.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-card rounded-3xl border border-border overflow-hidden shadow-lg"
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                  className="backdrop-blur-xl bg-card/60 dark:bg-card/40 rounded-3xl border border-white/20 dark:border-white/10 shadow-xl overflow-hidden"
                 >
                   {/* Arabic Text */}
                   <div className="p-6 bg-gradient-to-br from-primary/5 to-accent/5">
                     <div className="flex items-start justify-between mb-4">
-                      <BookOpen className="w-6 h-6 text-primary/50" />
+                      <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center">
+                        <BookOpen className="w-5 h-5 text-primary" />
+                      </div>
                       <button
                         onClick={() => toggleFavorite(currentHadith.id)}
-                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                        className={`w-11 h-11 rounded-2xl flex items-center justify-center transition-all ${
                           favorites.includes(currentHadith.id) 
                             ? "bg-rose-500/10 text-rose-500" 
-                            : "text-muted-foreground"
+                            : "bg-muted/50 text-muted-foreground"
                         }`}
                       >
                         <Heart className={`w-5 h-5 ${favorites.includes(currentHadith.id) ? "fill-current" : ""}`} />
                       </button>
                     </div>
-                    <p className="text-2xl font-arabic text-right text-foreground leading-[2] mb-2">
+                    <p className="text-2xl font-arabic text-right text-foreground leading-[2]">
                       {currentHadith.arabic}
                     </p>
                   </div>
 
                   {/* Translation */}
-                  <div className="p-6 border-t border-border">
+                  <div className="p-6 border-t border-white/10">
                     <p className="text-muted-foreground leading-relaxed">
                       {language === "bs" ? currentHadith.bosnian : currentHadith.german}
                     </p>
                   </div>
 
                   {/* Source */}
-                  <div className="px-6 py-4 bg-muted/30 border-t border-border">
+                  <div className="px-6 py-4 bg-muted/20 border-t border-white/10">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-semibold text-primary">
+                        <p className="text-sm font-bold text-primary">
                           {currentHadith.source}
                         </p>
                         <p className="text-xs text-muted-foreground">
@@ -422,7 +426,7 @@ const HadithPage = () => {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={copyHadith}
-                          className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center"
+                          className="w-11 h-11 rounded-2xl backdrop-blur-xl bg-card/60 border border-white/20 flex items-center justify-center"
                         >
                           {copied ? (
                             <Check className="w-4 h-4 text-green-500" />
@@ -432,7 +436,7 @@ const HadithPage = () => {
                         </button>
                         <button
                           onClick={shareHadith}
-                          className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center"
+                          className="w-11 h-11 rounded-2xl backdrop-blur-xl bg-card/60 border border-white/20 flex items-center justify-center"
                         >
                           <Share2 className="w-4 h-4 text-muted-foreground" />
                         </button>
@@ -446,7 +450,7 @@ const HadithPage = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="bg-card rounded-3xl border border-border p-8 flex items-center justify-center"
+                  className="backdrop-blur-xl bg-card/60 rounded-3xl border border-white/20 p-12 flex items-center justify-center"
                 >
                   <RefreshCw className="w-8 h-8 text-primary animate-spin" />
                 </motion.div>
@@ -454,17 +458,16 @@ const HadithPage = () => {
             </AnimatePresence>
 
             {/* New Hadith Button */}
-            <motion.button
-              whileTap={{ scale: 0.98 }}
+            <button
               onClick={loadRandomHadith}
-              className="w-full mt-6 py-4 bg-primary text-primary-foreground rounded-2xl font-medium flex items-center justify-center gap-2"
+              className="w-full mt-6 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/25 active:scale-[0.98] transition-transform"
             >
               <RefreshCw className="w-5 h-5" />
               {language === "bs" ? "Novi hadis" : "Neuer Hadith"}
-            </motion.button>
+            </button>
 
             {/* Info */}
-            <p className="text-center text-muted-foreground/50 text-xs mt-6">
+            <p className="text-center text-muted-foreground/40 text-xs mt-6 font-medium">
               {language === "bs" 
                 ? "Samo autentični hadisi iz Sahih Buharije i Sahih Muslima" 
                 : "Nur authentische Hadithe aus Sahih Bukhari und Sahih Muslim"}

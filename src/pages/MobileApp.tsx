@@ -8,13 +8,19 @@ import { usePrayerNotifications } from "@/hooks/usePrayerNotifications";
 import SplashScreen from "@/components/SplashScreen";
 import logo from "@/assets/logo.png";
 
+// Glass Card Component - Reusable
+const GlassCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <div className={`backdrop-blur-xl bg-card/60 dark:bg-card/40 rounded-3xl border border-white/20 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 ${className}`}>
+    {children}
+  </div>
+);
+
 const MobileApp = () => {
-  const { t, language, setLanguage } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [nextPrayerIndex, setNextPrayerIndex] = useState(0);
   const [showSplash, setShowSplash] = useState(true);
 
-  // Get notification settings from localStorage
   const [notificationsEnabled] = useState(() => 
     localStorage.getItem("prayer-notifications") === "true"
   );
@@ -23,8 +29,6 @@ const MobileApp = () => {
   );
 
   const { prayerTimes: prayerTimesData } = usePrayerTimes(currentTime);
-
-  // Initialize prayer notifications - this will run the check loop
   usePrayerNotifications(prayerTimesData, language, notificationsEnabled, adhanEnabled);
 
   const safePrayerTimesData = prayerTimesData || {
@@ -104,16 +108,29 @@ const MobileApp = () => {
     return <SplashScreen onComplete={() => setShowSplash(false)} />;
   }
 
+  // Menu items for the list
+  const menuItems = [
+    { to: "/app/qibla", icon: Compass, iconColor: "text-amber-500", iconBg: "bg-amber-500/10", 
+      label: language === "bs" ? "Kible" : "Qibla", sublabel: language === "bs" ? "Pronađi smjer Kible" : "Finde die Gebetsrichtung" },
+    { to: "/app/reminders", icon: Bell, iconColor: "text-blue-500", iconBg: "bg-blue-500/10",
+      label: language === "bs" ? "Podsjetnici" : "Erinnerungen", sublabel: language === "bs" ? "Obavijesti za namaz" : "Gebetsbenachrichtigungen" },
+    { to: "/app/calendar", icon: Calendar, iconColor: "text-purple-500", iconBg: "bg-purple-500/10",
+      label: language === "bs" ? "Kalendar" : "Kalender", sublabel: language === "bs" ? "Islamski datumi" : "Islamische Daten" },
+    { to: "/app/hadith", icon: BookMarked, iconColor: "text-amber-600", iconBg: "bg-amber-600/10",
+      label: language === "bs" ? "Hadisi" : "Hadithe", sublabel: language === "bs" ? "Sahih Buharija & Muslim" : "Sahih Bukhari & Muslim" },
+    { to: "/app/settings", icon: Settings, iconColor: "text-gray-500", iconBg: "bg-gray-500/10",
+      label: language === "bs" ? "Postavke" : "Einstellungen", sublabel: language === "bs" ? "App konfiguracija" : "App-Konfiguration" },
+  ];
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Clean iOS-style Header */}
-      <div className="bg-background sticky top-0 z-40">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/30">
+      {/* Header with Glass Effect */}
+      <div className="sticky top-0 z-50 backdrop-blur-2xl bg-background/70 border-b border-white/10">
         <div className="safe-area-inset-top" />
         <div className="px-5 pt-4 pb-3">
-          {/* Top Row - Logo & Language */}
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary to-accent p-0.5 shadow-lg shadow-primary/20">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-accent p-0.5 shadow-lg shadow-primary/20">
                 <img 
                   src={logo} 
                   alt="Et-Taqwa" 
@@ -122,287 +139,192 @@ const MobileApp = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-foreground tracking-tight">Et-Taqwa</h1>
-                <div className="flex items-center gap-1 text-muted-foreground">
+                <div className="flex items-center gap-1.5 text-muted-foreground">
                   <MapPin className="w-3 h-3" />
-                  <span className="text-xs">Wien, Österreich</span>
+                  <span className="text-xs font-medium">Wien, Österreich</span>
                 </div>
               </div>
             </div>
             <button
               onClick={() => setLanguage(language === "bs" ? "de" : "bs")}
-              className="w-10 h-10 rounded-xl bg-secondary/80 flex items-center justify-center text-lg border border-border/50 active:scale-95 transition-transform"
+              className="w-11 h-11 rounded-2xl backdrop-blur-xl bg-card/60 dark:bg-card/40 border border-white/20 dark:border-white/10 flex items-center justify-center text-xl shadow-lg shadow-black/5 active:scale-95 transition-transform"
             >
               {language === "bs" ? "🇧🇦" : "🇩🇪"}
             </button>
           </div>
           
-          {/* Date Row */}
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-sm font-medium">
             {getFormattedDate()}
           </p>
         </div>
-        <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       </div>
 
-      <div className="px-5 pb-8 pt-4">
+      <div className="px-5 pb-10 pt-5 space-y-5">
 
-        {/* Next Prayer Card - iOS Widget Style */}
+        {/* Next Prayer Card */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-primary to-accent rounded-3xl p-5 mb-6 shadow-lg shadow-primary/20"
+          transition={{ delay: 0.05 }}
         >
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-white/70 text-sm">
-                {language === "bs" ? "Sljedeći namaz" : "Nächstes Gebet"}
-              </p>
-              <h2 className="text-2xl font-bold text-white mt-1">
-                {language === "bs" ? nextPrayer?.nameBs : nextPrayer?.name}
-              </h2>
+          <div className="bg-gradient-to-br from-primary via-accent to-primary rounded-3xl p-5 shadow-xl shadow-primary/25">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <p className="text-white/60 text-xs font-bold uppercase tracking-wider">
+                  {language === "bs" ? "Sljedeći namaz" : "Nächstes Gebet"}
+                </p>
+                <h2 className="text-3xl font-bold text-white mt-1">
+                  {language === "bs" ? nextPrayer?.nameBs : nextPrayer?.name}
+                </h2>
+              </div>
+              <div className="text-right">
+                <p className="text-3xl font-bold text-white tabular-nums">{nextPrayer?.time}</p>
+              </div>
             </div>
-            <div className="text-right">
-              <p className="text-3xl font-bold text-white tabular-nums">{nextPrayer?.time}</p>
-            </div>
-          </div>
 
-          {/* Countdown */}
-          <div className="flex items-center gap-2 bg-black/20 rounded-2xl p-3">
-            <Clock className="w-4 h-4 text-white/60" />
-            <p className="text-white/80 text-sm">
-              {language === "bs" ? "za" : "in"} {" "}
-              <span className="font-semibold text-white tabular-nums">
-                {countdown.hours > 0 && `${countdown.hours}h `}
-                {countdown.minutes}m {countdown.seconds}s
-              </span>
-            </p>
+            <div className="flex items-center gap-3 bg-white/15 backdrop-blur-sm rounded-2xl p-3.5">
+              <Clock className="w-5 h-5 text-white/70" />
+              <p className="text-white/90 text-sm font-medium">
+                {language === "bs" ? "za" : "in"}{" "}
+                <span className="font-bold text-white tabular-nums text-lg">
+                  {countdown.hours > 0 && `${countdown.hours}h `}
+                  {countdown.minutes}m {countdown.seconds}s
+                </span>
+              </p>
+            </div>
           </div>
         </motion.div>
 
-        {/* Prayer Times List - iOS List Style */}
+        {/* Prayer Times List */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border mb-6"
         >
-          <div className="px-4 py-3 border-b border-border">
-            <h3 className="font-semibold text-foreground">
-              {language === "bs" ? "Sva vremena" : "Alle Gebetszeiten"}
-            </h3>
-          </div>
-          
-          {prayerTimesList.map((prayer, index) => {
-            const isNext = index === nextPrayerIndex;
-            const isPast = index < nextPrayerIndex;
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+            {language === "bs" ? "Sva vremena" : "Alle Gebetszeiten"}
+          </p>
+          <GlassCard className="overflow-hidden">
+            {prayerTimesList.map((prayer, index) => {
+              const isNext = index === nextPrayerIndex;
+              const isPast = index < nextPrayerIndex;
 
-            return (
-              <div
-                key={prayer.id}
-                className={`flex items-center justify-between px-4 py-3.5 border-b border-border/50 last:border-b-0 ${
-                  isNext ? "bg-primary/5" : ""
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-2 h-2 rounded-full ${
-                    isNext ? "bg-primary" : isPast ? "bg-muted" : "bg-muted-foreground/30"
-                  }`} />
-                  <span className={`font-medium ${
-                    isPast ? "text-muted-foreground" : isNext ? "text-primary" : "text-foreground"
+              return (
+                <div
+                  key={prayer.id}
+                  className={`flex items-center justify-between px-4 py-3.5 border-b border-white/10 last:border-b-0 ${
+                    isNext ? "bg-primary/10" : ""
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-2.5 h-2.5 rounded-full ${
+                      isNext ? "bg-primary shadow-lg shadow-primary/50" : isPast ? "bg-muted-foreground/30" : "bg-muted-foreground/50"
+                    }`} />
+                    <span className={`font-semibold ${
+                      isPast ? "text-muted-foreground/60" : isNext ? "text-primary" : "text-foreground"
+                    }`}>
+                      {language === "bs" ? prayer.nameBs : prayer.name}
+                    </span>
+                  </div>
+                  <span className={`tabular-nums font-bold ${
+                    isPast ? "text-muted-foreground/40" : isNext ? "text-primary" : "text-foreground"
                   }`}>
-                    {language === "bs" ? prayer.nameBs : prayer.name}
+                    {prayer.time}
                   </span>
                 </div>
-                <span className={`tabular-nums font-semibold ${
-                  isPast ? "text-muted-foreground/50" : isNext ? "text-primary" : "text-foreground"
-                }`}>
-                  {prayer.time}
-                </span>
-              </div>
-            );
-          })}
+              );
+            })}
 
-          {/* Jumu'ah Times */}
-          {isFriday && (
-            <div className="px-4 py-3 bg-amber-500/5 border-t border-amber-500/20">
-              <p className="text-xs text-amber-600 font-medium mb-2">
-                {language === "bs" ? "Džuma" : "Freitagsgebet"}
-              </p>
-              <div className="flex gap-4">
-                <span className="text-sm text-foreground">12:15</span>
-                <span className="text-muted-foreground">•</span>
-                <span className="text-sm text-foreground">13:00</span>
+            {isFriday && (
+              <div className="px-4 py-3 bg-amber-500/10 border-t border-amber-500/20">
+                <p className="text-xs text-amber-600 font-bold mb-1.5 uppercase tracking-wide">
+                  {language === "bs" ? "Džuma" : "Freitagsgebet"}
+                </p>
+                <div className="flex gap-3">
+                  <span className="text-sm font-semibold text-foreground">12:15</span>
+                  <span className="text-muted-foreground">•</span>
+                  <span className="text-sm font-semibold text-foreground">13:00</span>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </GlassCard>
         </motion.div>
 
-        {/* Quick Actions - iOS Native Style */}
+        {/* Quick Access */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.15 }}
         >
-          <h3 className="font-semibold text-foreground mb-3">
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
             {language === "bs" ? "Brzi pristup" : "Schnellzugriff"}
-          </h3>
+          </p>
           
-          {/* Main Features - Large Cards */}
-          <div className="grid grid-cols-2 gap-3 mb-3">
-            <Link to="/app/quran">
-              <motion.div
-                whileTap={{ scale: 0.98 }}
-                className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-4 shadow-lg shadow-emerald-500/20 aspect-square flex flex-col justify-between"
-              >
-                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+          {/* Main Feature Cards */}
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <Link to="/app/quran" className="block">
+              <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-3xl p-5 shadow-xl shadow-emerald-500/25 aspect-square flex flex-col justify-between active:scale-[0.98] transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
                   <BookOpen className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="font-bold text-white text-lg">
+                  <p className="font-bold text-white text-xl">
                     {language === "bs" ? "Kur'an" : "Quran"}
                   </p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white/70 text-sm font-medium">
                     {language === "bs" ? "Čitaj i slušaj" : "Lesen & Hören"}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             </Link>
 
-            <Link to="/app/dua">
-              <motion.div
-                whileTap={{ scale: 0.98 }}
-                className="bg-gradient-to-br from-rose-500 to-rose-600 rounded-2xl p-4 shadow-lg shadow-rose-500/20 aspect-square flex flex-col justify-between"
-              >
-                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+            <Link to="/app/dua" className="block">
+              <div className="bg-gradient-to-br from-rose-500 to-rose-600 rounded-3xl p-5 shadow-xl shadow-rose-500/25 aspect-square flex flex-col justify-between active:scale-[0.98] transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
                   <Heart className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="font-bold text-white text-lg">
+                  <p className="font-bold text-white text-xl">
                     {language === "bs" ? "Dove" : "Duas"}
                   </p>
-                  <p className="text-white/70 text-xs">
-                    {language === "bs" ? "Islamske dove" : "Islamische Gebete"}
+                  <p className="text-white/70 text-sm font-medium">
+                    {language === "bs" ? "Islamske dove" : "Islamische Bittgebete"}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             </Link>
           </div>
 
-          {/* Secondary Features - List Style */}
-          <div className="bg-card rounded-2xl border border-border overflow-hidden">
-            <Link to="/app/qibla">
-              <motion.div
-                whileTap={{ backgroundColor: "rgba(0,0,0,0.02)" }}
-                className="flex items-center px-4 py-3.5 border-b border-border/50"
-              >
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mr-3">
-                  <Compass className="w-5 h-5 text-amber-600" />
+          {/* Menu List */}
+          <GlassCard className="overflow-hidden">
+            {menuItems.map((item, index) => (
+              <Link key={item.to} to={item.to} className="block">
+                <div className={`flex items-center px-4 py-4 ${index !== menuItems.length - 1 ? 'border-b border-white/10' : ''} active:bg-muted/30 transition-colors`}>
+                  <div className={`w-11 h-11 rounded-2xl ${item.iconBg} flex items-center justify-center mr-4`}>
+                    <item.icon className={`w-5 h-5 ${item.iconColor}`} />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-foreground">{item.label}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{item.sublabel}</p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-muted-foreground/40" />
                 </div>
-                <div className="flex-1">
-                  <p className="font-medium text-foreground">
-                    {language === "bs" ? "Kible" : "Qibla"}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {language === "bs" ? "Pronađi smjer Kible" : "Finde die Gebetsrichtung"}
-                  </p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
-              </motion.div>
-            </Link>
-
-            <Link to="/app/reminders">
-              <motion.div
-                whileTap={{ backgroundColor: "rgba(0,0,0,0.02)" }}
-                className="flex items-center px-4 py-3.5 border-b border-border/50"
-              >
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mr-3">
-                  <Bell className="w-5 h-5 text-blue-500" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-foreground">
-                    {language === "bs" ? "Podsjetnici" : "Erinnerungen"}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {language === "bs" ? "Obavijesti za namaz" : "Gebetsbenachrichtigungen"}
-                  </p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
-              </motion.div>
-            </Link>
-
-            <Link to="/app/calendar">
-              <motion.div
-                whileTap={{ backgroundColor: "rgba(0,0,0,0.02)" }}
-                className="flex items-center px-4 py-3.5 border-b border-border/50"
-              >
-                <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center mr-3">
-                  <Calendar className="w-5 h-5 text-purple-500" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-foreground">
-                    {language === "bs" ? "Kalendar" : "Kalender"}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {language === "bs" ? "Islamski datumi" : "Islamische Daten"}
-                  </p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
-              </motion.div>
-            </Link>
-
-            <Link to="/app/hadith">
-              <motion.div
-                whileTap={{ backgroundColor: "rgba(0,0,0,0.02)" }}
-                className="flex items-center px-4 py-3.5 border-b border-border/50"
-              >
-                <div className="w-10 h-10 rounded-xl bg-amber-600/10 flex items-center justify-center mr-3">
-                  <BookMarked className="w-5 h-5 text-amber-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-foreground">
-                    {language === "bs" ? "Hadisi" : "Hadithe"}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {language === "bs" ? "Sahih Buharija & Muslim" : "Sahih Bukhari & Muslim"}
-                  </p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
-              </motion.div>
-            </Link>
-
-            <Link to="/app/settings">
-              <motion.div
-                whileTap={{ backgroundColor: "rgba(0,0,0,0.02)" }}
-                className="flex items-center px-4 py-3.5"
-              >
-                <div className="w-10 h-10 rounded-xl bg-gray-500/10 flex items-center justify-center mr-3">
-                  <Settings className="w-5 h-5 text-gray-500" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-foreground">
-                    {language === "bs" ? "Postavke" : "Einstellungen"}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {language === "bs" ? "App konfiguracija" : "App-Konfiguration"}
-                  </p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
-              </motion.div>
-            </Link>
-          </div>
+              </Link>
+            ))}
+          </GlassCard>
         </motion.div>
 
         {/* Basmala Footer */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mt-10 text-center pb-6"
+          transition={{ delay: 0.3 }}
+          className="pt-6 pb-4"
         >
-          <p className="text-muted-foreground/60 text-lg font-arabic">
+          <p className="text-muted-foreground/50 text-xl font-arabic text-center">
             بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
           </p>
-          <p className="text-muted-foreground/40 text-xs mt-1">
+          <p className="text-muted-foreground/30 text-xs mt-2 text-center font-medium">
             {language === "bs" ? "U ime Allaha, Milostivog, Samilosnog" : "Im Namen Allahs, des Allerbarmers, des Barmherzigen"}
           </p>
         </motion.div>
