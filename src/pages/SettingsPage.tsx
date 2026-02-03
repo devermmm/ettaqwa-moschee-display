@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { 
   ChevronLeft, 
-  ChevronRight, 
   Type, 
   Moon, 
   Sun, 
@@ -15,7 +14,9 @@ import {
   Volume2,
   VolumeX,
   Play,
-  Square
+  Square,
+  Globe,
+  Palette
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
@@ -48,7 +49,6 @@ const SettingsPage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const { prayerTimes } = usePrayerTimes(currentTime);
 
-  // Initialize prayer notifications hook
   const { isPlaying, playAdhan, stopAdhan, requestPermissions } = usePrayerNotifications(
     prayerTimes,
     language,
@@ -58,17 +58,16 @@ const SettingsPage = () => {
 
   const goBack = () => navigate("/app");
 
-  // Update time every second for widget preview
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
   const fontSizes = [
-    { id: "small", label: language === "bs" ? "Mala" : "Klein", scale: "text-sm" },
-    { id: "medium", label: language === "bs" ? "Srednja" : "Mittel", scale: "text-base" },
-    { id: "large", label: language === "bs" ? "Velika" : "Groß", scale: "text-lg" },
-    { id: "xlarge", label: language === "bs" ? "Vrlo velika" : "Sehr groß", scale: "text-xl" },
+    { id: "small", label: language === "bs" ? "S" : "S" },
+    { id: "medium", label: language === "bs" ? "M" : "M" },
+    { id: "large", label: language === "bs" ? "L" : "L" },
+    { id: "xlarge", label: language === "bs" ? "XL" : "XL" },
   ];
 
   useEffect(() => {
@@ -85,65 +84,65 @@ const SettingsPage = () => {
     }
   }, [darkMode]);
 
-  const SettingRow = ({ 
-    icon: Icon, 
-    label, 
-    value, 
-    onClick,
-    toggle,
-    isOn
-  }: { 
-    icon: any; 
-    label: string; 
-    value?: string; 
-    onClick?: () => void;
-    toggle?: boolean;
-    isOn?: boolean;
-  }) => (
+  // Glass Card Component
+  const GlassCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+    <div className={`backdrop-blur-xl bg-card/60 dark:bg-card/40 rounded-3xl border border-white/20 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 ${className}`}>
+      {children}
+    </div>
+  );
+
+  // Toggle Switch Component
+  const Toggle = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
     <button
-      onClick={onClick}
-      className="w-full flex items-center justify-between px-4 py-3.5 border-b border-border/50 last:border-b-0 active:bg-muted/50"
+      onClick={onToggle}
+      className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
+        isOn 
+          ? "bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/30" 
+          : "bg-muted/80 dark:bg-muted/50"
+      }`}
     >
-      <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Icon className="w-4 h-4 text-primary" />
-        </div>
-        <span className="font-medium text-foreground">{label}</span>
-      </div>
-      {toggle ? (
-        <div
-          className={`w-12 h-7 rounded-full p-0.5 transition-colors ${
-            isOn ? "bg-primary" : "bg-muted"
-          }`}
-        >
-          <div
-            className={`w-6 h-6 rounded-full bg-white shadow-sm transition-transform ${
-              isOn ? "translate-x-5" : "translate-x-0"
-            }`}
-          />
-        </div>
-      ) : (
-        <div className="flex items-center gap-2">
-          {value && <span className="text-muted-foreground text-sm">{value}</span>}
-          <ChevronRight className="w-4 h-4 text-muted-foreground" />
-        </div>
-      )}
+      <motion.div
+        animate={{ x: isOn ? 24 : 2 }}
+        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+        className="absolute top-1 w-6 h-6 rounded-full bg-white shadow-md"
+      />
     </button>
   );
 
-  // Widget Preview Component
-  const WidgetPreview = ({ 
-    language, 
-    prayerTimes, 
-    currentTime 
+  // Setting Item Component
+  const SettingItem = ({ 
+    icon: Icon, 
+    iconColor = "text-primary",
+    iconBg = "bg-primary/10",
+    label, 
+    sublabel,
+    children 
   }: { 
-    language: string; 
-    prayerTimes: any; 
-    currentTime: Date;
-  }) => {
+    icon: any; 
+    iconColor?: string;
+    iconBg?: string;
+    label: string; 
+    sublabel?: string;
+    children?: React.ReactNode;
+  }) => (
+    <div className="flex items-center justify-between py-4 px-1">
+      <div className="flex items-center gap-4">
+        <div className={`w-10 h-10 rounded-2xl ${iconBg} flex items-center justify-center`}>
+          <Icon className={`w-5 h-5 ${iconColor}`} />
+        </div>
+        <div>
+          <p className="font-medium text-foreground">{label}</p>
+          {sublabel && <p className="text-xs text-muted-foreground mt-0.5">{sublabel}</p>}
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+
+  // Widget Preview
+  const WidgetPreview = () => {
     const prayerTimesList = [
       { id: "fajr", name: "Fajr", nameBs: "Sabah", time: prayerTimes?.fajr || "--:--" },
-      { id: "sunrise", name: "Sunrise", nameBs: "Izlazak", time: prayerTimes?.sunrise || "--:--" },
       { id: "dhuhr", name: "Dhuhr", nameBs: "Podne", time: prayerTimes?.dhuhr || "--:--" },
       { id: "asr", name: "Asr", nameBs: "Ikindija", time: prayerTimes?.asr || "--:--" },
       { id: "maghrib", name: "Maghrib", nameBs: "Akšam", time: prayerTimes?.maghrib || "--:--" },
@@ -151,8 +150,8 @@ const SettingsPage = () => {
     ];
 
     const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
-    
     let nextPrayerIndex = 0;
+    
     for (let i = 0; i < prayerTimesList.length; i++) {
       const [hours, minutes] = prayerTimesList[i].time.split(":").map(Number);
       if (!isNaN(hours) && !isNaN(minutes)) {
@@ -167,44 +166,40 @@ const SettingsPage = () => {
     const nextPrayer = prayerTimesList[nextPrayerIndex];
     
     const getCountdown = () => {
-      if (!nextPrayer || nextPrayer.time === "--:--") return { hours: 0, minutes: 0, seconds: 0 };
+      if (!nextPrayer || nextPrayer.time === "--:--") return "00:00";
       const [hours, minutes] = nextPrayer.time.split(":").map(Number);
-      if (isNaN(hours) || isNaN(minutes)) return { hours: 0, minutes: 0, seconds: 0 };
+      if (isNaN(hours) || isNaN(minutes)) return "00:00";
       
       const prayerDate = new Date(currentTime);
       prayerDate.setHours(hours, minutes, 0, 0);
       const diff = prayerDate.getTime() - currentTime.getTime();
-      if (diff <= 0) return { hours: 0, minutes: 0, seconds: 0 };
+      if (diff <= 0) return "00:00";
 
-      return {
-        hours: Math.floor(diff / (1000 * 60 * 60)),
-        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((diff % (1000 * 60)) / 1000),
-      };
+      const h = Math.floor(diff / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      return h > 0 ? `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}` : `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
     };
 
-    const countdown = getCountdown();
-
     return (
-      <div className="bg-gradient-to-br from-primary to-accent rounded-2xl p-4 shadow-lg">
+      <div className="bg-gradient-to-br from-primary via-accent to-primary rounded-2xl p-4 shadow-xl shadow-primary/20">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-white/70 text-xs">
-              {language === "bs" ? "Sljedeći namaz" : "Nächstes Gebet"}
+            <p className="text-white/60 text-xs font-medium uppercase tracking-wide">
+              {language === "bs" ? "Sljedeći" : "Nächstes"}
             </p>
-            <p className="text-xl font-bold text-white mt-0.5">
+            <p className="text-xl font-bold text-white">
               {language === "bs" ? nextPrayer?.nameBs : nextPrayer?.name}
             </p>
-            <p className="text-white/80 text-sm tabular-nums">{nextPrayer?.time}</p>
           </div>
           <div className="text-right">
-            <div className="flex items-center gap-1 text-white/70 mb-1">
-              <Clock className="w-3 h-3" />
-              <span className="text-xs">{language === "bs" ? "preostalo" : "verbleibend"}</span>
+            <div className="flex items-center gap-1.5 text-white/60 mb-0.5">
+              <Clock className="w-3.5 h-3.5" />
+              <span className="text-xs">{nextPrayer?.time}</span>
             </div>
             <p className="text-2xl font-bold text-white tabular-nums">
-              {countdown.hours > 0 && `${countdown.hours}:`}
-              {String(countdown.minutes).padStart(2, '0')}:{String(countdown.seconds).padStart(2, '0')}
+              {getCountdown()}
             </p>
           </div>
         </div>
@@ -213,62 +208,78 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* iOS Navigation Bar */}
-      <div className="bg-background/80 backdrop-blur-xl sticky top-0 z-40 border-b border-border/50">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/30">
+      {/* Header with Glass Effect */}
+      <div className="sticky top-0 z-50 backdrop-blur-2xl bg-background/70 border-b border-white/10">
         <div className="safe-area-inset-top" />
-        <div className="flex items-center justify-between px-4 py-3">
+        <div className="flex items-center justify-between px-5 py-4">
           <button
             onClick={goBack}
-            className="flex items-center gap-1 text-primary font-medium"
+            className="flex items-center gap-1.5 text-primary font-semibold active:opacity-70 transition-opacity"
           >
             <ChevronLeft className="w-5 h-5" />
             <span>{language === "bs" ? "Nazad" : "Zurück"}</span>
           </button>
-          <h1 className="font-semibold text-foreground">
+          <h1 className="text-lg font-bold text-foreground">
             {language === "bs" ? "Postavke" : "Einstellungen"}
           </h1>
           <div className="w-16" />
         </div>
       </div>
 
-      <div className="px-5 pb-8">
-        {/* Font Size Section */}
+      <div className="px-5 pb-10 space-y-5 pt-6">
+        
+        {/* Appearance & Display */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-6"
+          transition={{ delay: 0.05 }}
         >
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-4">
-            {language === "bs" ? "Veličina teksta" : "Schriftgröße"}
-          </h3>
-          <div className="bg-card rounded-2xl border border-border overflow-hidden">
-            <div className="p-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Type className="w-4 h-4 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">A</span>
-                <div className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-primary transition-all"
-                    style={{ 
-                      width: fontSize === "small" ? "25%" : 
-                             fontSize === "medium" ? "50%" : 
-                             fontSize === "large" ? "75%" : "100%" 
-                    }}
-                  />
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+            {language === "bs" ? "Prikaz" : "Anzeige"}
+          </p>
+          <GlassCard className="p-4">
+            {/* Dark Mode */}
+            <SettingItem
+              icon={darkMode ? Moon : Sun}
+              iconColor={darkMode ? "text-indigo-500" : "text-amber-500"}
+              iconBg={darkMode ? "bg-indigo-500/10" : "bg-amber-500/10"}
+              label={language === "bs" ? "Tamni način" : "Dunkelmodus"}
+              sublabel={darkMode 
+                ? (language === "bs" ? "Aktivirano" : "Aktiviert")
+                : (language === "bs" ? "Deaktivirano" : "Deaktiviert")
+              }
+            >
+              <Toggle isOn={darkMode} onToggle={() => setDarkMode(!darkMode)} />
+            </SettingItem>
+
+            <div className="h-px bg-border/50 my-1" />
+
+            {/* Font Size */}
+            <div className="py-4 px-1">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 rounded-2xl bg-blue-500/10 flex items-center justify-center">
+                  <Type className="w-5 h-5 text-blue-500" />
                 </div>
-                <span className="text-lg text-muted-foreground">A</span>
+                <div>
+                  <p className="font-medium text-foreground">
+                    {language === "bs" ? "Veličina teksta" : "Schriftgröße"}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {language === "bs" ? "Prilagodi čitljivost" : "Lesbarkeit anpassen"}
+                  </p>
+                </div>
               </div>
               
-              <div className="grid grid-cols-4 gap-2">
+              <div className="flex items-center gap-3 bg-muted/40 rounded-2xl p-1.5">
                 {fontSizes.map((size) => (
                   <button
                     key={size.id}
                     onClick={() => setFontSize(size.id)}
-                    className={`py-2 px-3 rounded-xl text-sm font-medium transition-colors ${
+                    className={`flex-1 py-2.5 rounded-xl font-bold text-sm transition-all ${
                       fontSize === size.id
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-secondary text-secondary-foreground"
+                        ? "bg-white dark:bg-white/20 text-foreground shadow-md"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {size.label}
@@ -276,233 +287,238 @@ const SettingsPage = () => {
                 ))}
               </div>
 
-              {/* Live Preview - uses actual root font scaling */}
-              <div className="mt-4 p-3 bg-muted/50 rounded-xl">
-                <p className="text-foreground">
+              {/* Live Preview */}
+              <div className="mt-4 p-4 bg-muted/30 rounded-2xl border border-border/30">
+                <p className="text-foreground leading-relaxed">
                   {language === "bs" 
-                    ? "Ovo je primjer teksta za pregled veličine fonta." 
-                    : "Dies ist ein Beispieltext zur Vorschau der Schriftgröße."}
-                </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {language === "bs" 
-                    ? "Manji tekst za detalje" 
-                    : "Kleinerer Text für Details"}
+                    ? "Primjer teksta za pregled veličine." 
+                    : "Beispieltext für die Vorschau."}
                 </p>
               </div>
             </div>
-          </div>
+          </GlassCard>
         </motion.div>
 
-        {/* Appearance Section */}
+        {/* Language */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mt-6"
         >
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-4">
-            {language === "bs" ? "Izgled" : "Darstellung"}
-          </h3>
-          <div className="bg-card rounded-2xl border border-border overflow-hidden">
-            <SettingRow
-              icon={darkMode ? Moon : Sun}
-              label={language === "bs" ? "Tamni način" : "Dunkelmodus"}
-              toggle
-              isOn={darkMode}
-              onClick={() => setDarkMode(!darkMode)}
-            />
-          </div>
-        </motion.div>
-
-        {/* Language Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="mt-6"
-        >
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-4">
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
             {language === "bs" ? "Jezik" : "Sprache"}
-          </h3>
-          <div className="bg-card rounded-2xl border border-border overflow-hidden">
-            <div className="p-4">
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => setLanguage("de")}
-                  className={`py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-medium transition-colors ${
-                    language === "de"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-secondary-foreground"
-                  }`}
-                >
-                  <span className="text-lg">🇩🇪</span>
-                  <span>Deutsch</span>
-                </button>
-                <button
-                  onClick={() => setLanguage("bs")}
-                  className={`py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-medium transition-colors ${
-                    language === "bs"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-secondary-foreground"
-                  }`}
-                >
-                  <span className="text-lg">🇧🇦</span>
-                  <span>Bosanski</span>
-                </button>
+          </p>
+          <GlassCard className="p-4">
+            <div className="flex items-center gap-4 mb-4 px-1">
+              <div className="w-10 h-10 rounded-2xl bg-green-500/10 flex items-center justify-center">
+                <Globe className="w-5 h-5 text-green-500" />
+              </div>
+              <div>
+                <p className="font-medium text-foreground">
+                  {language === "bs" ? "Odaberi jezik" : "Sprache wählen"}
+                </p>
               </div>
             </div>
-          </div>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => setLanguage("de")}
+                className={`py-4 px-4 rounded-2xl flex flex-col items-center gap-2 font-medium transition-all ${
+                  language === "de"
+                    ? "bg-gradient-to-br from-primary to-accent text-white shadow-lg shadow-primary/20"
+                    : "bg-muted/50 text-foreground hover:bg-muted"
+                }`}
+              >
+                <span className="text-3xl">🇩🇪</span>
+                <span>Deutsch</span>
+              </button>
+              <button
+                onClick={() => setLanguage("bs")}
+                className={`py-4 px-4 rounded-2xl flex flex-col items-center gap-2 font-medium transition-all ${
+                  language === "bs"
+                    ? "bg-gradient-to-br from-primary to-accent text-white shadow-lg shadow-primary/20"
+                    : "bg-muted/50 text-foreground hover:bg-muted"
+                }`}
+              >
+                <span className="text-3xl">🇧🇦</span>
+                <span>Bosanski</span>
+              </button>
+            </div>
+          </GlassCard>
         </motion.div>
 
-        {/* Notifications Section */}
+        {/* Notifications */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mt-6"
+          transition={{ delay: 0.15 }}
         >
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-4">
-            {language === "bs" ? "Obavještenja" : "Mitteilungen"}
-          </h3>
-          <div className="bg-card rounded-2xl border border-border overflow-hidden">
-            <SettingRow
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+            {language === "bs" ? "Obavještenja" : "Benachrichtigungen"}
+          </p>
+          <GlassCard className="p-4">
+            <SettingItem
               icon={Bell}
-              label={language === "bs" ? "Obavještenja za namaz" : "Gebets-Mitteilungen"}
-              toggle
-              isOn={notificationsEnabled}
-              onClick={async () => {
-                const newValue = !notificationsEnabled;
-                if (newValue) {
-                  const granted = await requestPermissions();
-                  if (!granted) {
-                    alert(language === "bs" 
-                      ? "Molimo omogućite obavještenja u postavkama uređaja" 
-                      : "Bitte aktivieren Sie Benachrichtigungen in den Geräteeinstellungen");
-                    return;
+              iconColor="text-rose-500"
+              iconBg="bg-rose-500/10"
+              label={language === "bs" ? "Push obavještenja" : "Push-Mitteilungen"}
+              sublabel={language === "bs" ? "Obavijest za svaki namaz" : "Für jedes Gebet"}
+            >
+              <Toggle 
+                isOn={notificationsEnabled} 
+                onToggle={async () => {
+                  const newValue = !notificationsEnabled;
+                  if (newValue) {
+                    const granted = await requestPermissions();
+                    if (!granted) {
+                      alert(language === "bs" 
+                        ? "Molimo omogućite obavještenja u postavkama uređaja" 
+                        : "Bitte Benachrichtigungen in Geräteeinstellungen aktivieren");
+                      return;
+                    }
                   }
-                }
-                setNotificationsEnabled(newValue);
-                localStorage.setItem("prayer-notifications", String(newValue));
-              }}
-            />
-            <SettingRow
+                  setNotificationsEnabled(newValue);
+                  localStorage.setItem("prayer-notifications", String(newValue));
+                }}
+              />
+            </SettingItem>
+
+            <div className="h-px bg-border/50 my-1" />
+
+            <SettingItem
               icon={adhanEnabled ? Volume2 : VolumeX}
+              iconColor="text-emerald-500"
+              iconBg="bg-emerald-500/10"
               label={language === "bs" ? "Ezan (Gebetsruf)" : "Adhan (Gebetsruf)"}
-              toggle
-              isOn={adhanEnabled}
-              onClick={() => {
-                const newValue = !adhanEnabled;
-                setAdhanEnabled(newValue);
-                localStorage.setItem("adhan-enabled", String(newValue));
-              }}
-            />
+              sublabel={language === "bs" ? "Automatski pri svakom namazu" : "Automatisch bei jedem Gebet"}
+            >
+              <Toggle 
+                isOn={adhanEnabled} 
+                onToggle={() => {
+                  const newValue = !adhanEnabled;
+                  setAdhanEnabled(newValue);
+                  localStorage.setItem("adhan-enabled", String(newValue));
+                }}
+              />
+            </SettingItem>
             
-            {/* Test Adhan Button */}
+            {/* Adhan Test Button */}
             {adhanEnabled && (
-              <div className="px-4 py-3 bg-muted/30">
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mt-3"
+              >
                 <button
                   onClick={() => isPlaying ? stopAdhan() : playAdhan()}
-                  className={`w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-medium transition-colors ${
+                  className={`w-full flex items-center justify-center gap-2.5 py-3.5 rounded-2xl font-semibold transition-all ${
                     isPlaying 
-                      ? "bg-destructive text-destructive-foreground" 
-                      : "bg-primary text-primary-foreground"
+                      ? "bg-red-500/10 text-red-500 border border-red-500/20" 
+                      : "bg-gradient-to-r from-primary to-accent text-white shadow-lg shadow-primary/20"
                   }`}
                 >
                   {isPlaying ? (
                     <>
                       <Square className="w-4 h-4" />
-                      {language === "bs" ? "Zaustavi ezan" : "Adhan stoppen"}
+                      {language === "bs" ? "Zaustavi" : "Stoppen"}
                     </>
                   ) : (
                     <>
                       <Play className="w-4 h-4" />
-                      {language === "bs" ? "Test ezana" : "Adhan testen"}
+                      {language === "bs" ? "Testiraj ezan" : "Adhan testen"}
                     </>
                   )}
                 </button>
-                <p className="text-xs text-muted-foreground text-center mt-2">
-                  {language === "bs" 
-                    ? "Ezan će se automatski oglasiti na vrijeme svakog namaza" 
-                    : "Der Adhan ertönt automatisch zur Gebetszeit"}
-                </p>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </GlassCard>
         </motion.div>
 
-        {/* Widget Section */}
+        {/* Widget */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+            Widget
+          </p>
+          <GlassCard className="p-4">
+            <SettingItem
+              icon={Smartphone}
+              iconColor="text-purple-500"
+              iconBg="bg-purple-500/10"
+              label={language === "bs" ? "Početni ekran widget" : "Homescreen-Widget"}
+              sublabel={language === "bs" ? "Brzi pregled namaza" : "Schnelle Gebetsübersicht"}
+            >
+              <Toggle 
+                isOn={widgetEnabled} 
+                onToggle={() => {
+                  setWidgetEnabled(!widgetEnabled);
+                  localStorage.setItem("widget-enabled", String(!widgetEnabled));
+                }}
+              />
+            </SettingItem>
+
+            {widgetEnabled && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mt-4"
+              >
+                <p className="text-xs text-muted-foreground mb-2 px-1">
+                  {language === "bs" ? "Pregled widgeta" : "Widget-Vorschau"}
+                </p>
+                <WidgetPreview />
+              </motion.div>
+            )}
+          </GlassCard>
+        </motion.div>
+
+        {/* About */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="mt-6"
         >
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-4">
-            {language === "bs" ? "Widget" : "Widget"}
-          </h3>
-          <div className="bg-card rounded-2xl border border-border overflow-hidden">
-            <SettingRow
-              icon={Smartphone}
-              label={language === "bs" ? "Widget aktiviran" : "Widget aktiviert"}
-              toggle
-              isOn={widgetEnabled}
-              onClick={() => {
-                setWidgetEnabled(!widgetEnabled);
-                localStorage.setItem("widget-enabled", String(!widgetEnabled));
-              }}
-            />
-          </div>
-
-          {/* Live Widget Preview */}
-          {widgetEnabled && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="mt-3"
-            >
-              <p className="text-xs text-muted-foreground mb-2 px-4">
-                {language === "bs" ? "Widget pregled" : "Widget-Vorschau"}
-              </p>
-              <WidgetPreview language={language} prayerTimes={prayerTimes} currentTime={currentTime} />
-            </motion.div>
-          )}
-        </motion.div>
-
-        {/* About Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mt-6"
-        >
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-4">
-            {language === "bs" ? "O aplikaciji" : "Über die App"}
-          </h3>
-          <div className="bg-card rounded-2xl border border-border overflow-hidden">
-            <SettingRow
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+            {language === "bs" ? "Informacije" : "Informationen"}
+          </p>
+          <GlassCard className="p-4">
+            <SettingItem
               icon={Info}
-              label={language === "bs" ? "Verzija" : "Version"}
-              value="1.0.0"
+              iconColor="text-sky-500"
+              iconBg="bg-sky-500/10"
+              label={language === "bs" ? "Verzija aplikacije" : "App-Version"}
+              sublabel="1.0.0"
             />
-            <SettingRow
+            
+            <div className="h-px bg-border/50 my-1" />
+            
+            <SettingItem
               icon={Heart}
-              label={language === "bs" ? "Et-Taqwa Moschee" : "Et-Taqwa Moschee"}
-              value="Wien"
+              iconColor="text-pink-500"
+              iconBg="bg-pink-500/10"
+              label="Et-Taqwa Moschee"
+              sublabel="Wien, Österreich"
             />
-          </div>
+          </GlassCard>
         </motion.div>
 
         {/* Footer */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-center text-muted-foreground/50 text-xs mt-8"
+          transition={{ delay: 0.35 }}
+          className="pt-4 pb-6"
         >
-          {language === "bs" 
-            ? "Napravljeno s ljubavlju za našu zajednicu" 
-            : "Mit Liebe für unsere Gemeinde gemacht"}
-        </motion.p>
+          <p className="text-center text-muted-foreground/40 text-xs font-medium">
+            {language === "bs" 
+              ? "S ljubavlju za našu zajednicu 💚" 
+              : "Mit Liebe für unsere Gemeinde 💚"}
+          </p>
+        </motion.div>
       </div>
     </div>
   );
