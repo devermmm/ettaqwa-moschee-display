@@ -5,7 +5,8 @@ const config: CapacitorConfig = {
   appName: 'Et-Taqwa Moschee',
   webDir: 'dist',
   server: {
-    url: 'https://ed4f2e9b-bbc1-46d4-abc0-d3bbad32737c.lovableproject.com?forceHideBadge=true',
+    // Die native App lädt die /app Route direkt (ohne Navbar/Footer)
+    url: 'https://ed4f2e9b-bbc1-46d4-abc0-d3bbad32737c.lovableproject.com/app?forceHideBadge=true',
     cleartext: true
   }
 };

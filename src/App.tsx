@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import MobileApp from "./pages/MobileApp";
 import PrayerTimesLayout from "./pages/PrayerTimesLayout";
 import AboutUs from "./pages/AboutUs";
 import Projects from "./pages/Projects";
@@ -28,8 +29,12 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/gebetszeiten" element={<PrayerTimesLayout />} />
+          {/* Mobile App Route - für native iOS/Android App (ohne Navbar/Footer) */}
+          <Route path="/app" element={<MobileApp />} />
+          
+          {/* Website Routes - mit Navbar/Footer */}
+          <Route path="/" element={<><Navbar /><Index /><Footer /></>} />
+          <Route path="/gebetszeiten" element={<><Navbar /><PrayerTimesLayout /><Footer /></>} />
           <Route path="/about" element={<><Navbar /><AboutUs /><Footer /></>} />
           <Route path="/projects" element={<><Navbar /><Projects /><Footer /></>} />
           <Route path="/courses" element={<><Navbar /><Courses /><Footer /></>} />
@@ -40,7 +45,6 @@ const App = () => (
           <Route path="/admin/posts" element={<><Navbar /><AdminPostManagement /><Footer /></>} />
           <Route path="/admin/prayer-times" element={<><Navbar /><AdminPrayerTimes /><Footer /></>} />
           <Route path="/privacy" element={<><Navbar /><PrivacyPolicy /><Footer /></>} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<><Navbar /><NotFound /><Footer /></>} />
         </Routes>
       </BrowserRouter>
