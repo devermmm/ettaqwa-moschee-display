@@ -5,6 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import MobileApp from "./pages/MobileApp";
+import QuranPage from "./pages/QuranPage";
+import DuaPage from "./pages/DuaPage";
+import QiblaPage from "./pages/QiblaPage";
+import ReminderPage from "./pages/ReminderPage";
 import PrayerTimesLayout from "./pages/PrayerTimesLayout";
 import AboutUs from "./pages/AboutUs";
 import Projects from "./pages/Projects";
@@ -29,8 +33,12 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          {/* Mobile App Route - für native iOS/Android App (ohne Navbar/Footer) */}
+          {/* Mobile App Routes - für native iOS/Android App (ohne Navbar/Footer) */}
           <Route path="/app" element={<MobileApp />} />
+          <Route path="/app/quran" element={<QuranPage />} />
+          <Route path="/app/dua" element={<DuaPage />} />
+          <Route path="/app/qibla" element={<QiblaPage />} />
+          <Route path="/app/reminders" element={<ReminderPage />} />
           
           {/* Website Routes - mit Navbar/Footer */}
           <Route path="/" element={<><Navbar /><Index /><Footer /></>} />
