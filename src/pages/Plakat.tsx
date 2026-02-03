@@ -5,144 +5,167 @@ const Plakat = () => {
     <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950 flex items-center justify-center p-4 print:p-0 print:bg-white">
       {/* A4 Container */}
       <div className="w-[210mm] min-h-[297mm] bg-white shadow-2xl print:shadow-none relative overflow-hidden">
-        {/* Islamic Pattern Border */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 right-0 h-8 bg-emerald-700" />
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-emerald-700" />
-          <div className="absolute top-0 left-0 bottom-0 w-8 bg-emerald-700" />
-          <div className="absolute top-0 right-0 bottom-0 w-8 bg-emerald-700" />
-          
-          {/* Corner Decorations */}
-          <svg className="absolute top-2 left-2 w-12 h-12 text-emerald-300" viewBox="0 0 100 100">
-            <path d="M50 0L100 50L50 100L0 50Z" fill="currentColor" opacity="0.5"/>
-          </svg>
-          <svg className="absolute top-2 right-2 w-12 h-12 text-emerald-300" viewBox="0 0 100 100">
-            <path d="M50 0L100 50L50 100L0 50Z" fill="currentColor" opacity="0.5"/>
-          </svg>
-          <svg className="absolute bottom-2 left-2 w-12 h-12 text-emerald-300" viewBox="0 0 100 100">
-            <path d="M50 0L100 50L50 100L0 50Z" fill="currentColor" opacity="0.5"/>
-          </svg>
-          <svg className="absolute bottom-2 right-2 w-12 h-12 text-emerald-300" viewBox="0 0 100 100">
-            <path d="M50 0L100 50L50 100L0 50Z" fill="currentColor" opacity="0.5"/>
+        {/* Decorative Top Arc */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-emerald-700 to-emerald-600">
+          <div className="absolute -bottom-16 left-0 right-0 h-32 bg-white rounded-t-[100%]" />
+          {/* Islamic Pattern Overlay */}
+          <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="islamic-stars" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M20 0L24 16L40 20L24 24L20 40L16 24L0 20L16 16Z" fill="white" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#islamic-stars)"/>
           </svg>
         </div>
 
+        {/* Decorative Bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-emerald-700 to-emerald-600">
+          <div className="absolute -top-10 left-0 right-0 h-20 bg-white rounded-b-[100%]" />
+        </div>
+
         {/* Content */}
-        <div className="relative z-10 p-12 pt-16 flex flex-col items-center text-center h-full">
-          {/* Logo */}
-          <img 
-            src={logo} 
-            alt="Et-Taqwa Logo" 
-            className="h-24 mb-4 drop-shadow-lg"
-          />
-          <h1 className="text-2xl font-bold text-emerald-800 tracking-wide mb-2">
-            DŽEMAT ET-TAQWA
-          </h1>
-          <p className="text-emerald-600 text-lg font-arabic mb-8">مسجد التقوى</p>
+        <div className="relative z-10 px-10 pt-8 pb-24 flex flex-col items-center text-center h-full">
+          {/* Header with Logo */}
+          <div className="flex items-center gap-4 mb-2">
+            <img 
+              src={logo} 
+              alt="Et-Taqwa Logo" 
+              className="h-16 drop-shadow-lg"
+            />
+            <div className="text-left">
+              <h1 className="text-xl font-bold text-emerald-800 tracking-wide">
+                DŽEMAT ET-TAQWA
+              </h1>
+              <p className="text-emerald-600 text-base font-arabic">مسجد التقوى</p>
+            </div>
+          </div>
 
           {/* Bismillah */}
-          <div className="mb-8">
-            <p className="text-3xl font-arabic text-emerald-700">
+          <div className="my-4">
+            <p className="text-2xl font-arabic text-emerald-700">
               بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
             </p>
           </div>
 
-          {/* Main Announcement Box */}
-          <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-2 border-emerald-600 rounded-2xl p-8 mb-8 w-full max-w-lg shadow-lg">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <span className="text-3xl">🕌</span>
-              <span className="text-3xl">🧹</span>
+          {/* Main Title */}
+          <div className="mb-6">
+            <div className="inline-flex items-center gap-3 bg-amber-50 border-2 border-amber-400 rounded-full px-6 py-2 mb-3">
+              <span className="text-2xl">⚠️</span>
+              <span className="text-lg font-bold text-amber-700 uppercase tracking-wide">Wichtige Mitteilung</span>
+              <span className="text-2xl">⚠️</span>
             </div>
+          </div>
 
+          {/* Cleaning Icon */}
+          <div className="mb-4">
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center shadow-lg border-4 border-emerald-300">
+              <span className="text-4xl">🧹</span>
+            </div>
+          </div>
+
+          {/* Time Box - Prominent */}
+          <div className="bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white rounded-2xl px-8 py-4 mb-6 shadow-xl">
+            <p className="text-sm uppercase tracking-widest mb-1 opacity-90">Moschee geschlossen</p>
+            <p className="text-2xl font-bold">
+              Samstag 7:30 – Sonntag 6:00
+            </p>
+          </div>
+
+          {/* Three Language Cards */}
+          <div className="grid grid-cols-3 gap-4 w-full mb-6">
             {/* Arabic */}
-            <div className="mb-6 pb-6 border-b border-emerald-300">
-              <h2 className="text-xl font-bold text-emerald-800 mb-2 font-arabic">
-                إعلان هام
-              </h2>
-              <p className="text-lg text-emerald-700 font-arabic leading-relaxed">
-                المسجد مغلق من السبت الساعة 7:30 صباحاً
+            <div className="bg-gradient-to-b from-emerald-50 to-white border-2 border-emerald-200 rounded-xl p-4 shadow-md">
+              <div className="w-8 h-1 bg-emerald-500 rounded-full mx-auto mb-3" />
+              <h3 className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2">العربية</h3>
+              <p className="text-base font-arabic text-emerald-800 leading-relaxed">
+                المسجد مغلق
                 <br />
-                حتى الأحد الساعة 6:00 صباحاً
+                <span className="text-sm">من السبت 7:30 صباحاً</span>
                 <br />
-                بسبب تنظيف السجاد
+                <span className="text-sm">إلى الأحد 6:00 صباحاً</span>
               </p>
+              <p className="text-xs text-emerald-600 mt-2 font-arabic">بسبب تنظيف السجاد</p>
             </div>
 
             {/* Bosnian */}
-            <div className="mb-6 pb-6 border-b border-emerald-300">
-              <h2 className="text-xl font-bold text-emerald-800 mb-2">
-                OBAVJEŠTENJE
-              </h2>
-              <p className="text-lg text-emerald-700 leading-relaxed">
-                Džamija je zatvorena od subote u 7:30
-                <br />
-                do nedjelje u 6:00
-                <br />
-                zbog čišćenja tepiha
+            <div className="bg-gradient-to-b from-emerald-50 to-white border-2 border-emerald-200 rounded-xl p-4 shadow-md">
+              <div className="w-8 h-1 bg-emerald-500 rounded-full mx-auto mb-3" />
+              <h3 className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2">Bosanski</h3>
+              <p className="text-base text-emerald-800 leading-relaxed font-semibold">
+                Džamija zatvorena
               </p>
+              <p className="text-sm text-emerald-700">
+                od subote 7:30
+                <br />
+                do nedjelje 6:00
+              </p>
+              <p className="text-xs text-emerald-600 mt-2">zbog čišćenja tepiha</p>
             </div>
 
             {/* German */}
-            <div>
-              <h2 className="text-xl font-bold text-emerald-800 mb-2">
-                ANKÜNDIGUNG
-              </h2>
-              <p className="text-lg text-emerald-700 leading-relaxed">
-                Moschee geschlossen von Samstag 7:30
+            <div className="bg-gradient-to-b from-emerald-50 to-white border-2 border-emerald-200 rounded-xl p-4 shadow-md">
+              <div className="w-8 h-1 bg-emerald-500 rounded-full mx-auto mb-3" />
+              <h3 className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2">Deutsch</h3>
+              <p className="text-base text-emerald-800 leading-relaxed font-semibold">
+                Moschee geschlossen
+              </p>
+              <p className="text-sm text-emerald-700">
+                von Samstag 7:30
                 <br />
                 bis Sonntag 6:00
-                <br />
-                wegen Teppichreinigung
               </p>
+              <p className="text-xs text-emerald-600 mt-2">wegen Teppichreinigung</p>
             </div>
           </div>
 
           {/* Islamic Quote */}
-          <div className="mb-8 px-6">
-            <p className="text-2xl font-arabic text-emerald-700 mb-2">
+          <div className="bg-emerald-50 rounded-2xl px-6 py-4 mb-4 border border-emerald-200 max-w-md">
+            <p className="text-xl font-arabic text-emerald-700 mb-2">
               إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ
             </p>
-            <p className="text-sm text-emerald-600 italic">
+            <p className="text-xs text-emerald-600 italic leading-relaxed">
               "Wahrlich, Allah liebt die Reumütigen und Er liebt die sich Reinigenden."
             </p>
-            <p className="text-xs text-emerald-500 mt-1">
-              (Qur'an 2:222)
+            <p className="text-[10px] text-emerald-500 mt-1 font-medium">
+              — Qur'an 2:222
             </p>
           </div>
 
-          {/* Apology Message */}
-          <div className="bg-emerald-50 rounded-xl px-6 py-4 mb-8">
-            <p className="text-emerald-700 font-arabic text-lg mb-1">
-              جزاكم الله خيراً
-            </p>
-            <p className="text-emerald-600 text-sm">
-              Hvala na razumijevanju • Vielen Dank für Ihr Verständnis
-            </p>
+          {/* Thank You */}
+          <div className="flex items-center gap-2 text-emerald-700 mb-2">
+            <span className="text-lg">🤲</span>
+            <p className="font-arabic text-lg">جزاكم الله خيراً</p>
+            <span className="text-lg">🤲</span>
           </div>
+          <p className="text-sm text-emerald-600 mb-4">
+            Hvala na razumijevanju • Vielen Dank für Ihr Verständnis
+          </p>
 
           {/* Spacer */}
           <div className="flex-grow" />
 
           {/* Footer */}
-          <div className="mt-auto pt-4 border-t border-emerald-200 w-full">
-            <p className="text-xl font-bold text-emerald-800 mb-2">
+          <div className="mt-auto">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <span className="text-emerald-400">✦</span>
+              <span className="text-emerald-500">✦</span>
+              <span className="text-emerald-400">✦</span>
+            </div>
+            
+            <p className="text-xl font-bold text-emerald-800 mb-1">
               ❤️ LIEBE GRÜSSE ❤️
             </p>
-            <p className="text-lg font-semibold text-emerald-700 mb-4">
+            <p className="text-lg font-semibold text-emerald-700 mb-3">
               Euer ET-TAQWA TEAM
             </p>
             
-            {/* Decorative Islamic Elements */}
-            <div className="flex justify-center gap-4 text-emerald-600">
-              <span className="text-2xl">☪</span>
-              <span className="text-2xl">🌙</span>
-              <span className="text-2xl">⭐</span>
-            </div>
-            
             {/* Salaam */}
-            <p className="text-lg font-arabic text-emerald-700 mt-4">
-              السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
-            </p>
+            <div className="bg-emerald-700 text-white rounded-full px-6 py-2 inline-block">
+              <p className="text-base font-arabic">
+                السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
+              </p>
+            </div>
           </div>
         </div>
       </div>
