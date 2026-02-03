@@ -284,7 +284,7 @@ const HadithPage = () => {
             <ChevronLeft className="w-5 h-5" />
             <span>{language === "bs" ? "Nazad" : "Zurück"}</span>
           </button>
-          <h1 className="text-lg font-bold text-foreground">
+          <h1 className="text-lg font-bold text-foreground absolute left-1/2 -translate-x-1/2">
             {showFavorites 
               ? (language === "bs" ? "Omiljeni" : "Favoriten")
               : (language === "bs" ? "Hadisi" : "Hadithe")
