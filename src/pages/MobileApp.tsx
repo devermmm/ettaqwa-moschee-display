@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, ChevronRight, BookMarked } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
+import { usePrayerNotifications } from "@/hooks/usePrayerNotifications";
 import SplashScreen from "@/components/SplashScreen";
 import logo from "@/assets/logo.png";
 
@@ -13,7 +14,18 @@ const MobileApp = () => {
   const [nextPrayerIndex, setNextPrayerIndex] = useState(0);
   const [showSplash, setShowSplash] = useState(true);
 
+  // Get notification settings from localStorage
+  const [notificationsEnabled] = useState(() => 
+    localStorage.getItem("prayer-notifications") === "true"
+  );
+  const [adhanEnabled] = useState(() => 
+    localStorage.getItem("adhan-enabled") === "true"
+  );
+
   const { prayerTimes: prayerTimesData } = usePrayerTimes(currentTime);
+
+  // Initialize prayer notifications - this will run the check loop
+  usePrayerNotifications(prayerTimesData, language, notificationsEnabled, adhanEnabled);
 
   const safePrayerTimesData = prayerTimesData || {
     fajr: "--:--",
