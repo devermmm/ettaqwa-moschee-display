@@ -11,10 +11,15 @@ import {
   Smartphone,
   Info,
   Heart,
-  Clock
+  Clock,
+  Volume2,
+  VolumeX,
+  Play,
+  Square
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
+import { usePrayerNotifications } from "@/hooks/usePrayerNotifications";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -32,12 +37,24 @@ const SettingsPage = () => {
     return localStorage.getItem("prayer-notifications") === "true";
   });
 
+  const [adhanEnabled, setAdhanEnabled] = useState(() => {
+    return localStorage.getItem("adhan-enabled") === "true";
+  });
+
   const [widgetEnabled, setWidgetEnabled] = useState(() => {
     return localStorage.getItem("widget-enabled") === "true";
   });
 
   const [currentTime, setCurrentTime] = useState(new Date());
   const { prayerTimes } = usePrayerTimes(currentTime);
+
+  // Initialize prayer notifications hook
+  const { isPlaying, playAdhan, stopAdhan, requestPermissions } = usePrayerNotifications(
+    prayerTimes,
+    language,
+    notificationsEnabled,
+    adhanEnabled
+  );
 
   const goBack = () => navigate("/app");
 
@@ -353,11 +370,63 @@ const SettingsPage = () => {
               label={language === "bs" ? "Obavještenja za namaz" : "Gebets-Mitteilungen"}
               toggle
               isOn={notificationsEnabled}
-              onClick={() => {
-                setNotificationsEnabled(!notificationsEnabled);
-                localStorage.setItem("prayer-notifications", String(!notificationsEnabled));
+              onClick={async () => {
+                const newValue = !notificationsEnabled;
+                if (newValue) {
+                  const granted = await requestPermissions();
+                  if (!granted) {
+                    alert(language === "bs" 
+                      ? "Molimo omogućite obavještenja u postavkama uređaja" 
+                      : "Bitte aktivieren Sie Benachrichtigungen in den Geräteeinstellungen");
+                    return;
+                  }
+                }
+                setNotificationsEnabled(newValue);
+                localStorage.setItem("prayer-notifications", String(newValue));
               }}
             />
+            <SettingRow
+              icon={adhanEnabled ? Volume2 : VolumeX}
+              label={language === "bs" ? "Ezan (Gebetsruf)" : "Adhan (Gebetsruf)"}
+              toggle
+              isOn={adhanEnabled}
+              onClick={() => {
+                const newValue = !adhanEnabled;
+                setAdhanEnabled(newValue);
+                localStorage.setItem("adhan-enabled", String(newValue));
+              }}
+            />
+            
+            {/* Test Adhan Button */}
+            {adhanEnabled && (
+              <div className="px-4 py-3 bg-muted/30">
+                <button
+                  onClick={() => isPlaying ? stopAdhan() : playAdhan()}
+                  className={`w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-medium transition-colors ${
+                    isPlaying 
+                      ? "bg-destructive text-destructive-foreground" 
+                      : "bg-primary text-primary-foreground"
+                  }`}
+                >
+                  {isPlaying ? (
+                    <>
+                      <Square className="w-4 h-4" />
+                      {language === "bs" ? "Zaustavi ezan" : "Adhan stoppen"}
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-4 h-4" />
+                      {language === "bs" ? "Test ezana" : "Adhan testen"}
+                    </>
+                  )}
+                </button>
+                <p className="text-xs text-muted-foreground text-center mt-2">
+                  {language === "bs" 
+                    ? "Ezan će se automatski oglasiti na vrijeme svakog namaza" 
+                    : "Der Adhan ertönt automatisch zur Gebetszeit"}
+                </p>
+              </div>
+            )}
           </div>
         </motion.div>
 
