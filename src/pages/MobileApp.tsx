@@ -171,20 +171,20 @@ const MobileApp = () => {
         <div className="safe-area-inset-top" />
         <div className="px-5 pt-4 pb-3">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-accent p-0.5 shadow-lg shadow-primary/20">
-                <img 
-                  src={logo} 
-                  alt="Et-Taqwa" 
-                  className="w-full h-full rounded-[14px] object-cover bg-white" 
-                />
+            <div className="flex items-center gap-3.5">
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-br from-primary via-accent to-primary rounded-2xl opacity-60 blur-sm" />
+                <div className="relative w-13 h-13 rounded-xl bg-gradient-to-br from-primary to-accent p-[2px] shadow-xl shadow-primary/30">
+                  <img 
+                    src={logo} 
+                    alt="Et-Taqwa" 
+                    className="w-full h-full rounded-[10px] object-cover bg-white" 
+                  />
+                </div>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground tracking-tight">Et-Taqwa</h1>
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <MapPin className="w-3 h-3" />
-                  <span className="text-xs font-medium">Wien, Österreich</span>
-                </div>
+                <h1 className="text-lg font-bold text-foreground tracking-tight">ET-TAQWA</h1>
+                <p className="text-[10px] text-muted-foreground/70 font-arabic">مسجد التقوى</p>
               </div>
             </div>
             <button
