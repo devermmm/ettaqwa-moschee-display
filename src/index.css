@@ -114,4 +114,21 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Font size scaling based on user preference */
+  html[data-font-size="small"] {
+    font-size: 14px;
+  }
+  
+  html[data-font-size="medium"] {
+    font-size: 16px;
+  }
+  
+  html[data-font-size="large"] {
+    font-size: 18px;
+  }
+  
+  html[data-font-size="xlarge"] {
+    font-size: 20px;
+  }
 }
