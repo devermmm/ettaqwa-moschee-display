@@ -27,24 +27,22 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/gebetszeiten" element={<PrayerTimesLayout />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/news/:id" element={<NewsDetail />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/admin" element={<AdminPanel />} />
-          <Route path="/admin/posts" element={<AdminPostManagement />} />
-          <Route path="/admin/prayer-times" element={<AdminPrayerTimes />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/about" element={<><Navbar /><AboutUs /><Footer /></>} />
+          <Route path="/projects" element={<><Navbar /><Projects /><Footer /></>} />
+          <Route path="/courses" element={<><Navbar /><Courses /><Footer /></>} />
+          <Route path="/news" element={<><Navbar /><News /><Footer /></>} />
+          <Route path="/news/:id" element={<><Navbar /><NewsDetail /><Footer /></>} />
+          <Route path="/auth" element={<><Navbar /><Auth /><Footer /></>} />
+          <Route path="/admin" element={<><Navbar /><AdminPanel /><Footer /></>} />
+          <Route path="/admin/posts" element={<><Navbar /><AdminPostManagement /><Footer /></>} />
+          <Route path="/admin/prayer-times" element={<><Navbar /><AdminPrayerTimes /><Footer /></>} />
+          <Route path="/privacy" element={<><Navbar /><PrivacyPolicy /><Footer /></>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<><Navbar /><NotFound /><Footer /></>} />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

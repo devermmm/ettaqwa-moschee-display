@@ -1,7 +1,7 @@
-import NewHome from "./NewHome";
+import MobileApp from "./MobileApp";
 
 const Index = () => {
-  return <NewHome />;
+  return <MobileApp />;
 };
 
 export default Index;
