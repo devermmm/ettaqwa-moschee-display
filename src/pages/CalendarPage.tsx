@@ -1,13 +1,40 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Moon, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Moon, Star, Sun } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+// Hijri calendar conversion utilities
+const gregorianToHijri = (date: Date): { day: number; month: number; year: number } => {
+  const gd = date.getDate();
+  const gm = date.getMonth() + 1;
+  const gy = date.getFullYear();
+
+  let jd = Math.floor((1461 * (gy + 4800 + Math.floor((gm - 14) / 12))) / 4) +
+    Math.floor((367 * (gm - 2 - 12 * Math.floor((gm - 14) / 12))) / 12) -
+    Math.floor((3 * Math.floor((gy + 4900 + Math.floor((gm - 14) / 12)) / 100)) / 4) +
+    gd - 32075;
+
+  const l = jd - 1948440 + 10632;
+  const n = Math.floor((l - 1) / 10631);
+  const remaining = l - 10631 * n + 354;
+  const j = Math.floor((10985 - remaining) / 5316) * Math.floor((50 * remaining) / 17719) +
+    Math.floor(remaining / 5670) * Math.floor((43 * remaining) / 15238);
+  const adjustedRemaining = remaining - Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) -
+    Math.floor(j / 16) * Math.floor((15238 * j) / 43) + 29;
+
+  const hm = Math.floor((24 * adjustedRemaining) / 709);
+  const hd = adjustedRemaining - Math.floor((709 * hm) / 24);
+  const hy = 30 * n + j - 30;
+
+  return { day: hd, month: hm, year: hy };
+};
 
 const CalendarPage = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [showHijri, setShowHijri] = useState(true);
 
   const goBack = () => navigate("/app");
 
@@ -19,17 +46,27 @@ const CalendarPage = () => {
     ? ["Ned", "Pon", "Uto", "Sri", "Čet", "Pet", "Sub"]
     : ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
-  const islamicMonths = [
+  const hijriMonthNames = [
     "Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani",
     "Jumada al-Ula", "Jumada al-Thani", "Rajab", "Sha'ban",
     "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"
   ];
 
-  // Important Islamic dates (approximate - would need proper Hijri calendar library for accuracy)
-  const islamicEvents: { [key: string]: { name: string; nameBs: string } } = {
-    "2025-03-01": { name: "Ramadan Beginn", nameBs: "Početak Ramazana" },
-    "2025-03-31": { name: "Eid al-Fitr", nameBs: "Bajram" },
-    "2025-06-07": { name: "Eid al-Adha", nameBs: "Kurban Bajram" },
+  const hijriMonthNamesArabic = [
+    "مُحَرَّم", "صَفَر", "رَبِيع الأَوَّل", "رَبِيع الثَّانِي",
+    "جُمَادَى الأُولَى", "جُمَادَى الآخِرَة", "رَجَب", "شَعْبَان",
+    "رَمَضَان", "شَوَّال", "ذُو القَعْدَة", "ذُو الحِجَّة"
+  ];
+
+  // Important Islamic dates for 2025
+  const islamicEvents: { [key: string]: { name: string; nameBs: string; hijriDate: string } } = {
+    "2025-01-07": { name: "Rabi' al-Awwal Beginn", nameBs: "Početak Rebi'ul-evvela", hijriDate: "1 Rabi' al-Awwal 1446" },
+    "2025-03-01": { name: "Ramadan Beginn", nameBs: "Početak Ramazana", hijriDate: "1 Ramadan 1446" },
+    "2025-03-31": { name: "Eid al-Fitr (Bajram)", nameBs: "Ramazanski Bajram", hijriDate: "1 Shawwal 1446" },
+    "2025-06-07": { name: "Eid al-Adha (Kurban)", nameBs: "Kurban Bajram", hijriDate: "10 Dhu al-Hijjah 1446" },
+    "2025-06-27": { name: "Islamisches Neujahr", nameBs: "Islamska Nova Godina", hijriDate: "1 Muharram 1447" },
+    "2025-07-06": { name: "Ashura", nameBs: "Dan Ašure", hijriDate: "10 Muharram 1447" },
+    "2025-09-05": { name: "Mawlid an-Nabi", nameBs: "Mevlud", hijriDate: "12 Rabi' al-Awwal 1447" },
   };
 
   const getDaysInMonth = (date: Date) => {
@@ -42,17 +79,21 @@ const CalendarPage = () => {
 
     const days: (number | null)[] = [];
     
-    // Add empty cells for days before the first day of the month
     for (let i = 0; i < startingDay; i++) {
       days.push(null);
     }
     
-    // Add days of the month
     for (let i = 1; i <= daysInMonth; i++) {
       days.push(i);
     }
 
     return days;
+  };
+
+  const getHijriForDay = (day: number | null) => {
+    if (!day) return null;
+    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    return gregorianToHijri(date);
   };
 
   const prevMonth = () => {
@@ -86,12 +127,16 @@ const CalendarPage = () => {
   };
 
   const days = getDaysInMonth(currentDate);
+  
+  // Get current Hijri date for header
+  const currentHijri = gregorianToHijri(currentDate);
+  const todayHijri = gregorianToHijri(new Date());
 
   // Get upcoming events
   const upcomingEvents = Object.entries(islamicEvents)
     .filter(([date]) => new Date(date) >= new Date())
     .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
-    .slice(0, 3);
+    .slice(0, 4);
 
   return (
     <div className="min-h-screen bg-background">
@@ -109,16 +154,46 @@ const CalendarPage = () => {
           <h1 className="font-semibold text-foreground">
             {language === "bs" ? "Kalendar" : "Kalender"}
           </h1>
-          <div className="w-16" />
+          <button
+            onClick={() => setShowHijri(!showHijri)}
+            className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center"
+          >
+            <Moon className={`w-4 h-4 ${showHijri ? "text-primary" : "text-muted-foreground"}`} />
+          </button>
         </div>
       </div>
 
       <div className="px-5 pb-8">
+        {/* Today's Hijri Date Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-br from-primary to-accent rounded-2xl p-4 mt-4 mb-4"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-white/70 text-xs">
+                {language === "bs" ? "Danas - Hidžri" : "Heute - Hijri"}
+              </p>
+              <p className="text-white text-lg font-bold mt-1">
+                {todayHijri.day} {hijriMonthNames[todayHijri.month - 1]} {todayHijri.year}
+              </p>
+              <p className="text-white/80 text-sm font-arabic mt-0.5">
+                {todayHijri.day} {hijriMonthNamesArabic[todayHijri.month - 1]} {todayHijri.year}
+              </p>
+            </div>
+            <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+              <Moon className="w-7 h-7 text-white" />
+            </div>
+          </div>
+        </motion.div>
+
         {/* Month Navigation */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between py-4"
+          transition={{ delay: 0.05 }}
+          className="flex items-center justify-between py-3"
         >
           <button
             onClick={prevMonth}
@@ -127,9 +202,14 @@ const CalendarPage = () => {
             <ChevronLeft className="w-5 h-5 text-foreground" />
           </button>
           <div className="text-center">
-            <h2 className="text-xl font-bold text-foreground">
+            <h2 className="text-lg font-bold text-foreground">
               {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
             </h2>
+            {showHijri && (
+              <p className="text-xs text-muted-foreground">
+                {hijriMonthNames[currentHijri.month - 1]} {currentHijri.year} هـ
+              </p>
+            )}
           </div>
           <button
             onClick={nextMonth}
@@ -144,14 +224,14 @@ const CalendarPage = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-card rounded-2xl p-4 border border-border shadow-sm mb-6"
+          className="bg-card rounded-2xl p-3 border border-border shadow-sm mb-4"
         >
           {/* Day Names */}
-          <div className="grid grid-cols-7 gap-1 mb-2">
+          <div className="grid grid-cols-7 gap-1 mb-1">
             {dayNames.map((day, index) => (
               <div
                 key={day}
-                className={`text-center text-xs font-medium py-2 ${
+                className={`text-center text-xs font-medium py-1.5 ${
                   index === 5 ? "text-primary" : "text-muted-foreground"
                 }`}
               >
@@ -166,22 +246,30 @@ const CalendarPage = () => {
               const event = getEventForDay(day);
               const friday = isFriday(day);
               const today = isToday(day);
+              const hijri = showHijri ? getHijriForDay(day) : null;
 
               return (
                 <div
                   key={index}
                   className={`
-                    relative aspect-square flex items-center justify-center rounded-xl text-sm
+                    relative aspect-square flex flex-col items-center justify-center rounded-xl text-xs p-0.5
                     ${!day ? "" : ""}
-                    ${today ? "bg-primary text-primary-foreground font-bold" : ""}
-                    ${friday && !today ? "text-primary font-semibold" : ""}
-                    ${event && !today ? "bg-accent/20" : ""}
-                    ${!today && !friday && day ? "text-foreground" : ""}
+                    ${today ? "bg-primary text-primary-foreground" : ""}
+                    ${friday && !today ? "bg-primary/10" : ""}
+                    ${event && !today ? "bg-amber-500/10" : ""}
+                    ${!today && day ? "text-foreground" : ""}
                   `}
                 >
-                  {day}
+                  <span className={`font-semibold ${today ? "text-primary-foreground" : friday ? "text-primary" : ""}`}>
+                    {day}
+                  </span>
+                  {hijri && day && (
+                    <span className={`text-[9px] ${today ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                      {hijri.day}
+                    </span>
+                  )}
                   {event && (
-                    <div className="absolute bottom-1 left-1/2 -translate-x-1/2">
+                    <div className="absolute top-0.5 right-0.5">
                       <Star className="w-2 h-2 text-amber-500 fill-amber-500" />
                     </div>
                   )}
@@ -198,33 +286,46 @@ const CalendarPage = () => {
           transition={{ delay: 0.2 }}
         >
           <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-            <Moon className="w-4 h-4 text-primary" />
-            {language === "bs" ? "Važni datumi" : "Wichtige Termine"}
+            <Star className="w-4 h-4 text-amber-500" />
+            {language === "bs" ? "Islamski praznici" : "Islamische Feiertage"}
           </h3>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             {upcomingEvents.map(([date, event]) => {
               const eventDate = new Date(date);
+              const daysUntil = Math.ceil((eventDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+              
               return (
                 <div
                   key={date}
-                  className="bg-card rounded-2xl p-4 border border-border shadow-sm"
+                  className="bg-card rounded-2xl p-3 border border-border shadow-sm"
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-semibold text-foreground">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-primary/20 flex flex-col items-center justify-center">
+                      <span className="text-xs font-bold text-foreground">
+                        {eventDate.getDate()}
+                      </span>
+                      <span className="text-[9px] text-muted-foreground">
+                        {monthNames[eventDate.getMonth()].slice(0, 3)}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-foreground text-sm">
                         {language === "bs" ? event.nameBs : event.name}
                       </p>
-                      <p className="text-sm text-muted-foreground">
-                        {eventDate.toLocaleDateString(language === "bs" ? "bs-BA" : "de-DE", {
-                          weekday: "long",
-                          day: "numeric",
-                          month: "long",
-                        })}
+                      <p className="text-xs text-muted-foreground">
+                        {event.hijriDate}
                       </p>
                     </div>
-                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                      <Star className="w-5 h-5 text-amber-500" />
+                    <div className="text-right">
+                      <p className="text-xs text-muted-foreground">
+                        {daysUntil === 0 
+                          ? (language === "bs" ? "Danas" : "Heute")
+                          : daysUntil === 1 
+                            ? (language === "bs" ? "Sutra" : "Morgen")
+                            : `${daysUntil} ${language === "bs" ? "dana" : "Tage"}`
+                        }
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -233,7 +334,7 @@ const CalendarPage = () => {
 
             {upcomingEvents.length === 0 && (
               <div className="bg-card rounded-2xl p-6 border border-border text-center">
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   {language === "bs" ? "Nema nadolazećih događaja" : "Keine bevorstehenden Ereignisse"}
                 </p>
               </div>
@@ -246,20 +347,26 @@ const CalendarPage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="mt-6 flex items-center justify-center gap-6 text-xs text-muted-foreground"
+          className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-muted-foreground"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <div className="w-3 h-3 rounded-full bg-primary" />
             <span>{language === "bs" ? "Danas" : "Heute"}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-primary/30" />
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-primary/20" />
             <span>{language === "bs" ? "Petak" : "Freitag"}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
             <span>{language === "bs" ? "Praznik" : "Feiertag"}</span>
           </div>
+          {showHijri && (
+            <div className="flex items-center gap-1.5">
+              <Moon className="w-3 h-3 text-primary" />
+              <span>{language === "bs" ? "Hidžri datum" : "Hijri-Datum"}</span>
+            </div>
+          )}
         </motion.div>
       </div>
     </div>
