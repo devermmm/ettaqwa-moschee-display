@@ -171,19 +171,24 @@ const MobileApp = () => {
         <div className="safe-area-inset-top" />
         <div className="px-5 pt-4 pb-3">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl overflow-hidden shadow-2xl shadow-primary/40 ring-2 ring-primary/20 ring-offset-2 ring-offset-background">
-                <img 
-                  src={logo} 
-                  alt="Et-Taqwa" 
-                  className="w-full h-full object-cover" 
+            <div className="flex items-center gap-3.5">
+              {/* Logo: no cropping + strong contrast */}
+              <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-xl border border-white/20 shadow-xl shadow-primary/20 p-2">
+                <img
+                  src={logo}
+                  alt="Et-Taqwa Logo"
+                  className="w-full h-full object-contain"
                 />
               </div>
-              <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight">
+
+              <div className="leading-tight">
+                <h1 className="text-xl font-extrabold tracking-tight text-foreground">
                   ET-TAQWA
                 </h1>
-                <p className="text-xs text-muted-foreground font-medium">Wien, Österreich</p>
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span className="text-xs font-medium">Wien, Österreich</span>
+                </div>
               </div>
             </div>
             <button
