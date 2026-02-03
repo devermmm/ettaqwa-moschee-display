@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings } from "lucide-react";
+import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, GraduationCap } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 import SplashScreen from "@/components/SplashScreen";
@@ -239,6 +239,20 @@ const MobileApp = () => {
                 </div>
                 <p className="font-medium text-foreground text-xs text-center">
                   {language === "bs" ? "Kur'an" : "Quran"}
+                </p>
+              </motion.div>
+            </Link>
+
+            <Link to="/app/tajweed">
+              <motion.div
+                whileTap={{ scale: 0.98 }}
+                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-2">
+                  <GraduationCap className="w-6 h-6 text-indigo-600" />
+                </div>
+                <p className="font-medium text-foreground text-xs text-center">
+                  {language === "bs" ? "Tedžvid" : "Tajweed"}
                 </p>
               </motion.div>
             </Link>
