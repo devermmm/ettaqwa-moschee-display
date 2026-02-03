@@ -378,8 +378,20 @@ const MobileApp = () => {
                 </button>
               </div>
 
-              {/* Image */}
-              <div className="flex-1 flex items-center justify-center px-4">
+              {/* Swipeable Image */}
+              <motion.div 
+                className="flex-1 flex items-center justify-center px-4 overflow-hidden"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x > 80) {
+                    setLightboxIndex((prev) => (prev - 1 + terraceImages.length) % terraceImages.length);
+                  } else if (info.offset.x < -80) {
+                    setLightboxIndex((prev) => (prev + 1) % terraceImages.length);
+                  }
+                }}
+              >
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={lightboxIndex}
@@ -389,26 +401,21 @@ const MobileApp = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.2 }}
-                    className="max-w-full max-h-full object-contain rounded-2xl"
+                    className="max-w-full max-h-full object-contain rounded-2xl pointer-events-none"
                   />
                 </AnimatePresence>
-              </div>
+              </motion.div>
 
-              {/* Thumbnails */}
-              <div className="px-4 py-6 safe-area-inset-bottom">
-                <div className="flex gap-2 justify-center overflow-x-auto">
-                  {terraceImages.map((img, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setLightboxIndex(idx)}
-                      className={`w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all ${
-                        idx === lightboxIndex ? "border-white scale-105" : "border-transparent opacity-50"
-                      }`}
-                    >
-                      <img src={img} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
+              {/* Dots indicator */}
+              <div className="px-4 py-6 safe-area-inset-bottom flex justify-center gap-2">
+                {terraceImages.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      idx === lightboxIndex ? "bg-white scale-125" : "bg-white/30"
+                    }`}
+                  />
+                ))}
               </div>
             </motion.div>
           )}
