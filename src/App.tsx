@@ -11,7 +11,7 @@ import QiblaPage from "./pages/QiblaPage";
 import ReminderPage from "./pages/ReminderPage";
 import CalendarPage from "./pages/CalendarPage";
 import SettingsPage from "./pages/SettingsPage";
-import TajweedPage from "./pages/TajweedPage";
+
 import PrayerTimesLayout from "./pages/PrayerTimesLayout";
 import AboutUs from "./pages/AboutUs";
 import Projects from "./pages/Projects";
@@ -44,7 +44,7 @@ const App = () => (
           <Route path="/app/reminders" element={<ReminderPage />} />
           <Route path="/app/calendar" element={<CalendarPage />} />
           <Route path="/app/settings" element={<SettingsPage />} />
-          <Route path="/app/tajweed" element={<TajweedPage />} />
+          
           
           {/* Website Routes - mit Navbar/Footer */}
           <Route path="/" element={<><Navbar /><Index /><Footer /></>} />
