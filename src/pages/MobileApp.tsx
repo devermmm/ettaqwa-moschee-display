@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Clock, BookOpen, ChevronRight, MapPin, Heart, Compass, Bell, Moon, Sun } from "lucide-react";
+import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 import SplashScreen from "@/components/SplashScreen";
@@ -228,20 +228,17 @@ const MobileApp = () => {
             {language === "bs" ? "Brzi pristup" : "Schnellzugriff"}
           </h3>
           
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <Link to="/app/quran">
               <motion.div
                 whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-4 border border-border shadow-sm"
+                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
               >
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-3">
-                  <BookOpen className="w-5 h-5 text-emerald-600" />
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-2">
+                  <BookOpen className="w-6 h-6 text-emerald-600" />
                 </div>
-                <p className="font-semibold text-foreground text-sm">
+                <p className="font-medium text-foreground text-xs text-center">
                   {language === "bs" ? "Kur'an" : "Quran"}
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {language === "bs" ? "Čitaj sure" : "Suren lesen"}
                 </p>
               </motion.div>
             </Link>
@@ -249,16 +246,13 @@ const MobileApp = () => {
             <Link to="/app/dua">
               <motion.div
                 whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-4 border border-border shadow-sm"
+                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
               >
-                <div className="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center mb-3">
-                  <Heart className="w-5 h-5 text-rose-500" />
+                <div className="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center mb-2">
+                  <Heart className="w-6 h-6 text-rose-500" />
                 </div>
-                <p className="font-semibold text-foreground text-sm">
+                <p className="font-medium text-foreground text-xs text-center">
                   {language === "bs" ? "Dove" : "Duas"}
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {language === "bs" ? "Bittgebete" : "Bittgebete"}
                 </p>
               </motion.div>
             </Link>
@@ -266,16 +260,13 @@ const MobileApp = () => {
             <Link to="/app/qibla">
               <motion.div
                 whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-4 border border-border shadow-sm"
+                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
               >
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mb-3">
-                  <Compass className="w-5 h-5 text-amber-600" />
+                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-2">
+                  <Compass className="w-6 h-6 text-amber-600" />
                 </div>
-                <p className="font-semibold text-foreground text-sm">
+                <p className="font-medium text-foreground text-xs text-center">
                   {language === "bs" ? "Kible" : "Qibla"}
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {language === "bs" ? "Kompas" : "Kompass"}
                 </p>
               </motion.div>
             </Link>
@@ -283,16 +274,41 @@ const MobileApp = () => {
             <Link to="/app/reminders">
               <motion.div
                 whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-4 border border-border shadow-sm"
+                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
               >
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mb-3">
-                  <Bell className="w-5 h-5 text-blue-500" />
+                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-2">
+                  <Bell className="w-6 h-6 text-blue-500" />
                 </div>
-                <p className="font-semibold text-foreground text-sm">
-                  {language === "bs" ? "Podsjetnici" : "Erinnerungen"}
+                <p className="font-medium text-foreground text-xs text-center">
+                  {language === "bs" ? "Podsjetnici" : "Erinnerung"}
                 </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {language === "bs" ? "Obavještenja" : "Mitteilungen"}
+              </motion.div>
+            </Link>
+
+            <Link to="/app/calendar">
+              <motion.div
+                whileTap={{ scale: 0.98 }}
+                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-2">
+                  <Calendar className="w-6 h-6 text-purple-500" />
+                </div>
+                <p className="font-medium text-foreground text-xs text-center">
+                  {language === "bs" ? "Kalendar" : "Kalender"}
+                </p>
+              </motion.div>
+            </Link>
+
+            <Link to="/app/settings">
+              <motion.div
+                whileTap={{ scale: 0.98 }}
+                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-gray-500/10 flex items-center justify-center mb-2">
+                  <Settings className="w-6 h-6 text-gray-500" />
+                </div>
+                <p className="font-medium text-foreground text-xs text-center">
+                  {language === "bs" ? "Postavke" : "Einstellung"}
                 </p>
               </motion.div>
             </Link>
