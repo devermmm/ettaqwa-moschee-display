@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, ChevronRight, BookMarked, Newspaper } from "lucide-react";
+import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, ChevronRight, BookMarked, Newspaper, X, ChevronLeft } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 import { usePrayerNotifications } from "@/hooks/usePrayerNotifications";
@@ -39,6 +39,8 @@ const MobileApp = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [posts, setPosts] = useState<Post[]>([]);
   const [currentTerraceIndex, setCurrentTerraceIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const [notificationsEnabled] = useState(() => 
     localStorage.getItem("prayer-notifications") === "true"
@@ -300,7 +302,13 @@ const MobileApp = () => {
             {language === "bs" ? "Projekti" : "Projekte"}
           </p>
           <GlassCard className="overflow-hidden">
-            <div className="relative h-48">
+            <button
+              onClick={() => {
+                setLightboxIndex(currentTerraceIndex);
+                setLightboxOpen(true);
+              }}
+              className="relative h-48 w-full block active:scale-[0.98] transition-transform"
+            >
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentTerraceIndex}
@@ -314,7 +322,7 @@ const MobileApp = () => {
                 />
               </AnimatePresence>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-4">
+              <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
                 <span className="inline-block px-2 py-1 bg-amber-500/90 text-white text-xs font-bold rounded-lg mb-2">
                   {language === "bs" ? "Uskoro" : "Bald"}
                 </span>
@@ -336,9 +344,75 @@ const MobileApp = () => {
                   />
                 ))}
               </div>
-            </div>
+            </button>
           </GlassCard>
         </motion.div>
+
+        {/* Lightbox for Terrace Images */}
+        <AnimatePresence>
+          {lightboxOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black flex flex-col"
+            >
+              {/* Header */}
+              <div className="safe-area-inset-top" />
+              <div className="flex items-center justify-between px-4 py-3">
+                <button
+                  onClick={() => setLightboxOpen(false)}
+                  className="flex items-center gap-1 text-white/80 font-medium active:opacity-70"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                  {language === "bs" ? "Nazad" : "Zurück"}
+                </button>
+                <span className="text-white/60 text-sm">
+                  {lightboxIndex + 1} / {terraceImages.length}
+                </span>
+                <button
+                  onClick={() => setLightboxOpen(false)}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center active:bg-white/20"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+
+              {/* Image */}
+              <div className="flex-1 flex items-center justify-center px-4">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={lightboxIndex}
+                    src={terraceImages[lightboxIndex]}
+                    alt={`Terrasse ${lightboxIndex + 1}`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.2 }}
+                    className="max-w-full max-h-full object-contain rounded-2xl"
+                  />
+                </AnimatePresence>
+              </div>
+
+              {/* Thumbnails */}
+              <div className="px-4 py-6 safe-area-inset-bottom">
+                <div className="flex gap-2 justify-center overflow-x-auto">
+                  {terraceImages.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setLightboxIndex(idx)}
+                      className={`w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all ${
+                        idx === lightboxIndex ? "border-white scale-105" : "border-transparent opacity-50"
+                      }`}
+                    >
+                      <img src={img} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* News Section */}
         {posts.length > 0 && (
