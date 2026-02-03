@@ -9,21 +9,33 @@ const Plakat = () => {
 
   return (
     <>
-      {/* Print-specific styles to remove browser headers/footers */}
       <style>{`
         @media print {
           @page {
             margin: 0;
-            size: A4;
+            size: A4 portrait;
+          }
+          html, body {
+            width: 210mm;
+            height: 297mm;
+            margin: 0;
+            padding: 0;
           }
           body {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
+          .print-container {
+            width: 210mm !important;
+            height: 297mm !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+          }
         }
       `}</style>
 
-      <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950 flex items-center justify-center p-4 print:p-0 print:bg-white relative">
+      <div className="min-h-screen bg-emerald-900 flex items-center justify-center p-4 print:p-0 print:m-0 print:bg-white">
         
         {/* Print Button */}
         <div className="fixed top-4 right-4 z-50 print:hidden">
@@ -34,63 +46,63 @@ const Plakat = () => {
             <Printer className="w-4 h-4 mr-2" />
             Drucken / PDF
           </Button>
-          <p className="text-xs text-white/70 mt-2 text-center max-w-[200px]">
-            Tipp: Im Druckdialog "Kopf- und Fußzeilen" deaktivieren
+          <p className="text-[10px] text-white/60 mt-2 text-center">
+            Kopf-/Fußzeilen deaktivieren
           </p>
         </div>
 
-        {/* A4 Container */}
-        <div className="w-[210mm] h-[297mm] bg-white shadow-2xl print:shadow-none relative overflow-hidden flex flex-col">
+        {/* A4 Container - Exact dimensions */}
+        <div className="print-container w-[210mm] h-[297mm] bg-white shadow-2xl print:shadow-none flex flex-col overflow-hidden">
           
           {/* Top Border */}
-          <div className="h-4 bg-emerald-600 shrink-0" />
+          <div className="h-3 bg-emerald-600 shrink-0" />
           
           {/* Content */}
-          <div className="flex-1 px-12 py-6 flex flex-col items-center text-center">
+          <div className="flex-1 px-8 py-4 flex flex-col items-center text-center min-h-0">
             
             {/* Header */}
-            <div className="flex items-center gap-4 mb-4">
-              <img src={logo} alt="Et-Taqwa" className="h-16" />
+            <div className="flex items-center gap-3 mb-3">
+              <img src={logo} alt="Et-Taqwa" className="h-12" />
               <div className="text-left">
-                <h1 className="text-2xl font-bold text-emerald-800">DŽEMAT ET-TAQWA</h1>
-                <p className="text-xl font-arabic text-emerald-600">مسجد التقوى</p>
+                <h1 className="text-xl font-bold text-emerald-800">DŽEMAT ET-TAQWA</h1>
+                <p className="text-lg font-arabic text-emerald-600">مسجد التقوى</p>
               </div>
             </div>
 
             {/* Bismillah */}
-            <p className="text-3xl font-arabic text-emerald-700 mb-6">
+            <p className="text-2xl font-arabic text-emerald-700 mb-4">
               بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
             </p>
 
             {/* Main Announcement */}
-            <div className="w-full max-w-lg bg-emerald-50 border-4 border-emerald-500 rounded-2xl p-6 mb-6">
-              <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 rounded-full bg-emerald-600 flex items-center justify-center">
-                  <span className="text-5xl">🕌</span>
+            <div className="w-full max-w-md bg-emerald-50 border-3 border-emerald-500 rounded-xl p-5 mb-4">
+              <div className="flex justify-center mb-3">
+                <div className="w-16 h-16 rounded-full bg-emerald-600 flex items-center justify-center">
+                  <span className="text-4xl">🕌</span>
                 </div>
               </div>
               
-              <h2 className="text-2xl font-bold text-emerald-800 mb-4">
+              <h2 className="text-xl font-bold text-emerald-800 mb-3">
                 MOSCHEE GESCHLOSSEN
               </h2>
               
-              <div className="bg-white rounded-xl p-4 mb-4">
-                <div className="flex items-center justify-center gap-6">
+              <div className="bg-white rounded-lg p-3 mb-3 border border-emerald-200">
+                <div className="flex items-center justify-center gap-4">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-emerald-800">Samstag</p>
-                    <p className="text-xl font-semibold text-emerald-600">8. Februar</p>
-                    <p className="text-4xl font-bold text-emerald-700">7:30</p>
+                    <p className="text-xl font-bold text-emerald-800">Samstag</p>
+                    <p className="text-base font-semibold text-emerald-600">8. Februar</p>
+                    <p className="text-3xl font-bold text-emerald-700">7:30</p>
                   </div>
-                  <span className="text-5xl text-emerald-400">→</span>
+                  <span className="text-4xl text-emerald-400">→</span>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-emerald-800">Sonntag</p>
-                    <p className="text-xl font-semibold text-emerald-600">9. Februar</p>
-                    <p className="text-4xl font-bold text-emerald-700">6:00</p>
+                    <p className="text-xl font-bold text-emerald-800">Sonntag</p>
+                    <p className="text-base font-semibold text-emerald-600">9. Februar</p>
+                    <p className="text-3xl font-bold text-emerald-700">6:00</p>
                   </div>
                 </div>
               </div>
 
-              <p className="text-2xl text-emerald-700 flex items-center justify-center gap-3">
+              <p className="text-xl text-emerald-700 flex items-center justify-center gap-2">
                 <span>🧹</span>
                 <span className="font-semibold">Teppichreinigung</span>
                 <span>✨</span>
@@ -98,57 +110,57 @@ const Plakat = () => {
             </div>
 
             {/* Three Languages */}
-            <div className="w-full grid grid-cols-3 gap-6 mb-6">
-              <div className="text-center border-r-2 border-emerald-200 pr-4">
-                <p className="text-lg text-emerald-500 mb-2">العربية</p>
-                <p className="text-2xl font-arabic text-emerald-800 font-bold">المسجد مغلق</p>
-                <p className="text-lg font-arabic text-emerald-600">بسبب تنظيف السجاد</p>
+            <div className="w-full grid grid-cols-3 gap-4 mb-4 px-4">
+              <div className="text-center">
+                <p className="text-sm text-emerald-500 mb-1">العربية</p>
+                <p className="text-lg font-arabic text-emerald-800 font-bold">المسجد مغلق</p>
+                <p className="text-sm font-arabic text-emerald-600">بسبب تنظيف السجاد</p>
               </div>
-              <div className="text-center border-r-2 border-emerald-200 pr-4">
-                <p className="text-lg text-emerald-500 mb-2">Bosanski</p>
-                <p className="text-2xl text-emerald-800 font-bold">Džamija zatvorena</p>
-                <p className="text-lg text-emerald-600">zbog čišćenja tepiha</p>
+              <div className="text-center border-x border-emerald-200 px-2">
+                <p className="text-sm text-emerald-500 mb-1">Bosanski</p>
+                <p className="text-lg text-emerald-800 font-bold">Džamija zatvorena</p>
+                <p className="text-sm text-emerald-600">zbog čišćenja tepiha</p>
               </div>
               <div className="text-center">
-                <p className="text-lg text-emerald-500 mb-2">Deutsch</p>
-                <p className="text-2xl text-emerald-800 font-bold">Moschee geschlossen</p>
-                <p className="text-lg text-emerald-600">wegen Teppichreinigung</p>
+                <p className="text-sm text-emerald-500 mb-1">Deutsch</p>
+                <p className="text-lg text-emerald-800 font-bold">Moschee geschlossen</p>
+                <p className="text-sm text-emerald-600">wegen Teppichreinigung</p>
               </div>
             </div>
 
             {/* Islamic Quote */}
-            <div className="bg-emerald-50 rounded-xl px-8 py-4 mb-4">
-              <p className="text-2xl font-arabic text-emerald-700 mb-2">
+            <div className="bg-emerald-50 rounded-lg px-6 py-3 mb-3">
+              <p className="text-xl font-arabic text-emerald-700 mb-1">
                 إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ
               </p>
-              <p className="text-lg text-emerald-600 italic">
+              <p className="text-sm text-emerald-600 italic">
                 "Allah liebt die Reumütigen und die sich Reinigenden." — Qur'an 2:222
               </p>
             </div>
 
             {/* Thank You */}
-            <p className="text-2xl font-arabic text-emerald-700 mb-1">جزاكم الله خيراً</p>
-            <p className="text-lg text-emerald-600">
+            <p className="text-xl font-arabic text-emerald-700 mb-1">جزاكم الله خيراً</p>
+            <p className="text-base text-emerald-600">
               Hvala na razumijevanju • Vielen Dank für Ihr Verständnis
             </p>
 
             {/* Spacer */}
-            <div className="flex-1" />
+            <div className="flex-1 min-h-2" />
 
             {/* Footer */}
-            <div className="mt-auto pt-4 border-t-2 border-emerald-200 w-full">
-              <p className="text-2xl font-bold text-emerald-800 mb-1">
+            <div className="pt-3 border-t border-emerald-200 w-full">
+              <p className="text-xl font-bold text-emerald-800 mb-1">
                 ❤️ LIEBE GRÜSSE ❤️
               </p>
-              <p className="text-xl text-emerald-700 mb-3">Euer ET-TAQWA TEAM</p>
-              <p className="text-xl font-arabic text-emerald-600">
+              <p className="text-lg text-emerald-700 mb-2">Euer ET-TAQWA TEAM</p>
+              <p className="text-lg font-arabic text-emerald-600">
                 السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
               </p>
             </div>
           </div>
 
           {/* Bottom Border */}
-          <div className="h-4 bg-emerald-600 shrink-0" />
+          <div className="h-3 bg-emerald-600 shrink-0" />
         </div>
       </div>
     </>
