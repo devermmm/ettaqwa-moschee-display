@@ -7,7 +7,7 @@ import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 import { usePrayerNotifications } from "@/hooks/usePrayerNotifications";
 import { supabase } from "@/integrations/supabase/client";
 import SplashScreen from "@/components/SplashScreen";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo-new.png";
 import terrace1 from "@/assets/terrace-1.jpg";
 import terrace2 from "@/assets/terrace-2.jpg";
 import terrace3 from "@/assets/terrace-3.jpg";
