@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { 
-  ChevronLeft, 
   Type, 
   Moon, 
   Sun, 
@@ -10,17 +9,20 @@ import {
   Smartphone,
   Info,
   Heart,
-  Clock,
   Volume2,
   VolumeX,
   Play,
   Square,
-  Globe,
-  Palette
+  Globe
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 import { usePrayerNotifications } from "@/hooks/usePrayerNotifications";
+
+import { GlassCard, PageContainer, PageHeader, SectionTitle } from "@/components/ui/GlassUI";
+import { GlassSwitch } from "@/components/ui/GlassSwitch";
+import { SettingItem } from "@/components/settings/SettingItem";
+import { WidgetPreview } from "@/components/settings/WidgetPreview";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -46,8 +48,9 @@ const SettingsPage = () => {
     return localStorage.getItem("widget-enabled") === "true";
   });
 
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const { prayerTimes } = usePrayerTimes(currentTime);
+  // Stable reference so the page doesn't re-render every second (which caused toggle remount + flicker)
+  const [prayerClock] = useState(() => new Date());
+  const { prayerTimes } = usePrayerTimes(prayerClock);
 
   const { isPlaying, playAdhan, stopAdhan, requestPermissions } = usePrayerNotifications(
     prayerTimes,
@@ -57,11 +60,6 @@ const SettingsPage = () => {
   );
 
   const goBack = () => navigate("/app");
-
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   const fontSizes = [
     { id: "small", label: language === "bs" ? "S" : "S" },
@@ -84,148 +82,13 @@ const SettingsPage = () => {
     }
   }, [darkMode]);
 
-  // Glass Card Component
-  const GlassCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
-    <div className={`backdrop-blur-xl bg-card/60 dark:bg-card/40 rounded-3xl border border-white/20 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 ${className}`}>
-      {children}
-    </div>
-  );
-
-  // Toggle Switch Component
-  const Toggle = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
-    <button
-      onClick={onToggle}
-      className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
-        isOn 
-          ? "bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/30" 
-          : "bg-muted/80 dark:bg-muted/50"
-      }`}
-    >
-      <motion.div
-        animate={{ x: isOn ? 24 : 2 }}
-        transition={{ type: "spring", stiffness: 500, damping: 30 }}
-        className="absolute top-1 w-6 h-6 rounded-full bg-white shadow-md"
-      />
-    </button>
-  );
-
-  // Setting Item Component
-  const SettingItem = ({ 
-    icon: Icon, 
-    iconColor = "text-primary",
-    iconBg = "bg-primary/10",
-    label, 
-    sublabel,
-    children 
-  }: { 
-    icon: any; 
-    iconColor?: string;
-    iconBg?: string;
-    label: string; 
-    sublabel?: string;
-    children?: React.ReactNode;
-  }) => (
-    <div className="flex items-center justify-between py-4 px-1">
-      <div className="flex items-center gap-4">
-        <div className={`w-10 h-10 rounded-2xl ${iconBg} flex items-center justify-center`}>
-          <Icon className={`w-5 h-5 ${iconColor}`} />
-        </div>
-        <div>
-          <p className="font-medium text-foreground">{label}</p>
-          {sublabel && <p className="text-xs text-muted-foreground mt-0.5">{sublabel}</p>}
-        </div>
-      </div>
-      {children}
-    </div>
-  );
-
-  // Widget Preview
-  const WidgetPreview = () => {
-    const prayerTimesList = [
-      { id: "fajr", name: "Fajr", nameBs: "Sabah", time: prayerTimes?.fajr || "--:--" },
-      { id: "dhuhr", name: "Dhuhr", nameBs: "Podne", time: prayerTimes?.dhuhr || "--:--" },
-      { id: "asr", name: "Asr", nameBs: "Ikindija", time: prayerTimes?.asr || "--:--" },
-      { id: "maghrib", name: "Maghrib", nameBs: "Akšam", time: prayerTimes?.maghrib || "--:--" },
-      { id: "isha", name: "Isha", nameBs: "Jacija", time: prayerTimes?.isha || "--:--" },
-    ];
-
-    const currentMinutes = currentTime.getHours() * 60 + currentTime.getMinutes();
-    let nextPrayerIndex = 0;
-    
-    for (let i = 0; i < prayerTimesList.length; i++) {
-      const [hours, minutes] = prayerTimesList[i].time.split(":").map(Number);
-      if (!isNaN(hours) && !isNaN(minutes)) {
-        const prayerMinutes = hours * 60 + minutes;
-        if (currentMinutes < prayerMinutes) {
-          nextPrayerIndex = i;
-          break;
-        }
-      }
-    }
-
-    const nextPrayer = prayerTimesList[nextPrayerIndex];
-    
-    const getCountdown = () => {
-      if (!nextPrayer || nextPrayer.time === "--:--") return "00:00";
-      const [hours, minutes] = nextPrayer.time.split(":").map(Number);
-      if (isNaN(hours) || isNaN(minutes)) return "00:00";
-      
-      const prayerDate = new Date(currentTime);
-      prayerDate.setHours(hours, minutes, 0, 0);
-      const diff = prayerDate.getTime() - currentTime.getTime();
-      if (diff <= 0) return "00:00";
-
-      const h = Math.floor(diff / (1000 * 60 * 60));
-      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const s = Math.floor((diff % (1000 * 60)) / 1000);
-      
-      return h > 0 ? `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}` : `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    };
-
-    return (
-      <div className="bg-gradient-to-br from-primary via-accent to-primary rounded-2xl p-4 shadow-xl shadow-primary/20">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-white/60 text-xs font-medium uppercase tracking-wide">
-              {language === "bs" ? "Sljedeći" : "Nächstes"}
-            </p>
-            <p className="text-xl font-bold text-white">
-              {language === "bs" ? nextPrayer?.nameBs : nextPrayer?.name}
-            </p>
-          </div>
-          <div className="text-right">
-            <div className="flex items-center gap-1.5 text-white/60 mb-0.5">
-              <Clock className="w-3.5 h-3.5" />
-              <span className="text-xs">{nextPrayer?.time}</span>
-            </div>
-            <p className="text-2xl font-bold text-white tabular-nums">
-              {getCountdown()}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/30">
-      {/* Header with Glass Effect */}
-      <div className="sticky top-0 z-50 backdrop-blur-2xl bg-background/70 border-b border-white/10">
-        <div className="safe-area-inset-top" />
-        <div className="flex items-center justify-between px-5 py-4">
-          <button
-            onClick={goBack}
-            className="flex items-center gap-1.5 text-primary font-semibold active:opacity-70 transition-opacity"
-          >
-            <ChevronLeft className="w-5 h-5" />
-            <span>{language === "bs" ? "Nazad" : "Zurück"}</span>
-          </button>
-          <h1 className="text-lg font-bold text-foreground">
-            {language === "bs" ? "Postavke" : "Einstellungen"}
-          </h1>
-          <div className="w-16" />
-        </div>
-      </div>
+    <PageContainer>
+      <PageHeader
+        title={language === "bs" ? "Postavke" : "Einstellungen"}
+        onBack={goBack}
+        backLabel={language === "bs" ? "Nazad" : "Zurück"}
+      />
 
       <div className="px-5 pb-10 space-y-5 pt-6">
         
@@ -235,9 +98,7 @@ const SettingsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
         >
-          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
-            {language === "bs" ? "Prikaz" : "Anzeige"}
-          </p>
+          <SectionTitle>{language === "bs" ? "Prikaz" : "Anzeige"}</SectionTitle>
           <GlassCard className="p-4">
             {/* Dark Mode */}
             <SettingItem
@@ -250,7 +111,11 @@ const SettingsPage = () => {
                 : (language === "bs" ? "Deaktivirano" : "Deaktiviert")
               }
             >
-              <Toggle isOn={darkMode} onToggle={() => setDarkMode(!darkMode)} />
+              <GlassSwitch
+                checked={darkMode}
+                onCheckedChange={setDarkMode}
+                aria-label={language === "bs" ? "Tamni način" : "Dunkelmodus"}
+              />
             </SettingItem>
 
             <div className="h-px bg-border/50 my-1" />
@@ -305,9 +170,7 @@ const SettingsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
-            {language === "bs" ? "Jezik" : "Sprache"}
-          </p>
+          <SectionTitle>{language === "bs" ? "Jezik" : "Sprache"}</SectionTitle>
           <GlassCard className="p-4">
             <div className="flex items-center gap-4 mb-4 px-1">
               <div className="w-10 h-10 rounded-2xl bg-green-500/10 flex items-center justify-center">
@@ -353,9 +216,9 @@ const SettingsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
         >
-          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+          <SectionTitle>
             {language === "bs" ? "Obavještenja" : "Benachrichtigungen"}
-          </p>
+          </SectionTitle>
           <GlassCard className="p-4">
             <SettingItem
               icon={Bell}
@@ -364,22 +227,26 @@ const SettingsPage = () => {
               label={language === "bs" ? "Push obavještenja" : "Push-Mitteilungen"}
               sublabel={language === "bs" ? "Obavijest za svaki namaz" : "Für jedes Gebet"}
             >
-              <Toggle 
-                isOn={notificationsEnabled} 
-                onToggle={async () => {
-                  const newValue = !notificationsEnabled;
-                  if (newValue) {
+              <GlassSwitch
+                checked={notificationsEnabled}
+                onCheckedChange={async (checked) => {
+                  if (checked) {
                     const granted = await requestPermissions();
                     if (!granted) {
-                      alert(language === "bs" 
-                        ? "Molimo omogućite obavještenja u postavkama uređaja" 
-                        : "Bitte Benachrichtigungen in Geräteeinstellungen aktivieren");
+                      alert(
+                        language === "bs"
+                          ? "Molimo omogućite obavještenja u postavkama uređaja"
+                          : "Bitte Benachrichtigungen in Geräteeinstellungen aktivieren",
+                      );
                       return;
                     }
                   }
-                  setNotificationsEnabled(newValue);
-                  localStorage.setItem("prayer-notifications", String(newValue));
+                  setNotificationsEnabled(checked);
+                  localStorage.setItem("prayer-notifications", String(checked));
                 }}
+                aria-label={
+                  language === "bs" ? "Push obavještenja" : "Push-Mitteilungen"
+                }
               />
             </SettingItem>
 
@@ -392,13 +259,13 @@ const SettingsPage = () => {
               label={language === "bs" ? "Ezan (Gebetsruf)" : "Adhan (Gebetsruf)"}
               sublabel={language === "bs" ? "Automatski pri svakom namazu" : "Automatisch bei jedem Gebet"}
             >
-              <Toggle 
-                isOn={adhanEnabled} 
-                onToggle={() => {
-                  const newValue = !adhanEnabled;
-                  setAdhanEnabled(newValue);
-                  localStorage.setItem("adhan-enabled", String(newValue));
+              <GlassSwitch
+                checked={adhanEnabled}
+                onCheckedChange={(checked) => {
+                  setAdhanEnabled(checked);
+                  localStorage.setItem("adhan-enabled", String(checked));
                 }}
+                aria-label={language === "bs" ? "Ezan" : "Adhan"}
               />
             </SettingItem>
             
@@ -441,9 +308,7 @@ const SettingsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
-            Widget
-          </p>
+          <SectionTitle>Widget</SectionTitle>
           <GlassCard className="p-4">
             <SettingItem
               icon={Smartphone}
@@ -452,12 +317,17 @@ const SettingsPage = () => {
               label={language === "bs" ? "Početni ekran widget" : "Homescreen-Widget"}
               sublabel={language === "bs" ? "Brzi pregled namaza" : "Schnelle Gebetsübersicht"}
             >
-              <Toggle 
-                isOn={widgetEnabled} 
-                onToggle={() => {
-                  setWidgetEnabled(!widgetEnabled);
-                  localStorage.setItem("widget-enabled", String(!widgetEnabled));
+              <GlassSwitch
+                checked={widgetEnabled}
+                onCheckedChange={(checked) => {
+                  setWidgetEnabled(checked);
+                  localStorage.setItem("widget-enabled", String(checked));
                 }}
+                aria-label={
+                  language === "bs"
+                    ? "Početni ekran widget"
+                    : "Homescreen-Widget"
+                }
               />
             </SettingItem>
 
@@ -470,7 +340,7 @@ const SettingsPage = () => {
                 <p className="text-xs text-muted-foreground mb-2 px-1">
                   {language === "bs" ? "Pregled widgeta" : "Widget-Vorschau"}
                 </p>
-                <WidgetPreview />
+                 <WidgetPreview language={language} />
               </motion.div>
             )}
           </GlassCard>
@@ -482,9 +352,9 @@ const SettingsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
         >
-          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+          <SectionTitle>
             {language === "bs" ? "Informacije" : "Informationen"}
-          </p>
+          </SectionTitle>
           <GlassCard className="p-4">
             <SettingItem
               icon={Info}
@@ -520,7 +390,7 @@ const SettingsPage = () => {
           </p>
         </motion.div>
       </div>
-    </div>
+    </PageContainer>
   );
 };
 
