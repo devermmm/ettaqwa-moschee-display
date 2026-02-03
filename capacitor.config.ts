@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'app.lovable.ed4f2e9bbbc146d4abc0d3bbad32737c',
-  appName: 'Et-Taqwa Moschee',
+  appName: 'ET TAQWA',
   webDir: 'dist',
   server: {
     // Die native App lädt die /app Route direkt (ohne Navbar/Footer)
