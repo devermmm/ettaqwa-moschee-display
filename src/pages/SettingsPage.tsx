@@ -259,16 +259,17 @@ const SettingsPage = () => {
                 ))}
               </div>
 
-              {/* Preview */}
+              {/* Live Preview - uses actual root font scaling */}
               <div className="mt-4 p-3 bg-muted/50 rounded-xl">
-                <p className={`text-foreground ${
-                  fontSize === "small" ? "text-sm" :
-                  fontSize === "medium" ? "text-base" :
-                  fontSize === "large" ? "text-lg" : "text-xl"
-                }`}>
+                <p className="text-foreground">
                   {language === "bs" 
-                    ? "Ovo je primjer teksta" 
-                    : "Dies ist ein Beispieltext"}
+                    ? "Ovo je primjer teksta za pregled veličine fonta." 
+                    : "Dies ist ein Beispieltext zur Vorschau der Schriftgröße."}
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {language === "bs" 
+                    ? "Manji tekst za detalje" 
+                    : "Kleinerer Text für Details"}
                 </p>
               </div>
             </div>
