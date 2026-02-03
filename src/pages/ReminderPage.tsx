@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Bell, BellOff, Clock, Check, Smartphone } from "lucide-react";
+import { ChevronLeft, Bell, BellOff, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
@@ -16,7 +16,6 @@ interface PrayerReminder {
 const ReminderPage = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
-  const [notificationsSupported, setNotificationsSupported] = useState(true);
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [reminders, setReminders] = useState<PrayerReminder[]>([
     { id: "fajr", name: "Fajr", nameBs: "Sabah", enabled: true, minutesBefore: 15 },
@@ -29,18 +28,10 @@ const ReminderPage = () => {
   const timeOptions = [5, 10, 15, 20, 30];
 
   useEffect(() => {
-    // Check notification support
-    if (!("Notification" in window)) {
-      setNotificationsSupported(false);
-      return;
-    }
-
-    // Check permission status
-    if (Notification.permission === "granted") {
+    if ("Notification" in window && Notification.permission === "granted") {
       setPermissionGranted(true);
     }
 
-    // Load saved reminders from localStorage
     const saved = localStorage.getItem("prayer-reminders");
     if (saved) {
       setReminders(JSON.parse(saved));
@@ -52,12 +43,10 @@ const ReminderPage = () => {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
         setPermissionGranted(true);
-        toast.success(language === "bs" ? "Obavještenja aktivirana!" : "Benachrichtigungen aktiviert!");
-      } else {
-        toast.error(language === "bs" ? "Pristup obavještenjima odbijen" : "Benachrichtigungszugriff verweigert");
+        toast.success(language === "bs" ? "Aktivirano!" : "Aktiviert!");
       }
     } catch (err) {
-      console.error("Permission request failed:", err);
+      console.error("Permission request failed");
     }
   };
 
@@ -67,15 +56,6 @@ const ReminderPage = () => {
     );
     setReminders(updated);
     localStorage.setItem("prayer-reminders", JSON.stringify(updated));
-    
-    const reminder = updated.find(r => r.id === id);
-    if (reminder?.enabled) {
-      toast.success(
-        language === "bs" 
-          ? `${reminder.nameBs} podsjetnik aktiviran` 
-          : `${reminder.name} Erinnerung aktiviert`
-      );
-    }
   };
 
   const updateMinutesBefore = (id: string, minutes: number) => {
@@ -86,212 +66,132 @@ const ReminderPage = () => {
     localStorage.setItem("prayer-reminders", JSON.stringify(updated));
   };
 
-  const enableAll = () => {
-    const updated = reminders.map(r => ({ ...r, enabled: true }));
-    setReminders(updated);
-    localStorage.setItem("prayer-reminders", JSON.stringify(updated));
-    toast.success(language === "bs" ? "Svi podsjetnici aktivirani" : "Alle Erinnerungen aktiviert");
-  };
-
-  const disableAll = () => {
-    const updated = reminders.map(r => ({ ...r, enabled: false }));
-    setReminders(updated);
-    localStorage.setItem("prayer-reminders", JSON.stringify(updated));
-    toast.success(language === "bs" ? "Svi podsjetnici deaktivirani" : "Alle Erinnerungen deaktiviert");
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary via-primary/95 to-accent">
-      {/* Header */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-primary/95 backdrop-blur-xl border-b border-white/10 px-4 py-4"
-      >
-        <div className="flex items-center gap-4">
-          <motion.button 
-            whileTap={{ scale: 0.9 }}
-            onClick={() => navigate("/app")}
-            className="p-2 rounded-full bg-white/10"
+    <div className="min-h-screen bg-background">
+      {/* iOS Navigation Bar */}
+      <div className="bg-background/80 backdrop-blur-xl sticky top-0 z-40 border-b border-border/50">
+        <div className="safe-area-inset-top" />
+        <div className="flex items-center justify-between px-4 py-3">
+          <button onClick={() => navigate("/app")} className="flex items-center gap-1 text-primary">
+            <ChevronLeft className="w-5 h-5" />
+            <span className="text-[17px]">{language === "bs" ? "Nazad" : "Zurück"}</span>
+          </button>
+          <h1 className="font-semibold text-[17px] text-foreground absolute left-1/2 -translate-x-1/2">
+            {language === "bs" ? "Podsjetnici" : "Erinnerungen"}
+          </h1>
+          <div className="w-16" />
+        </div>
+      </div>
+
+      <div className="p-4 pb-8">
+        {/* Permission Banner */}
+        {!permissionGranted && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20"
           >
-            <ArrowLeft className="w-5 h-5 text-white" />
-          </motion.button>
-          <div>
-            <h1 className="text-xl font-bold text-white">
-              {language === "bs" ? "Podsjetnici" : "Erinnerungen"}
-            </h1>
-            <p className="text-white/70 text-sm">
-              {language === "bs" ? "Obavještenja za namaz" : "Gebetsbenachrichtigungen"}
+            <div className="flex items-start gap-3">
+              <Bell className="w-5 h-5 text-amber-600 mt-0.5" />
+              <div className="flex-1">
+                <p className="font-medium text-foreground text-sm">
+                  {language === "bs" ? "Obavještenja nisu aktivirana" : "Benachrichtigungen nicht aktiv"}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {language === "bs" 
+                    ? "Omogućite obavještenja za podsjetnike" 
+                    : "Aktivieren Sie Benachrichtigungen für Erinnerungen"}
+                </p>
+                <button
+                  onClick={requestPermission}
+                  className="mt-3 px-4 py-2 bg-amber-500 text-white rounded-lg text-sm font-medium"
+                >
+                  {language === "bs" ? "Aktiviraj" : "Aktivieren"}
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Reminders List - iOS Settings Style */}
+        <div className="bg-card rounded-2xl overflow-hidden border border-border">
+          <div className="px-4 py-3 border-b border-border">
+            <p className="text-sm font-semibold text-foreground">
+              {language === "bs" ? "Namaz podsjetnici" : "Gebetserinnerungen"}
             </p>
           </div>
-        </div>
-      </motion.div>
 
-      <div className="p-4 pb-24">
-        {/* Permission Request */}
-        {notificationsSupported && !permissionGranted && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 p-5 rounded-2xl bg-amber-500/20 border border-amber-400/30"
-          >
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl bg-amber-500/30">
-                <Bell className="w-6 h-6 text-amber-200" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-white font-semibold mb-1">
-                  {language === "bs" ? "Aktiviraj obavještenja" : "Benachrichtigungen aktivieren"}
-                </h3>
-                <p className="text-white/70 text-sm mb-3">
-                  {language === "bs" 
-                    ? "Primajte podsjetnike prije svakog namaza" 
-                    : "Erhalten Sie Erinnerungen vor jedem Gebet"}
-                </p>
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  onClick={requestPermission}
-                  className="px-4 py-2 bg-amber-500 text-white rounded-lg text-sm font-medium"
-                >
-                  {language === "bs" ? "Dozvoli obavještenja" : "Benachrichtigungen erlauben"}
-                </motion.button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {!notificationsSupported && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 p-5 rounded-2xl bg-red-500/20 border border-red-400/30"
-          >
-            <div className="flex items-center gap-3">
-              <Smartphone className="w-6 h-6 text-red-300" />
-              <p className="text-white/80 text-sm">
-                {language === "bs" 
-                  ? "Obavještenja nisu podržana na ovom uređaju" 
-                  : "Benachrichtigungen werden auf diesem Gerät nicht unterstützt"}
-              </p>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Quick Actions */}
-        <div className="flex gap-3 mb-6">
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={enableAll}
-            className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-white/10 text-white text-sm"
-          >
-            <Bell className="w-4 h-4" />
-            {language === "bs" ? "Sve uključi" : "Alle ein"}
-          </motion.button>
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={disableAll}
-            className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-white/10 text-white text-sm"
-          >
-            <BellOff className="w-4 h-4" />
-            {language === "bs" ? "Sve isključi" : "Alle aus"}
-          </motion.button>
-        </div>
-
-        {/* Prayer Reminders */}
-        <div className="space-y-3">
-          {reminders.map((reminder, index) => (
-            <motion.div
+          {reminders.map((reminder) => (
+            <div
               key={reminder.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className={`p-4 rounded-2xl border transition-all ${
-                reminder.enabled 
-                  ? "bg-white/10 border-white/20" 
-                  : "bg-white/5 border-white/10"
-              }`}
+              className="border-b border-border/50 last:border-b-0"
             >
-              <div className="flex items-center justify-between mb-3">
+              {/* Main Toggle Row */}
+              <div className="flex items-center justify-between px-4 py-4">
                 <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-xl ${reminder.enabled ? "bg-primary" : "bg-white/10"}`}>
-                    {reminder.enabled ? (
-                      <Bell className="w-5 h-5 text-white" />
-                    ) : (
-                      <BellOff className="w-5 h-5 text-white/50" />
+                  {reminder.enabled ? (
+                    <Bell className="w-5 h-5 text-primary" />
+                  ) : (
+                    <BellOff className="w-5 h-5 text-muted-foreground" />
+                  )}
+                  <div>
+                    <p className={`font-medium ${reminder.enabled ? "text-foreground" : "text-muted-foreground"}`}>
+                      {language === "bs" ? reminder.nameBs : reminder.name}
+                    </p>
+                    {reminder.enabled && (
+                      <p className="text-xs text-muted-foreground">
+                        {reminder.minutesBefore} {language === "bs" ? "min prije" : "Min vorher"}
+                      </p>
                     )}
                   </div>
-                  <div>
-                    <h3 className={`font-semibold ${reminder.enabled ? "text-white" : "text-white/50"}`}>
-                      {language === "bs" ? reminder.nameBs : reminder.name}
-                    </h3>
-                    <p className="text-white/50 text-xs">
-                      {reminder.enabled 
-                        ? `${reminder.minutesBefore} ${language === "bs" ? "min prije" : "Min vorher"}`
-                        : (language === "bs" ? "Isključeno" : "Deaktiviert")}
-                    </p>
-                  </div>
                 </div>
-                <motion.button
-                  whileTap={{ scale: 0.9 }}
+                
+                {/* iOS Toggle */}
+                <button
                   onClick={() => toggleReminder(reminder.id)}
-                  className={`w-12 h-7 rounded-full transition-all ${
-                    reminder.enabled ? "bg-primary" : "bg-white/20"
+                  className={`w-[51px] h-[31px] rounded-full transition-colors ${
+                    reminder.enabled ? "bg-primary" : "bg-secondary"
                   }`}
                 >
                   <motion.div
-                    className="w-5 h-5 bg-white rounded-full shadow-md"
-                    animate={{ x: reminder.enabled ? 26 : 4 }}
+                    className="w-[27px] h-[27px] bg-white rounded-full shadow-md ml-[2px]"
+                    animate={{ x: reminder.enabled ? 20 : 0 }}
                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   />
-                </motion.button>
+                </button>
               </div>
 
               {/* Time Options */}
               {reminder.enabled && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  className="flex gap-2 pt-3 border-t border-white/10"
-                >
-                  <Clock className="w-4 h-4 text-white/50 shrink-0 mt-1" />
-                  <div className="flex flex-wrap gap-2">
+                <div className="px-4 pb-4 flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-muted-foreground" />
+                  <div className="flex gap-2 flex-wrap">
                     {timeOptions.map((mins) => (
-                      <motion.button
+                      <button
                         key={mins}
-                        whileTap={{ scale: 0.95 }}
                         onClick={() => updateMinutesBefore(reminder.id, mins)}
-                        className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                           reminder.minutesBefore === mins
-                            ? "bg-white text-primary"
-                            : "bg-white/10 text-white/70"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-secondary text-secondary-foreground"
                         }`}
                       >
-                        {mins} min
-                      </motion.button>
+                        {mins}m
+                      </button>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               )}
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Info Card */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-8 p-4 rounded-2xl bg-white/5 border border-white/10"
-        >
-          <div className="flex items-start gap-3">
-            <Check className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
-            <p className="text-white/60 text-sm">
-              {language === "bs" 
-                ? "Podsjetnici će se prikazati čak i kada je aplikacija zatvorena (zahtijeva nativnu aplikaciju)" 
-                : "Erinnerungen erscheinen auch wenn die App geschlossen ist (erfordert native App)"}
-            </p>
-          </div>
-        </motion.div>
+        {/* Info */}
+        <p className="mt-6 text-center text-xs text-muted-foreground/60 px-4">
+          {language === "bs" 
+            ? "Podsjetnici rade i kada je aplikacija zatvorena" 
+            : "Erinnerungen funktionieren auch bei geschlossener App"}
+        </p>
       </div>
     </div>
   );
