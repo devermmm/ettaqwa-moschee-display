@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, GraduationCap } from "lucide-react";
+import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 import SplashScreen from "@/components/SplashScreen";
@@ -218,7 +218,7 @@ const MobileApp = () => {
           )}
         </motion.div>
 
-        {/* Quick Actions - iOS Grid Style */}
+        {/* Quick Actions - iOS Native Style */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -228,102 +228,126 @@ const MobileApp = () => {
             {language === "bs" ? "Brzi pristup" : "Schnellzugriff"}
           </h3>
           
-          <div className="grid grid-cols-3 gap-3">
+          {/* Main Features - Large Cards */}
+          <div className="grid grid-cols-2 gap-3 mb-3">
             <Link to="/app/quran">
               <motion.div
                 whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
+                className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-4 shadow-lg shadow-emerald-500/20 aspect-square flex flex-col justify-between"
               >
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-2">
-                  <BookOpen className="w-6 h-6 text-emerald-600" />
+                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+                  <BookOpen className="w-6 h-6 text-white" />
                 </div>
-                <p className="font-medium text-foreground text-xs text-center">
-                  {language === "bs" ? "Kur'an" : "Quran"}
-                </p>
-              </motion.div>
-            </Link>
-
-            <Link to="/app/tajweed">
-              <motion.div
-                whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-2">
-                  <GraduationCap className="w-6 h-6 text-indigo-600" />
+                <div>
+                  <p className="font-bold text-white text-lg">
+                    {language === "bs" ? "Kur'an" : "Quran"}
+                  </p>
+                  <p className="text-white/70 text-xs">
+                    {language === "bs" ? "Čitaj i slušaj" : "Lesen & Hören"}
+                  </p>
                 </div>
-                <p className="font-medium text-foreground text-xs text-center">
-                  {language === "bs" ? "Tedžvid" : "Tajweed"}
-                </p>
               </motion.div>
             </Link>
 
             <Link to="/app/dua">
               <motion.div
                 whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
+                className="bg-gradient-to-br from-rose-500 to-rose-600 rounded-2xl p-4 shadow-lg shadow-rose-500/20 aspect-square flex flex-col justify-between"
               >
-                <div className="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center mb-2">
-                  <Heart className="w-6 h-6 text-rose-500" />
+                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+                  <Heart className="w-6 h-6 text-white" />
                 </div>
-                <p className="font-medium text-foreground text-xs text-center">
-                  {language === "bs" ? "Dove" : "Duas"}
-                </p>
+                <div>
+                  <p className="font-bold text-white text-lg">
+                    {language === "bs" ? "Dove" : "Duas"}
+                  </p>
+                  <p className="text-white/70 text-xs">
+                    {language === "bs" ? "Islamske dove" : "Islamische Gebete"}
+                  </p>
+                </div>
               </motion.div>
             </Link>
+          </div>
 
+          {/* Secondary Features - List Style */}
+          <div className="bg-card rounded-2xl border border-border overflow-hidden">
             <Link to="/app/qibla">
               <motion.div
-                whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
+                whileTap={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+                className="flex items-center px-4 py-3.5 border-b border-border/50"
               >
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-2">
-                  <Compass className="w-6 h-6 text-amber-600" />
+                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mr-3">
+                  <Compass className="w-5 h-5 text-amber-600" />
                 </div>
-                <p className="font-medium text-foreground text-xs text-center">
-                  {language === "bs" ? "Kible" : "Qibla"}
-                </p>
+                <div className="flex-1">
+                  <p className="font-medium text-foreground">
+                    {language === "bs" ? "Kible" : "Qibla"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {language === "bs" ? "Pronađi smjer Kible" : "Finde die Gebetsrichtung"}
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
               </motion.div>
             </Link>
 
             <Link to="/app/reminders">
               <motion.div
-                whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
+                whileTap={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+                className="flex items-center px-4 py-3.5 border-b border-border/50"
               >
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-2">
-                  <Bell className="w-6 h-6 text-blue-500" />
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mr-3">
+                  <Bell className="w-5 h-5 text-blue-500" />
                 </div>
-                <p className="font-medium text-foreground text-xs text-center">
-                  {language === "bs" ? "Podsjetnici" : "Erinnerung"}
-                </p>
+                <div className="flex-1">
+                  <p className="font-medium text-foreground">
+                    {language === "bs" ? "Podsjetnici" : "Erinnerungen"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {language === "bs" ? "Obavijesti za namaz" : "Gebetsbenachrichtigungen"}
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
               </motion.div>
             </Link>
 
             <Link to="/app/calendar">
               <motion.div
-                whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
+                whileTap={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+                className="flex items-center px-4 py-3.5 border-b border-border/50"
               >
-                <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-2">
-                  <Calendar className="w-6 h-6 text-purple-500" />
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center mr-3">
+                  <Calendar className="w-5 h-5 text-purple-500" />
                 </div>
-                <p className="font-medium text-foreground text-xs text-center">
-                  {language === "bs" ? "Kalendar" : "Kalender"}
-                </p>
+                <div className="flex-1">
+                  <p className="font-medium text-foreground">
+                    {language === "bs" ? "Kalendar" : "Kalender"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {language === "bs" ? "Islamski datumi" : "Islamische Daten"}
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
               </motion.div>
             </Link>
 
             <Link to="/app/settings">
               <motion.div
-                whileTap={{ scale: 0.98 }}
-                className="bg-card rounded-2xl p-3 border border-border shadow-sm flex flex-col items-center"
+                whileTap={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+                className="flex items-center px-4 py-3.5"
               >
-                <div className="w-12 h-12 rounded-2xl bg-gray-500/10 flex items-center justify-center mb-2">
-                  <Settings className="w-6 h-6 text-gray-500" />
+                <div className="w-10 h-10 rounded-xl bg-gray-500/10 flex items-center justify-center mr-3">
+                  <Settings className="w-5 h-5 text-gray-500" />
                 </div>
-                <p className="font-medium text-foreground text-xs text-center">
-                  {language === "bs" ? "Postavke" : "Einstellung"}
-                </p>
+                <div className="flex-1">
+                  <p className="font-medium text-foreground">
+                    {language === "bs" ? "Postavke" : "Einstellungen"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {language === "bs" ? "App konfiguracija" : "App-Konfiguration"}
+                  </p>
+                </div>
+                <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
               </motion.div>
             </Link>
           </div>
