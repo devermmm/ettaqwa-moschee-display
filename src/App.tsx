@@ -24,6 +24,7 @@ import AdminPanel from "./pages/AdminPanel";
 import AdminPostManagement from "./pages/AdminPostManagement";
 import AdminPrayerTimes from "./pages/AdminPrayerTimes";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Plakat from "./pages/Plakat";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -177,6 +178,10 @@ const App = () => (
                 <Footer />
               </>
             }
+          />
+          <Route
+            path="/plakat"
+            element={<Plakat />}
           />
           <Route
             path="*"
