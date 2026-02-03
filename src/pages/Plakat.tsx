@@ -1,8 +1,26 @@
 import logo from "@/assets/logo.png";
+import { Button } from "@/components/ui/button";
+import { Download, Printer } from "lucide-react";
 
 const Plakat = () => {
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950 flex items-center justify-center p-4 print:p-0 print:bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950 flex items-center justify-center p-4 print:p-0 print:bg-white relative">
+      
+      {/* Download/Print Buttons - Hidden when printing */}
+      <div className="fixed top-4 right-4 flex gap-2 z-50 print:hidden">
+        <Button 
+          onClick={handlePrint}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg"
+        >
+          <Printer className="w-4 h-4 mr-2" />
+          Drucken / PDF
+        </Button>
+      </div>
+
       {/* A4 Container */}
       <div className="w-[210mm] min-h-[297mm] bg-gradient-to-b from-emerald-50 via-white to-emerald-50 shadow-2xl print:shadow-none relative overflow-hidden">
         
