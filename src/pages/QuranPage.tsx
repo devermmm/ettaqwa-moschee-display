@@ -152,9 +152,13 @@ const QuranPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [verses, setVerses] = useState<Verse[]>([]);
-  const [currentVerseIndex, setCurrentVerseIndex] = useState(0);
+  const [currentVerseIndex, setCurrentVerseIndex] = useState<number>(-1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [playMode, setPlayMode] = useState<"surah" | "verse">("surah");
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const verseRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
+  const audioQueue = useRef<number[]>([]);
+  const isPlayingSequence = useRef(false);
 
   // Filter surahs based on search
   const filteredSurahs = allSurahs.filter(surah => 
@@ -167,8 +171,19 @@ const QuranPage = () => {
   useEffect(() => {
     if (selectedSurah) {
       fetchSurahVerses(selectedSurah.number);
+      setCurrentVerseIndex(-1);
     }
   }, [selectedSurah]);
+
+  // Auto-scroll to current verse
+  useEffect(() => {
+    if (currentVerseIndex >= 0 && verseRefs.current[currentVerseIndex]) {
+      verseRefs.current[currentVerseIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+  }, [currentVerseIndex]);
 
   const fetchSurahVerses = async (surahNumber: number) => {
     setIsLoading(true);
@@ -197,39 +212,6 @@ const QuranPage = () => {
     }
   };
 
-  const playAudio = async (surahNumber: number, verseNumber?: number) => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
-
-    // Using Mishary Rashid Alafasy recitation
-    const reciter = "ar.alafasy";
-    let audioUrl: string;
-
-    if (verseNumber) {
-      // Play single verse
-      const globalVerseNumber = getGlobalVerseNumber(surahNumber, verseNumber);
-      audioUrl = `https://cdn.islamic.network/quran/audio/128/${reciter}/${globalVerseNumber}.mp3`;
-    } else {
-      // Play full surah
-      audioUrl = `https://cdn.islamic.network/quran/audio-surah/128/${reciter}/${surahNumber}.mp3`;
-    }
-
-    audioRef.current = new Audio(audioUrl);
-    audioRef.current.onended = () => setIsPlaying(false);
-    audioRef.current.onerror = () => {
-      toast.error(language === "bs" ? "Audio nije dostupan" : "Audio nicht verfügbar");
-      setIsPlaying(false);
-    };
-    
-    try {
-      await audioRef.current.play();
-      setIsPlaying(true);
-    } catch (error) {
-      console.error("Error playing audio:", error);
-    }
-  };
-
   const getGlobalVerseNumber = (surahNumber: number, verseNumber: number): number => {
     // Calculate global verse number for audio API
     const versesBeforeSurah = allSurahs
@@ -238,15 +220,154 @@ const QuranPage = () => {
     return versesBeforeSurah + verseNumber;
   };
 
+  const playVerseByIndex = async (index: number) => {
+    if (!selectedSurah || index >= verses.length) {
+      setIsPlaying(false);
+      setCurrentVerseIndex(-1);
+      isPlayingSequence.current = false;
+      return;
+    }
+
+    const verse = verses[index];
+    setCurrentVerseIndex(index);
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+
+    const reciter = "ar.alafasy";
+    const globalVerseNumber = getGlobalVerseNumber(selectedSurah.number, verse.number);
+    const audioUrl = `https://cdn.islamic.network/quran/audio/128/${reciter}/${globalVerseNumber}.mp3`;
+
+    audioRef.current = new Audio(audioUrl);
+    
+    audioRef.current.onended = () => {
+      // Play next verse in sequence
+      if (isPlayingSequence.current && index + 1 < verses.length) {
+        playVerseByIndex(index + 1);
+      } else {
+        setIsPlaying(false);
+        setCurrentVerseIndex(-1);
+        isPlayingSequence.current = false;
+      }
+    };
+
+    audioRef.current.onerror = () => {
+      toast.error(language === "bs" ? "Audio nije dostupan" : "Audio nicht verfügbar");
+      setIsPlaying(false);
+      setCurrentVerseIndex(-1);
+      isPlayingSequence.current = false;
+    };
+
+    try {
+      await audioRef.current.play();
+      setIsPlaying(true);
+    } catch (error) {
+      console.error("Error playing audio:", error);
+      setIsPlaying(false);
+    }
+  };
+
+  const playSingleVerse = async (verseIndex: number) => {
+    isPlayingSequence.current = false;
+    setPlayMode("verse");
+    
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+
+    if (!selectedSurah) return;
+
+    const verse = verses[verseIndex];
+    setCurrentVerseIndex(verseIndex);
+
+    const reciter = "ar.alafasy";
+    const globalVerseNumber = getGlobalVerseNumber(selectedSurah.number, verse.number);
+    const audioUrl = `https://cdn.islamic.network/quran/audio/128/${reciter}/${globalVerseNumber}.mp3`;
+
+    audioRef.current = new Audio(audioUrl);
+    
+    audioRef.current.onended = () => {
+      setIsPlaying(false);
+      setCurrentVerseIndex(-1);
+    };
+
+    audioRef.current.onerror = () => {
+      toast.error(language === "bs" ? "Audio nije dostupan" : "Audio nicht verfügbar");
+      setIsPlaying(false);
+      setCurrentVerseIndex(-1);
+    };
+
+    try {
+      await audioRef.current.play();
+      setIsPlaying(true);
+    } catch (error) {
+      console.error("Error playing audio:", error);
+    }
+  };
+
+  const startFullSurahPlayback = () => {
+    if (!selectedSurah || verses.length === 0) return;
+    
+    isPlayingSequence.current = true;
+    setPlayMode("surah");
+    playVerseByIndex(0);
+  };
+
   const togglePlayPause = () => {
     if (isPlaying && audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
+      isPlayingSequence.current = false;
     } else if (selectedSurah) {
-      playAudio(selectedSurah.number);
+      if (currentVerseIndex >= 0 && currentVerseIndex < verses.length - 1) {
+        // Resume from current position
+        isPlayingSequence.current = true;
+        playVerseByIndex(currentVerseIndex);
+      } else {
+        // Start from beginning
+        startFullSurahPlayback();
+      }
     } else if (showAyatKursi) {
-      // Play Ayat al-Kursi (verse 255 of Al-Baqarah)
-      playAudio(2, 255);
+      playAyatKursi();
+    }
+  };
+
+  const playAyatKursi = async () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+
+    const reciter = "ar.alafasy";
+    const globalVerseNumber = getGlobalVerseNumber(2, 255);
+    const audioUrl = `https://cdn.islamic.network/quran/audio/128/${reciter}/${globalVerseNumber}.mp3`;
+
+    audioRef.current = new Audio(audioUrl);
+    audioRef.current.onended = () => setIsPlaying(false);
+    audioRef.current.onerror = () => {
+      toast.error(language === "bs" ? "Audio nije dostupan" : "Audio nicht verfügbar");
+      setIsPlaying(false);
+    };
+
+    try {
+      await audioRef.current.play();
+      setIsPlaying(true);
+    } catch (error) {
+      console.error("Error playing audio:", error);
+    }
+  };
+
+  const skipToNextVerse = () => {
+    if (currentVerseIndex < verses.length - 1) {
+      isPlayingSequence.current = true;
+      playVerseByIndex(currentVerseIndex + 1);
+    }
+  };
+
+  const skipToPreviousVerse = () => {
+    if (currentVerseIndex > 0) {
+      isPlayingSequence.current = true;
+      playVerseByIndex(currentVerseIndex - 1);
     }
   };
 
@@ -441,41 +562,104 @@ const QuranPage = () => {
             {/* Verses */}
             {!isLoading && verses.length > 0 && (
               <div className="px-4 space-y-3">
-                {verses.map((verse) => (
-                  <motion.div
-                    key={verse.number}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-card rounded-2xl border border-border overflow-hidden"
-                  >
-                    <div className="p-4">
-                      {/* Verse Number & Play Button */}
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm font-semibold text-primary">
-                          {verse.number}
-                        </span>
-                        <button
-                          onClick={() => playAudio(selectedSurah.number, verse.number)}
-                          className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center"
+                {verses.map((verse, index) => {
+                  const isCurrentVerse = currentVerseIndex === index;
+                  return (
+                    <motion.div
+                      key={verse.number}
+                      ref={(el) => { verseRefs.current[index] = el; }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ 
+                        opacity: 1, 
+                        y: 0,
+                        scale: isCurrentVerse ? 1.02 : 1,
+                      }}
+                      transition={{ 
+                        duration: 0.3,
+                        scale: { duration: 0.2 }
+                      }}
+                      className={`rounded-2xl border overflow-hidden transition-all duration-300 ${
+                        isCurrentVerse 
+                          ? "bg-gradient-to-br from-primary/10 to-accent/10 border-primary shadow-lg shadow-primary/20" 
+                          : "bg-card border-border"
+                      }`}
+                    >
+                      <div className="p-4">
+                        {/* Verse Number & Play Button */}
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-2">
+                            <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors ${
+                              isCurrentVerse 
+                                ? "bg-primary text-primary-foreground" 
+                                : "bg-primary/10 text-primary"
+                            }`}>
+                              {verse.number}
+                            </span>
+                            {isCurrentVerse && isPlaying && (
+                              <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="flex items-center gap-0.5"
+                              >
+                                {[1, 2, 3].map((bar) => (
+                                  <motion.div
+                                    key={bar}
+                                    className="w-1 bg-primary rounded-full"
+                                    animate={{
+                                      height: [8, 16, 8],
+                                    }}
+                                    transition={{
+                                      duration: 0.5,
+                                      repeat: Infinity,
+                                      delay: bar * 0.1,
+                                    }}
+                                  />
+                                ))}
+                              </motion.div>
+                            )}
+                          </div>
+                          <button
+                            onClick={() => playSingleVerse(index)}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                              isCurrentVerse 
+                                ? "bg-primary text-primary-foreground" 
+                                : "bg-primary/10 text-primary"
+                            }`}
+                          >
+                            {isCurrentVerse && isPlaying ? (
+                              <Pause className="w-4 h-4" />
+                            ) : (
+                              <Volume2 className="w-4 h-4" />
+                            )}
+                          </button>
+                        </div>
+                        
+                        {/* Arabic Text */}
+                        <motion.p 
+                          className={`text-xl font-arabic text-right leading-[2.2] mb-4 transition-colors ${
+                            isCurrentVerse ? "text-foreground" : "text-foreground"
+                          }`}
+                          animate={{
+                            textShadow: isCurrentVerse ? "0 0 20px rgba(var(--primary), 0.3)" : "none"
+                          }}
                         >
-                          <Volume2 className="w-4 h-4 text-primary" />
-                        </button>
+                          {verse.arabic}
+                        </motion.p>
+                        
+                        {/* Translation */}
+                        <div className={`pt-3 border-t transition-colors ${
+                          isCurrentVerse ? "border-primary/30" : "border-border"
+                        }`}>
+                          <p className={`text-sm leading-relaxed ${
+                            isCurrentVerse ? "text-foreground" : "text-muted-foreground"
+                          }`}>
+                            {verse.translation}
+                          </p>
+                        </div>
                       </div>
-                      
-                      {/* Arabic Text */}
-                      <p className="text-xl text-foreground font-arabic text-right leading-[2.2] mb-4">
-                        {verse.arabic}
-                      </p>
-                      
-                      {/* Translation */}
-                      <div className="pt-3 border-t border-border">
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          {verse.translation}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  );
+                })}
               </div>
             )}
           </motion.div>
@@ -490,21 +674,55 @@ const QuranPage = () => {
           className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-border"
         >
           <div className="safe-area-inset-bottom" />
+          
+          {/* Progress Bar */}
+          {selectedSurah && currentVerseIndex >= 0 && (
+            <div className="px-5 pt-3">
+              <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+                <span>{language === "bs" ? "Ajet" : "Vers"} {currentVerseIndex + 1}</span>
+                <span>{verses.length} {language === "bs" ? "ajeta" : "Verse"}</span>
+              </div>
+              <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
+                <motion.div 
+                  className="h-full bg-primary"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${((currentVerseIndex + 1) / verses.length) * 100}%` }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+            </div>
+          )}
+
           <div className="flex items-center justify-between px-5 py-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
                 <BookOpen className="w-6 h-6 text-primary-foreground" />
               </div>
-              <div>
-                <p className="font-medium text-foreground">
+              <div className="min-w-0">
+                <p className="font-medium text-foreground truncate">
                   {showAyatKursi ? "Ayat al-Kursi" : selectedSurah?.name}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Mishary Rashid Alafasy
+                  {currentVerseIndex >= 0 
+                    ? `${language === "bs" ? "Ajet" : "Vers"} ${currentVerseIndex + 1}` 
+                    : "Mishary Rashid Alafasy"}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            
+            {/* Playback Controls */}
+            <div className="flex items-center gap-1">
+              {selectedSurah && (
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  onClick={skipToPreviousVerse}
+                  disabled={currentVerseIndex <= 0}
+                  className="w-10 h-10 rounded-full flex items-center justify-center disabled:opacity-30"
+                >
+                  <SkipBack className="w-5 h-5 text-foreground" />
+                </motion.button>
+              )}
+              
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 onClick={togglePlayPause}
@@ -516,6 +734,17 @@ const QuranPage = () => {
                   <Play className="w-6 h-6 text-primary-foreground ml-1" />
                 )}
               </motion.button>
+
+              {selectedSurah && (
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  onClick={skipToNextVerse}
+                  disabled={currentVerseIndex >= verses.length - 1}
+                  className="w-10 h-10 rounded-full flex items-center justify-center disabled:opacity-30"
+                >
+                  <SkipForward className="w-5 h-5 text-foreground" />
+                </motion.button>
+              )}
             </div>
           </div>
         </motion.div>
