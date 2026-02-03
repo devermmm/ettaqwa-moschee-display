@@ -1,12 +1,29 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, ChevronRight, BookMarked } from "lucide-react";
+import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, ChevronRight, BookMarked, Newspaper } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 import { usePrayerNotifications } from "@/hooks/usePrayerNotifications";
+import { supabase } from "@/integrations/supabase/client";
 import SplashScreen from "@/components/SplashScreen";
 import logo from "@/assets/logo.png";
+import terrace1 from "@/assets/terrace-1.jpg";
+import terrace2 from "@/assets/terrace-2.jpg";
+import terrace3 from "@/assets/terrace-3.jpg";
+import terrace4 from "@/assets/terrace-4.jpg";
+import terrace5 from "@/assets/terrace-5.jpg";
+import terrace6 from "@/assets/terrace-6.jpg";
+
+const terraceImages = [terrace1, terrace2, terrace3, terrace4, terrace5, terrace6];
+
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+  image_url: string | null;
+  created_at: string;
+}
 
 // Glass Card Component - Reusable
 const GlassCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
@@ -20,6 +37,8 @@ const MobileApp = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [nextPrayerIndex, setNextPrayerIndex] = useState(0);
   const [showSplash, setShowSplash] = useState(true);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [currentTerraceIndex, setCurrentTerraceIndex] = useState(0);
 
   const [notificationsEnabled] = useState(() => 
     localStorage.getItem("prayer-notifications") === "true"
@@ -29,6 +48,27 @@ const MobileApp = () => {
   );
 
   const { prayerTimes: prayerTimesData } = usePrayerTimes(currentTime);
+
+  // Fetch news posts
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const { data } = await supabase
+        .from('posts')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(5);
+      if (data) setPosts(data);
+    };
+    fetchPosts();
+  }, []);
+
+  // Terrace slideshow timer
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTerraceIndex((prev) => (prev + 1) % terraceImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
   usePrayerNotifications(prayerTimesData, language, notificationsEnabled, adhanEnabled);
 
   const safePrayerTimesData = prayerTimesData || {
@@ -249,6 +289,101 @@ const MobileApp = () => {
             )}
           </GlassCard>
         </motion.div>
+
+        {/* Terrace Project Slideshow */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.12 }}
+        >
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+            {language === "bs" ? "Projekti" : "Projekte"}
+          </p>
+          <GlassCard className="overflow-hidden">
+            <div className="relative h-48">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentTerraceIndex}
+                  src={terraceImages[currentTerraceIndex]}
+                  alt="Terrasse Projekt"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </AnimatePresence>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <span className="inline-block px-2 py-1 bg-amber-500/90 text-white text-xs font-bold rounded-lg mb-2">
+                  {language === "bs" ? "Uskoro" : "Bald"}
+                </span>
+                <h3 className="text-white font-bold text-lg">
+                  {language === "bs" ? "Nova Terasa" : "Neue Terrasse"}
+                </h3>
+                <p className="text-white/70 text-sm">
+                  {language === "bs" ? "Uljepšavamo naš prostor" : "Wir verschönern unseren Raum"}
+                </p>
+              </div>
+              {/* Dots indicator */}
+              <div className="absolute bottom-4 right-4 flex gap-1.5">
+                {terraceImages.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      idx === currentTerraceIndex ? "bg-white scale-110" : "bg-white/40"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </GlassCard>
+        </motion.div>
+
+        {/* News Section */}
+        {posts.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.14 }}
+          >
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+              {language === "bs" ? "Novosti" : "Neuigkeiten"}
+            </p>
+            <div className="space-y-3">
+              {posts.slice(0, 3).map((post) => (
+                <GlassCard key={post.id} className="overflow-hidden">
+                  <div className="flex">
+                    {post.image_url && (
+                      <img
+                        src={post.image_url}
+                        alt={post.title}
+                        className="w-24 h-24 object-cover flex-shrink-0"
+                      />
+                    )}
+                    <div className="p-3 flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Newspaper className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(post.created_at).toLocaleDateString(
+                            language === "bs" ? "bs-BA" : "de-DE",
+                            { day: "numeric", month: "short" }
+                          )}
+                        </span>
+                      </div>
+                      <h3 className="font-semibold text-foreground text-sm line-clamp-2">
+                        {post.title}
+                      </h3>
+                      <p className="text-xs text-muted-foreground line-clamp-1 mt-1">
+                        {post.content}
+                      </p>
+                    </div>
+                  </div>
+                </GlassCard>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* Quick Access */}
         <motion.div
