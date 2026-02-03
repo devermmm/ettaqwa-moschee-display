@@ -58,15 +58,33 @@ const CalendarPage = () => {
     "رَمَضَان", "شَوَّال", "ذُو القَعْدَة", "ذُو الحِجَّة"
   ];
 
-  // Important Islamic dates for 2025
+  // Important Islamic dates for 2025/2026
   const islamicEvents: { [key: string]: { name: string; nameBs: string; hijriDate: string } } = {
+    // 2025 Events
     "2025-01-07": { name: "Rabi' al-Awwal Beginn", nameBs: "Početak Rebi'ul-evvela", hijriDate: "1 Rabi' al-Awwal 1446" },
-    "2025-03-01": { name: "Ramadan Beginn", nameBs: "Početak Ramazana", hijriDate: "1 Ramadan 1446" },
-    "2025-03-31": { name: "Eid al-Fitr (Bajram)", nameBs: "Ramazanski Bajram", hijriDate: "1 Shawwal 1446" },
-    "2025-06-07": { name: "Eid al-Adha (Kurban)", nameBs: "Kurban Bajram", hijriDate: "10 Dhu al-Hijjah 1446" },
+    "2025-02-28": { name: "Ramadan Beginn", nameBs: "Početak Ramazana", hijriDate: "1 Ramadan 1446" },
+    "2025-03-30": { name: "Eid al-Fitr (Ramazanski Bajram)", nameBs: "Ramazanski Bajram", hijriDate: "1 Shawwal 1446" },
+    "2025-03-31": { name: "2. Tag Eid al-Fitr", nameBs: "2. dan Ramazanskog Bajrama", hijriDate: "2 Shawwal 1446" },
+    "2025-04-01": { name: "3. Tag Eid al-Fitr", nameBs: "3. dan Ramazanskog Bajrama", hijriDate: "3 Shawwal 1446" },
+    "2025-06-06": { name: "Eid al-Adha (Kurban Bajram)", nameBs: "Kurban Bajram", hijriDate: "10 Dhu al-Hijjah 1446" },
+    "2025-06-07": { name: "2. Tag Eid al-Adha", nameBs: "2. dan Kurban Bajrama", hijriDate: "11 Dhu al-Hijjah 1446" },
+    "2025-06-08": { name: "3. Tag Eid al-Adha", nameBs: "3. dan Kurban Bajrama", hijriDate: "12 Dhu al-Hijjah 1446" },
+    "2025-06-09": { name: "4. Tag Eid al-Adha", nameBs: "4. dan Kurban Bajrama", hijriDate: "13 Dhu al-Hijjah 1446" },
     "2025-06-27": { name: "Islamisches Neujahr", nameBs: "Islamska Nova Godina", hijriDate: "1 Muharram 1447" },
     "2025-07-06": { name: "Ashura", nameBs: "Dan Ašure", hijriDate: "10 Muharram 1447" },
     "2025-09-05": { name: "Mawlid an-Nabi", nameBs: "Mevlud", hijriDate: "12 Rabi' al-Awwal 1447" },
+    // 2026 Events
+    "2026-02-17": { name: "Ramadan Beginn", nameBs: "Početak Ramazana", hijriDate: "1 Ramadan 1447" },
+    "2026-03-19": { name: "Eid al-Fitr (Ramazanski Bajram)", nameBs: "Ramazanski Bajram", hijriDate: "1 Shawwal 1447" },
+    "2026-03-20": { name: "2. Tag Eid al-Fitr", nameBs: "2. dan Ramazanskog Bajrama", hijriDate: "2 Shawwal 1447" },
+    "2026-03-21": { name: "3. Tag Eid al-Fitr", nameBs: "3. dan Ramazanskog Bajrama", hijriDate: "3 Shawwal 1447" },
+    "2026-05-27": { name: "Eid al-Adha (Kurban Bajram)", nameBs: "Kurban Bajram", hijriDate: "10 Dhu al-Hijjah 1447" },
+    "2026-05-28": { name: "2. Tag Eid al-Adha", nameBs: "2. dan Kurban Bajrama", hijriDate: "11 Dhu al-Hijjah 1447" },
+    "2026-05-29": { name: "3. Tag Eid al-Adha", nameBs: "3. dan Kurban Bajrama", hijriDate: "12 Dhu al-Hijjah 1447" },
+    "2026-05-30": { name: "4. Tag Eid al-Adha", nameBs: "4. dan Kurban Bajrama", hijriDate: "13 Dhu al-Hijjah 1447" },
+    "2026-06-17": { name: "Islamisches Neujahr", nameBs: "Islamska Nova Godina", hijriDate: "1 Muharram 1448" },
+    "2026-06-26": { name: "Ashura", nameBs: "Dan Ašure", hijriDate: "10 Muharram 1448" },
+    "2026-08-26": { name: "Mawlid an-Nabi", nameBs: "Mevlud", hijriDate: "12 Rabi' al-Awwal 1448" },
   };
 
   const getDaysInMonth = (date: Date) => {
@@ -151,7 +169,7 @@ const CalendarPage = () => {
             <ChevronLeft className="w-5 h-5" />
             <span>{language === "bs" ? "Nazad" : "Zurück"}</span>
           </button>
-          <h1 className="font-semibold text-foreground">
+          <h1 className="font-semibold text-foreground absolute left-1/2 -translate-x-1/2">
             {language === "bs" ? "Kalendar" : "Kalender"}
           </h1>
           <button
