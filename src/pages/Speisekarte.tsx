@@ -62,33 +62,32 @@ const Speisekarte = () => {
   ];
 
   const MenuCard = ({ menu }: { menu: typeof menusSeite1[0] }) => (
-    <div className="bg-white rounded-2xl shadow-lg border-2 border-emerald-200 p-5">
-      <div className="flex items-start gap-5">
-        {/* Menu Number */}
-        <div className="flex-shrink-0 w-14 h-14 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md">
-          <span className="text-white font-bold text-2xl">{menu.nummer}</span>
-        </div>
-        
-        {/* Content */}
-        <div className="flex-1">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h3 className="text-2xl font-bold text-emerald-800 mb-1">{menu.titel}</h3>
-              <p className="text-lg text-emerald-700 font-medium">{menu.hauptgericht}</p>
-            </div>
-            {/* Price */}
-            <div className="flex-shrink-0 bg-emerald-600 text-white px-5 py-2 rounded-xl text-2xl font-bold shadow-md">
-              {menu.preis}
-            </div>
+    <div className="bg-gradient-to-r from-emerald-50 to-white rounded-2xl shadow-lg border-2 border-emerald-300 overflow-hidden">
+      {/* Header Bar */}
+      <div className="bg-emerald-600 px-6 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+            <span className="text-emerald-700 font-bold text-xl">{menu.nummer}</span>
           </div>
-          
-          <div className="mt-2 pt-2 border-t border-emerald-100 flex items-center gap-4">
-            {menu.beilage && (
-              <p className="text-base text-emerald-600">
-                <span className="font-semibold">Prilog:</span> {menu.beilage}
-              </p>
-            )}
-            <p className="text-base text-emerald-500">{menu.extras}</p>
+          <h3 className="text-2xl font-bold text-white">{menu.titel}</h3>
+        </div>
+        <div className="bg-white text-emerald-700 px-5 py-1.5 rounded-full text-2xl font-bold">
+          {menu.preis}
+        </div>
+      </div>
+      
+      {/* Content */}
+      <div className="px-6 py-4">
+        <p className="text-xl text-emerald-800 font-semibold mb-3">{menu.hauptgericht}</p>
+        
+        <div className="flex flex-wrap gap-3">
+          {menu.beilage && (
+            <div className="bg-emerald-100 px-4 py-2 rounded-lg">
+              <span className="text-emerald-700 font-medium">Prilog: {menu.beilage}</span>
+            </div>
+          )}
+          <div className="bg-emerald-50 px-4 py-2 rounded-lg border border-emerald-200">
+            <span className="text-emerald-600">{menu.extras}</span>
           </div>
         </div>
       </div>
