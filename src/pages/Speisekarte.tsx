@@ -125,7 +125,6 @@ const Speisekarte = () => {
       </div>
       
       <p className="text-lg font-bold text-emerald-800">Afijet olsun! • Prijatno!</p>
-      <p className="text-base font-arabic text-emerald-600">بِسْمِ اللَّهِ • صِحَّة</p>
     </div>
   );
 
