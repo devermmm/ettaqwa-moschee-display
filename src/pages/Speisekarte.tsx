@@ -103,7 +103,7 @@ const Speisekarte = () => {
       </div>
       
       <h2 className="text-2xl font-bold text-emerald-700 mt-3">
-        🍽️ Ponuda za Ponijeti 🍽️
+        Ponuda za Ponijeti
       </h2>
     </div>
   );
@@ -113,7 +113,7 @@ const Speisekarte = () => {
       {showKinder && (
         <div className="bg-emerald-100 rounded-xl py-3 px-6 mb-4 inline-block">
           <p className="text-xl font-bold text-emerald-700">
-            👶 Dječija porcija: <span className="text-emerald-600">5€</span>
+            Dječija porcija: <span className="text-emerald-600">5€</span>
           </p>
         </div>
       )}
