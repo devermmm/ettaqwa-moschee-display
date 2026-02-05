@@ -100,7 +100,7 @@ const Speisekarte = () => {
       </div>
       
       <h2 className="text-2xl font-bold text-emerald-700 mt-3">
-        Ponuda za Ponijeti
+        Jelovnik
       </h2>
     </div>
   );
