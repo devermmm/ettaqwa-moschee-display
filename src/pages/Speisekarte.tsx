@@ -223,7 +223,7 @@ const Speisekarte = () => {
               ))}
             </div>
             
-            <PageFooter showKinder={true} />
+            <PageFooter />
           </div>
         </div>
       </div>
