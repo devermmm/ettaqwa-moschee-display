@@ -7,82 +7,35 @@ const Speisekarte = () => {
     window.print();
   };
 
-  const menusSeite1 = [
-    {
-      nummer: 1,
-      titel: "Gulaš Meni",
-      items: ["Gulaš", "Pire", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
-      preis: "17€",
-    },
-    {
-      nummer: 2,
-      titel: "Pileći Paprikaš",
-      items: ["Pileći paprikaš", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
-      preis: "17€",
-    },
-    {
-      nummer: 3,
-      titel: "Teleći Paprikaš",
-      items: ["Teleći paprikaš", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
-      preis: "17€",
-    },
+  const grillJela = [
+    { naziv: "Ćevapi 10 kom", preis: "12€" },
+    { naziv: "Punjena pljeskavica 200g + trapist", preis: "8€" },
+    { naziv: "Piletina batak i bjelo meso", preis: "8€" },
+    { naziv: "Kobasica roštilska + pommes i salata", preis: "8€" },
+    { naziv: "Teletina 200g + pommes ili riža", preis: "13€" },
   ];
 
-  const menusSeite2 = [
-    {
-      nummer: 4,
-      titel: "Piletina u Sosu",
-      items: ["Piletina u sosu", "Prilog: riža ili pire", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
-      preis: "17€",
-    },
-    {
-      nummer: 5,
-      titel: "Dinstana Teletina",
-      items: ["Dinstana teletina", "Prilog: riža ili pečeni krompir", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
-      preis: "20€",
-    },
-    {
-      nummer: 6,
-      titel: "Grill Plata",
-      items: ["Grill plata", "Prilog: pečeni krompir, riža ili pommes", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
-      preis: "25€",
-    },
+  const slatko = [
+    { naziv: "Baklava", preis: "2€" },
+    { naziv: "Tulumba", preis: "1,50€" },
+    { naziv: "Hurmašica", preis: "1,50€" },
   ];
 
-  const MenuCard = ({ menu }: { menu: typeof menusSeite1[0] }) => (
-    <div className="bg-gradient-to-r from-emerald-50 to-white rounded-2xl shadow-lg border-2 border-emerald-300 overflow-hidden">
-      {/* Header Bar */}
-      <div className="bg-emerald-600 px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-            <span className="text-emerald-700 font-bold text-xl">{menu.nummer}</span>
-          </div>
-          <h3 className="text-2xl font-bold text-white">{menu.titel}</h3>
-        </div>
-        <div className="bg-white text-emerald-700 px-5 py-1.5 rounded-full text-2xl font-bold">
-          {menu.preis}
-        </div>
-      </div>
-      
-      {/* Content - All Items */}
-      <div className="px-6 py-4">
-        <div className="flex flex-wrap gap-2">
-          {menu.items.map((item, index) => (
-            <div 
-              key={index} 
-              className={`px-4 py-2 rounded-lg ${
-                index === 0 
-                  ? 'bg-emerald-600 text-white font-semibold' 
-                  : item.startsWith('Prilog') 
-                    ? 'bg-emerald-100 text-emerald-700 font-medium'
-                    : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
-              }`}
-            >
-              {item}
-            </div>
-          ))}
-        </div>
-      </div>
+  const ostalePonude = [
+    { naziv: "Burek (tepsija)", preis: "15€" },
+    { naziv: "Čorba", preis: "3€" },
+  ];
+
+  const MenuItem = ({ item }: { item: { naziv: string; preis: string } }) => (
+    <div className="flex items-center justify-between bg-gradient-to-r from-emerald-50 to-white rounded-xl px-5 py-3 border-2 border-emerald-200 shadow-sm">
+      <span className="text-lg font-semibold text-emerald-800">{item.naziv}</span>
+      <span className="text-xl font-bold text-emerald-600 bg-white px-4 py-1 rounded-full border border-emerald-300">{item.preis}</span>
+    </div>
+  );
+
+  const SectionTitle = ({ title }: { title: string }) => (
+    <div className="bg-emerald-600 rounded-xl px-6 py-3 mb-4">
+      <h3 className="text-2xl font-bold text-white text-center">{title}</h3>
     </div>
   );
 
@@ -186,11 +139,14 @@ const Speisekarte = () => {
           <div className="relative z-10 h-full px-10 py-8 flex flex-col">
             <PageHeader />
             
-            {/* Menus */}
-            <div className="flex-1 flex flex-col gap-5 justify-center">
-              {menusSeite1.map((menu) => (
-                <MenuCard key={menu.nummer} menu={menu} />
-              ))}
+            {/* Grill Menu */}
+            <div className="flex-1 flex flex-col justify-center">
+              <SectionTitle title="Jela sa Roštila" />
+              <div className="flex flex-col gap-3">
+                {grillJela.map((item, index) => (
+                  <MenuItem key={index} item={item} />
+                ))}
+              </div>
             </div>
             
             <PageFooter />
@@ -216,11 +172,26 @@ const Speisekarte = () => {
           <div className="relative z-10 h-full px-10 py-8 flex flex-col">
             <PageHeader />
             
-            {/* Menus */}
-            <div className="flex-1 flex flex-col gap-5 justify-center">
-              {menusSeite2.map((menu) => (
-                <MenuCard key={menu.nummer} menu={menu} />
-              ))}
+            {/* Slatko Section */}
+            <div className="flex-1 flex flex-col justify-center gap-8">
+              <div>
+                <SectionTitle title="Slatko" />
+                <div className="flex flex-col gap-3">
+                  {slatko.map((item, index) => (
+                    <MenuItem key={index} item={item} />
+                  ))}
+                </div>
+              </div>
+              
+              {/* Ostale Ponude Section */}
+              <div>
+                <SectionTitle title="Ostale Ponude" />
+                <div className="flex flex-col gap-3">
+                  {ostalePonude.map((item, index) => (
+                    <MenuItem key={index} item={item} />
+                  ))}
+                </div>
+              </div>
             </div>
             
             <PageFooter />
