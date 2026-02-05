@@ -10,15 +10,15 @@ const Speisekarte = () => {
   const menusSeite1 = [
     {
       nummer: 1,
-      titel: "Gulaš Menü",
-      hauptgericht: "Hausgemachter Gulaš",
-      beilage: "Pire oder Makarone",
+      titel: "Gulaš Meni",
+      hauptgericht: "Domaći gulaš",
+      beilage: "Pire ili makaroni",
       extras: "Salata • Hljeb",
       preis: "9€",
     },
     {
       nummer: 2,
-      titel: "Paprikaš Menü",
+      titel: "Paprikaš Meni",
       hauptgericht: "Pileći ili teleći paprikaš",
       beilage: "",
       extras: "Salata • Hljeb",
@@ -27,8 +27,8 @@ const Speisekarte = () => {
     {
       nummer: 3,
       titel: "Dinstana Teletina",
-      hauptgericht: "Zarte dinstana teletina",
-      beilage: "Riža, Pire oder Krompir",
+      hauptgericht: "Nježna dinstana teletina",
+      beilage: "Riža, pire ili krompir",
       extras: "Salata • Hljeb",
       preis: "12€",
     },
@@ -38,15 +38,15 @@ const Speisekarte = () => {
     {
       nummer: 4,
       titel: "Piletina u Sosu",
-      hauptgericht: "Saftige Piletina u sosu",
-      beilage: "Pire, Riža oder Krompir",
+      hauptgericht: "Sočna piletina u sosu",
+      beilage: "Pire, riža ili krompir",
       extras: "Salata • Hljeb",
       preis: "9€",
     },
     {
       nummer: 5,
       titel: "Punjena Pljeskavica",
-      hauptgericht: "Gefüllte Pljeskavica",
+      hauptgericht: "Punjena pljeskavica",
       beilage: "Pire",
       extras: "Salata • Hljeb",
       preis: "9€",
@@ -54,8 +54,8 @@ const Speisekarte = () => {
     {
       nummer: 6,
       titel: "Pohovana Šnicla",
-      hauptgericht: "Knusprige pohovana šnicla",
-      beilage: "Pommes",
+      hauptgericht: "Hrskava pohovana šnicla",
+      beilage: "Pomfrit",
       extras: "Salata • Hljeb",
       preis: "8€",
     },
@@ -113,7 +113,7 @@ const Speisekarte = () => {
       {showKinder && (
         <div className="bg-emerald-100 rounded-xl py-3 px-6 mb-4 inline-block">
           <p className="text-xl font-bold text-emerald-700">
-            👶 Kinderportionen: <span className="text-emerald-600">5€</span>
+            👶 Dječija porcija: <span className="text-emerald-600">5€</span>
           </p>
         </div>
       )}
@@ -124,7 +124,7 @@ const Speisekarte = () => {
         <div className="w-12 h-[2px] bg-gradient-to-l from-transparent to-emerald-400" />
       </div>
       
-      <p className="text-lg font-bold text-emerald-800">Afijet olsun! • Guten Appetit!</p>
+      <p className="text-lg font-bold text-emerald-800">Afijet olsun! • Prijatno!</p>
       <p className="text-base font-arabic text-emerald-600">بِسْمِ اللَّهِ • صِحَّة</p>
     </div>
   );
