@@ -62,29 +62,27 @@ const Speisekarte = () => {
   ];
 
   const MenuCard = ({ menu }: { menu: typeof menusSeite1[0] }) => (
-    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border-2 border-emerald-200 relative overflow-hidden">
-      {/* Decorative corner */}
-      <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-emerald-500 to-emerald-600 rounded-bl-3xl flex items-start justify-end p-2">
-        <span className="text-white font-bold text-lg">#{menu.nummer}</span>
+    <div className="bg-white rounded-xl shadow-md border border-emerald-200 flex items-center gap-4 px-5 py-4">
+      {/* Menu Number */}
+      <div className="flex-shrink-0 w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center">
+        <span className="text-white font-bold text-xl">{menu.nummer}</span>
       </div>
       
       {/* Content */}
-      <div className="pr-12">
-        <h3 className="text-2xl font-bold text-emerald-800 mb-3">{menu.titel}</h3>
-        <p className="text-xl text-emerald-700 font-semibold mb-1">{menu.hauptgericht}</p>
+      <div className="flex-1 min-w-0">
+        <h3 className="text-xl font-bold text-emerald-800">{menu.titel}</h3>
+        <p className="text-base text-emerald-700">{menu.hauptgericht}</p>
         {menu.beilage && (
-          <p className="text-lg text-emerald-600 mb-1">
-            <span className="text-emerald-500">Prilog:</span> {menu.beilage}
+          <p className="text-sm text-emerald-600">
+            Prilog: {menu.beilage}
           </p>
         )}
-        <p className="text-emerald-500 text-base mb-4">{menu.extras}</p>
+        <p className="text-sm text-emerald-500">{menu.extras}</p>
       </div>
       
       {/* Price */}
-      <div className="flex justify-end">
-        <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-6 py-2 rounded-full text-2xl font-bold shadow-md">
-          {menu.preis}
-        </div>
+      <div className="flex-shrink-0 bg-emerald-600 text-white px-4 py-2 rounded-lg text-xl font-bold">
+        {menu.preis}
       </div>
     </div>
   );
