@@ -51,10 +51,6 @@ const Speisekarte = () => {
         <span className="text-emerald-600 text-xl">☪</span>
         <div className="w-16 h-[2px] bg-gradient-to-l from-transparent to-emerald-500" />
       </div>
-      
-      <h2 className="text-2xl font-bold text-emerald-700 mt-3">
-        Jelovnik
-      </h2>
     </div>
   );
 
