@@ -11,26 +11,20 @@ const Speisekarte = () => {
     {
       nummer: 1,
       titel: "Gulaš Meni",
-      hauptgericht: "Domaći gulaš",
-      beilage: "Pire ili makaroni",
-      extras: "Salata • Hljeb",
-      preis: "9€",
+      items: ["Gulaš", "Pire", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
+      preis: "17€",
     },
     {
       nummer: 2,
-      titel: "Paprikaš Meni",
-      hauptgericht: "Pileći ili teleći paprikaš",
-      beilage: "",
-      extras: "Salata • Hljeb",
-      preis: "8€",
+      titel: "Pileći Paprikaš",
+      items: ["Pileći paprikaš", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
+      preis: "17€",
     },
     {
       nummer: 3,
-      titel: "Dinstana Teletina",
-      hauptgericht: "Nježna dinstana teletina",
-      beilage: "Riža, pire ili krompir",
-      extras: "Salata • Hljeb",
-      preis: "12€",
+      titel: "Teleći Paprikaš",
+      items: ["Teleći paprikaš", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
+      preis: "17€",
     },
   ];
 
@@ -38,26 +32,20 @@ const Speisekarte = () => {
     {
       nummer: 4,
       titel: "Piletina u Sosu",
-      hauptgericht: "Sočna piletina u sosu",
-      beilage: "Pire, riža ili krompir",
-      extras: "Salata • Hljeb",
-      preis: "9€",
+      items: ["Piletina u sosu", "Prilog: riža ili pire", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
+      preis: "17€",
     },
     {
       nummer: 5,
-      titel: "Punjena Pljeskavica",
-      hauptgericht: "Punjena pljeskavica",
-      beilage: "Pire",
-      extras: "Salata • Hljeb",
-      preis: "9€",
+      titel: "Dinstana Teletina",
+      items: ["Dinstana teletina", "Prilog: riža ili pečeni krompir", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
+      preis: "20€",
     },
     {
       nummer: 6,
-      titel: "Pohovana Šnicla",
-      hauptgericht: "Hrskava pohovana šnicla",
-      beilage: "Pomfrit",
-      extras: "Salata • Hljeb",
-      preis: "8€",
+      titel: "Grill Plata",
+      items: ["Grill plata", "Prilog: pečeni krompir, riža ili pommes", "Salata", "Hljeb", "Burek", "Slatko", "Piće"],
+      preis: "25€",
     },
   ];
 
@@ -76,19 +64,23 @@ const Speisekarte = () => {
         </div>
       </div>
       
-      {/* Content */}
+      {/* Content - All Items */}
       <div className="px-6 py-4">
-        <p className="text-xl text-emerald-800 font-semibold mb-3">{menu.hauptgericht}</p>
-        
-        <div className="flex flex-wrap gap-3">
-          {menu.beilage && (
-            <div className="bg-emerald-100 px-4 py-2 rounded-lg">
-              <span className="text-emerald-700 font-medium">Prilog: {menu.beilage}</span>
+        <div className="flex flex-wrap gap-2">
+          {menu.items.map((item, index) => (
+            <div 
+              key={index} 
+              className={`px-4 py-2 rounded-lg ${
+                index === 0 
+                  ? 'bg-emerald-600 text-white font-semibold' 
+                  : item.startsWith('Prilog') 
+                    ? 'bg-emerald-100 text-emerald-700 font-medium'
+                    : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+              }`}
+            >
+              {item}
             </div>
-          )}
-          <div className="bg-emerald-50 px-4 py-2 rounded-lg border border-emerald-200">
-            <span className="text-emerald-600">{menu.extras}</span>
-          </div>
+          ))}
         </div>
       </div>
     </div>
