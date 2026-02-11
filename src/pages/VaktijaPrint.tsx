@@ -131,23 +131,47 @@ const VaktijaPrint = () => {
 
             {/* Footer */}
             <div style={{ flexShrink: 0 }}>
-              <div style={{ textAlign: "center", marginTop: "4px", backgroundColor: "#ecfdf5", border: "1px solid #a7f3d0", borderRadius: "4px", padding: "4px" }}>
+              <div style={{ textAlign: "center", marginTop: "3px", backgroundColor: "#ecfdf5", border: "1px solid #a7f3d0", borderRadius: "4px", padding: "3px" }}>
                 <p style={{ fontSize: "9px", fontWeight: "bold", color: "#064e3b", margin: 0 }}>
                   Bajram namaz se klanja u petak 20. marta u 06:37 h
                 </p>
               </div>
 
-              <p style={{ fontSize: "6.5px", color: "#6b7280", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 600, textAlign: "center", margin: "3px 0" }}>
+              <p style={{ fontSize: "6px", color: "#6b7280", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 600, textAlign: "center", margin: "2px 0" }}>
                 Zekatom i sadekatul-fitrom pomažete humanitarne i obrazovne ustanove islamske zajednice
               </p>
 
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 4px" }}>
-                <span style={{ fontSize: "24px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>2026.</span>
+                <span style={{ fontSize: "22px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>2026.</span>
                 <div style={{ textAlign: "center", flex: 1 }}>
-                  <p style={{ fontSize: "7.5px", color: "#374151", fontWeight: "bold", textTransform: "uppercase", margin: 0 }}>Bosnischer Kulturverein Et-Taqwa</p>
-                  <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0 }}>Voitgasse 21, 1220 Wien</p>
+                  <p style={{ fontSize: "8px", color: "#374151", fontWeight: "bold", textTransform: "uppercase", margin: 0 }}>Bosnischer Kulturverein Et-Taqwa</p>
+                  <p style={{ fontSize: "7px", color: "#6b7280", margin: 0 }}>Voitgasse 21, 1220 Wien • E-mail: dzematettaqwa@gmail.com</p>
                 </div>
-                <span style={{ fontSize: "24px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>1447.</span>
+                <span style={{ fontSize: "22px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>1447.</span>
+              </div>
+
+              <div style={{ marginTop: "3px", paddingTop: "3px", borderTop: "2px solid #065f46" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "3px", textAlign: "center" }}>
+                  <div>
+                    <p style={{ fontSize: "7.5px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat El-Ihsan</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>Leopoldgasse 10, 1020 Wien</p>
+                    <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0 }}>Tel: 06431274A600</p>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: "7.5px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat El-Ihsan</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>Troststraße 77</p>
+                    <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0 }}>Tel: 06811040160</p>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: "7.5px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Kulturni Centar</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>"Sandžačka Bosna"</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>Schöpfgasse 44, 1210 Wien</p>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: "7.5px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat "Sandžak"</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>Triester Str. 1, 11000 Wien</p>
+                  </div>
+                </div>
               </div>
             </div>
 
