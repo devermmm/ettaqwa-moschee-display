@@ -47,8 +47,8 @@ const VaktijaPrint = () => {
     <>
       <style>{`
         @media print {
-          @page { size: A4 portrait; margin: 5mm; }
-          body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          @page { size: A4 portrait; margin: 0; }
+          body { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; padding: 0; }
           .no-print { display: none !important; }
           .print-page { width: 210mm; height: 297mm; margin: 0; padding: 0; page-break-after: always; }
           #lovable-badge { display: none !important; }
