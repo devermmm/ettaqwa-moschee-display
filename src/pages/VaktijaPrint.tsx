@@ -31,7 +31,6 @@ const mubarekDani: Record<string, string> = {
   "3-10": "Ulazak u I'tikaf. Fethu-Mekke",
   "3-13": "Džuma",
   "3-16": "Lejletul-kadr",
-  "3-19": "Bajram namaz 06:37",
 };
 
 const VaktijaPrint = () => {
@@ -54,48 +53,48 @@ const VaktijaPrint = () => {
         </button>
       </div>
 
-      <div className="bg-white mx-auto overflow-hidden" style={{ width: "210mm", height: "297mm", fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
-        <div className="h-full m-[3mm] border-[2.5px] border-emerald-800 rounded-md p-[2mm] flex flex-col">
-          <div className="h-full border border-emerald-600 rounded p-[2mm] flex flex-col">
+      <div className="bg-white mx-auto overflow-hidden" style={{ width: "210mm", height: "297mm", fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", boxSizing: "border-box" }}>
+        <div style={{ height: "100%", margin: "3mm", border: "2.5px solid #065f46", borderRadius: "6px", padding: "2mm", display: "flex", flexDirection: "column", boxSizing: "border-box" }}>
+          <div style={{ flex: 1, border: "1px solid #059669", borderRadius: "4px", padding: "2mm", display: "flex", flexDirection: "column", boxSizing: "border-box", overflow: "hidden" }}>
 
-            {/* Compact header: logo + dua side by side */}
-            <div className="flex items-center gap-3 mb-1">
-              <img src={logo} alt="Et-Taqwa" className="h-14 w-14 flex-shrink-0" />
-              <div className="text-center flex-1">
-                <p className="text-[15px] leading-tight font-bold text-gray-800" style={{ fontFamily: "'Amiri', 'Traditional Arabic', serif", direction: "rtl" }}>
+            {/* Header */}
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "2px", flexShrink: 0 }}>
+              <img src={logo} alt="Et-Taqwa" style={{ height: "50px", width: "50px", flexShrink: 0 }} />
+              <div style={{ textAlign: "center", flex: 1 }}>
+                <p style={{ fontSize: "14px", fontWeight: "bold", color: "#1f2937", fontFamily: "'Amiri', 'Traditional Arabic', serif", direction: "rtl", lineHeight: 1.2 }}>
                   ذَهَبَ الظَّمَأُ وَابْتَلَّتِ العُرُوقُ وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللّٰهُ
                 </p>
-                <p className="text-[7.5px] text-gray-600 italic leading-tight">
+                <p style={{ fontSize: "7px", color: "#4b5563", fontStyle: "italic" }}>
                   Zehebez-zameu vebtelletil-'uruku ve sebetel-edžru inšaAllah.
                 </p>
-                <p className="text-[6.5px] text-gray-500 leading-tight">
+                <p style={{ fontSize: "6px", color: "#6b7280" }}>
                   Nestala je žeđ, natopile su se žile i nagrada je osigurana, ako Allah Uzvišeni htjedne.
                 </p>
               </div>
-              <div className="w-14 flex-shrink-0" />
+              <div style={{ width: "50px", flexShrink: 0 }} />
             </div>
 
-            {/* Title - compact */}
-            <div className="text-center mb-1">
-              <h1 className="text-xl font-black text-emerald-800 tracking-wide leading-none">VAKTIJA</h1>
-              <p className="text-[9px] text-gray-700 font-semibold">2026/1447. (19. februar - 19. mart)</p>
+            {/* Title */}
+            <div style={{ textAlign: "center", marginBottom: "3px", flexShrink: 0 }}>
+              <h1 style={{ fontSize: "18px", fontWeight: 900, color: "#065f46", letterSpacing: "2px", lineHeight: 1, margin: 0 }}>VAKTIJA</h1>
+              <p style={{ fontSize: "8px", color: "#374151", fontWeight: 600, margin: 0 }}>2026/1447. (19. februar - 19. mart)</p>
             </div>
 
             {/* Table */}
-            <div>
-              <table className="w-full border-collapse text-[9.5px] leading-none">
+            <div style={{ flex: 1, overflow: "hidden" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "9px", height: "100%", tableLayout: "fixed" }}>
                 <thead>
-                  <tr className="bg-emerald-800 text-white text-[8px]">
-                    <th className="border border-emerald-700 px-0.5 py-1 font-bold text-center" style={{width:"4%"}}>R.</th>
-                    <th className="border border-emerald-700 px-0.5 py-1 font-bold text-center" style={{width:"4%"}}></th>
-                    <th className="border border-emerald-700 px-0.5 py-1 font-bold text-center" style={{width:"4%"}}>DAT.</th>
-                    <th className="border border-emerald-700 px-1 py-1 font-bold text-left" style={{width:"24%"}}>MUBAREK DANI I NOĆI / PODACI</th>
-                    <th className="border border-emerald-700 px-0.5 py-1 font-bold text-center" style={{width:"9%"}}>ZORA /<br/>IMSAK</th>
-                    <th className="border border-emerald-700 px-0.5 py-1 font-bold text-center" style={{width:"9%"}}>IZL.<br/>SUNCA</th>
-                    <th className="border border-emerald-700 px-0.5 py-1 font-bold text-center" style={{width:"9%"}}>PODNE</th>
-                    <th className="border border-emerald-700 px-0.5 py-1 font-bold text-center" style={{width:"9%"}}>IKINDIJA</th>
-                    <th className="border border-emerald-700 px-0.5 py-1 font-bold text-center" style={{width:"9%"}}>AKŠAM /<br/>IFTAR</th>
-                    <th className="border border-emerald-700 px-0.5 py-1 font-bold text-center" style={{width:"9%"}}>JACIJA /<br/>TERAV.</th>
+                  <tr style={{ backgroundColor: "#065f46", color: "white", fontSize: "7.5px" }}>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "4%" }}>R.</th>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "4%" }}></th>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "4%" }}>DAT.</th>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "left", width: "24%", paddingLeft: "4px" }}>MUBAREK DANI I NOĆI<br/>I DRUGI PODACI</th>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>ZORA /<br/>IMSAK</th>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>IZLAZAK<br/>SUNCA</th>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>PODNE</th>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>IKINDIJA</th>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>AKŠAM /<br/>IFTAR</th>
+                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>JACIJA /<br/>TERAVIJA</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -104,25 +103,25 @@ const VaktijaPrint = () => {
                     const eventKey = `${day.gMonth}-${day.gDay}`;
                     const event = mubarekDani[eventKey];
                     const isFriday = day.dayName === "Pe";
-                    const isSpecial = eventKey === "3-19" || eventKey === "2-19";
+                    const isFirst = eventKey === "2-19";
+
+                    const bg = isFirst ? "#fef3c7" : isFriday ? "#ecfdf5" : day.ramazanDay % 2 === 0 ? "#f9fafb" : "#ffffff";
+                    const fw = isFirst || isFriday ? "600" : "normal";
 
                     return (
-                      <tr
-                        key={day.ramazanDay}
-                        className={`${isSpecial ? "bg-amber-100 font-bold" : isFriday ? "bg-emerald-50 font-semibold" : day.ramazanDay % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
-                      >
-                        <td className="border border-gray-300 px-0.5 py-[2.5px] text-center font-bold text-emerald-800">{day.ramazanDay}</td>
-                        <td className={`border border-gray-300 px-0.5 py-[2.5px] text-center ${isFriday ? "text-emerald-700 font-bold" : "text-gray-600"}`}>{day.dayName}</td>
-                        <td className="border border-gray-300 px-0.5 py-[2.5px] text-center font-semibold">{day.gDay}</td>
-                        <td className={`border border-gray-300 px-1 py-[2.5px] text-left text-[8.5px] ${event ? "text-emerald-800 font-semibold" : "text-gray-400"}`}>
+                      <tr key={day.ramazanDay} style={{ backgroundColor: bg, fontWeight: fw }}>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontWeight: "bold", color: "#065f46" }}>{day.ramazanDay}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", color: isFriday ? "#047857" : "#6b7280", fontWeight: isFriday ? "bold" : "normal" }}>{day.dayName}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontWeight: 600 }}>{day.gDay}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "left", paddingLeft: "4px", fontSize: "8px", color: event ? "#065f46" : "#d1d5db", fontWeight: event ? 600 : "normal" }}>
                           {event || ""}
                         </td>
-                        <td className="border border-gray-300 px-0.5 py-[2.5px] text-center font-mono text-emerald-900 font-bold">{pt?.fajr || ""}</td>
-                        <td className="border border-gray-300 px-0.5 py-[2.5px] text-center font-mono text-gray-600">{pt?.sunrise || ""}</td>
-                        <td className="border border-gray-300 px-0.5 py-[2.5px] text-center font-mono">{pt?.dhuhr || ""}</td>
-                        <td className="border border-gray-300 px-0.5 py-[2.5px] text-center font-mono">{pt?.asr || ""}</td>
-                        <td className="border border-gray-300 px-0.5 py-[2.5px] text-center font-mono text-emerald-900 font-bold">{pt?.maghrib || ""}</td>
-                        <td className="border border-gray-300 px-0.5 py-[2.5px] text-center font-mono">{pt?.isha || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#064e3b", fontWeight: "bold" }}>{pt?.fajr || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#6b7280" }}>{pt?.sunrise || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace" }}>{pt?.dhuhr || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace" }}>{pt?.asr || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#064e3b", fontWeight: "bold" }}>{pt?.maghrib || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace" }}>{pt?.isha || ""}</td>
                       </tr>
                     );
                   })}
@@ -130,44 +129,49 @@ const VaktijaPrint = () => {
               </table>
             </div>
 
-            {/* Bajram + Sadaka in one line */}
-            <div className="text-center mt-1 bg-emerald-50 border border-emerald-300 rounded py-1 px-1">
-              <p className="text-[9px] font-bold text-emerald-900">
-                Bajram namaz se klanja u petak 20. marta u 06:37 h
-              </p>
-            </div>
-            <p className="text-[7px] text-gray-600 uppercase tracking-wider font-semibold text-center mt-0.5">
-              Zekatom i sadekatul-fitrom pomažete humanitarne i obrazovne ustanove islamske zajednice
-            </p>
-
-            {/* Year + Info */}
-            <div className="flex items-center justify-between mt-1 px-1">
-              <span className="text-2xl font-black text-emerald-800 leading-none">2026.</span>
-              <div className="text-center flex-1">
-                <p className="text-[8px] text-gray-700 font-bold uppercase">Bosnischer Kulturverein Et-Taqwa</p>
-                <p className="text-[7px] text-gray-500">Voitgasse 21, 1220 Wien · dzematettaqwa@gmail.com</p>
+            {/* Footer */}
+            <div style={{ flexShrink: 0 }}>
+              <div style={{ textAlign: "center", marginTop: "4px", backgroundColor: "#ecfdf5", border: "1px solid #a7f3d0", borderRadius: "4px", padding: "4px" }}>
+                <p style={{ fontSize: "9px", fontWeight: "bold", color: "#064e3b", margin: 0 }}>
+                  Bajram namaz se klanja u petak 20. marta u 06:37 h
+                </p>
               </div>
-              <span className="text-2xl font-black text-emerald-800 leading-none">1447.</span>
-            </div>
 
-            {/* Mosques */}
-            <div className="mt-1 pt-1 border-t-2 border-emerald-800">
-              <div className="grid grid-cols-4 gap-1 text-center">
-                <div>
-                  <p className="text-[7px] font-bold text-emerald-900 uppercase">Džemat El-Ihsan</p>
-                  <p className="text-[6px] text-gray-600">Leopoldgasse 10, 1020 Wien</p>
+              <p style={{ fontSize: "6.5px", color: "#6b7280", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 600, textAlign: "center", margin: "3px 0" }}>
+                Zekatom i sadekatul-fitrom pomažete humanitarne i obrazovne ustanove islamske zajednice
+              </p>
+
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 4px" }}>
+                <span style={{ fontSize: "24px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>2026.</span>
+                <div style={{ textAlign: "center", flex: 1 }}>
+                  <p style={{ fontSize: "7.5px", color: "#374151", fontWeight: "bold", textTransform: "uppercase", margin: 0 }}>Bosnischer Kulturverein Et-Taqwa</p>
+                  <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0 }}>Voitgasse 21, 1220 Wien</p>
+                  <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0 }}>E-mail: dzematettaqwa@gmail.com</p>
                 </div>
-                <div>
-                  <p className="text-[7px] font-bold text-emerald-900 uppercase">Džemat El-Ihsan</p>
-                  <p className="text-[6px] text-gray-600">Troststraße 77, Wien</p>
-                </div>
-                <div>
-                  <p className="text-[7px] font-bold text-emerald-900 uppercase">Kulturni Centar</p>
-                  <p className="text-[6px] text-gray-600">"Sandžačka Bosna" Schöpfg. 44</p>
-                </div>
-                <div>
-                  <p className="text-[7px] font-bold text-emerald-900 uppercase">Džemat "Sandžak"</p>
-                  <p className="text-[6px] text-gray-600">Triester Str. 1, Wien</p>
+                <span style={{ fontSize: "24px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>1447.</span>
+              </div>
+
+              <div style={{ marginTop: "4px", paddingTop: "4px", borderTop: "2px solid #065f46" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "4px", textAlign: "center" }}>
+                  <div>
+                    <p style={{ fontSize: "7px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat El-Ihsan</p>
+                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>Leopoldgasse 10, 1020 Wien</p>
+                    <p style={{ fontSize: "6px", color: "#9ca3af", margin: 0 }}>Tel: 06431274A600</p>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: "7px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat El-Ihsan</p>
+                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>Troststraße 77 oder Ferbungasse</p>
+                    <p style={{ fontSize: "6px", color: "#9ca3af", margin: 0 }}>Tel: 06811040160</p>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: "7px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Kulturni Centar</p>
+                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>"Sandžačka Bosna"</p>
+                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>Schöpfgasse 44, 1210 Wien</p>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: "7px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat "Sandžak"</p>
+                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>Triester Str. 1, 11000 Wien</p>
+                  </div>
                 </div>
               </div>
             </div>
