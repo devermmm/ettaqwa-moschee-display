@@ -26,6 +26,7 @@ import AdminPrayerTimes from "./pages/AdminPrayerTimes";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Plakat from "./pages/Plakat";
 import Speisekarte from "./pages/Speisekarte";
+import VaktijaPrint from "./pages/VaktijaPrint";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -187,6 +188,10 @@ const App = () => (
           <Route
             path="/karte"
             element={<Speisekarte />}
+          />
+          <Route
+            path="/kalender"
+            element={<VaktijaPrint />}
           />
           <Route
             path="*"
