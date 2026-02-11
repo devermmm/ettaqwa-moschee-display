@@ -163,7 +163,7 @@ const VaktijaPrint = () => {
             <div style={{ flexShrink: 0, marginTop: "3px" }}>
               {/* Bajram */}
               <div style={{ textAlign: "center", backgroundColor: "#ecfdf5", border: "1.5px solid #6ee7b7", borderRadius: "4px", padding: "4px 8px" }}>
-                <p style={{ fontSize: "14px", fontWeight: 700, color: "#064e3b", margin: 0, letterSpacing: "0.3px" }}>
+                <p style={{ fontSize: "17px", fontWeight: 700, color: "#064e3b", margin: 0, letterSpacing: "0.3px" }}>
                   Bajram namaz se klanja u petak 20. marta u 06:37 h
                 </p>
               </div>
