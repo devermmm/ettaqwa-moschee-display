@@ -187,23 +187,23 @@ const VaktijaPrint = () => {
               <div style={{ borderTop: "2px solid #065f46", paddingTop: "4px" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "8px", textAlign: "center" }}>
                   <div>
-                    <p style={{ fontSize: "10.5px", fontWeight: 700, color: "#064e3b", textTransform: "uppercase", margin: 0, lineHeight: 1.3 }}>Džemat El-Ihsan</p>
+                    <p style={{ fontSize: "10.5px", fontWeight: 700, color: "#064e3b", textTransform: "uppercase", margin: 0, lineHeight: 1.3 }}>Džemat El-Iman</p>
                     <p style={{ fontSize: "9.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>Leopoldgasse 10, 1020 Wien</p>
-                    <p style={{ fontSize: "9.5px", color: "#6b7280", margin: 0, lineHeight: 1.3 }}>Tel: 06431274A600</p>
+                    <p style={{ fontSize: "9.5px", color: "#6b7280", margin: 0, lineHeight: 1.3 }}>Tel: 004312766660</p>
                   </div>
                   <div>
                     <p style={{ fontSize: "10.5px", fontWeight: 700, color: "#064e3b", textTransform: "uppercase", margin: 0, lineHeight: 1.3 }}>Džemat El-Ihsan</p>
-                    <p style={{ fontSize: "9.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>Troststraße 77</p>
-                    <p style={{ fontSize: "9.5px", color: "#6b7280", margin: 0, lineHeight: 1.3 }}>Tel: 06811040160</p>
+                    <p style={{ fontSize: "9.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>Troststraße 77, Ecke Ferkomgasse</p>
+                    <p style={{ fontSize: "9.5px", color: "#6b7280", margin: 0, lineHeight: 1.3 }}>Tel: 068110401609</p>
                   </div>
                   <div>
                     <p style={{ fontSize: "10.5px", fontWeight: 700, color: "#064e3b", textTransform: "uppercase", margin: 0, lineHeight: 1.3 }}>Kulturni Centar</p>
-                    <p style={{ fontSize: "9.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>"Sandžačka Bosna"</p>
-                    <p style={{ fontSize: "9.5px", color: "#374151", margin: 0, lineHeight: 1.3 }}>Schöpfgasse 44, 1210 Wien</p>
+                    <p style={{ fontSize: "9.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>"Sandžak Bosna"</p>
+                    <p style={{ fontSize: "9.5px", color: "#374151", margin: 0, lineHeight: 1.3 }}>Scheydgasse 44, 1210 Wien</p>
                   </div>
                   <div>
                     <p style={{ fontSize: "10.5px", fontWeight: 700, color: "#064e3b", textTransform: "uppercase", margin: 0, lineHeight: 1.3 }}>Džemat "Sandžak"</p>
-                    <p style={{ fontSize: "9.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>Triester Str. 1, 11000 Wien</p>
+                    <p style={{ fontSize: "9.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>Triester Str. 1, 1100 Wien</p>
                   </div>
                 </div>
               </div>
