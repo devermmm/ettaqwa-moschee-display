@@ -53,48 +53,79 @@ const VaktijaPrint = () => {
         </button>
       </div>
 
-      <div className="bg-white mx-auto overflow-hidden" style={{ width: "210mm", height: "297mm", fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", boxSizing: "border-box" }}>
-        <div style={{ height: "100%", margin: "3mm", border: "2.5px solid #065f46", borderRadius: "6px", padding: "2mm", display: "flex", flexDirection: "column", boxSizing: "border-box" }}>
-          <div style={{ flex: 1, border: "1px solid #059669", borderRadius: "4px", padding: "2mm", display: "flex", flexDirection: "column", boxSizing: "border-box", overflow: "hidden" }}>
+      <div style={{
+        width: "210mm",
+        height: "297mm",
+        background: "white",
+        margin: "0 auto",
+        overflow: "hidden",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        boxSizing: "border-box",
+        padding: "5mm",
+        display: "flex",
+        flexDirection: "column",
+      }}>
+        {/* Outer decorative border */}
+        <div style={{
+          flex: 1,
+          border: "2.5px solid #065f46",
+          borderRadius: "8px",
+          padding: "3mm",
+          display: "flex",
+          flexDirection: "column",
+          boxSizing: "border-box",
+          overflow: "hidden",
+        }}>
+          {/* Inner border */}
+          <div style={{
+            flex: 1,
+            border: "1px solid #10b981",
+            borderRadius: "5px",
+            padding: "3mm",
+            display: "flex",
+            flexDirection: "column",
+            boxSizing: "border-box",
+            overflow: "hidden",
+          }}>
 
-            {/* Header */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "2px", flexShrink: 0 }}>
-              <img src={logo} alt="Et-Taqwa" style={{ height: "50px", width: "50px", flexShrink: 0 }} />
+            {/* ===== HEADER ===== */}
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px", flexShrink: 0 }}>
+              <img src={logo} alt="Et-Taqwa" style={{ height: "48px", width: "48px", flexShrink: 0, borderRadius: "4px" }} />
               <div style={{ textAlign: "center", flex: 1 }}>
-                <p style={{ fontSize: "14px", fontWeight: "bold", color: "#1f2937", fontFamily: "'Amiri', 'Traditional Arabic', serif", direction: "rtl", lineHeight: 1.2 }}>
+                <p style={{ fontSize: "15px", fontWeight: "bold", color: "#1f2937", fontFamily: "'Amiri', 'Traditional Arabic', serif", direction: "rtl", lineHeight: 1.3, margin: 0 }}>
                   ذَهَبَ الظَّمَأُ وَابْتَلَّتِ العُرُوقُ وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللّٰهُ
                 </p>
-                <p style={{ fontSize: "7px", color: "#4b5563", fontStyle: "italic" }}>
+                <p style={{ fontSize: "7.5px", color: "#4b5563", fontStyle: "italic", margin: "1px 0 0 0" }}>
                   Zehebez-zameu vebtelletil-'uruku ve sebetel-edžru inšaAllah.
                 </p>
-                <p style={{ fontSize: "6px", color: "#6b7280" }}>
+                <p style={{ fontSize: "6.5px", color: "#6b7280", margin: "1px 0 0 0" }}>
                   Nestala je žeđ, natopile su se žile i nagrada je osigurana, ako Allah Uzvišeni htjedne.
                 </p>
               </div>
-              <div style={{ width: "50px", flexShrink: 0 }} />
+              <div style={{ width: "48px", flexShrink: 0 }} />
             </div>
 
-            {/* Title */}
-            <div style={{ textAlign: "center", marginBottom: "3px", flexShrink: 0 }}>
-              <h1 style={{ fontSize: "18px", fontWeight: 900, color: "#065f46", letterSpacing: "2px", lineHeight: 1, margin: 0 }}>VAKTIJA</h1>
-              <p style={{ fontSize: "8px", color: "#374151", fontWeight: 600, margin: 0 }}>2026/1447. (19. februar - 19. mart)</p>
+            {/* ===== TITLE ===== */}
+            <div style={{ textAlign: "center", marginBottom: "4px", flexShrink: 0 }}>
+              <h1 style={{ fontSize: "20px", fontWeight: 900, color: "#065f46", letterSpacing: "3px", lineHeight: 1, margin: 0 }}>VAKTIJA</h1>
+              <p style={{ fontSize: "8.5px", color: "#374151", fontWeight: 600, margin: "2px 0 0 0" }}>RAMAZAN 2026 / 1447. h. &nbsp;(19. februar – 19. mart)</p>
             </div>
 
-            {/* Table */}
-            <div style={{ flex: 1, overflow: "hidden" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "9px", height: "100%", tableLayout: "fixed" }}>
+            {/* ===== TABLE ===== */}
+            <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "9.5px", flex: 1, tableLayout: "fixed" }}>
                 <thead>
                   <tr style={{ backgroundColor: "#065f46", color: "white", fontSize: "7.5px" }}>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "4%" }}>R.</th>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "4%" }}></th>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "4%" }}>DAT.</th>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "left", width: "24%", paddingLeft: "4px" }}>MUBAREK DANI I NOĆI<br/>I DRUGI PODACI</th>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>ZORA /<br/>IMSAK</th>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>IZLAZAK<br/>SUNCA</th>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>PODNE</th>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>IKINDIJA</th>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>AKŠAM /<br/>IFTAR</th>
-                    <th style={{ border: "1px solid #047857", padding: "2px 1px", fontWeight: "bold", textAlign: "center", width: "9%" }}>JACIJA /<br/>TERAVIJA</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "center", width: "4%" }}>R.</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "center", width: "4.5%" }}>DAN</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "center", width: "4%" }}>DAT.</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "left", width: "23%", paddingLeft: "5px" }}>MUBAREK DANI I NOĆI<br/>I DRUGI PODACI</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "center", width: "9.5%" }}>ZORA /<br/>IMSAK</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "center", width: "9.5%" }}>IZLAZAK<br/>SUNCA</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "center", width: "9%" }}>PODNE</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "center", width: "9%" }}>IKINDIJA</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "center", width: "9.5%" }}>AKŠAM /<br/>IFTAR</th>
+                    <th style={{ border: "1px solid #047857", padding: "3px 1px", fontWeight: 700, textAlign: "center", width: "9%" }}>JACIJA /<br/>TERAVIJA</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -105,23 +136,22 @@ const VaktijaPrint = () => {
                     const isFriday = day.dayName === "Pe";
                     const isFirst = eventKey === "2-19";
 
-                    const bg = isFirst ? "#fef3c7" : isFriday ? "#ecfdf5" : day.ramazanDay % 2 === 0 ? "#f9fafb" : "#ffffff";
-                    const fw = isFirst || isFriday ? "600" : "normal";
+                    const bg = isFirst ? "#fef9c3" : isFriday ? "#ecfdf5" : day.ramazanDay % 2 === 0 ? "#f8fafc" : "#ffffff";
 
                     return (
-                      <tr key={day.ramazanDay} style={{ backgroundColor: bg, fontWeight: fw }}>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontWeight: "bold", color: "#065f46" }}>{day.ramazanDay}</td>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", color: isFriday ? "#047857" : "#6b7280", fontWeight: isFriday ? "bold" : "normal" }}>{day.dayName}</td>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontWeight: 600 }}>{day.gDay}</td>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "left", paddingLeft: "4px", fontSize: "8px", color: event ? "#065f46" : "#d1d5db", fontWeight: event ? 600 : "normal" }}>
-                          {event || ""}
+                      <tr key={day.ramazanDay} style={{ backgroundColor: bg }}>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontWeight: 700, color: "#065f46", verticalAlign: "middle" }}>{day.ramazanDay}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", color: isFriday ? "#047857" : "#4b5563", fontWeight: isFriday ? 700 : 500, verticalAlign: "middle" }}>{day.dayName}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontWeight: 600, verticalAlign: "middle" }}>{day.gDay}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "left", paddingLeft: "5px", fontSize: "8px", color: event ? "#065f46" : "transparent", fontWeight: event ? 600 : 400, verticalAlign: "middle" }}>
+                          {event || "–"}
                         </td>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#064e3b", fontWeight: "bold" }}>{pt?.fajr || ""}</td>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#6b7280" }}>{pt?.sunrise || ""}</td>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace" }}>{pt?.dhuhr || ""}</td>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace" }}>{pt?.asr || ""}</td>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#064e3b", fontWeight: "bold" }}>{pt?.maghrib || ""}</td>
-                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace" }}>{pt?.isha || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#064e3b", fontWeight: 700, verticalAlign: "middle" }}>{pt?.fajr || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#6b7280", verticalAlign: "middle" }}>{pt?.sunrise || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#1f2937", verticalAlign: "middle" }}>{pt?.dhuhr || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#1f2937", verticalAlign: "middle" }}>{pt?.asr || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#064e3b", fontWeight: 700, verticalAlign: "middle" }}>{pt?.maghrib || ""}</td>
+                        <td style={{ border: "1px solid #d1d5db", textAlign: "center", fontFamily: "monospace", color: "#1f2937", verticalAlign: "middle" }}>{pt?.isha || ""}</td>
                       </tr>
                     );
                   })}
@@ -129,47 +159,51 @@ const VaktijaPrint = () => {
               </table>
             </div>
 
-            {/* Footer */}
-            <div style={{ flexShrink: 0 }}>
-              <div style={{ textAlign: "center", marginTop: "3px", backgroundColor: "#ecfdf5", border: "1px solid #a7f3d0", borderRadius: "4px", padding: "3px" }}>
-                <p style={{ fontSize: "9px", fontWeight: "bold", color: "#064e3b", margin: 0 }}>
+            {/* ===== FOOTER ===== */}
+            <div style={{ flexShrink: 0, marginTop: "4px" }}>
+              {/* Bajram */}
+              <div style={{ textAlign: "center", backgroundColor: "#ecfdf5", border: "1.5px solid #6ee7b7", borderRadius: "4px", padding: "4px 8px" }}>
+                <p style={{ fontSize: "9.5px", fontWeight: 700, color: "#064e3b", margin: 0, letterSpacing: "0.3px" }}>
                   Bajram namaz se klanja u petak 20. marta u 06:37 h
                 </p>
               </div>
 
-              <p style={{ fontSize: "6px", color: "#6b7280", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 600, textAlign: "center", margin: "2px 0" }}>
+              {/* Sadaka */}
+              <p style={{ fontSize: "6.5px", color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 600, textAlign: "center", margin: "3px 0" }}>
                 Zekatom i sadekatul-fitrom pomažete humanitarne i obrazovne ustanove islamske zajednice
               </p>
 
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 4px" }}>
+              {/* Year + Verein */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2px", marginBottom: "3px" }}>
                 <span style={{ fontSize: "22px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>2026.</span>
                 <div style={{ textAlign: "center", flex: 1 }}>
-                  <p style={{ fontSize: "8px", color: "#374151", fontWeight: "bold", textTransform: "uppercase", margin: 0 }}>Bosnischer Kulturverein Et-Taqwa</p>
-                  <p style={{ fontSize: "7px", color: "#6b7280", margin: 0 }}>Voitgasse 21, 1220 Wien • E-mail: dzematettaqwa@gmail.com</p>
+                  <p style={{ fontSize: "8.5px", color: "#1f2937", fontWeight: 700, textTransform: "uppercase", margin: 0, letterSpacing: "0.5px" }}>Bosnischer Kulturverein Et-Taqwa</p>
+                  <p style={{ fontSize: "7px", color: "#4b5563", margin: "1px 0 0 0" }}>Voitgasse 21, 1220 Wien &nbsp;•&nbsp; dzematettaqwa@gmail.com</p>
                 </div>
                 <span style={{ fontSize: "22px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>1447.</span>
               </div>
 
-              <div style={{ marginTop: "3px", paddingTop: "3px", borderTop: "2px solid #065f46" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "3px", textAlign: "center" }}>
+              {/* Mosques */}
+              <div style={{ borderTop: "2px solid #065f46", paddingTop: "4px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "6px", textAlign: "center" }}>
                   <div>
-                    <p style={{ fontSize: "7.5px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat El-Ihsan</p>
-                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>Leopoldgasse 10, 1020 Wien</p>
-                    <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0 }}>Tel: 06431274A600</p>
+                    <p style={{ fontSize: "7.5px", fontWeight: 700, color: "#064e3b", textTransform: "uppercase", margin: 0, lineHeight: 1.3 }}>Džemat El-Ihsan</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>Leopoldgasse 10, 1020 Wien</p>
+                    <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0, lineHeight: 1.3 }}>Tel: 06431274A600</p>
                   </div>
                   <div>
-                    <p style={{ fontSize: "7.5px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat El-Ihsan</p>
-                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>Troststraße 77</p>
-                    <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0 }}>Tel: 06811040160</p>
+                    <p style={{ fontSize: "7.5px", fontWeight: 700, color: "#064e3b", textTransform: "uppercase", margin: 0, lineHeight: 1.3 }}>Džemat El-Ihsan</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>Troststraße 77</p>
+                    <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0, lineHeight: 1.3 }}>Tel: 06811040160</p>
                   </div>
                   <div>
-                    <p style={{ fontSize: "7.5px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Kulturni Centar</p>
-                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>"Sandžačka Bosna"</p>
-                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>Schöpfgasse 44, 1210 Wien</p>
+                    <p style={{ fontSize: "7.5px", fontWeight: 700, color: "#064e3b", textTransform: "uppercase", margin: 0, lineHeight: 1.3 }}>Kulturni Centar</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>"Sandžačka Bosna"</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0, lineHeight: 1.3 }}>Schöpfgasse 44, 1210 Wien</p>
                   </div>
                   <div>
-                    <p style={{ fontSize: "7.5px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat "Sandžak"</p>
-                    <p style={{ fontSize: "6.5px", color: "#374151", margin: 0 }}>Triester Str. 1, 11000 Wien</p>
+                    <p style={{ fontSize: "7.5px", fontWeight: 700, color: "#064e3b", textTransform: "uppercase", margin: 0, lineHeight: 1.3 }}>Džemat "Sandžak"</p>
+                    <p style={{ fontSize: "6.5px", color: "#374151", margin: "1px 0 0 0", lineHeight: 1.3 }}>Triester Str. 1, 11000 Wien</p>
                   </div>
                 </div>
               </div>
