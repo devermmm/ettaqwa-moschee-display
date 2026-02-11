@@ -146,33 +146,8 @@ const VaktijaPrint = () => {
                 <div style={{ textAlign: "center", flex: 1 }}>
                   <p style={{ fontSize: "7.5px", color: "#374151", fontWeight: "bold", textTransform: "uppercase", margin: 0 }}>Bosnischer Kulturverein Et-Taqwa</p>
                   <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0 }}>Voitgasse 21, 1220 Wien</p>
-                  <p style={{ fontSize: "6.5px", color: "#6b7280", margin: 0 }}>E-mail: dzematettaqwa@gmail.com</p>
                 </div>
                 <span style={{ fontSize: "24px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>1447.</span>
-              </div>
-
-              <div style={{ marginTop: "4px", paddingTop: "4px", borderTop: "2px solid #065f46" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "4px", textAlign: "center" }}>
-                  <div>
-                    <p style={{ fontSize: "7px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat El-Ihsan</p>
-                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>Leopoldgasse 10, 1020 Wien</p>
-                    <p style={{ fontSize: "6px", color: "#9ca3af", margin: 0 }}>Tel: 06431274A600</p>
-                  </div>
-                  <div>
-                    <p style={{ fontSize: "7px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat El-Ihsan</p>
-                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>Troststraße 77 oder Ferbungasse</p>
-                    <p style={{ fontSize: "6px", color: "#9ca3af", margin: 0 }}>Tel: 06811040160</p>
-                  </div>
-                  <div>
-                    <p style={{ fontSize: "7px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Kulturni Centar</p>
-                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>"Sandžačka Bosna"</p>
-                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>Schöpfgasse 44, 1210 Wien</p>
-                  </div>
-                  <div>
-                    <p style={{ fontSize: "7px", fontWeight: "bold", color: "#064e3b", textTransform: "uppercase", margin: 0 }}>Džemat "Sandžak"</p>
-                    <p style={{ fontSize: "6px", color: "#6b7280", margin: 0 }}>Triester Str. 1, 11000 Wien</p>
-                  </div>
-                </div>
               </div>
             </div>
 
