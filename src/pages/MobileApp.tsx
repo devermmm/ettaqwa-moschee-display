@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, ChevronRight, BookMarked, Newspaper, X, ChevronLeft } from "lucide-react";
+import { Clock, BookOpen, MapPin, Heart, Compass, Bell, Calendar, Settings, ChevronRight, BookMarked, Newspaper, X, ChevronLeft, Download } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePrayerTimes } from "@/hooks/usePrayerTimes";
 import { usePrayerNotifications } from "@/hooks/usePrayerNotifications";
@@ -152,6 +152,8 @@ const MobileApp = () => {
 
   // Menu items for the list
   const menuItems = [
+    { to: "/kalender", icon: Download, iconColor: "text-emerald-500", iconBg: "bg-emerald-500/10",
+      label: language === "bs" ? "Vaktija" : "Vaktija", sublabel: language === "bs" ? "Ramazan 2026 – Preuzmi" : "Ramadan 2026 – Herunterladen" },
     { to: "/app/qibla", icon: Compass, iconColor: "text-amber-500", iconBg: "bg-amber-500/10", 
       label: language === "bs" ? "Kible" : "Qibla", sublabel: language === "bs" ? "Pronađi smjer Kible" : "Finde die Gebetsrichtung" },
     { to: "/app/reminders", icon: Bell, iconColor: "text-blue-500", iconBg: "bg-blue-500/10",
