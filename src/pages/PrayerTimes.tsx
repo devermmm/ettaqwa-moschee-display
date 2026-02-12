@@ -216,20 +216,20 @@ const PrayerTimes = () => {
         )}
       </motion.button>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-8">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
         {/* Header Row: Logo, Time, Date */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-6 md:mb-8 gap-4">
           {/* Mosque Logo/Name */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-left"
+            className="text-center md:text-left"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-white tracking-wide mb-1">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-wide mb-1">
               ET-TAQWA
             </h1>
-            <p className="text-emerald-300 text-lg font-arabic">مسجد التقوى</p>
-            <div className="flex items-center gap-2 text-emerald-200/80 mt-1">
+            <p className="text-emerald-300 text-base md:text-lg font-arabic">مسجد التقوى</p>
+            <div className="flex items-center justify-center md:justify-start gap-2 text-emerald-200/80 mt-1">
               <MapPin className="w-4 h-4" />
               <span className="text-sm uppercase tracking-widest">{t("prayerTimes.location")}</span>
             </div>
@@ -242,8 +242,8 @@ const PrayerTimes = () => {
             transition={{ delay: 0.2 }}
             className="text-center"
           >
-            <div className="inline-block px-8 py-4 rounded-2xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
-              <p className="text-5xl md:text-6xl lg:text-7xl font-light text-white tabular-nums tracking-tight">
+            <div className="inline-block px-6 md:px-8 py-3 md:py-4 rounded-2xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
+              <p className="text-3xl md:text-5xl lg:text-7xl font-light text-white tabular-nums tracking-tight">
                 {currentTime.toLocaleTimeString("de-DE", {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -258,9 +258,9 @@ const PrayerTimes = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.15 }}
-            className="text-right"
+            className="text-center md:text-right"
           >
-            <p className="text-emerald-100 text-lg font-medium">
+            <p className="text-emerald-100 text-base md:text-lg font-medium">
               {getGregorianDate()}
             </p>
             <p className="text-emerald-300/80 text-sm mt-1">
@@ -274,7 +274,7 @@ const PrayerTimes = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="grid grid-cols-6 gap-4 mb-6"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 mb-6"
         >
           {prayerTimesList.map((prayer, index) => {
             const isNext = index === nextPrayerIndex;
@@ -286,18 +286,18 @@ const PrayerTimes = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + index * 0.05 }}
-                className={`text-center px-4 py-6 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
+                className={`text-center px-3 md:px-4 py-4 md:py-6 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
                   isNext 
                     ? "bg-gradient-to-b from-emerald-600/50 to-teal-600/50 border-emerald-400/50 scale-105" 
                     : "bg-emerald-900/40 border-emerald-500/20"
                 }`}
               >
-                <span className={`block text-lg md:text-xl font-medium mb-2 ${
+                <span className={`block text-base md:text-lg lg:text-xl font-medium mb-1 md:mb-2 ${
                   isNext ? "text-white" : isPast ? "text-emerald-100/40" : "text-emerald-100"
                 }`}>
                   {prayer.bosnianName}
                 </span>
-                <span className={`block text-3xl md:text-4xl font-bold tabular-nums mb-2 ${
+                <span className={`block text-2xl md:text-3xl lg:text-4xl font-bold tabular-nums mb-1 md:mb-2 ${
                   isNext ? "text-white" : isPast ? "text-emerald-100/40" : "text-emerald-100"
                 }`}>
                   {prayer.time}
