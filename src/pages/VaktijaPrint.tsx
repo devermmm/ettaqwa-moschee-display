@@ -40,28 +40,24 @@ const VaktijaPrint = () => {
   const handlePrint = () => window.print();
   const handleDownloadImage = async () => {
     if (!printRef.current) return;
-    // Force fixed dimensions to prevent overlap
     const el = printRef.current;
-    const origWidth = el.style.width;
-    const origHeight = el.style.height;
-    const origOverflow = el.style.overflow;
-    el.style.width = "210mm";
-    el.style.height = "297mm";
-    el.style.overflow = "hidden";
 
     const canvas = await html2canvas(el, {
       scale: 3,
       useCORS: true,
       backgroundColor: "#ffffff",
-      width: el.scrollWidth,
-      height: el.scrollHeight,
-      windowWidth: el.scrollWidth,
-      windowHeight: el.scrollHeight,
+      onclone: (clonedDoc) => {
+        const clonedEl = clonedDoc.querySelector("[data-vaktija]") as HTMLElement;
+        if (clonedEl) {
+          // Convert mm to fixed px and remove flex to avoid html2canvas issues
+          clonedEl.style.width = "794px";
+          clonedEl.style.height = "1123px";
+          clonedEl.style.overflow = "visible";
+          clonedEl.style.display = "block";
+          clonedEl.style.position = "relative";
+        }
+      },
     });
-
-    el.style.width = origWidth;
-    el.style.height = origHeight;
-    el.style.overflow = origOverflow;
 
     canvas.toBlob((blob) => {
       if (!blob) return;
@@ -94,7 +90,7 @@ const VaktijaPrint = () => {
         </button>
       </div>
 
-      <div ref={printRef} style={{
+      <div ref={printRef} data-vaktija style={{
         width: "210mm",
         height: "297mm",
         background: "white",
