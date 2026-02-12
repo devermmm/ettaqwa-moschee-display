@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar, ArrowRight, Download } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Post {
   id: string;
@@ -85,6 +86,34 @@ const News = () => {
               ? 'Ostanite u toku sa najnovijim vijestima iz naše zajednice'
               : 'Bleiben Sie auf dem Laufenden mit den neuesten Nachrichten aus unserer Gemeinde'}
           </p>
+        </motion.div>
+
+        {/* Vaktija Download Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-10"
+        >
+          <Link to="/kalender">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.01] group cursor-pointer">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl -translate-y-10 translate-x-10" />
+              <div className="relative z-10 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-white/70 text-xs font-bold uppercase tracking-wider mb-1">Ramazan 2026 / 1447. h.</p>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                    {language === 'bs' ? 'Vaktija za Ramazan' : 'Vaktija für Ramadan'}
+                  </h3>
+                  <p className="text-white/80 text-sm mt-1">
+                    {language === 'bs' ? 'Preuzmi kao sliku ili PDF' : 'Als Bild oder PDF herunterladen'}
+                  </p>
+                </div>
+                <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <Download className="w-7 h-7 text-white" />
+                </div>
+              </div>
+            </div>
+          </Link>
         </motion.div>
 
         {loading ? (
