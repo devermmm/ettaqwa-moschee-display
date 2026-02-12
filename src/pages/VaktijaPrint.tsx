@@ -1,7 +1,7 @@
 import { prayerTimes2025 } from "@/data/prayerTimes2025";
 import logo from "@/assets/logo.png";
 import { useRef } from "react";
-import html2canvas from "html2canvas";
+import { domToPng } from "modern-screenshot";
 
 const ramadanDays: { ramazanDay: number; dayName: string; gDay: number; gMonth: number }[] = [];
 const dayNamesBs = ["Ne", "Po", "Ut", "Sr", "Če", "Pe", "Su"];
@@ -40,34 +40,18 @@ const VaktijaPrint = () => {
   const handlePrint = () => window.print();
   const handleDownloadImage = async () => {
     if (!printRef.current) return;
-    const el = printRef.current;
-
-    const canvas = await html2canvas(el, {
-      scale: 3,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-      onclone: (clonedDoc) => {
-        const clonedEl = clonedDoc.querySelector("[data-vaktija]") as HTMLElement;
-        if (clonedEl) {
-          // Convert mm to fixed px and remove flex to avoid html2canvas issues
-          clonedEl.style.width = "794px";
-          clonedEl.style.height = "1123px";
-          clonedEl.style.overflow = "visible";
-          clonedEl.style.display = "block";
-          clonedEl.style.position = "relative";
-        }
-      },
-    });
-
-    canvas.toBlob((blob) => {
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
+    try {
+      const dataUrl = await domToPng(printRef.current, {
+        scale: 3,
+        backgroundColor: "#ffffff",
+      });
       const link = document.createElement("a");
       link.download = "Vaktija-Ramazan-2026.png";
-      link.href = url;
+      link.href = dataUrl;
       link.click();
-      URL.revokeObjectURL(url);
-    }, "image/png");
+    } catch (err) {
+      console.error("Screenshot failed:", err);
+    }
   };
 
   return (
