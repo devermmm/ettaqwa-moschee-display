@@ -548,52 +548,6 @@ const NewHome = () => {
             viewport={{ once: true }}
             className="max-w-2xl mx-auto"
           >
-            {/* Donation Stats - Enhanced cards */}
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-8">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-primary/20 text-center relative overflow-hidden"
-                style={{ boxShadow: 'var(--shadow-card)', background: 'var(--gradient-card)' }}
-              >
-                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
-                <div className="relative z-10">
-                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-primary to-accent mb-4 shadow-lg">
-                    <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                  </div>
-                  <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
-                    €{donationStats.total.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </p>
-                  <p className="text-sm sm:text-base text-muted-foreground">
-                    {language === "bs" ? "Ukupno prikupljeno" : "Gesamt gesammelt"}
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                whileHover={{ y: -5 }}
-                className="backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-accent/20 text-center relative overflow-hidden"
-                style={{ boxShadow: 'var(--shadow-card)', background: 'var(--gradient-card)' }}
-              >
-                <div className="absolute top-0 right-0 w-24 h-24 bg-accent/10 rounded-full blur-2xl" />
-                <div className="relative z-10">
-                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-accent to-primary mb-4 shadow-lg">
-                    <Heart className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                  </div>
-                  <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">{donationStats.count}</p>
-                  <p className="text-sm sm:text-base text-muted-foreground">
-                    {language === "bs" ? "Broj donacija" : "Anzahl Spenden"}
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-
             {/* Bank details card - Enhanced */}
             <motion.div 
               className="backdrop-blur-xl rounded-3xl p-8 sm:p-10 border border-primary/20 overflow-hidden relative"
