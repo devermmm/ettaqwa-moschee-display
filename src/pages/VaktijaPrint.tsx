@@ -1,5 +1,7 @@
 import { prayerTimes2025 } from "@/data/prayerTimes2025";
 import logo from "@/assets/logo.png";
+import { useRef } from "react";
+import html2canvas from "html2canvas";
 
 const ramadanDays: { ramazanDay: number; dayName: string; gDay: number; gMonth: number }[] = [];
 const dayNamesBs = ["Ne", "Po", "Ut", "Sr", "Če", "Pe", "Su"];
@@ -34,7 +36,20 @@ const mubarekDani: Record<string, string> = {
 };
 
 const VaktijaPrint = () => {
+  const printRef = useRef<HTMLDivElement>(null);
   const handlePrint = () => window.print();
+  const handleDownloadImage = async () => {
+    if (!printRef.current) return;
+    const canvas = await html2canvas(printRef.current, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+    });
+    const link = document.createElement("a");
+    link.download = "Vaktija-Ramazan-2026.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  };
 
   return (
     <>
@@ -47,13 +62,16 @@ const VaktijaPrint = () => {
         }
       `}</style>
 
-      <div className="no-print fixed top-4 right-4 z-50">
+      <div className="no-print fixed top-4 right-4 z-50 flex gap-2">
+        <button onClick={handleDownloadImage} className="bg-emerald-700 text-white px-5 py-2.5 rounded-lg shadow-lg hover:bg-emerald-800 font-semibold text-sm">
+          📥 Als Bild speichern
+        </button>
         <button onClick={handlePrint} className="bg-emerald-700 text-white px-5 py-2.5 rounded-lg shadow-lg hover:bg-emerald-800 font-semibold text-sm">
           🖨️ Štampaj / PDF
         </button>
       </div>
 
-      <div style={{
+      <div ref={printRef} style={{
         width: "210mm",
         height: "297mm",
         background: "white",
