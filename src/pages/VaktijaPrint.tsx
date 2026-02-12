@@ -1,7 +1,9 @@
 import { prayerTimes2025 } from "@/data/prayerTimes2025";
 import logo from "@/assets/logo.png";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { domToPng } from "modern-screenshot";
+import { Download, Printer, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ramadanDays: { ramazanDay: number; dayName: string; gDay: number; gMonth: number }[] = [];
 const dayNamesBs = ["Ne", "Po", "Ut", "Sr", "Če", "Pe", "Su"];
@@ -37,9 +39,11 @@ const mubarekDani: Record<string, string> = {
 
 const VaktijaPrint = () => {
   const printRef = useRef<HTMLDivElement>(null);
+  const [downloading, setDownloading] = useState(false);
   const handlePrint = () => window.print();
   const handleDownloadImage = async () => {
     if (!printRef.current) return;
+    setDownloading(true);
     try {
       const dataUrl = await domToPng(printRef.current, {
         scale: 3,
@@ -51,6 +55,8 @@ const VaktijaPrint = () => {
       link.click();
     } catch (err) {
       console.error("Screenshot failed:", err);
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -61,20 +67,135 @@ const VaktijaPrint = () => {
           @page { size: A4 portrait; margin: 0; }
           html, body { margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           .no-print { display: none !important; }
+          .mobile-view { display: none !important; }
+          .print-view { display: flex !important; }
           #lovable-badge { display: none !important; }
+        }
+        @media screen {
+          .print-view { position: absolute; left: -9999px; top: 0; }
         }
       `}</style>
 
-      <div className="no-print fixed top-4 right-4 z-50 flex gap-2">
-        <button onClick={handleDownloadImage} className="bg-emerald-700 text-white px-5 py-2.5 rounded-lg shadow-lg hover:bg-emerald-800 font-semibold text-sm">
-          📥 Als Bild speichern
-        </button>
-        <button onClick={handlePrint} className="bg-emerald-700 text-white px-5 py-2.5 rounded-lg shadow-lg hover:bg-emerald-800 font-semibold text-sm">
-          🖨️ Štampaj / PDF
-        </button>
+      {/* ===== MOBILE-FRIENDLY VIEW ===== */}
+      <div className="mobile-view min-h-screen bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950">
+        {/* Header */}
+        <div className="sticky top-0 z-50 backdrop-blur-xl bg-emerald-950/80 border-b border-emerald-500/20">
+          <div className="flex items-center justify-between px-4 py-3">
+            <Link to="/news" className="flex items-center gap-2 text-emerald-200 active:opacity-70">
+              <ArrowLeft className="w-5 h-5" />
+              <span className="text-sm font-medium">Nazad</span>
+            </Link>
+            <h1 className="text-lg font-bold text-white tracking-wide">VAKTIJA</h1>
+            <div className="w-16" />
+          </div>
+        </div>
+
+        <div className="px-4 py-5 space-y-5">
+          {/* Title Card */}
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <img src={logo} alt="Et-Taqwa" className="w-12 h-12 rounded-xl" />
+            </div>
+            <h2 className="text-3xl font-black text-white tracking-widest">VAKTIJA</h2>
+            <p className="text-emerald-300 text-sm font-semibold mt-1">RAMAZAN 2026 / 1447. h.</p>
+            <p className="text-emerald-400/60 text-xs mt-0.5">19. februar – 19. mart</p>
+          </div>
+
+          {/* Download Buttons */}
+          <div className="flex gap-3">
+            <button 
+              onClick={handleDownloadImage} 
+              disabled={downloading}
+              className="flex-1 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white py-3.5 rounded-2xl font-semibold text-sm shadow-lg shadow-emerald-900/50 transition-colors disabled:opacity-50"
+            >
+              <Download className="w-5 h-5" />
+              {downloading ? "Preuzimanje..." : "📥 Preuzmi sliku"}
+            </button>
+            <button 
+              onClick={handlePrint}
+              className="flex items-center justify-center gap-2 bg-emerald-800/50 hover:bg-emerald-700/50 active:bg-emerald-800/70 text-emerald-200 px-5 py-3.5 rounded-2xl font-semibold text-sm border border-emerald-500/30 transition-colors"
+            >
+              <Printer className="w-5 h-5" />
+              PDF
+            </button>
+          </div>
+
+          {/* Iftar Dua */}
+          <div className="bg-emerald-800/30 backdrop-blur-sm rounded-2xl border border-emerald-500/20 p-4 text-center">
+            <p className="text-lg font-bold text-white font-arabic" style={{ direction: "rtl" }}>
+              ذَهَبَ الظَّمَأُ وَابْتَلَّتِ العُرُوقُ وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللّٰهُ
+            </p>
+            <p className="text-emerald-300/70 text-xs mt-2 italic">
+              Nestala je žeđ, natopile su se žile i nagrada je osigurana, ako Allah Uzvišeni htjedne.
+            </p>
+          </div>
+
+          {/* Prayer Times Table - Mobile optimized */}
+          <div className="bg-emerald-800/20 backdrop-blur-sm rounded-2xl border border-emerald-500/20 overflow-hidden">
+            {/* Table Header */}
+            <div className="bg-emerald-700/50 px-3 py-2.5 grid grid-cols-[2rem_2rem_1fr_3.2rem_3.2rem_3.2rem_3.2rem] gap-1 text-[10px] font-bold text-emerald-100 text-center">
+              <span>R.</span>
+              <span>DAT.</span>
+              <span className="text-left pl-1">IMSAK</span>
+              <span>☀️</span>
+              <span>🕐</span>
+              <span>🌅</span>
+              <span>🌙</span>
+            </div>
+
+            {/* Table Rows */}
+            {ramadanDays.map((day) => {
+              const pt = getPrayerTime(day.gMonth, day.gDay);
+              const eventKey = `${day.gMonth}-${day.gDay}`;
+              const event = mubarekDani[eventKey];
+              const isFriday = day.dayName === "Pe";
+              const isFirst = eventKey === "2-19";
+
+              return (
+                <div key={day.ramazanDay}>
+                  <div className={`px-3 py-2 grid grid-cols-[2rem_2rem_1fr_3.2rem_3.2rem_3.2rem_3.2rem] gap-1 items-center text-xs border-t border-emerald-500/10 ${
+                    isFirst ? "bg-amber-500/10" : isFriday ? "bg-emerald-500/10" : ""
+                  }`}>
+                    <span className="text-emerald-300 font-bold text-center">{day.ramazanDay}</span>
+                    <span className="text-emerald-200/70 text-center text-[10px]">{day.gDay}.{day.gMonth}</span>
+                    <span className="text-white font-bold font-mono pl-1">{pt?.fajr || ""}</span>
+                    <span className="text-emerald-200/50 font-mono text-center text-[10px]">{pt?.sunrise || ""}</span>
+                    <span className="text-emerald-200/70 font-mono text-center text-[10px]">{pt?.dhuhr || ""}</span>
+                    <span className="text-white font-bold font-mono text-center">{pt?.maghrib || ""}</span>
+                    <span className="text-emerald-200/70 font-mono text-center text-[10px]">{pt?.isha || ""}</span>
+                  </div>
+                  {event && (
+                    <div className="px-3 pb-1.5 -mt-0.5">
+                      <span className="text-[10px] text-emerald-400 font-medium">{event}</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Bajram Notice */}
+          <div className="bg-emerald-600/20 border border-emerald-400/30 rounded-2xl p-4 text-center">
+            <p className="text-white font-bold text-sm">
+              🕌 Bajram namaz se klanja u petak 20. marta u 06:37 h
+            </p>
+          </div>
+
+          {/* Footer Info */}
+          <div className="text-center space-y-2 pb-6">
+            <p className="text-emerald-300/40 text-[10px] uppercase tracking-wider font-semibold">
+              Zekatom i sadekatul-fitrom pomažete humanitarne i obrazovne ustanove islamske zajednice
+            </p>
+            <div>
+              <p className="text-emerald-200 text-sm font-bold uppercase tracking-wide">Bosnischer Kulturverein Et-Taqwa</p>
+              <p className="text-emerald-300/60 text-xs">Voitgasse 21, 1220 Wien • dzematettaqwa@gmail.com</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div ref={printRef} data-vaktija style={{
+      {/* ===== A4 PRINT/SCREENSHOT VIEW (hidden off-screen, used for download) ===== */}
+      <div ref={printRef} data-vaktija className="print-view" style={{
         width: "210mm",
         height: "297mm",
         background: "white",
@@ -156,7 +277,6 @@ const VaktijaPrint = () => {
                     const event = mubarekDani[eventKey];
                     const isFriday = day.dayName === "Pe";
                     const isFirst = eventKey === "2-19";
-
                     const bg = isFirst ? "#fef9c3" : isFriday ? "#ecfdf5" : day.ramazanDay % 2 === 0 ? "#f8fafc" : "#ffffff";
 
                     return (
@@ -182,19 +302,14 @@ const VaktijaPrint = () => {
 
             {/* ===== FOOTER ===== */}
             <div style={{ flexShrink: 0, marginTop: "3px" }}>
-              {/* Bajram */}
               <div style={{ textAlign: "center", backgroundColor: "#ecfdf5", border: "1.5px solid #6ee7b7", borderRadius: "4px", padding: "4px 8px" }}>
                 <p style={{ fontSize: "17px", fontWeight: 700, color: "#064e3b", margin: 0, letterSpacing: "0.3px" }}>
                   Bajram namaz se klanja u petak 20. marta u 06:37 h
                 </p>
               </div>
-
-              {/* Sadaka */}
               <p style={{ fontSize: "9.5px", color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 600, textAlign: "center", margin: "3px 0" }}>
                 Zekatom i sadekatul-fitrom pomažete humanitarne i obrazovne ustanove islamske zajednice
               </p>
-
-              {/* Year + Verein */}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2px", marginBottom: "3px" }}>
                 <span style={{ fontSize: "34px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>2026.</span>
                 <div style={{ textAlign: "center", flex: 1 }}>
@@ -203,8 +318,6 @@ const VaktijaPrint = () => {
                 </div>
                 <span style={{ fontSize: "34px", fontWeight: 900, color: "#065f46", lineHeight: 1 }}>1447.</span>
               </div>
-
-              {/* Mosques */}
               <div style={{ borderTop: "2px solid #065f46", paddingTop: "4px" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "8px", textAlign: "center" }}>
                   <div>
