@@ -236,15 +236,6 @@ const NewHome = () => {
             viewport={{ once: true }}
             className="text-center mb-16 sm:mb-24"
           >
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              whileInView={{ scale: 1, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ type: "spring", stiffness: 200 }}
-              className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent mb-6 shadow-lg"
-            >
-              <Sparkles className="w-8 h-8 text-white" />
-            </motion.div>
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
               {t("home.offers")}
             </h2>
