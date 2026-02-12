@@ -82,61 +82,6 @@ const NewHome = () => {
     <div className="min-h-screen overflow-hidden">
       {/* Hero Section - More dramatic */}
       <div className="relative min-h-screen flex items-center overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
-        {/* Animated gradient orbs */}
-        <motion.div 
-          className="absolute top-20 right-20 w-96 h-96 rounded-full blur-3xl opacity-20"
-          style={{ background: 'radial-gradient(circle, hsl(175 60% 50%), transparent)' }}
-          animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.3, 0.2]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute bottom-40 left-10 w-72 h-72 rounded-full blur-3xl opacity-15"
-          style={{ background: 'radial-gradient(circle, hsl(165 55% 45%), transparent)' }}
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            opacity: [0.15, 0.25, 0.15]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-
-        {/* Floating decorative icons */}
-        <motion.div 
-          className="absolute top-32 right-[15%] text-white/10"
-          animate={floatingAnimation}
-        >
-          <Moon className="w-16 h-16" />
-        </motion.div>
-        <motion.div 
-          className="absolute bottom-32 right-[25%] text-white/10"
-          animate={{ 
-            y: [0, -15, 0],
-            transition: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut" as const,
-              delay: 1
-            }
-          }}
-        >
-          <Star className="w-12 h-12" />
-        </motion.div>
-        <motion.div 
-          className="absolute top-[40%] right-[10%] text-white/10"
-          animate={{ 
-            y: [0, -15, 0],
-            transition: {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut" as const,
-              delay: 2
-            }
-          }}
-        >
-          <Sparkles className="w-10 h-10" />
-        </motion.div>
 
         {/* Subtle Arabic Calligraphy Background */}
         <div className="absolute inset-0 overflow-hidden">
