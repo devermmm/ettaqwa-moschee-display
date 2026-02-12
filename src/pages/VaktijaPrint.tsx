@@ -40,15 +40,38 @@ const VaktijaPrint = () => {
   const handlePrint = () => window.print();
   const handleDownloadImage = async () => {
     if (!printRef.current) return;
-    const canvas = await html2canvas(printRef.current, {
-      scale: 2,
+    // Force fixed dimensions to prevent overlap
+    const el = printRef.current;
+    const origWidth = el.style.width;
+    const origHeight = el.style.height;
+    const origOverflow = el.style.overflow;
+    el.style.width = "210mm";
+    el.style.height = "297mm";
+    el.style.overflow = "hidden";
+
+    const canvas = await html2canvas(el, {
+      scale: 3,
       useCORS: true,
       backgroundColor: "#ffffff",
+      width: el.scrollWidth,
+      height: el.scrollHeight,
+      windowWidth: el.scrollWidth,
+      windowHeight: el.scrollHeight,
     });
-    const link = document.createElement("a");
-    link.download = "Vaktija-Ramazan-2026.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+
+    el.style.width = origWidth;
+    el.style.height = origHeight;
+    el.style.overflow = origOverflow;
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.download = "Vaktija-Ramazan-2026.png";
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }, "image/png");
   };
 
   return (
