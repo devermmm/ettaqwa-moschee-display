@@ -19,13 +19,28 @@ const PrayerTimes = () => {
   const [showFullscreenButton, setShowFullscreenButton] = useState(true);
   const [showAd, setShowAd] = useState(false);
 
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen();
-      setIsFullscreen(false);
+  const toggleFullscreen = async () => {
+    try {
+      const doc = document as any;
+      const docEl = document.documentElement as any;
+
+      if (!doc.fullscreenElement && !doc.webkitFullscreenElement) {
+        if (docEl.requestFullscreen) {
+          await docEl.requestFullscreen();
+        } else if (docEl.webkitRequestFullscreen) {
+          await docEl.webkitRequestFullscreen();
+        }
+        setIsFullscreen(true);
+      } else {
+        if (doc.exitFullscreen) {
+          await doc.exitFullscreen();
+        } else if (doc.webkitExitFullscreen) {
+          await doc.webkitExitFullscreen();
+        }
+        setIsFullscreen(false);
+      }
+    } catch (err) {
+      console.warn("Fullscreen not supported:", err);
     }
   };
 
@@ -64,7 +79,8 @@ const PrayerTimes = () => {
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      const isInFullscreen = !!document.fullscreenElement;
+      const doc = document as any;
+      const isInFullscreen = !!(doc.fullscreenElement || doc.webkitFullscreenElement);
       setIsFullscreen(isInFullscreen);
       
       const navbar = document.querySelector('nav');
@@ -74,8 +90,10 @@ const PrayerTimes = () => {
     };
 
     document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
       const navbar = document.querySelector('nav');
       if (navbar) {
         navbar.style.display = '';
