@@ -225,7 +225,7 @@ const PrayerTimes = () => {
             animate={{ opacity: 1, x: 0 }}
             className="text-center md:text-left"
           >
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-wide mb-1">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-wide mb-1">
               ET-TAQWA
             </h1>
             <p className="text-emerald-300 text-base md:text-lg font-arabic">مسجد التقوى</p>
@@ -243,7 +243,7 @@ const PrayerTimes = () => {
             className="text-center"
           >
             <div className="inline-block px-6 md:px-8 py-3 md:py-4 rounded-2xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
-              <p className="text-3xl md:text-5xl lg:text-7xl font-light text-white tabular-nums tracking-tight">
+              <p className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-light text-white tabular-nums tracking-tight">
                 {currentTime.toLocaleTimeString("de-DE", {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -274,7 +274,7 @@ const PrayerTimes = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 md:gap-4 mb-6"
+          className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3 md:gap-4 mb-6"
         >
           {prayerTimesList.map((prayer, index) => {
             const isNext = index === nextPrayerIndex;
@@ -286,18 +286,18 @@ const PrayerTimes = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + index * 0.05 }}
-                className={`text-center px-3 md:px-4 py-4 md:py-6 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
+                className={`text-center px-2 sm:px-3 md:px-4 py-3 sm:py-4 md:py-6 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
                   isNext 
                     ? "bg-gradient-to-b from-emerald-600/50 to-teal-600/50 border-emerald-400/50 scale-105" 
                     : "bg-emerald-900/40 border-emerald-500/20"
                 }`}
               >
-                <span className={`block text-base md:text-lg lg:text-xl font-medium mb-1 md:mb-2 ${
+                <span className={`block text-xs sm:text-base md:text-lg lg:text-xl font-medium mb-1 md:mb-2 ${
                   isNext ? "text-white" : isPast ? "text-emerald-100/40" : "text-emerald-100"
                 }`}>
                   {prayer.bosnianName}
                 </span>
-                <span className={`block text-2xl md:text-3xl lg:text-4xl font-bold tabular-nums mb-1 md:mb-2 ${
+                <span className={`block text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold tabular-nums mb-1 md:mb-2 ${
                   isNext ? "text-white" : isPast ? "text-emerald-100/40" : "text-emerald-100"
                 }`}>
                   {prayer.time}
@@ -319,12 +319,12 @@ const PrayerTimes = () => {
           transition={{ delay: 0.5 }}
           className="flex justify-center gap-6"
         >
-          <div className="inline-flex items-center gap-6 px-8 py-4 rounded-2xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
-            <span className="text-emerald-300 text-lg font-semibold">{t("prayerTimes.dzumaLabel")}:</span>
+          <div className="inline-flex items-center gap-3 sm:gap-6 px-4 sm:px-8 py-3 sm:py-4 rounded-2xl bg-emerald-800/30 backdrop-blur-sm border border-emerald-500/20">
+            <span className="text-emerald-300 text-sm sm:text-lg font-semibold">{t("prayerTimes.dzumaLabel")}:</span>
             {dzumaTimes.map((dzuma) => (
               <div key={dzuma.name} className="text-center">
                 <span className="text-emerald-100/80 text-sm block">{dzuma.bosnianName}</span>
-                <span className="text-white text-2xl font-bold tabular-nums">{dzuma.time}</span>
+                <span className="text-white text-lg sm:text-2xl font-bold tabular-nums">{dzuma.time}</span>
               </div>
             ))}
           </div>
