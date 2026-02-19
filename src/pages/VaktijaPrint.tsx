@@ -133,7 +133,7 @@ const VaktijaPrint = () => {
           {/* Prayer Times Table - Mobile optimized */}
           <div className="bg-emerald-800/20 backdrop-blur-sm rounded-2xl border border-emerald-500/20 overflow-hidden">
             {/* Table Header */}
-            <div className="bg-emerald-700/50 px-3 py-2.5 grid grid-cols-[2rem_2rem_1fr_3.2rem_3.2rem_3.2rem_3.2rem] gap-1 text-[10px] font-bold text-emerald-100 text-center">
+            <div className="bg-emerald-700/50 px-3 py-2.5 grid grid-cols-[2rem_2rem_1fr_3.2rem_3.2rem_3.2rem_3.2rem] md:grid-cols-[2.5rem_3rem_1fr_4rem_4rem_4rem_4rem] gap-1 md:gap-2 text-[10px] md:text-xs font-bold text-emerald-100 text-center">
               <span>R.</span>
               <span>DAT.</span>
               <span className="text-left pl-1">IMSAK</span>
@@ -153,7 +153,7 @@ const VaktijaPrint = () => {
 
               return (
                 <div key={day.ramazanDay}>
-                  <div className={`px-3 py-2 grid grid-cols-[2rem_2rem_1fr_3.2rem_3.2rem_3.2rem_3.2rem] gap-1 items-center text-xs border-t border-emerald-500/10 ${
+                  <div className={`px-3 py-2 md:py-3 grid grid-cols-[2rem_2rem_1fr_3.2rem_3.2rem_3.2rem_3.2rem] md:grid-cols-[2.5rem_3rem_1fr_4rem_4rem_4rem_4rem] gap-1 md:gap-2 items-center text-xs md:text-sm border-t border-emerald-500/10 ${
                     isFirst ? "bg-amber-500/10" : isFriday ? "bg-emerald-500/10" : ""
                   }`}>
                     <span className="text-emerald-300 font-bold text-center">{day.ramazanDay}</span>
