@@ -4,6 +4,7 @@ import { Download, Loader2 } from "lucide-react";
 import instaBg from "@/assets/instagram-announcement.jpg";
 import ramadanBg from "@/assets/ramadan-story-bg.jpg";
 import logo from "@/assets/logo.png";
+import logoTransparent from "@/assets/logo-transparent.png";
 import profileLogo from "@/assets/ettaqwa-profile-logo.png";
 
 const INSTA_ICON = (
@@ -301,115 +302,74 @@ const InstaPost = () => {
         }}
       >
         <img src={ramadanBg} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,15,8,0.3) 0%, rgba(0,10,5,0.6) 50%, rgba(0,15,8,0.85) 100%)" }} />
-
-        {/* Decorative top arc */}
-        <div style={{
-          position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
-          width: "80%", height: "12%", borderRadius: "0 0 50% 50%",
-          background: "linear-gradient(180deg, rgba(251,191,36,0.12) 0%, transparent 100%)",
-        }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,20,12,0.35) 0%, rgba(0,12,6,0.75) 100%)" }} />
 
         <div style={{
           position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center", width: "100%", height: "100%",
-          padding: "8% 7%", textAlign: "center", color: "white",
+          padding: "10% 8%", textAlign: "center", color: "white",
         }}>
-          {/* Ornamental top */}
-          <p style={{
-            fontSize: "2.5cqi", fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase",
-            opacity: 0.45, marginBottom: "3%",
-          }}>
-            ☽ Hadith ☽
-          </p>
 
-          {/* Logo with blend mode to remove white bg */}
-          <div style={{
-            width: "16%", marginBottom: "4%", position: "relative",
-            filter: "drop-shadow(0 0 20px rgba(251,191,36,0.3))",
-          }}>
-            <img src={logo} alt="Et-Taqwa" style={{
-              width: "100%", objectFit: "contain",
-              mixBlendMode: "screen",
-            }} />
-          </div>
+          {/* Logo transparent */}
+          <img src={logoTransparent} alt="Et-Taqwa" style={{
+            width: "18%", objectFit: "contain", marginBottom: "5%",
+            filter: "brightness(1.8) drop-shadow(0 0 15px rgba(251,191,36,0.25))",
+          }} />
 
-          {/* Ramadan Title */}
+          {/* Title */}
           <h2 style={{
-            fontSize: "7.5cqi", fontWeight: 800, lineHeight: 1.05, marginBottom: "0.5%", letterSpacing: "0.05em",
-            background: "linear-gradient(180deg, #fde68a, #f59e0b, #d97706)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-            textShadow: "none",
+            fontSize: "8cqi", fontWeight: 800, lineHeight: 1, letterSpacing: "0.08em",
+            background: "linear-gradient(180deg, #fde68a, #f59e0b)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            marginBottom: "2%",
           }}>
             RAMAZAN
           </h2>
-          <p style={{
-            fontSize: "4cqi", fontWeight: 500, opacity: 0.5, marginBottom: "5%", letterSpacing: "0.1em",
-            fontFamily: "'Amiri', serif",
-          }}>
+
+          <p style={{ fontSize: "3.5cqi", opacity: 0.45, marginBottom: "6%", letterSpacing: "0.2em", fontFamily: "'Amiri', serif" }}>
             رمضان كريم
           </p>
 
-          {/* Ornamental divider */}
-          <div style={{ display: "flex", alignItems: "center", gap: "3%", marginBottom: "5%", width: "50%" }}>
-            <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(251,191,36,0.4))" }} />
-            <span style={{ fontSize: "2.5cqi", opacity: 0.4 }}>✦</span>
-            <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(251,191,36,0.4), transparent)" }} />
-          </div>
+          {/* Simple divider */}
+          <div style={{ width: "25%", height: 1, background: "linear-gradient(90deg, transparent, rgba(251,191,36,0.35), transparent)", marginBottom: "6%" }} />
 
-          {/* Hadith Bosnian - featured */}
-          <div style={{
-            background: "linear-gradient(135deg, rgba(251,191,36,0.1), rgba(217,119,6,0.06))",
-            border: "1px solid rgba(251,191,36,0.2)",
-            borderRadius: 20, padding: "5% 7%", marginBottom: "3.5%", maxWidth: "92%",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(251,191,36,0.15)",
+          {/* Hadith BS */}
+          <p style={{
+            fontSize: "3.5cqi", lineHeight: 1.6, fontWeight: 500, fontStyle: "italic",
+            marginBottom: "3%", maxWidth: "88%",
           }}>
-            <p style={{
-              fontSize: "3.4cqi", lineHeight: 1.55, fontWeight: 500, fontStyle: "italic",
-              textShadow: "0 1px 3px rgba(0,0,0,0.3)",
-            }}>
-              „Ko posti Ramazan vjerujući i nadajući se nagradi, bit će mu oprošteni prethodni grijesi."
-            </p>
-            <p style={{
-              fontSize: "2cqi", opacity: 0.45, marginTop: "3%", fontWeight: 700,
-              letterSpacing: "0.1em",
-              background: "linear-gradient(90deg, #fbbf24, #f59e0b)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-            }}>
-              — Sahih Buhari
-            </p>
-          </div>
+            „Ko posti Ramazan vjerujući i nadajući se nagradi, bit će mu oprošteni prethodni grijesi."
+          </p>
 
-          {/* Hadith German */}
-          <div style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 20, padding: "4.5% 7%", marginBottom: "5%", maxWidth: "92%",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+          <p style={{ fontSize: "2cqi", opacity: 0.4, marginBottom: "5%", fontWeight: 600, letterSpacing: "0.1em",
+            background: "linear-gradient(90deg, #fbbf24, #f59e0b)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>
-            <p style={{ fontSize: "2.8cqi", lineHeight: 1.55, fontWeight: 400, opacity: 0.8 }}>
-              „Wer den Ramadan mit Glauben und Hoffnung auf Belohnung fastet, dem werden seine vorherigen Sünden vergeben."
-            </p>
-            <p style={{ fontSize: "2cqi", opacity: 0.35, marginTop: "3%", fontWeight: 600, letterSpacing: "0.1em" }}>
-              — Sahih Bukhari
-            </p>
-          </div>
+            — Sahih Buhari
+          </p>
 
-          {/* Handle pill */}
+          {/* Divider */}
+          <div style={{ width: "15%", height: 1, background: "rgba(255,255,255,0.1)", marginBottom: "5%" }} />
+
+          {/* Hadith DE */}
+          <p style={{
+            fontSize: "3cqi", lineHeight: 1.6, fontWeight: 400, opacity: 0.7,
+            marginBottom: "3%", maxWidth: "88%",
+          }}>
+            „Wer den Ramadan mit Glauben und Hoffnung auf Belohnung fastet, dem werden seine vorherigen Sünden vergeben."
+          </p>
+
+          <p style={{ fontSize: "2cqi", opacity: 0.3, marginBottom: "6%", fontWeight: 600, letterSpacing: "0.1em" }}>
+            — Sahih Bukhari
+          </p>
+
+          {/* Handle */}
           <div style={{
-            display: "inline-flex", alignItems: "center", gap: "2.5%", padding: "2.2% 5.5%",
-            background: "linear-gradient(135deg, rgba(251,191,36,0.12), rgba(251,191,36,0.05))",
-            borderRadius: 50,
-            border: "1px solid rgba(251,191,36,0.2)", fontSize: "3cqi", fontWeight: 700,
-            boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+            display: "inline-flex", alignItems: "center", gap: "2%", padding: "2% 5%",
+            background: "rgba(251,191,36,0.08)", borderRadius: 50,
+            border: "1px solid rgba(251,191,36,0.15)", fontSize: "3cqi", fontWeight: 700,
           }}>
             {INSTA_ICON}
             @dzemat_et_taqwa
           </div>
-
-          <p style={{ fontSize: "2cqi", opacity: 0.3, marginTop: "3.5%", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 500 }}>
-            Džemat Et-Taqwa
-          </p>
         </div>
       </div>
 
