@@ -2,6 +2,8 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Loader2 } from "lucide-react";
 import VaktijaStory from "@/components/insta/VaktijaStory";
+import JummaReminderStory from "@/components/insta/JummaReminderStory";
+import jummaVideo from "@/assets/jumma-reminder-video.mp4";
 import instaBg from "@/assets/instagram-announcement.jpg";
 import ramadanBg from "@/assets/ramadan-story-bg.jpg";
 import logo from "@/assets/logo.png";
@@ -25,6 +27,7 @@ const InstaPost = () => {
   const spendenRef = useRef<HTMLDivElement>(null);
   const standortRef = useRef<HTMLDivElement>(null);
   const vaktijaRef = useRef<HTMLDivElement>(null);
+  const jummaRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
 
   const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
@@ -55,6 +58,37 @@ const InstaPost = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-6">
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
+
+      {/* ===== JUMMA REMINDER VIDEO ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">🕌 Jumma Reminder Video</h2>
+
+      <div style={{ width: "min(100%, 540px)", aspectRatio: "9 / 16", borderRadius: 12, overflow: "hidden" }}>
+        <video
+          src={jummaVideo}
+          controls
+          loop
+          playsInline
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      </div>
+
+      <a href={jummaVideo} download="ettaqwa-jumma-reminder.mp4">
+        <Button size="lg" className="gap-2">
+          <Download className="w-5 h-5" />
+          Jumma Video herunterladen
+        </Button>
+      </a>
+
+      {/* ===== JUMMA REMINDER STORY (static) ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">🕌 Jumma Reminder Story (Bild)</h2>
+
+      <JummaReminderStory ref={jummaRef} />
+
+      <Button onClick={() => handleDownload(jummaRef, "ettaqwa-jumma-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading === "ettaqwa-jumma-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Jumma Story herunterladen (1080×1920)
+      </Button>
+
       
       <div
         ref={postRef}
