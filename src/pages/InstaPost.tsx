@@ -7,6 +7,7 @@ import logo from "@/assets/logo.png";
 import logoTransparent from "@/assets/logo-transparent.png";
 import profileLogo from "@/assets/ettaqwa-profile-logo.png";
 import highlightHadith from "@/assets/highlight-hadith.png";
+import highlightSpenden from "@/assets/highlight-spenden.png";
 
 const INSTA_ICON = (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="white">
@@ -457,6 +458,20 @@ const InstaPost = () => {
       </div>
 
       <a href={highlightHadith} download="ettaqwa-highlight-hadith.png">
+        <Button size="lg" className="gap-2">
+          <Download className="w-5 h-5" />
+          Highlight Icon herunterladen
+        </Button>
+      </a>
+
+      {/* ===== HIGHLIGHT ICON SPENDEN ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">Highlight Icon – Spenden</h2>
+
+      <div className="rounded-full overflow-hidden border border-border" style={{ width: 160, height: 160 }}>
+        <img src={highlightSpenden} alt="Spenden Highlight" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      </div>
+
+      <a href={highlightSpenden} download="ettaqwa-highlight-spenden.png">
         <Button size="lg" className="gap-2">
           <Download className="w-5 h-5" />
           Highlight Icon herunterladen
