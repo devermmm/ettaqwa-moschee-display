@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
@@ -33,18 +33,6 @@ const Footer = () => {
                   <p className="text-sm opacity-70 mt-0.5">Dzemat Et-Taqwa</p>
                   <p className="text-sm opacity-70">Voitgasse 21, 1220 Wien</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-background/10 rounded-lg">
-                  <Phone className="w-4 h-4 opacity-70" />
-                </div>
-                <p className="text-sm opacity-70">+43 XXX XXXXXXX</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-background/10 rounded-lg">
-                  <Mail className="w-4 h-4 opacity-70" />
-                </div>
-                <p className="text-sm opacity-70 break-all">dzematettaqwa@gmail.com</p>
               </div>
             </div>
           </div>
