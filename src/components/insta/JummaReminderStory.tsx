@@ -35,15 +35,6 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
           Džemat Et-Taqwa
         </p>
 
-        {/* Arabic — separate block with margin to prevent overlap */}
-        <p style={{
-          fontSize: "5cqi", fontWeight: 700,
-          fontFamily: "'Amiri', 'Times New Roman', serif",
-          lineHeight: 1.4, marginBottom: "0",
-        }}>
-          صَلَاةُ الْجُمُعَة
-        </p>
-
         {/* Title */}
         <h3 style={{
           fontSize: "5cqi", fontWeight: 800, lineHeight: 1.05,
@@ -102,15 +93,15 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
 
         {/* Verse */}
         <p style={{
-          fontSize: "2.2cqi", fontFamily: "'Amiri', serif", lineHeight: 1.45,
+          fontSize: "3cqi", fontFamily: "'Amiri', serif", lineHeight: 1.5,
           maxWidth: "88%", direction: "rtl", opacity: 0.6, marginTop: "1cqi",
         }}>
           إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ
         </p>
-        <p style={{ fontSize: "1.6cqi", lineHeight: 1.35, opacity: 0.4, fontStyle: "italic", maxWidth: "82%" }}>
+        <p style={{ fontSize: "2.2cqi", lineHeight: 1.4, opacity: 0.45, fontStyle: "italic", maxWidth: "82%" }}>
           Kada se u petak pozove na namaz, požurite Allaha spominjati.
         </p>
-        <p style={{ fontSize: "1.3cqi", opacity: 0.25 }}>
+        <p style={{ fontSize: "1.8cqi", opacity: 0.3 }}>
           Al-Jumu'ah 62:9
         </p>
 
