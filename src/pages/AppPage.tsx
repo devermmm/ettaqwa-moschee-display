@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Clock, BookOpen, Compass, Bell, Calendar, BookMarked, MapPin, Download, Smartphone } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import appMockup from "@/assets/app-mockup-screen.png";
 import badgeAppStore from "@/assets/badge-appstore.svg";
 import badgeGooglePlay from "@/assets/badge-googleplay.svg";
 
@@ -79,12 +80,13 @@ const AppPage = () => {
                 <div className="relative bg-black rounded-[3rem] p-3 shadow-2xl shadow-black/50 border border-white/10">
                   {/* Notch */}
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-black rounded-b-2xl z-10" />
-                  {/* Live App Screen */}
+                  {/* Live App Preview */}
                   <div className="rounded-[2.3rem] overflow-hidden bg-background aspect-[9/19.5]">
                     <iframe 
                       src="/app" 
-                      className="w-full h-full border-0 pointer-events-none"
+                      className="w-full h-full border-0 pointer-events-none scale-100"
                       title="Et Taqwa App Preview"
+                      scrolling="no"
                     />
                   </div>
                 </div>
