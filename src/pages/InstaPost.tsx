@@ -8,6 +8,7 @@ import logoTransparent from "@/assets/logo-transparent.png";
 import profileLogo from "@/assets/ettaqwa-profile-logo.png";
 import highlightHadith from "@/assets/highlight-hadith.png";
 import highlightSpenden from "@/assets/highlight-spenden.png";
+import mapVienna from "@/assets/map-vienna.jpg";
 
 const INSTA_ICON = (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="white">
@@ -20,6 +21,7 @@ const InstaPost = () => {
   const storyRef = useRef<HTMLDivElement>(null);
   const ramadanRef = useRef<HTMLDivElement>(null);
   const spendenRef = useRef<HTMLDivElement>(null);
+  const standortRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
 
   const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
@@ -448,6 +450,68 @@ const InstaPost = () => {
       <Button onClick={() => handleDownload(spendenRef, "ettaqwa-spenden-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
         {downloading === "ettaqwa-spenden-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
         Spenden Story herunterladen (1080×1920)
+      </Button>
+
+      {/* ===== STANDORT STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">Standort Story</h2>
+
+      <div
+        ref={standortRef}
+        style={{
+          width: "min(100%, 540px)",
+          aspectRatio: "9 / 16",
+          position: "relative",
+          overflow: "hidden",
+          fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif",
+          containerType: "inline-size",
+        }}
+      >
+        <img src={mapVienna} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+
+        {/* Bottom card overlay */}
+        <div style={{
+          position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 10,
+          background: "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0.9) 100%)",
+          padding: "25% 8% 8%",
+          display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", color: "white",
+        }}>
+          {/* Location pin */}
+          <svg viewBox="0 0 24 24" fill="none" style={{ width: "8%", marginBottom: "3%" }}>
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="rgba(52,211,153,0.8)" stroke="white" strokeWidth="1" />
+            <circle cx="12" cy="10" r="3" fill="white" />
+          </svg>
+
+          <h2 style={{
+            fontSize: "5.5cqi", fontWeight: 800, lineHeight: 1.1, marginBottom: "2%",
+          }}>
+            BESUCHE UNS
+          </h2>
+
+          <p style={{ fontSize: "3cqi", opacity: 0.6, marginBottom: "4%", letterSpacing: "0.1em" }}>
+            Posjeti nas
+          </p>
+
+          <div style={{
+            background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+            borderRadius: 16, padding: "4% 6%", width: "90%", marginBottom: "4%",
+          }}>
+            <p style={{ fontSize: "3.5cqi", fontWeight: 700, marginBottom: "1.5%" }}>
+              Voitgasse 21
+            </p>
+            <p style={{ fontSize: "2.8cqi", opacity: 0.7 }}>
+              1220 Wien, Österreich
+            </p>
+          </div>
+
+          <p style={{ fontSize: "2.8cqi", fontWeight: 600, opacity: 0.4 }}>
+            @dzemat_et_taqwa
+          </p>
+        </div>
+      </div>
+
+      <Button onClick={() => handleDownload(standortRef, "ettaqwa-standort-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading === "ettaqwa-standort-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Standort Story herunterladen (1080×1920)
       </Button>
 
       {/* ===== HIGHLIGHT ICON ===== */}
