@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Clock, BookOpen, Users, Heart, HandHeart, Copy, Star, ArrowRight, Instagram } from "lucide-react";
 import ReviewsSection from "@/components/ReviewsSection";
 import { useLanguage } from "@/contexts/LanguageContext";
-import mosqueHero from "@/assets/mosque-hero.png";
+import mosqueHeroBg from "@/assets/mosque-hero-bg.jpg";
 import mosqueInterior from "@/assets/mosque-interior.png";
 import community from "@/assets/community.png";
 import { toast } from "sonner";
@@ -62,116 +62,68 @@ const NewHome = () => {
     <div className="min-h-screen overflow-hidden bg-background">
 
       {/* ═══════════════════════════════════════════════════ */}
-      {/* HERO — Full-bleed image with overlay */}
+      {/* HERO — Centered, bold, AECARS-style */}
       {/* ═══════════════════════════════════════════════════ */}
-      <div className="relative min-h-[100svh] flex items-end overflow-hidden">
+      <div className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0">
           <img 
-            src={mosqueHero} 
-            alt="Et-Taqwa Moschee" 
+            src={mosqueHeroBg} 
+            alt="" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
 
-        {/* Arabic calligraphy watermark */}
-        <motion.div 
-          className="absolute top-20 right-4 sm:right-12 opacity-[0.06] pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.06 }}
-          transition={{ duration: 2, delay: 1 }}
-        >
-          <p className="text-[8rem] sm:text-[14rem] md:text-[20rem] font-arabic text-white leading-none">
-            التقوى
-          </p>
-        </motion.div>
-
-        {/* Hero content */}
-        <div className="relative z-10 w-full pb-16 sm:pb-24 pt-32">
-          <div className="container mx-auto px-5 sm:px-8 md:px-16 max-w-7xl">
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              animate="visible"
-              className="max-w-3xl"
+        {/* Centered content */}
+        <div className="relative z-10 text-center px-6">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col items-center"
+          >
+            <motion.h1 
+              variants={fadeUp}
+              className="text-6xl sm:text-8xl md:text-9xl lg:text-[11rem] font-black text-white tracking-tighter leading-[0.85] uppercase"
             >
-              <motion.div variants={fadeUp}>
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 text-xs font-semibold tracking-widest uppercase">
-                  <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                  {language === "bs" ? "Dobrodošli" : "Willkommen"}
-                </span>
-              </motion.div>
+              DZEMAT
+              <br />
+              <span className="text-primary">ET TAQWA</span>
+            </motion.h1>
 
-              <motion.h1 
-                variants={fadeUp}
-                className="mt-8 text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter leading-[0.85]"
-              >
-                ET
-                <br />
-                <span className="text-primary">TAQWA</span>
-              </motion.h1>
+            <motion.p
+              variants={fadeUp}
+              className="text-white/50 mt-6 sm:mt-8 text-sm sm:text-base tracking-[0.3em] uppercase font-medium"
+            >
+              {language === "bs" ? "Bošnjački kulturni centar · Beč" : "Bosniakisches Kulturzentrum · Wien"}
+            </motion.p>
 
-              <motion.p
-                variants={fadeUp}
-                className="text-lg sm:text-xl md:text-2xl text-white/70 mt-6 sm:mt-8 font-medium max-w-xl leading-relaxed"
-              >
-                {language === "bs" 
-                  ? "Bošnjački kulturni centar i džamija u Beču"
-                  : "Bosniakisches Kulturzentrum und Moschee in Wien"
-                }
-              </motion.p>
-
-              <motion.p
-                variants={fadeUp}
-                className="text-white/30 mt-2 font-amiri text-lg"
-              >
-                مسجد التقوى — Voitgasse 21, 1220 Wien
-              </motion.p>
-
-              <motion.div
-                variants={fadeUp}
-                className="flex flex-col sm:flex-row gap-3 mt-10 sm:mt-12"
-              >
-                <Link to="/gebetszeiten">
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground rounded-2xl text-sm font-bold shadow-xl shadow-primary/25 flex items-center gap-2 justify-center transition-all"
-                  >
-                    {t("nav.prayerTimes")}
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.button>
-                </Link>
-                <Link to="/about">
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full sm:w-auto px-8 py-4 bg-white/10 backdrop-blur-xl text-white border border-white/15 rounded-2xl text-sm font-semibold transition-all hover:bg-white/15"
-                  >
-                    {t("nav.about")}
-                  </motion.button>
-                </Link>
-              </motion.div>
+            <motion.div
+              variants={fadeUp}
+              className="flex flex-col sm:flex-row gap-3 mt-10 sm:mt-14"
+            >
+              <Link to="/gebetszeiten">
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full sm:w-auto px-10 py-4 bg-primary text-primary-foreground rounded-full text-sm font-bold tracking-[0.15em] uppercase shadow-xl shadow-primary/25 flex items-center gap-2 justify-center transition-all"
+                >
+                  {t("nav.prayerTimes")}
+                </motion.button>
+              </Link>
+              <Link to="/about">
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full sm:w-auto px-10 py-4 bg-white/10 backdrop-blur-xl text-white border border-white/20 rounded-full text-sm font-bold tracking-[0.15em] uppercase transition-all hover:bg-white/15"
+                >
+                  {t("nav.about")}
+                </motion.button>
+              </Link>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div 
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="w-5 h-9 rounded-full border-2 border-white/20 flex items-start justify-center p-1.5">
-            <motion.div 
-              className="w-1 h-2.5 bg-white/40 rounded-full"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </div>
-        </motion.div>
       </div>
 
       {/* ═══════════════════════════════════════════════════ */}
