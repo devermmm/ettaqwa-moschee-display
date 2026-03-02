@@ -309,11 +309,6 @@ const InstaPost = () => {
           padding: "12% 9%", textAlign: "center", color: "white",
         }}>
 
-          {/* Logo */}
-          <img src={logoTransparent} alt="Et-Taqwa" style={{
-            width: "15%", objectFit: "contain", marginBottom: "6%",
-            filter: "brightness(2)",
-          }} />
 
           {/* Hadith BS */}
           <p style={{
