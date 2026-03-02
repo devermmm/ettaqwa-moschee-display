@@ -414,7 +414,7 @@ const InstaPost = () => {
               Islamische Gemeinschaft Et-Taqwa
             </p>
             <p style={{ fontSize: "2.5cqi", opacity: 0.7, marginBottom: "1%" }}>
-              IBAN: DE XX XXXX XXXX XXXX XXXX XX
+              IBAN: AT58 2011 1826 7414 0900
             </p>
             <p style={{ fontSize: "2.5cqi", opacity: 0.7 }}>
               Verwendungszweck: Spende
