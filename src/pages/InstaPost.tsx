@@ -302,74 +302,46 @@ const InstaPost = () => {
         }}
       >
         <img src={ramadanBg} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,20,12,0.35) 0%, rgba(0,12,6,0.75) 100%)" }} />
 
         <div style={{
           position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center", width: "100%", height: "100%",
-          padding: "10% 8%", textAlign: "center", color: "white",
+          padding: "12% 9%", textAlign: "center", color: "white",
         }}>
 
-          {/* Logo transparent */}
+          {/* Logo */}
           <img src={logoTransparent} alt="Et-Taqwa" style={{
-            width: "18%", objectFit: "contain", marginBottom: "5%",
-            filter: "brightness(1.8) drop-shadow(0 0 15px rgba(251,191,36,0.25))",
+            width: "15%", objectFit: "contain", marginBottom: "6%",
+            filter: "brightness(2)",
           }} />
-
-          {/* Title */}
-          <h2 style={{
-            fontSize: "8cqi", fontWeight: 800, lineHeight: 1, letterSpacing: "0.08em",
-            background: "linear-gradient(180deg, #fde68a, #f59e0b)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-            marginBottom: "2%",
-          }}>
-            RAMAZAN
-          </h2>
-
-          <p style={{ fontSize: "3.5cqi", opacity: 0.45, marginBottom: "6%", letterSpacing: "0.2em", fontFamily: "'Amiri', serif" }}>
-            رمضان كريم
-          </p>
-
-          {/* Simple divider */}
-          <div style={{ width: "25%", height: 1, background: "linear-gradient(90deg, transparent, rgba(251,191,36,0.35), transparent)", marginBottom: "6%" }} />
 
           {/* Hadith BS */}
           <p style={{
-            fontSize: "3.5cqi", lineHeight: 1.6, fontWeight: 500, fontStyle: "italic",
-            marginBottom: "3%", maxWidth: "88%",
+            fontSize: "3.5cqi", lineHeight: 1.65, fontWeight: 500, fontStyle: "italic",
+            marginBottom: "4%", maxWidth: "85%",
           }}>
             „Ko posti Ramazan vjerujući i nadajući se nagradi, bit će mu oprošteni prethodni grijesi."
           </p>
 
-          <p style={{ fontSize: "2cqi", opacity: 0.4, marginBottom: "5%", fontWeight: 600, letterSpacing: "0.1em",
-            background: "linear-gradient(90deg, #fbbf24, #f59e0b)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-          }}>
-            — Sahih Buhari
-          </p>
-
           {/* Divider */}
-          <div style={{ width: "15%", height: 1, background: "rgba(255,255,255,0.1)", marginBottom: "5%" }} />
+          <div style={{ width: "12%", height: 1, background: "rgba(255,255,255,0.15)", marginBottom: "4%" }} />
 
           {/* Hadith DE */}
           <p style={{
-            fontSize: "3cqi", lineHeight: 1.6, fontWeight: 400, opacity: 0.7,
-            marginBottom: "3%", maxWidth: "88%",
+            fontSize: "3cqi", lineHeight: 1.65, fontWeight: 400, opacity: 0.6,
+            marginBottom: "4%", maxWidth: "85%",
           }}>
             „Wer den Ramadan mit Glauben und Hoffnung auf Belohnung fastet, dem werden seine vorherigen Sünden vergeben."
           </p>
 
-          <p style={{ fontSize: "2cqi", opacity: 0.3, marginBottom: "6%", fontWeight: 600, letterSpacing: "0.1em" }}>
-            — Sahih Bukhari
+          <p style={{ fontSize: "2cqi", opacity: 0.35, marginBottom: "8%", fontWeight: 600, letterSpacing: "0.05em" }}>
+            Sahih Bukhari
           </p>
 
           {/* Handle */}
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: "2%", padding: "2% 5%",
-            background: "rgba(251,191,36,0.08)", borderRadius: 50,
-            border: "1px solid rgba(251,191,36,0.15)", fontSize: "3cqi", fontWeight: 700,
-          }}>
-            {INSTA_ICON}
+          <p style={{ fontSize: "2.8cqi", fontWeight: 600, opacity: 0.4 }}>
             @dzemat_et_taqwa
-          </div>
+          </p>
         </div>
       </div>
 
