@@ -27,6 +27,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Plakat from "./pages/Plakat";
 import Speisekarte from "./pages/Speisekarte";
 import VaktijaPrint from "./pages/VaktijaPrint";
+import InstaPost from "./pages/InstaPost";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -192,6 +193,10 @@ const App = () => (
           <Route
             path="/kalender"
             element={<VaktijaPrint />}
+          />
+          <Route
+            path="/insta-post"
+            element={<InstaPost />}
           />
           <Route
             path="*"
