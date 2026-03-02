@@ -25,12 +25,13 @@ const InstaPost = () => {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-6">
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
       
-      {/* Post Preview */}
+      {/* Post Preview - Full screen width maintaining 1:1 aspect */}
       <div
         ref={postRef}
         style={{
-          width: 540,
-          height: 540,
+          width: "100%",
+          maxWidth: 1080,
+          aspectRatio: "1 / 1",
           position: "relative",
           overflow: "hidden",
           borderRadius: 0,
