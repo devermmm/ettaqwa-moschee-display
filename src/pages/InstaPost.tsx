@@ -101,47 +101,70 @@ const InstaPost = () => {
             Džemat Et-Taqwa
           </p>
 
-          {/* Main Title - Bosnian only */}
+          {/* German Title */}
           <h2 style={{
-            fontSize: "7cqi",
+            fontSize: "5.5cqi",
             fontWeight: 800,
             lineHeight: 1.1,
-            marginBottom: "1%",
+            marginBottom: "0.5%",
             letterSpacing: "-0.02em",
           }}>
-            ZVANIČNO SMO
+            WIR SIND OFFIZIELL
           </h2>
           <h2 style={{
-            fontSize: "7cqi",
+            fontSize: "5.5cqi",
             fontWeight: 800,
             lineHeight: 1.1,
-            marginBottom: "5%",
+            marginBottom: "3%",
             letterSpacing: "-0.02em",
             background: "linear-gradient(90deg, #34d399, #6ee7b7, #5eead4)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }}>
-            NA INSTAGRAMU!
+            AUF INSTAGRAM!
           </h2>
 
           {/* Decorative line */}
           <div style={{
             width: "12%",
-            height: 3,
-            background: "linear-gradient(90deg, transparent, rgba(52,211,153,0.6), transparent)",
-            marginBottom: "5%",
+            height: 2,
+            background: "linear-gradient(90deg, transparent, rgba(52,211,153,0.5), transparent)",
+            marginBottom: "3%",
           }} />
+
+          {/* Bosnian Title */}
+          <h3 style={{
+            fontSize: "4.5cqi",
+            fontWeight: 700,
+            lineHeight: 1.15,
+            marginBottom: "0.5%",
+            opacity: 0.85,
+          }}>
+            ZVANIČNO SMO
+          </h3>
+          <h3 style={{
+            fontSize: "4.5cqi",
+            fontWeight: 700,
+            lineHeight: 1.15,
+            marginBottom: "4%",
+            background: "linear-gradient(90deg, #6ee7b7, #5eead4)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}>
+            NA INSTAGRAMU!
+          </h3>
 
           {/* Description */}
           <p style={{
-            fontSize: "3cqi",
-            lineHeight: 1.6,
-            opacity: 0.8,
-            marginBottom: "5%",
+            fontSize: "2.5cqi",
+            lineHeight: 1.5,
+            opacity: 0.7,
+            marginBottom: "4%",
             maxWidth: "80%",
           }}>
-            Pratite nas za vijesti, namaz vakti,
-            aktivnosti i dešavanja iz džemata.
+            Folgt uns für Neuigkeiten & Veranstaltungen
+            <br />
+            Pratite nas za vijesti i dešavanja iz džemata
           </p>
 
           {/* Handle pill */}
@@ -163,13 +186,13 @@ const InstaPost = () => {
           </div>
 
           <p style={{
-            fontSize: "2.2cqi",
+            fontSize: "2cqi",
             opacity: 0.4,
-            marginTop: "4%",
+            marginTop: "3%",
             letterSpacing: "0.15em",
             textTransform: "uppercase",
           }}>
-            Pratite nas ✦ Podijelite ✦ Budite u toku
+            Folgt uns ✦ Pratite nas ✦ Podijelite
           </p>
         </div>
       </div>
