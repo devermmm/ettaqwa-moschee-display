@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Loader2 } from "lucide-react";
+import VaktijaStory from "@/components/insta/VaktijaStory";
 import instaBg from "@/assets/instagram-announcement.jpg";
 import ramadanBg from "@/assets/ramadan-story-bg.jpg";
 import logo from "@/assets/logo.png";
@@ -23,6 +24,7 @@ const InstaPost = () => {
   const ramadanRef = useRef<HTMLDivElement>(null);
   const spendenRef = useRef<HTMLDivElement>(null);
   const standortRef = useRef<HTMLDivElement>(null);
+  const vaktijaRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
 
   const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
@@ -293,6 +295,16 @@ const InstaPost = () => {
       <Button onClick={() => handleDownload(storyRef, "ettaqwa-instagram-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
         {downloading === "ettaqwa-instagram-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
         Story herunterladen (1080×1920)
+      </Button>
+
+      {/* ===== VAKTIJA STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">Vaktija Story (Gebetszeiten)</h2>
+
+      <VaktijaStory ref={vaktijaRef} />
+
+      <Button onClick={() => handleDownload(vaktijaRef, "ettaqwa-vaktija-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading === "ettaqwa-vaktija-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Vaktija Story herunterladen (1080×1920)
       </Button>
 
       {/* ===== RAMADAN HADITH STORY ===== */}
