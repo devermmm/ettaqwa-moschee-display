@@ -154,60 +154,17 @@ const AppAnnouncementStory = forwardRef<HTMLDivElement>((_, ref) => {
           UNSERE OFFIZIELLE APP
         </p>
 
-        {/* "In Entwicklung" info card */}
-        <div style={{
-          width: "88%", padding: "3.5% 5%", borderRadius: 14,
-          background: "linear-gradient(135deg, rgba(52,211,153,0.08), rgba(255,255,255,0.02))",
-          border: "1px solid rgba(52,211,153,0.15)",
-          marginTop: "0.5cqi",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: "1cqi",
+        {/* Coming soon note */}
+        <p style={{
+          fontSize: "2.5cqi", lineHeight: 1.5, opacity: 0.5, margin: "1cqi 0 0",
         }}>
-          <div style={{
-            display: "flex", alignItems: "center", gap: "1.5cqi",
-          }}>
-            <span style={{ fontSize: "3cqi" }}>⏳</span>
-            <span style={{
-              fontSize: "2.8cqi", fontWeight: 700, opacity: 0.9,
-            }}>
-              U pripremi · In Entwicklung
-            </span>
-          </div>
-          <p style={{
-            fontSize: "2.2cqi", lineHeight: 1.5, opacity: 0.5, margin: 0,
-          }}>
-            Aplikacija je trenutno u izradi i uskoro će biti dostupna za preuzimanje.
-          </p>
-          <p style={{
-            fontSize: "2cqi", lineHeight: 1.5, opacity: 0.35, margin: 0,
-          }}>
-            Die App wird gerade entwickelt und ist bald zum Download verfügbar.
-          </p>
-        </div>
-
-        {/* Feature pills */}
-        <div style={{
-          display: "flex", flexWrap: "wrap", justifyContent: "center",
-          gap: "1.2cqi", marginTop: "0.5cqi", maxWidth: "92%",
-        }}>
-          {FEATURES.map((f, i) => (
-            <div key={i} style={{
-              display: "flex", alignItems: "center", gap: "1cqi",
-              padding: "1% 3%", borderRadius: 50,
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              fontSize: "2cqi", fontWeight: 600, opacity: 0.7,
-            }}>
-              <span>{f.icon}</span>
-              <span>{f.text}</span>
-            </div>
-          ))}
-        </div>
+          Uskoro dostupna · Bald verfügbar
+        </p>
 
         {/* Store badges */}
         <div style={{
           display: "flex", alignItems: "center", gap: "2cqi",
-          marginTop: "1.5cqi", opacity: 0.5,
-          position: "relative",
+          marginTop: "1.5cqi",
         }}>
           <img src={badgeAppStore} alt="App Store" style={{ height: "5.5cqi" }} />
           <img src={badgeGooglePlay} alt="Google Play" style={{ height: "5.5cqi" }} />
@@ -217,12 +174,6 @@ const AppAnnouncementStory = forwardRef<HTMLDivElement>((_, ref) => {
         <div style={{ flex: 1 }} />
 
         {/* Footer */}
-        <p style={{ fontSize: "2.2cqi", fontWeight: 600, opacity: 0.45, margin: 0 }}>
-          Pratite nas za obavijesti o objavi 📲
-        </p>
-        <p style={{ fontSize: "2cqi", fontWeight: 500, opacity: 0.35, margin: 0 }}>
-          Folgt uns für Updates zum Launch
-        </p>
         <p style={{ fontSize: "2cqi", fontWeight: 600, opacity: 0.3, margin: 0 }}>
           @dzemat_et_taqwa
         </p>
