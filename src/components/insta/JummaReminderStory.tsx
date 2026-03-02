@@ -91,26 +91,48 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
           </div>
         </div>
 
-        {/* Verse */}
-        <p style={{
-          fontSize: "3cqi", fontFamily: "'Amiri', serif", lineHeight: 1.5,
-          maxWidth: "88%", direction: "rtl", opacity: 0.6, marginTop: "1cqi",
+        {/* Verse + Footer */}
+        <div style={{
+          width: "88%",
+          marginTop: "0.8cqi",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.7cqi",
+          padding: "2.5% 4%",
+          borderRadius: 12,
+          background: "rgba(255,255,255,0.02)",
+          border: "1px solid rgba(255,255,255,0.05)",
         }}>
-          إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ
-        </p>
-        <p style={{ fontSize: "2.2cqi", lineHeight: 1.4, opacity: 0.45, fontStyle: "italic", maxWidth: "82%" }}>
-          Kada se u petak pozove na namaz, požurite Allaha spominjati.
-        </p>
-        <p style={{ fontSize: "1.8cqi", opacity: 0.3 }}>
-          Al-Jumu'ah 62:9
-        </p>
+          <p style={{
+            fontSize: "3cqi",
+            fontFamily: "'Amiri', serif",
+            lineHeight: 1.45,
+            maxWidth: "100%",
+            direction: "rtl",
+            opacity: 0.65,
+            margin: 0,
+          }}>
+            إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ
+          </p>
+          <p style={{
+            fontSize: "2.1cqi",
+            lineHeight: 1.35,
+            opacity: 0.5,
+            fontStyle: "italic",
+            maxWidth: "95%",
+            margin: 0,
+          }}>
+            Kada se u petak pozove na namaz, požurite Allaha spominjati.
+          </p>
+          <p style={{ fontSize: "1.7cqi", opacity: 0.35, margin: 0.01 }}>
+            Al-Jumu'ah 62:9
+          </p>
 
-        {/* Footer */}
-        <div style={{ marginTop: "1cqi" }}>
-          <p style={{ fontSize: "1.8cqi", opacity: 0.3, letterSpacing: "0.09em" }}>
+          <p style={{ fontSize: "1.7cqi", opacity: 0.32, letterSpacing: "0.08em", marginTop: "0.8cqi" }}>
             📍 Voitgasse 21 · 1220 Wien
           </p>
-          <p style={{ fontSize: "2cqi", fontWeight: 600, opacity: 0.35, marginTop: "0.4cqi" }}>
+          <p style={{ fontSize: "1.9cqi", fontWeight: 600, opacity: 0.35, margin: 0 }}>
             @dzemat_et_taqwa
           </p>
         </div>
