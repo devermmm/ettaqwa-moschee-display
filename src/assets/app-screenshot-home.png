@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Et-Taqwa Moschee Wien</title>
+    <meta name="description" content="Et Taqwa Moschee">
+    <meta name="author" content="Et-Taqwa Moschee" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/m8pTz9bQZFMkoASBGmMRU5wOIgz2/social-images/social-1761301832791-Logo.jpeg">
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/m8pTz9bQZFMkoASBGmMRU5wOIgz2/social-images/social-1761301832791-Logo.jpeg">
+    
+  
+  
+  
+  <meta property="og:title" content="Et-Taqwa Moschee Wien">
+  <meta name="twitter:title" content="Et-Taqwa Moschee Wien">
+  <meta property="og:description" content="Et Taqwa Moschee">
+  <meta name="twitter:description" content="Et Taqwa Moschee">
+  <link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/gpt-engineer-file-uploads/m8pTz9bQZFMkoASBGmMRU5wOIgz2/uploads/1761301819737-Logo.jpeg">
+</head>
+
+  <body>
+    <div id="root"></div><script src="https://cdn.gpteng.co/lovable.js" type="module"></script>
+    <script type="module" src="/src/main.tsx?t=1772495493266"></script>
+  </body>
+</html>
