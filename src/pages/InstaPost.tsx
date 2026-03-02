@@ -18,6 +18,7 @@ const InstaPost = () => {
   const postRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<HTMLDivElement>(null);
   const ramadanRef = useRef<HTMLDivElement>(null);
+  const spendenRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
 
   const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
@@ -346,6 +347,100 @@ const InstaPost = () => {
       <Button onClick={() => handleDownload(ramadanRef, "ettaqwa-ramadan-hadith-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
         {downloading === "ettaqwa-ramadan-hadith-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
         Ramadan Story herunterladen (1080×1920)
+      </Button>
+
+      {/* ===== SPENDEN STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">Spenden Story</h2>
+
+      <div
+        ref={spendenRef}
+        style={{
+          width: "min(100%, 540px)",
+          aspectRatio: "9 / 16",
+          position: "relative",
+          overflow: "hidden",
+          fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif",
+          containerType: "inline-size",
+          background: "radial-gradient(ellipse at 50% 40%, #1a3a2a 0%, #0d1f15 60%, #060f0a 100%)",
+        }}
+      >
+        <div style={{
+          position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center", width: "100%", height: "100%",
+          padding: "10% 8%", textAlign: "center", color: "white",
+        }}>
+
+          {/* Heart icon */}
+          <div style={{
+            width: "12%", aspectRatio: "1", marginBottom: "5%", display: "flex",
+            alignItems: "center", justifyContent: "center",
+            border: "1px solid rgba(52,211,153,0.3)", borderRadius: "50%",
+          }}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(52,211,153,0.8)" strokeWidth="1.5" style={{ width: "55%" }}>
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </div>
+
+          {/* Title */}
+          <h2 style={{
+            fontSize: "6.5cqi", fontWeight: 800, lineHeight: 1.05, marginBottom: "2%", letterSpacing: "0.03em",
+          }}>
+            SPENDE FÜR
+          </h2>
+          <h2 style={{
+            fontSize: "6.5cqi", fontWeight: 800, lineHeight: 1.05, marginBottom: "2%",
+            background: "linear-gradient(90deg, #34d399, #6ee7b7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+          }}>
+            DEINEN DŽEMAT
+          </h2>
+
+          <p style={{ fontSize: "3cqi", opacity: 0.5, marginBottom: "6%", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+            Doniraj za svoj džemat
+          </p>
+
+          {/* Divider */}
+          <div style={{ width: "15%", height: 1, background: "rgba(255,255,255,0.1)", marginBottom: "6%" }} />
+
+          {/* Bank info */}
+          <div style={{
+            background: "rgba(52,211,153,0.06)", border: "1px solid rgba(52,211,153,0.15)",
+            borderRadius: 16, padding: "5% 7%", marginBottom: "4%", width: "90%",
+            textAlign: "left",
+          }}>
+            <p style={{ fontSize: "2.2cqi", opacity: 0.5, marginBottom: "2%", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              Bankverbindung
+            </p>
+            <p style={{ fontSize: "2.8cqi", fontWeight: 600, marginBottom: "1.5%" }}>
+              Islamische Gemeinschaft Et-Taqwa
+            </p>
+            <p style={{ fontSize: "2.5cqi", opacity: 0.7, marginBottom: "1%" }}>
+              IBAN: DE XX XXXX XXXX XXXX XXXX XX
+            </p>
+            <p style={{ fontSize: "2.5cqi", opacity: 0.7 }}>
+              Verwendungszweck: Spende
+            </p>
+          </div>
+
+          {/* Quran verse */}
+          <p style={{
+            fontSize: "2.5cqi", lineHeight: 1.6, fontStyle: "italic", opacity: 0.5,
+            marginBottom: "5%", maxWidth: "85%",
+          }}>
+            „Wer etwas Gutes tut, dem wird es vielfach vergolten."
+            <br />
+            <span style={{ fontSize: "0.85em", opacity: 0.7 }}>— Sure 2:261</span>
+          </p>
+
+          {/* Handle */}
+          <p style={{ fontSize: "2.8cqi", fontWeight: 600, opacity: 0.4 }}>
+            @dzemat_et_taqwa
+          </p>
+        </div>
+      </div>
+
+      <Button onClick={() => handleDownload(spendenRef, "ettaqwa-spenden-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading === "ettaqwa-spenden-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Spenden Story herunterladen (1080×1920)
       </Button>
 
       {/* ===== HIGHLIGHT ICON ===== */}
