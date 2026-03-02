@@ -35,7 +35,6 @@ const InstaPost = () => {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-6">
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
       
-      {/* Post - uses vw-based sizing so text scales with container */}
       <div
         ref={postRef}
         style={{
@@ -44,9 +43,10 @@ const InstaPost = () => {
           position: "relative",
           overflow: "hidden",
           fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif",
+          containerType: "inline-size",
         }}
       >
-        {/* Background Image */}
+        {/* Background */}
         <img
           src={instaBg}
           alt=""
@@ -62,11 +62,11 @@ const InstaPost = () => {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(180deg, rgba(0,40,30,0.7) 0%, rgba(0,50,35,0.85) 50%, rgba(0,30,20,0.95) 100%)",
+            background: "linear-gradient(160deg, rgba(2,48,32,0.75) 0%, rgba(0,30,20,0.92) 100%)",
           }}
         />
 
-        {/* Content - all sizes use % of container width */}
+        {/* Content */}
         <div
           style={{
             position: "relative",
@@ -77,94 +77,84 @@ const InstaPost = () => {
             justifyContent: "center",
             width: "100%",
             height: "100%",
-            padding: "6% 8%",
+            padding: "8%",
             textAlign: "center",
             color: "white",
           }}
         >
-          {/* Logo - 10% of width */}
+          {/* Logo */}
           <img
             src={logo}
             alt="Et-Taqwa"
-            style={{ width: "12%", aspectRatio: "1 / 1", objectFit: "contain", marginBottom: "3%", borderRadius: 0 }}
+            style={{ width: "14%", objectFit: "contain", marginBottom: "4%" }}
           />
 
-          {/* Title */}
+          {/* Subtitle */}
           <p style={{
-            fontSize: "2.8cqi",
-            fontWeight: 600,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase" as const,
-            opacity: 0.7,
-            marginBottom: "1.5%",
+            fontSize: "2.5cqi",
+            fontWeight: 500,
+            letterSpacing: "0.25em",
+            textTransform: "uppercase",
+            opacity: 0.6,
+            marginBottom: "4%",
           }}>
-            DZEMAT ET-TAQWA TEAM
+            Džemat Et-Taqwa
           </p>
 
-          {/* German */}
+          {/* Main Title - Bosnian only */}
           <h2 style={{
-            fontSize: "5.5cqi",
+            fontSize: "7cqi",
             fontWeight: 800,
-            lineHeight: 1.15,
-            marginBottom: "0.5%",
+            lineHeight: 1.1,
+            marginBottom: "1%",
             letterSpacing: "-0.02em",
-          }}>
-            WIR SIND OFFIZIELL
-          </h2>
-          <h2 style={{
-            fontSize: "5.5cqi",
-            fontWeight: 800,
-            lineHeight: 1.15,
-            marginBottom: "3%",
-            letterSpacing: "-0.02em",
-            background: "linear-gradient(90deg, #34d399, #5eead4)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}>
-            AUF INSTAGRAM! 📸
-          </h2>
-
-          {/* Divider */}
-          <div style={{
-            width: "8%",
-            height: 2,
-            background: "rgba(255,255,255,0.3)",
-            borderRadius: 2,
-            marginBottom: "3%",
-          }} />
-
-          {/* Bosnian */}
-          <h3 style={{
-            fontSize: "4.5cqi",
-            fontWeight: 700,
-            lineHeight: 1.2,
-            marginBottom: "0.5%",
           }}>
             ZVANIČNO SMO
-          </h3>
-          <h3 style={{
-            fontSize: "4.5cqi",
-            fontWeight: 700,
-            lineHeight: 1.2,
-            marginBottom: "3%",
-            background: "linear-gradient(90deg, #34d399, #5eead4)",
+          </h2>
+          <h2 style={{
+            fontSize: "7cqi",
+            fontWeight: 800,
+            lineHeight: 1.1,
+            marginBottom: "5%",
+            letterSpacing: "-0.02em",
+            background: "linear-gradient(90deg, #34d399, #6ee7b7, #5eead4)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }}>
-            NA INSTAGRAMU! 📸
-          </h3>
+            NA INSTAGRAMU!
+          </h2>
 
-          {/* Handle */}
+          {/* Decorative line */}
+          <div style={{
+            width: "12%",
+            height: 3,
+            background: "linear-gradient(90deg, transparent, rgba(52,211,153,0.6), transparent)",
+            marginBottom: "5%",
+          }} />
+
+          {/* Description */}
+          <p style={{
+            fontSize: "3cqi",
+            lineHeight: 1.6,
+            opacity: 0.8,
+            marginBottom: "5%",
+            maxWidth: "80%",
+          }}>
+            Pratite nas za vijesti, namaz vakti,
+            aktivnosti i dešavanja iz džemata.
+          </p>
+
+          {/* Handle pill */}
           <div style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "1.5%",
-            padding: "1.5% 4%",
-            background: "rgba(255,255,255,0.12)",
+            gap: "2%",
+            padding: "2% 5%",
+            background: "linear-gradient(135deg, rgba(52,211,153,0.2), rgba(94,234,212,0.1))",
             borderRadius: 50,
-            border: "1px solid rgba(255,255,255,0.15)",
-            fontSize: "2.8cqi",
-            fontWeight: 600,
+            border: "1px solid rgba(52,211,153,0.3)",
+            fontSize: "3.5cqi",
+            fontWeight: 700,
           }}>
             <svg width="1em" height="1em" viewBox="0 0 24 24" fill="white">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -174,11 +164,12 @@ const InstaPost = () => {
 
           <p style={{
             fontSize: "2.2cqi",
-            opacity: 0.5,
-            marginTop: "3%",
-            letterSpacing: "0.1em",
+            opacity: 0.4,
+            marginTop: "4%",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
           }}>
-            FOLGT UNS • PRATITE NAS
+            Pratite nas ✦ Podijelite ✦ Budite u toku
           </p>
         </div>
       </div>
