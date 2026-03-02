@@ -62,7 +62,7 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
             border: "1px solid rgba(52,211,153,0.3)",
           }}>
             <p style={{ fontSize: "2cqi", opacity: 0.5, marginBottom: "0.5%", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-              1. Termin · Hutba
+              1. Termin
             </p>
             <p style={{
               fontSize: "6.5cqi", fontWeight: 800, fontVariantNumeric: "tabular-nums",
@@ -80,7 +80,7 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
             border: "1px solid rgba(255,255,255,0.08)",
           }}>
             <p style={{ fontSize: "2cqi", opacity: 0.5, marginBottom: "0.5%", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-              2. Termin · Hutba
+              2. Termin
             </p>
             <p style={{
               fontSize: "6.5cqi", fontWeight: 800, fontVariantNumeric: "tabular-nums",
@@ -113,6 +113,15 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
             margin: 0,
           }}>
             Kada se u petak pozove na namaz, požurite Allaha spominjati.
+          </p>
+          <p style={{
+            fontSize: "2.2cqi",
+            lineHeight: 1.35,
+            opacity: 0.45,
+            maxWidth: "95%",
+            margin: 0,
+          }}>
+            Wenn zum Freitagsgebet gerufen wird, so eilt zum Gedenken Allahs.
           </p>
           <p style={{ fontSize: "1.9cqi", opacity: 0.35, margin: 0.01 }}>
             Al-Jumu'ah 62:9
