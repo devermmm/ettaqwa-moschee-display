@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Loader2 } from "lucide-react";
+import { Download, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import VaktijaStory from "@/components/insta/VaktijaStory";
 import JummaReminderStory from "@/components/insta/JummaReminderStory";
+import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 
 import instaBg from "@/assets/instagram-announcement.jpg";
 import ramadanBg from "@/assets/ramadan-story-bg.jpg";
@@ -29,7 +30,9 @@ const InstaPost = () => {
   const standortRef = useRef<HTMLDivElement>(null);
   const vaktijaRef = useRef<HTMLDivElement>(null);
   const jummaRef = useRef<HTMLDivElement>(null);
+  const quranRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
+  const [quranVerseIdx, setQuranVerseIdx] = useState(0);
 
   const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
     if (!ref.current || downloading) return;
@@ -59,6 +62,34 @@ const InstaPost = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-6">
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
+
+      {/* ===== QURAN VERSE POST ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">📖 Quran-Vers Post</h2>
+
+      <div className="flex items-center gap-3 mb-2">
+        <Button
+          variant="outline" size="icon"
+          onClick={() => setQuranVerseIdx((i) => (i - 1 + quranVerses.length) % quranVerses.length)}
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
+        <span className="text-sm text-muted-foreground font-medium">
+          Vers {quranVerseIdx + 1} / {quranVerses.length} — {quranVerses[quranVerseIdx].reference}
+        </span>
+        <Button
+          variant="outline" size="icon"
+          onClick={() => setQuranVerseIdx((i) => (i + 1) % quranVerses.length)}
+        >
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+      </div>
+
+      <QuranVersePost ref={quranRef} verseIndex={quranVerseIdx} />
+
+      <Button onClick={() => handleDownload(quranRef, `ettaqwa-quran-vers-${quranVerseIdx + 1}.png`, 1080, 1080)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading?.startsWith("ettaqwa-quran-vers") ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Quran Post herunterladen (1080×1080)
+      </Button>
 
       {/* ===== JUMMA REMINDER STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">🕌 Džuma-Namaz Story</h2>
