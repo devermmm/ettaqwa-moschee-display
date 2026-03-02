@@ -77,6 +77,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <PrayerTimesLayout />
                 <Footer />
               </>
@@ -87,6 +88,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <AboutUs />
                 <Footer />
               </>
@@ -97,6 +99,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <Projects />
                 <Footer />
               </>
@@ -107,6 +110,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <Courses />
                 <Footer />
               </>
@@ -117,6 +121,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <News />
                 <Footer />
               </>
@@ -127,6 +132,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <NewsDetail />
                 <Footer />
               </>
@@ -137,6 +143,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <Auth />
                 <Footer />
               </>
@@ -147,6 +154,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <AdminPanel />
                 <Footer />
               </>
@@ -157,6 +165,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <AdminPostManagement />
                 <Footer />
               </>
@@ -167,6 +176,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <AdminPrayerTimes />
                 <Footer />
               </>
@@ -177,6 +187,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <PrivacyPolicy />
                 <Footer />
               </>
@@ -203,6 +214,7 @@ const App = () => (
             element={
               <>
                 <Navbar />
+                <div className="pt-20" />
                 <NotFound />
                 <Footer />
               </>
