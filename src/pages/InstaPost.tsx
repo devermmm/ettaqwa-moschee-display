@@ -32,7 +32,9 @@ const InstaPost = () => {
         scale: scaleFactor,
         width: currentWidth,
         height: el.offsetHeight,
-      });
+        backgroundColor: "#001a0d",
+        fetchProxyUrl: undefined,
+      } as any);
       const link = document.createElement("a");
       link.download = filename;
       link.href = dataUrl;
@@ -299,9 +301,9 @@ const InstaPost = () => {
           overflow: "hidden",
           fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif",
           containerType: "inline-size",
+          background: "radial-gradient(ellipse at 50% 30%, #003d1f 0%, #001a0d 60%, #000d06 100%)",
         }}
       >
-        <img src={ramadanBg} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
 
         <div style={{
           position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
