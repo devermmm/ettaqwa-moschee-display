@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Download, Loader2, ChevronLeft, ChevronRight, Copy, Check } from "lucide-react";
 import VaktijaStory from "@/components/insta/VaktijaStory";
 import JummaReminderStory from "@/components/insta/JummaReminderStory";
 import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
@@ -33,6 +33,14 @@ const InstaPost = () => {
   const quranRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyCaption = async () => {
+    const caption = quranVerses[quranVerseIdx].caption;
+    await navigator.clipboard.writeText(caption);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
     if (!ref.current || downloading) return;
@@ -90,6 +98,20 @@ const InstaPost = () => {
         {downloading?.startsWith("ettaqwa-quran-vers") ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
         Quran Post herunterladen (1080×1080)
       </Button>
+
+      {/* Caption zum Kopieren */}
+      <div className="w-full max-w-[540px] rounded-lg border border-border bg-card/50 p-4">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-semibold text-foreground">📋 Instagram Beschreibung</span>
+          <Button variant="outline" size="sm" className="gap-1.5" onClick={handleCopyCaption}>
+            {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? "Kopiert!" : "Kopieren"}
+          </Button>
+        </div>
+        <pre className="text-xs text-muted-foreground whitespace-pre-wrap font-inter leading-relaxed">
+          {quranVerses[quranVerseIdx].caption}
+        </pre>
+      </div>
 
       {/* ===== JUMMA REMINDER STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">🕌 Džuma-Namaz Story</h2>
