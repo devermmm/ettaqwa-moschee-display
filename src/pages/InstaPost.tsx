@@ -423,12 +423,18 @@ const InstaPost = () => {
 
           {/* Quran verse */}
           <p style={{
-            fontSize: "2.5cqi", lineHeight: 1.6, fontStyle: "italic", opacity: 0.5,
-            marginBottom: "5%", maxWidth: "85%",
+            fontSize: "2.8cqi", lineHeight: 1.6, fontStyle: "italic", opacity: 0.55,
+            marginBottom: "2%", maxWidth: "88%",
           }}>
-            „Wer etwas Gutes tut, dem wird es vielfach vergolten."
+            „Ko udijeli sadaku, makar pola hurme, od lijepe zarade — Allah je prima Svojom desnicom."
+          </p>
+          <p style={{
+            fontSize: "2.3cqi", lineHeight: 1.6, opacity: 0.4,
+            marginBottom: "5%", maxWidth: "88%",
+          }}>
+            „Wer auch nur eine halbe Dattel als Spende gibt, von einem guten Erwerb — Allah nimmt sie mit Seiner Rechten an."
             <br />
-            <span style={{ fontSize: "0.85em", opacity: 0.7 }}>— Sure 2:261</span>
+            <span style={{ fontSize: "0.85em", opacity: 0.7 }}>— Sahih Bukhari</span>
           </p>
 
           {/* Handle */}
