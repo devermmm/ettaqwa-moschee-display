@@ -70,12 +70,6 @@ const Navbar = () => {
 
           {/* Desktop Right Side */}
           <div className="hidden md:flex items-center gap-1.5">
-            <NavLink
-              to="/auth"
-              className="px-3 py-1.5 rounded-xl text-[13px] font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-all"
-            >
-              Login
-            </NavLink>
             <button
               onClick={toggleLanguage}
               className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-all"
@@ -121,13 +115,6 @@ const Navbar = () => {
                     {item.name}
                   </NavLink>
                 ))}
-                <NavLink
-                  to="/auth"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Login
-                </NavLink>
                 <button
                   onClick={toggleLanguage}
                   className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-muted-foreground hover:bg-muted/60 transition-colors mt-1"
