@@ -472,16 +472,8 @@ const InstaPost = () => {
           objectFit: "cover", objectPosition: "center 8%", top: "-5%",
         }} />
 
-        {/* Location pin at Voitgasse position */}
-        <div style={{
-          position: "absolute", top: "37%", left: "48%", transform: "translate(-50%, -100%)",
-          zIndex: 8,
-        }}>
-          <svg viewBox="0 0 24 36" style={{ width: 36, filter: "drop-shadow(0 3px 8px rgba(0,0,0,0.6))" }}>
-            <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z" fill="#e74c3c" />
-            <circle cx="12" cy="12" r="5" fill="white" />
-          </svg>
-        </div>
+
+
 
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: "12%", zIndex: 5,
