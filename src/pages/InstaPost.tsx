@@ -4,6 +4,7 @@ import { Download, Loader2, ChevronLeft, ChevronRight, Copy, Check } from "lucid
 import VaktijaStory from "@/components/insta/VaktijaStory";
 import JummaReminderStory from "@/components/insta/JummaReminderStory";
 import TarawihStory from "@/components/insta/TarawihStory";
+import AppAnnouncementStory from "@/components/insta/AppAnnouncementStory";
 import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 import QuranVerseStory from "@/components/insta/QuranVerseStory";
 
@@ -35,6 +36,7 @@ const InstaPost = () => {
   const quranRef = useRef<HTMLDivElement>(null);
   const quranStoryRef = useRef<HTMLDivElement>(null);
   const tarawihRef = useRef<HTMLDivElement>(null);
+  const appAnnouncementRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -158,6 +160,16 @@ const InstaPost = () => {
           {quranVerses[quranVerseIdx].caption}
         </pre>
       </div>
+
+      {/* ===== APP ANNOUNCEMENT STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">📱 App-Ankündigung Story</h2>
+
+      <AppAnnouncementStory ref={appAnnouncementRef} />
+
+      <Button onClick={() => handleDownload(appAnnouncementRef, "ettaqwa-app-announcement.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading === "ettaqwa-app-announcement.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        App Story herunterladen (1080×1920)
+      </Button>
 
       {/* ===== TARAWIH STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">🌙 Teravija / Tarawih Story</h2>
