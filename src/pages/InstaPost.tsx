@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Download, Loader2, ChevronLeft, ChevronRight, Copy, Check } from "lucide-react";
 import VaktijaStory from "@/components/insta/VaktijaStory";
 import JummaReminderStory from "@/components/insta/JummaReminderStory";
+import TarawihStory from "@/components/insta/TarawihStory";
 import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 import QuranVerseStory from "@/components/insta/QuranVerseStory";
 
@@ -33,6 +34,7 @@ const InstaPost = () => {
   const jummaRef = useRef<HTMLDivElement>(null);
   const quranRef = useRef<HTMLDivElement>(null);
   const quranStoryRef = useRef<HTMLDivElement>(null);
+  const tarawihRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -156,6 +158,16 @@ const InstaPost = () => {
           {quranVerses[quranVerseIdx].caption}
         </pre>
       </div>
+
+      {/* ===== TARAWIH STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">🌙 Teravija / Tarawih Story</h2>
+
+      <TarawihStory ref={tarawihRef} />
+
+      <Button onClick={() => handleDownload(tarawihRef, "ettaqwa-tarawih-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading === "ettaqwa-tarawih-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Tarawih Story herunterladen (1080×1920)
+      </Button>
 
       {/* ===== JUMMA REMINDER STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">🕌 Džuma-Namaz Story</h2>
