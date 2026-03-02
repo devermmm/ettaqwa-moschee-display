@@ -105,27 +105,16 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
           border: "1px solid rgba(255,255,255,0.05)",
         }}>
           <p style={{
-            fontSize: "3cqi",
-            fontFamily: "'Amiri', serif",
-            lineHeight: 1.45,
-            maxWidth: "100%",
-            direction: "rtl",
-            opacity: 0.65,
-            margin: 0,
-          }}>
-            إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ
-          </p>
-          <p style={{
-            fontSize: "2.1cqi",
+            fontSize: "2.5cqi",
             lineHeight: 1.35,
-            opacity: 0.5,
+            opacity: 0.6,
             fontStyle: "italic",
             maxWidth: "95%",
             margin: 0,
           }}>
             Kada se u petak pozove na namaz, požurite Allaha spominjati.
           </p>
-          <p style={{ fontSize: "1.7cqi", opacity: 0.35, margin: 0.01 }}>
+          <p style={{ fontSize: "1.9cqi", opacity: 0.35, margin: 0.01 }}>
             Al-Jumu'ah 62:9
           </p>
 
