@@ -91,46 +91,57 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
           </div>
         </div>
 
-        {/* Verse + Footer */}
+        {/* Verse */}
         <div style={{
-          width: "88%",
-          marginTop: "0.8cqi",
+          width: "90%",
+          marginTop: "1.5cqi",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "0.7cqi",
-          padding: "2.5% 4%",
-          borderRadius: 12,
-          background: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(255,255,255,0.05)",
+          gap: "1.2cqi",
+          padding: "4% 5%",
+          borderRadius: 16,
+          background: "linear-gradient(135deg, rgba(52,211,153,0.06), rgba(255,255,255,0.02))",
+          border: "1px solid rgba(52,211,153,0.12)",
         }}>
+          <div style={{
+            width: "10%", height: 1, marginBottom: "0.3cqi",
+            background: "linear-gradient(90deg, transparent, rgba(52,211,153,0.4), transparent)",
+          }} />
+          <p style={{
+            fontSize: "3cqi",
+            lineHeight: 1.45,
+            opacity: 0.75,
+            fontStyle: "italic",
+            fontWeight: 500,
+            maxWidth: "95%",
+            margin: 0,
+          }}>
+            „Kada se u petak pozove na namaz, požurite Allaha spominjati."
+          </p>
           <p style={{
             fontSize: "2.5cqi",
-            lineHeight: 1.35,
-            opacity: 0.6,
-            fontStyle: "italic",
+            lineHeight: 1.4,
+            opacity: 0.5,
             maxWidth: "95%",
             margin: 0,
           }}>
-            Kada se u petak pozove na namaz, požurite Allaha spominjati.
+            „Wenn zum Freitagsgebet gerufen wird, so eilt zum Gedenken Allahs."
           </p>
           <p style={{
-            fontSize: "2.2cqi",
-            lineHeight: 1.35,
-            opacity: 0.45,
-            maxWidth: "95%",
-            margin: 0,
+            fontSize: "2cqi", opacity: 0.35, margin: 0,
+            letterSpacing: "0.05em", fontWeight: 600,
           }}>
-            Wenn zum Freitagsgebet gerufen wird, so eilt zum Gedenken Allahs.
-          </p>
-          <p style={{ fontSize: "1.9cqi", opacity: 0.35, margin: 0.01 }}>
             Al-Jumu'ah 62:9
           </p>
+        </div>
 
-          <p style={{ fontSize: "1.7cqi", opacity: 0.32, letterSpacing: "0.08em", marginTop: "0.8cqi" }}>
+        {/* Footer */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4cqi" }}>
+          <p style={{ fontSize: "1.8cqi", opacity: 0.3, letterSpacing: "0.08em", margin: 0 }}>
             📍 Voitgasse 21 · 1220 Wien
           </p>
-          <p style={{ fontSize: "1.9cqi", fontWeight: 600, opacity: 0.35, margin: 0 }}>
+          <p style={{ fontSize: "2cqi", fontWeight: 600, opacity: 0.35, margin: 0 }}>
             @dzemat_et_taqwa
           </p>
         </div>
