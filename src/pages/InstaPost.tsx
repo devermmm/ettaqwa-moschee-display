@@ -86,7 +86,7 @@ const InstaPost = () => {
           <img
             src={logo}
             alt="Et-Taqwa"
-            style={{ width: "10%", marginBottom: "3%", borderRadius: "8%" }}
+            style={{ width: "12%", aspectRatio: "1 / 1", objectFit: "contain", marginBottom: "3%", borderRadius: 0 }}
           />
 
           {/* Title */}
