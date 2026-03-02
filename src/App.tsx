@@ -28,6 +28,7 @@ import Plakat from "./pages/Plakat";
 import Speisekarte from "./pages/Speisekarte";
 import VaktijaPrint from "./pages/VaktijaPrint";
 import InstaPost from "./pages/InstaPost";
+import AppPage from "./pages/AppPage";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -79,6 +80,17 @@ const App = () => (
                 <Navbar />
                 <div className="pt-20" />
                 <PrayerTimesLayout />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/unsere-app"
+            element={
+              <>
+                <Navbar />
+                <div className="pt-20" />
+                <AppPage />
                 <Footer />
               </>
             }

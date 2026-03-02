@@ -21,6 +21,7 @@ const Navbar = () => {
     { name: t("nav.home"), path: "/" },
     { name: t("nav.prayerTimes"), path: "/gebetszeiten" },
     { name: t("nav.about"), path: "/about" },
+    { name: language === "bs" ? "Aplikacija" : "App", path: "/unsere-app" },
     { name: language === "bs" ? "Novosti" : "Neuigkeiten", path: "/news" },
   ];
 
