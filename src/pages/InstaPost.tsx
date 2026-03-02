@@ -13,6 +13,7 @@ import highlightHadith from "@/assets/highlight-hadith.png";
 import highlightSpenden from "@/assets/highlight-spenden.png";
 import mapVienna from "@/assets/map-vienna.png";
 import highlightStandort from "@/assets/highlight-standort.png";
+import highlightDzuma from "@/assets/highlight-dzuma.png";
 
 const INSTA_ICON = (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="white">
@@ -549,6 +550,20 @@ const InstaPost = () => {
 
       {/* ===== HIGHLIGHT ICON ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">Highlight Icon – Hadith</h2>
+
+      {/* ===== HIGHLIGHT ICON DŽUMA ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">Highlight Icon – Džuma</h2>
+
+      <div className="rounded-full overflow-hidden border border-border" style={{ width: 160, height: 160 }}>
+        <img src={highlightDzuma} alt="Džuma Highlight" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      </div>
+
+      <a href={highlightDzuma} download="ettaqwa-highlight-dzuma.png">
+        <Button size="lg" className="gap-2">
+          <Download className="w-5 h-5" />
+          Highlight Icon herunterladen
+        </Button>
+      </a>
 
       <div className="rounded-full overflow-hidden border border-border" style={{ width: 160, height: 160 }}>
         <img src={highlightHadith} alt="Hadith Highlight" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
