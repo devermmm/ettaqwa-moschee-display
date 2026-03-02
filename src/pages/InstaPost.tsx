@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Loader2 } from "lucide-react";
 import instaBg from "@/assets/instagram-announcement.jpg";
+import ramadanBg from "@/assets/ramadan-story-bg.jpg";
 import logo from "@/assets/logo.png";
 import profileLogo from "@/assets/ettaqwa-profile-logo.png";
 
@@ -14,6 +15,7 @@ const INSTA_ICON = (
 const InstaPost = () => {
   const postRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<HTMLDivElement>(null);
+  const ramadanRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
 
   const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
@@ -282,6 +284,93 @@ const InstaPost = () => {
       <Button onClick={() => handleDownload(storyRef, "ettaqwa-instagram-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
         {downloading === "ettaqwa-instagram-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
         Story herunterladen (1080×1920)
+      </Button>
+
+      {/* ===== RAMADAN HADITH STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">Ramadan Hadith Story</h2>
+
+      <div
+        ref={ramadanRef}
+        style={{
+          width: "min(100%, 540px)",
+          aspectRatio: "9 / 16",
+          position: "relative",
+          overflow: "hidden",
+          fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif",
+          containerType: "inline-size",
+        }}
+      >
+        <img src={ramadanBg} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,20,10,0.4) 0%, rgba(0,20,10,0.7) 100%)" }} />
+
+        <div style={{
+          position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center", width: "100%", height: "100%",
+          padding: "8% 7%", textAlign: "center", color: "white",
+        }}>
+          <p style={{
+            fontSize: "2.8cqi", fontWeight: 600, letterSpacing: "0.3em", textTransform: "uppercase",
+            opacity: 0.5, marginBottom: "4%",
+          }}>
+            ✦ Hadith ✦
+          </p>
+
+          <img src={logo} alt="Et-Taqwa" style={{ width: "14%", objectFit: "contain", marginBottom: "5%" }} />
+
+          <h2 style={{
+            fontSize: "6cqi", fontWeight: 800, lineHeight: 1.1, marginBottom: "1%", letterSpacing: "-0.02em",
+            background: "linear-gradient(90deg, #fbbf24, #f59e0b, #d97706)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+          }}>
+            RAMAZAN
+          </h2>
+          <p style={{ fontSize: "3cqi", fontWeight: 500, opacity: 0.6, marginBottom: "6%", letterSpacing: "0.15em" }}>
+            رمضان كريم
+          </p>
+
+          <div style={{ width: "20%", height: 1, background: "linear-gradient(90deg, transparent, rgba(251,191,36,0.5), transparent)", marginBottom: "5%" }} />
+
+          <div style={{
+            background: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.2)",
+            borderRadius: 16, padding: "5% 6%", marginBottom: "4%", maxWidth: "95%",
+          }}>
+            <p style={{ fontSize: "3.2cqi", lineHeight: 1.6, fontWeight: 500, fontStyle: "italic" }}>
+              „Ko posti Ramazan vjerujući i nadajući se nagradi, bit će mu oprošteni prethodni grijesi."
+            </p>
+            <p style={{ fontSize: "2.2cqi", opacity: 0.5, marginTop: "3%", fontWeight: 600 }}>
+              — Sahih Buhari
+            </p>
+          </div>
+
+          <div style={{
+            background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: 16, padding: "5% 6%", marginBottom: "5%", maxWidth: "95%",
+          }}>
+            <p style={{ fontSize: "3cqi", lineHeight: 1.6, fontWeight: 400, opacity: 0.85 }}>
+              „Wer den Ramadan mit Glauben und Hoffnung auf Belohnung fastet, dem werden seine vorherigen Sünden vergeben."
+            </p>
+            <p style={{ fontSize: "2.2cqi", opacity: 0.4, marginTop: "3%", fontWeight: 600 }}>
+              — Sahih Bukhari
+            </p>
+          </div>
+
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: "2%", padding: "2% 5%",
+            background: "rgba(251,191,36,0.1)", borderRadius: 50,
+            border: "1px solid rgba(251,191,36,0.25)", fontSize: "3.2cqi", fontWeight: 700,
+          }}>
+            {INSTA_ICON}
+            @dzemat_et_taqwa
+          </div>
+
+          <p style={{ fontSize: "2.2cqi", opacity: 0.35, marginTop: "4%", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+            Džemat Et-Taqwa
+          </p>
+        </div>
+      </div>
+
+      <Button onClick={() => handleDownload(ramadanRef, "ettaqwa-ramadan-hadith-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading === "ettaqwa-ramadan-hadith-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Ramadan Story herunterladen (1080×1920)
       </Button>
 
       {/* ===== PROFILE LOGO ===== */}
