@@ -23,64 +23,83 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
       }} />
 
       <div style={{
-        position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "space-between", width: "100%", height: "100%",
-        padding: "8% 7%", textAlign: "center", color: "white",
+        position: "relative",
+        zIndex: 10,
+        display: "grid",
+        gridTemplateRows: "auto 1fr auto",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+        padding: "7% 7% 6%",
+        textAlign: "center",
+        color: "white",
+        rowGap: "2.2cqi",
       }}>
-        {/* Top: Logo + Name */}
+        {/* Top */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <img src={logo} alt="Et-Taqwa" style={{ width: "14%", objectFit: "contain", marginBottom: "2%" }} />
+          <img src={logo} alt="Et-Taqwa" style={{ width: "13%", objectFit: "contain", marginBottom: "1.5%" }} />
           <p style={{
-            fontSize: "2.2cqi", fontWeight: 500, letterSpacing: "0.25em",
-            textTransform: "uppercase", opacity: 0.5,
+            fontSize: "2cqi",
+            fontWeight: 500,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            opacity: 0.5,
           }}>
             Džemat Et-Taqwa
           </p>
         </div>
 
-        {/* Middle: Title + Times */}
+        {/* Middle */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-          {/* Arabic */}
           <h2 style={{
-            fontSize: "6cqi", fontWeight: 700, marginBottom: "2%",
+            fontSize: "5.2cqi",
+            fontWeight: 700,
+            marginBottom: "1.6%",
             fontFamily: "'Amiri', 'Times New Roman', serif",
-            lineHeight: 1.3,
+            lineHeight: 1.25,
           }}>
             صَلَاةُ الْجُمُعَة
           </h2>
 
-          {/* Title */}
           <h3 style={{
-            fontSize: "5.5cqi", fontWeight: 800, lineHeight: 1.1, marginBottom: "0.5%",
+            fontSize: "4.9cqi",
+            fontWeight: 800,
+            lineHeight: 1.06,
+            marginBottom: "0.2%",
             background: "linear-gradient(90deg, #34d399, #6ee7b7, #5eead4)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
           }}>
             DŽUMA-NAMAZ
           </h3>
-          <p style={{ fontSize: "3cqi", fontWeight: 600, opacity: 0.45, marginBottom: "4%" }}>
+          <p style={{ fontSize: "2.6cqi", fontWeight: 600, opacity: 0.45, marginBottom: "3%" }}>
             FREITAGSGEBET
           </p>
 
-          {/* Divider */}
           <div style={{
-            width: "15%", height: 2, marginBottom: "4%",
+            width: "14%",
+            height: 2,
+            marginBottom: "3.4%",
             background: "linear-gradient(90deg, transparent, rgba(52,211,153,0.5), transparent)",
           }} />
 
-          {/* Two prayer times */}
-          <div style={{ width: "85%", display: "flex", flexDirection: "column", gap: "2.5cqi" }}>
+          <div style={{ width: "84%", display: "flex", flexDirection: "column", gap: "2cqi" }}>
             <div style={{
-              padding: "3.5% 5%", borderRadius: 16,
+              padding: "3.2% 5%",
+              borderRadius: 16,
               background: "linear-gradient(135deg, rgba(52,211,153,0.15), rgba(94,234,212,0.05))",
               border: "1px solid rgba(52,211,153,0.3)",
             }}>
-              <p style={{ fontSize: "2.2cqi", opacity: 0.5, marginBottom: "1%", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+              <p style={{ fontSize: "2cqi", opacity: 0.5, marginBottom: "0.8%", letterSpacing: "0.15em", textTransform: "uppercase" }}>
                 1. Termin · Hutba
               </p>
               <p style={{
-                fontSize: "7cqi", fontWeight: 800, fontVariantNumeric: "tabular-nums",
+                fontSize: "6.2cqi",
+                fontWeight: 800,
+                fontVariantNumeric: "tabular-nums",
                 background: "linear-gradient(90deg, #34d399, #6ee7b7)",
-                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
                 lineHeight: 1,
               }}>
                 12:15
@@ -88,16 +107,20 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
             </div>
 
             <div style={{
-              padding: "3.5% 5%", borderRadius: 16,
+              padding: "3.2% 5%",
+              borderRadius: 16,
               background: "rgba(255,255,255,0.03)",
               border: "1px solid rgba(255,255,255,0.08)",
             }}>
-              <p style={{ fontSize: "2.2cqi", opacity: 0.5, marginBottom: "1%", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+              <p style={{ fontSize: "2cqi", opacity: 0.5, marginBottom: "0.8%", letterSpacing: "0.15em", textTransform: "uppercase" }}>
                 2. Termin · Hutba
               </p>
               <p style={{
-                fontSize: "7cqi", fontWeight: 800, fontVariantNumeric: "tabular-nums",
-                lineHeight: 1, opacity: 0.85,
+                fontSize: "6.2cqi",
+                fontWeight: 800,
+                fontVariantNumeric: "tabular-nums",
+                lineHeight: 1,
+                opacity: 0.85,
               }}>
                 13:00
               </p>
@@ -105,25 +128,30 @@ const JummaReminderStory = forwardRef<HTMLDivElement>((_, ref) => {
           </div>
         </div>
 
-        {/* Bottom: Verse + Footer */}
+        {/* Bottom */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <p style={{
-            fontSize: "2.5cqi", fontFamily: "'Amiri', serif", lineHeight: 1.5,
-            marginBottom: "1.5%", maxWidth: "90%", direction: "rtl", opacity: 0.7,
+            fontSize: "2.1cqi",
+            fontFamily: "'Amiri', serif",
+            lineHeight: 1.45,
+            marginBottom: "1.2%",
+            maxWidth: "88%",
+            direction: "rtl",
+            opacity: 0.7,
           }}>
             إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ
           </p>
-          <p style={{ fontSize: "1.8cqi", lineHeight: 1.4, opacity: 0.4, fontStyle: "italic", marginBottom: "1%", maxWidth: "85%" }}>
+          <p style={{ fontSize: "1.5cqi", lineHeight: 1.35, opacity: 0.4, fontStyle: "italic", marginBottom: "0.6%", maxWidth: "82%" }}>
             Kada se u petak pozove na namaz, požurite Allaha spominjati.
           </p>
-          <p style={{ fontSize: "1.5cqi", opacity: 0.25, marginBottom: "3%" }}>
+          <p style={{ fontSize: "1.3cqi", opacity: 0.25, marginBottom: "1.8%" }}>
             Al-Jumu'ah 62:9
           </p>
 
-          <p style={{ fontSize: "2cqi", opacity: 0.3, letterSpacing: "0.1em" }}>
+          <p style={{ fontSize: "1.8cqi", opacity: 0.3, letterSpacing: "0.09em" }}>
             📍 Voitgasse 21 · 1220 Wien
           </p>
-          <p style={{ fontSize: "2.2cqi", fontWeight: 600, opacity: 0.35, marginTop: "1%" }}>
+          <p style={{ fontSize: "2cqi", fontWeight: 600, opacity: 0.35, marginTop: "0.6%" }}>
             @dzemat_et_taqwa
           </p>
         </div>
