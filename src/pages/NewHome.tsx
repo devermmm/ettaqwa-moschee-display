@@ -72,7 +72,7 @@ const NewHome = () => {
             alt="" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
 
         {/* Centered content */}
@@ -83,25 +83,22 @@ const NewHome = () => {
             animate="visible"
             className="flex flex-col items-center"
           >
-            <motion.h1 
-              variants={fadeUp}
-              className="text-6xl sm:text-8xl md:text-9xl lg:text-[11rem] font-black text-white tracking-tighter leading-[0.85] uppercase"
-            >
-              DZEMAT
-              <br />
-              <span className="text-primary">ET TAQWA</span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              className="text-white/50 mt-6 sm:mt-8 text-sm sm:text-base tracking-[0.3em] uppercase font-medium"
-            >
-              {language === "bs" ? "Bošnjački kulturni centar · Beč" : "Bosniakisches Kulturzentrum · Wien"}
-            </motion.p>
+            {/* Title with frosted glass background */}
+            <motion.div variants={fadeUp} className="bg-white/10 backdrop-blur-md rounded-3xl px-8 sm:px-14 py-8 sm:py-12 border border-white/10">
+              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tight leading-[0.9] uppercase">
+                DZEMAT
+              </h1>
+              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-primary tracking-tight leading-[0.9] uppercase mt-1">
+                ET TAQWA
+              </h1>
+              <p className="text-white/50 mt-5 sm:mt-6 text-xs sm:text-sm tracking-[0.3em] uppercase font-medium">
+                {language === "bs" ? "Bošnjački kulturni centar · Beč" : "Bosniakisches Kulturzentrum · Wien"}
+              </p>
+            </motion.div>
 
             <motion.div
               variants={fadeUp}
-              className="flex flex-col sm:flex-row gap-3 mt-10 sm:mt-14"
+              className="flex flex-col sm:flex-row gap-3 mt-8 sm:mt-10"
             >
               <Link to="/gebetszeiten">
                 <motion.button
