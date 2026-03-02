@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Download, Loader2 } from "lucide-react";
 import instaBg from "@/assets/instagram-announcement.jpg";
 import logo from "@/assets/logo.png";
+import profileLogo from "@/assets/ettaqwa-profile-logo.png";
 
 const INSTA_ICON = (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="white">
@@ -283,8 +284,22 @@ const InstaPost = () => {
         Story herunterladen (1080×1920)
       </Button>
 
+      {/* ===== PROFILE LOGO ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">Profilbild Logo</h2>
+
+      <div className="rounded-xl overflow-hidden border border-border" style={{ width: "min(100%, 400px)" }}>
+        <img src={profileLogo} alt="Et-Taqwa Profilbild" style={{ width: "100%", display: "block" }} />
+      </div>
+
+      <a href={profileLogo} download="ettaqwa-profilbild.png">
+        <Button size="lg" className="gap-2">
+          <Download className="w-5 h-5" />
+          Profilbild herunterladen
+        </Button>
+      </a>
+
       <p className="text-sm text-muted-foreground max-w-md text-center mb-8">
-        Beide Bilder werden in voller Instagram-Auflösung heruntergeladen.
+        Alle Bilder werden in voller Instagram-Auflösung heruntergeladen.
       </p>
     </div>
   );
