@@ -8,7 +8,7 @@ import logoTransparent from "@/assets/logo-transparent.png";
 import profileLogo from "@/assets/ettaqwa-profile-logo.png";
 import highlightHadith from "@/assets/highlight-hadith.png";
 import highlightSpenden from "@/assets/highlight-spenden.png";
-import mapVienna from "@/assets/map-vienna.jpg";
+import mapVienna from "@/assets/map-vienna.png";
 
 const INSTA_ICON = (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="white">
@@ -466,44 +466,48 @@ const InstaPost = () => {
           containerType: "inline-size",
         }}
       >
-        <img src={mapVienna} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+        {/* Map image - cropped to hide status bar and search bar */}
+        <img src={mapVienna} alt="" style={{
+          position: "absolute", left: 0, right: 0, width: "100%", height: "115%",
+          objectFit: "cover", objectPosition: "center 8%", top: "-5%",
+        }} />
 
-        {/* Bottom card overlay */}
+        {/* Top fade to hide status bar */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, height: "12%", zIndex: 5,
+          background: "linear-gradient(180deg, rgba(15,20,30,1) 0%, rgba(15,20,30,0.8) 50%, transparent 100%)",
+        }} />
+
+        {/* Bottom overlay with info */}
         <div style={{
           position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 10,
-          background: "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0.9) 100%)",
-          padding: "25% 8% 8%",
+          background: "linear-gradient(180deg, transparent 0%, rgba(10,15,20,0.85) 40%, rgba(10,15,20,0.97) 100%)",
+          padding: "30% 8% 8%",
           display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", color: "white",
         }}>
-          {/* Location pin */}
-          <svg viewBox="0 0 24 24" fill="none" style={{ width: "8%", marginBottom: "3%" }}>
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="rgba(52,211,153,0.8)" stroke="white" strokeWidth="1" />
-            <circle cx="12" cy="10" r="3" fill="white" />
-          </svg>
-
           <h2 style={{
             fontSize: "5.5cqi", fontWeight: 800, lineHeight: 1.1, marginBottom: "2%",
           }}>
             BESUCHE UNS
           </h2>
 
-          <p style={{ fontSize: "3cqi", opacity: 0.6, marginBottom: "4%", letterSpacing: "0.1em" }}>
+          <p style={{ fontSize: "3cqi", opacity: 0.5, marginBottom: "5%", letterSpacing: "0.1em" }}>
             Posjeti nas
           </p>
 
           <div style={{
-            background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
-            borderRadius: 16, padding: "4% 6%", width: "90%", marginBottom: "4%",
+            background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: 16, padding: "4% 6%", width: "85%", marginBottom: "5%",
           }}>
             <p style={{ fontSize: "3.5cqi", fontWeight: 700, marginBottom: "1.5%" }}>
-              Voitgasse 21
+              📍 Voitgasse 21
             </p>
-            <p style={{ fontSize: "2.8cqi", opacity: 0.7 }}>
+            <p style={{ fontSize: "2.8cqi", opacity: 0.6 }}>
               1220 Wien, Österreich
             </p>
           </div>
 
-          <p style={{ fontSize: "2.8cqi", fontWeight: 600, opacity: 0.4 }}>
+          <p style={{ fontSize: "2.8cqi", fontWeight: 600, opacity: 0.35 }}>
             @dzemat_et_taqwa
           </p>
         </div>
