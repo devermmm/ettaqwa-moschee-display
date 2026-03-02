@@ -143,6 +143,20 @@ const InstaPost = () => {
         Quran Story herunterladen (1080×1920)
       </Button>
 
+      {/* Caption zum Kopieren - Story */}
+      <div className="w-full max-w-[540px] rounded-lg border border-border bg-card/50 p-4">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-semibold text-foreground">📋 Instagram Beschreibung</span>
+          <Button variant="outline" size="sm" className="gap-1.5" onClick={handleCopyCaption}>
+            {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? "Kopiert!" : "Kopieren"}
+          </Button>
+        </div>
+        <pre className="text-xs text-muted-foreground whitespace-pre-wrap font-inter leading-relaxed">
+          {quranVerses[quranVerseIdx].caption}
+        </pre>
+      </div>
+
       {/* ===== JUMMA REMINDER STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">🕌 Džuma-Namaz Story</h2>
 
