@@ -202,7 +202,6 @@ const StoryVideoOverlay = () => {
 
       const exportVid = document.createElement("video");
       exportVid.src = videoSrc;
-      exportVid.muted = true;
       exportVid.playsInline = true;
       exportVid.crossOrigin = "anonymous";
 
