@@ -2,13 +2,19 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Loader2, Download } from "lucide-react";
 import logo from "@/assets/ettaqwa-profile-logo.png";
 
-interface Subtitle {
+interface SubtitleSegment {
   start: number;
   end: number;
   text: string;
 }
 
-const subtitles: Subtitle[] = [
+// Each word with its own timing
+interface TimedWord {
+  word: string;
+  start: number;
+}
+
+const segments: SubtitleSegment[] = [
   { start: 0.699, end: 3.699, text: "Gdje se kune vremenom pa kaže Svi su ljudi" },
   { start: 4.019, end: 6.799, text: "na gubitku, osim onih koji vjeruju" },
   { start: 7.679, end: 11.44, text: "i dobra djela čine i koji preporučuju" },
@@ -28,8 +34,31 @@ const subtitles: Subtitle[] = [
   { start: 51.299, end: 52.059, text: "da je uzvišenija" },
 ];
 
-const getSubtitleAtTime = (time: number): string => {
-  return subtitles.find((s) => time >= s.start && time <= s.end)?.text || "";
+// Pre-compute timed words: each word gets evenly distributed timing within its segment
+const timedWords: TimedWord[] = [];
+for (const seg of segments) {
+  const words = seg.text.split(/\s+/);
+  const duration = seg.end - seg.start;
+  const interval = words.length > 1 ? duration / words.length : duration;
+  for (let i = 0; i < words.length; i++) {
+    timedWords.push({
+      word: words[i],
+      start: seg.start + i * interval,
+    });
+  }
+}
+
+// Get visible words at a given time – words that have started, within the current segment
+const getVisibleTextAtTime = (time: number): string => {
+  const currentSeg = segments.find((s) => time >= s.start && time <= s.end);
+  if (!currentSeg) return "";
+
+  const segWords = timedWords.filter(
+    (w) => w.start >= currentSeg.start && w.start < currentSeg.end
+  );
+
+  const visible = segWords.filter((w) => time >= w.start);
+  return visible.map((w) => w.word).join(" ");
 };
 
 const StoryVideoOverlay = () => {
@@ -57,7 +86,7 @@ const StoryVideoOverlay = () => {
     return () => video.removeEventListener("timeupdate", handleTimeUpdate);
   }, []);
 
-  const subtitle = getSubtitleAtTime(currentTime);
+  const subtitle = getVisibleTextAtTime(currentTime);
 
   const drawFrame = useCallback(
     (ctx: CanvasRenderingContext2D, video: HTMLVideoElement, time: number, w: number, h: number) => {
@@ -80,10 +109,10 @@ const StoryVideoOverlay = () => {
       // Logo
       const logoSize = Math.round(w * 0.13);
       const logoPad = Math.round(w * 0.04);
-      const logoRadius = Math.round(logoSize * 0.25);
+      const logoR = Math.round(logoSize * 0.25);
       ctx.save();
       ctx.beginPath();
-      ctx.roundRect(logoPad, logoPad, logoSize, logoSize, logoRadius);
+      ctx.roundRect(logoPad, logoPad, logoSize, logoSize, logoR);
       ctx.fillStyle = "white";
       ctx.shadowColor = "rgba(0,0,0,0.5)";
       ctx.shadowBlur = 12;
@@ -92,7 +121,7 @@ const StoryVideoOverlay = () => {
       if (logoImgRef.current) {
         ctx.save();
         ctx.beginPath();
-        ctx.roundRect(logoPad, logoPad, logoSize, logoSize, logoRadius);
+        ctx.roundRect(logoPad, logoPad, logoSize, logoSize, logoR);
         ctx.clip();
         ctx.drawImage(logoImgRef.current, logoPad, logoPad, logoSize, logoSize);
         ctx.restore();
@@ -108,20 +137,20 @@ const StoryVideoOverlay = () => {
       ctx.fillText("@dzemat_et_taqwa", w - logoPad, logoPad + Math.round(w * 0.04));
       ctx.restore();
 
-      // Subtitle
-      const sub = getSubtitleAtTime(time);
+      // Subtitle (word-by-word)
+      const sub = getVisibleTextAtTime(time);
       if (sub) {
         ctx.save();
-        const fontSize = Math.round(w * 0.045);
+        const fontSize = Math.round(w * 0.048);
         ctx.font = `bold ${fontSize}px system-ui, sans-serif`;
         ctx.textAlign = "center";
-        const maxWidth = w * 0.85;
+        const maxWidth = w * 0.88;
         const metrics = ctx.measureText(sub);
         const textW = Math.min(metrics.width, maxWidth);
         const padX = Math.round(w * 0.04);
-        const padY = Math.round(w * 0.025);
+        const padY = Math.round(w * 0.028);
         const boxW = textW + padX * 2;
-        const boxH = fontSize * 1.4 + padY * 2;
+        const boxH = fontSize * 1.5 + padY * 2;
         const boxX = (w - boxW) / 2;
         const boxY = h * 0.82 - padY;
         const boxR = Math.round(w * 0.025);
@@ -134,7 +163,7 @@ const StoryVideoOverlay = () => {
         ctx.fillStyle = "white";
         ctx.shadowColor = "rgba(0,0,0,0.5)";
         ctx.shadowBlur = 4;
-        ctx.fillText(sub, w / 2, h * 0.82 + fontSize * 0.8, maxWidth);
+        ctx.fillText(sub, w / 2, h * 0.82 + fontSize * 0.85, maxWidth);
         ctx.restore();
       }
 
@@ -189,8 +218,19 @@ const StoryVideoOverlay = () => {
         ...audioDest.stream.getAudioTracks(),
       ]);
 
+      // Try MP4 first (Safari), fall back to WebM
+      let mimeType = "video/mp4";
+      if (!MediaRecorder.isTypeSupported(mimeType)) {
+        mimeType = "video/webm;codecs=vp9";
+      }
+      if (!MediaRecorder.isTypeSupported(mimeType)) {
+        mimeType = "video/webm";
+      }
+
+      const ext = mimeType.includes("mp4") ? "mp4" : "webm";
+
       const mediaRecorder = new MediaRecorder(combinedStream, {
-        mimeType: "video/webm;codecs=vp9",
+        mimeType,
         videoBitsPerSecond: 8_000_000,
       });
 
@@ -201,11 +241,11 @@ const StoryVideoOverlay = () => {
 
       const downloadPromise = new Promise<void>((resolve) => {
         mediaRecorder.onstop = () => {
-          const blob = new Blob(chunks, { type: "video/webm" });
+          const blob = new Blob(chunks, { type: mimeType });
           const url = URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
-          a.download = "instagram-story.webm";
+          a.download = `instagram-story.${ext}`;
           a.click();
           URL.revokeObjectURL(url);
           resolve();
@@ -257,33 +297,20 @@ const StoryVideoOverlay = () => {
           crossOrigin="anonymous"
         />
 
-        {/* Top gradient */}
-        <div
-          className="absolute top-0 left-0 right-0 pointer-events-none"
-          style={{ height: 160, background: "linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)" }}
-        />
+        <div className="absolute top-0 left-0 right-0 pointer-events-none" style={{ height: 160, background: "linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)" }} />
 
-        {/* Logo */}
         <div className="absolute top-4 left-4 pointer-events-none">
           <div className="rounded-2xl overflow-hidden shadow-lg" style={{ width: 56, height: 56, backgroundColor: "white" }}>
             <img src={logo} alt="Et Taqwa" className="w-full h-full object-contain" />
           </div>
         </div>
 
-        {/* Handle */}
         <div className="absolute top-5 right-4 pointer-events-none">
-          <span className="text-white font-bold text-xs" style={{ textShadow: "0 1px 8px rgba(0,0,0,0.8)" }}>
-            @dzemat_et_taqwa
-          </span>
+          <span className="text-white font-bold text-xs" style={{ textShadow: "0 1px 8px rgba(0,0,0,0.8)" }}>@dzemat_et_taqwa</span>
         </div>
 
-        {/* Bottom gradient */}
-        <div
-          className="absolute bottom-0 left-0 right-0 pointer-events-none"
-          style={{ height: 200, background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}
-        />
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: 200, background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }} />
 
-        {/* Subtitle */}
         {subtitle && (
           <div className="absolute bottom-16 left-3 right-3 pointer-events-none flex justify-center">
             <div className="px-4 py-2.5 rounded-xl text-center" style={{ backgroundColor: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)" }}>
@@ -294,15 +321,11 @@ const StoryVideoOverlay = () => {
           </div>
         )}
 
-        {/* Website */}
         <div className="absolute bottom-4 left-0 right-0 pointer-events-none flex justify-center">
-          <span className="text-white/80 font-semibold text-xs" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)" }}>
-            et-taqwa.com
-          </span>
+          <span className="text-white/80 font-semibold text-xs" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)" }}>et-taqwa.com</span>
         </div>
       </div>
 
-      {/* Download button */}
       <button
         onClick={exportVideo}
         disabled={isExporting}
@@ -322,7 +345,7 @@ const StoryVideoOverlay = () => {
       </button>
 
       {error && <p className="text-red-400 text-sm">{error}</p>}
-      <p className="text-white/30 text-xs">1080×1920 · 9:16 · Instagram Story mit Untertiteln</p>
+      <p className="text-white/30 text-xs">1080×1920 · 9:16 · Wort-für-Wort Untertitel</p>
     </div>
   );
 };
