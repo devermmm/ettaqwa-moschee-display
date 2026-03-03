@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { domToPng } from "modern-screenshot";
 import { Download } from "lucide-react";
-import logo from "@/assets/logo-transparent.png";
+import logo from "@/assets/ettaqwa-profile-logo.png";
 
 const TikTokOverlay = () => {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -65,10 +65,12 @@ const TikTokOverlay = () => {
                 src={logo}
                 alt="Et Taqwa"
                 style={{
-                  width: 120,
-                  height: 120,
+                  width: 220,
+                  height: 220,
                   objectFit: "contain",
-                  filter: "brightness(1.2) drop-shadow(0 2px 8px rgba(0,0,0,0.5))",
+                  borderRadius: 40,
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                  filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.4))",
                 }}
               />
 
