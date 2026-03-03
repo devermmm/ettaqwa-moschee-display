@@ -30,6 +30,7 @@ import VaktijaPrint from "./pages/VaktijaPrint";
 import InstaPost from "./pages/InstaPost";
 import TikTokOverlay from "./pages/TikTokOverlay";
 import StoryVideoOverlay from "./pages/StoryVideoOverlay";
+import ReelCover from "./pages/ReelCover";
 import AppPage from "./pages/AppPage";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
@@ -230,6 +231,10 @@ const App = () => (
           <Route
             path="/story-video"
             element={<StoryVideoOverlay />}
+          />
+          <Route
+            path="/reel-cover"
+            element={<ReelCover />}
           />
           <Route
             path="*"
