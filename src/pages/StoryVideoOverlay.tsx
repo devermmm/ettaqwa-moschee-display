@@ -6,27 +6,26 @@ interface SubtitleSegment {
   start: number;
   end: number;
   text: string;
-  de: string; // German translation
 }
 
 const segments: SubtitleSegment[] = [
-  { start: 0.699, end: 3.699, text: "Gdje se kune vremenom pa kaže Svi su ljudi", de: "Wo Er bei der Zeit schwört und sagt: Alle Menschen" },
-  { start: 4.019, end: 6.799, text: "na gubitku, osim onih koji vjeruju", de: "sind im Verlust, außer denen, die glauben" },
-  { start: 7.679, end: 11.44, text: "i dobra djela čine i koji preporučuju", de: "und gute Taten vollbringen und einander empfehlen" },
-  { start: 11.5, end: 14.639, text: "istinu, hak i istinu", de: "die Wahrheit, das Recht und die Wahrheit" },
-  { start: 14.699, end: 19.739, text: "i sabur strpljenje. Znači, vjernicima ili", de: "und Geduld. Das heißt, den Gläubigen oder" },
-  { start: 19.84, end: 20.679, text: "vjernici", de: "Gläubige" },
-  { start: 22.799, end: 23.76, text: "nije dozvoljeno", de: "ist es nicht erlaubt" },
-  { start: 24.92, end: 27.44, text: "samo za sebe da bude vjernik,", de: "nur für sich selbst gläubig zu sein," },
-  { start: 28.779, end: 32.0, text: "već u okviru toga da je vjernik ili", de: "sondern im Rahmen dessen, gläubig zu sein oder" },
-  { start: 32.099, end: 32.879, text: "vjernica", de: "Gläubige" },
-  { start: 34.6, end: 35.779, text: "podrazumijeva se", de: "versteht es sich" },
-  { start: 37.7, end: 38.579, text: "da istinu", de: "dass die Wahrheit" },
-  { start: 39.659, end: 44.139, text: "prenosi drugima. Jedan od primjera koji", de: "anderen weitergegeben wird. Ein Beispiel, das" },
-  { start: 44.239, end: 44.739, text: "često", de: "oft" },
-  { start: 44.819, end: 46.799, text: "spominjemo", de: "erwähnt wird" },
-  { start: 47.86, end: 49.42, text: "vezano za ovu temu", de: "bezüglich dieses Themas" },
-  { start: 51.299, end: 52.059, text: "da je uzvišenija", de: "dass es erhabener ist" },
+  { start: 0.699, end: 3.699, text: "Gdje se kune vremenom pa kaže Svi su ljudi" },
+  { start: 4.019, end: 6.799, text: "na gubitku, osim onih koji vjeruju" },
+  { start: 7.679, end: 11.44, text: "i dobra djela čine i koji preporučuju" },
+  { start: 11.5, end: 14.639, text: "istinu, hak i istinu" },
+  { start: 14.699, end: 19.739, text: "i sabur strpljenje. Znači, vjernicima ili" },
+  { start: 19.84, end: 20.679, text: "vjernici" },
+  { start: 22.799, end: 23.76, text: "nije dozvoljeno" },
+  { start: 24.92, end: 27.44, text: "samo za sebe da bude vjernik," },
+  { start: 28.779, end: 32.0, text: "već u okviru toga da je vjernik ili" },
+  { start: 32.099, end: 32.879, text: "vjernica" },
+  { start: 34.6, end: 35.779, text: "podrazumijeva se" },
+  { start: 37.7, end: 38.579, text: "da istinu" },
+  { start: 39.659, end: 44.139, text: "prenosi drugima. Jedan od primjera koji" },
+  { start: 44.239, end: 44.739, text: "često" },
+  { start: 44.819, end: 46.799, text: "spominjemo" },
+  { start: 47.86, end: 49.42, text: "vezano za ovu temu" },
+  { start: 51.299, end: 52.059, text: "da je uzvišenija" },
 ];
 
 // Pre-compute timed words per segment
@@ -62,18 +61,7 @@ const getVisibleTextAtTime = (time: number): string => {
   return visible.map((w) => w.word).join(" ");
 };
 
-const getGermanAtTime = (time: number): string => {
-  const currentSeg = segments.find((s) => time >= s.start && time <= s.end);
-  if (!currentSeg) return "";
-  return currentSeg.de;
-};
-
-// Google Font for canvas
-const FONT_FAMILY = "'Playfair Display', Georgia, serif";
-const fontLink = document.createElement("link");
-fontLink.href = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap";
-fontLink.rel = "stylesheet";
-document.head.appendChild(fontLink);
+const FONT_FAMILY = "system-ui, sans-serif";
 
 const StoryVideoOverlay = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -115,7 +103,6 @@ const StoryVideoOverlay = () => {
   }, []);
 
   const subtitle = getVisibleTextAtTime(currentTime);
-  const germanText = getGermanAtTime(currentTime);
 
   const drawFrame = useCallback(
     (ctx: CanvasRenderingContext2D, video: HTMLVideoElement, time: number, w: number, h: number) => {
@@ -168,49 +155,31 @@ const StoryVideoOverlay = () => {
 
       // Subtitle
       const sub = getVisibleTextAtTime(time);
-      const de = getGermanAtTime(time);
       if (sub) {
         ctx.save();
-        const fontSize = Math.round(w * 0.046);
-        const deFontSize = Math.round(w * 0.03);
+        const fontSize = Math.round(w * 0.048);
+        ctx.font = `bold ${fontSize}px ${FONT_FAMILY}`;
         ctx.textAlign = "center";
         const maxWidth = w * 0.88;
-
-        // Measure both lines
-        ctx.font = `700 ${fontSize}px ${FONT_FAMILY}`;
-        const subMetrics = ctx.measureText(sub);
-        ctx.font = `italic 400 ${deFontSize}px ${FONT_FAMILY}`;
-        const deMetrics = ctx.measureText(de);
-        const textW = Math.max(Math.min(subMetrics.width, maxWidth), Math.min(deMetrics.width, maxWidth));
-
-        const padX = Math.round(w * 0.045);
-        const padY = Math.round(w * 0.03);
-        const lineGap = Math.round(w * 0.018);
+        const metrics = ctx.measureText(sub);
+        const textW = Math.min(metrics.width, maxWidth);
+        const padX = Math.round(w * 0.04);
+        const padY = Math.round(w * 0.028);
         const boxW = textW + padX * 2;
-        const boxH = fontSize + deFontSize + lineGap + padY * 2;
+        const boxH = fontSize * 1.5 + padY * 2;
         const boxX = (w - boxW) / 2;
-        const boxY = h * 0.78 - padY;
-        const boxR = Math.round(w * 0.02);
+        const boxY = h * 0.82 - padY;
+        const boxR = Math.round(w * 0.025);
 
-        // Background pill
         ctx.beginPath();
         ctx.roundRect(boxX, boxY, boxW, boxH, boxR);
-        ctx.fillStyle = "rgba(0,0,0,0.7)";
+        ctx.fillStyle = "rgba(0,0,0,0.75)";
         ctx.fill();
 
-        // Bosnian text
-        ctx.font = `700 ${fontSize}px ${FONT_FAMILY}`;
         ctx.fillStyle = "white";
-        ctx.shadowColor = "rgba(0,0,0,0.4)";
-        ctx.shadowBlur = 3;
-        ctx.fillText(sub, w / 2, boxY + padY + fontSize * 0.88, maxWidth);
-
-        // German text
-        ctx.font = `italic 400 ${deFontSize}px ${FONT_FAMILY}`;
-        ctx.fillStyle = "rgba(255,255,255,0.7)";
-        ctx.shadowBlur = 2;
-        ctx.fillText(de, w / 2, boxY + padY + fontSize + lineGap + deFontSize * 0.85, maxWidth);
-
+        ctx.shadowColor = "rgba(0,0,0,0.5)";
+        ctx.shadowBlur = 4;
+        ctx.fillText(sub, w / 2, h * 0.82 + fontSize * 0.85, maxWidth);
         ctx.restore();
       }
 
@@ -327,7 +296,7 @@ const StoryVideoOverlay = () => {
 
   return (
     <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center gap-6 p-4">
-      <h1 className="text-white text-xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+      <h1 className="text-white text-xl font-bold">
         Instagram Story Video – 9:16
       </h1>
 
@@ -361,22 +330,17 @@ const StoryVideoOverlay = () => {
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: 200, background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }} />
 
         {subtitle && (
-          <div className="absolute bottom-14 left-3 right-3 pointer-events-none flex justify-center">
-            <div className="px-4 py-3 rounded-xl text-center" style={{ backgroundColor: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }}>
-              <p className="text-white font-bold leading-snug" style={{ fontSize: 16, fontFamily: "'Playfair Display', serif", textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
+          <div className="absolute bottom-16 left-3 right-3 pointer-events-none flex justify-center">
+            <div className="px-4 py-2.5 rounded-xl text-center" style={{ backgroundColor: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)" }}>
+              <p className="text-white font-bold leading-snug" style={{ fontSize: 17, textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
                 {subtitle}
               </p>
-              {germanText && (
-                <p className="text-white/60 italic leading-snug mt-1" style={{ fontSize: 12, fontFamily: "'Playfair Display', serif" }}>
-                  {germanText}
-                </p>
-              )}
             </div>
           </div>
         )}
 
         <div className="absolute bottom-4 left-0 right-0 pointer-events-none flex justify-center">
-          <span className="text-white/80 font-semibold text-xs" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)", fontFamily: "'Playfair Display', serif" }}>et-taqwa.com</span>
+          <span className="text-white/80 font-semibold text-xs" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)" }}>et-taqwa.com</span>
         </div>
       </div>
 
