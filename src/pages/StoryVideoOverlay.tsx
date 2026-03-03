@@ -1,51 +1,47 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Loader2, Play, RefreshCw, Download } from "lucide-react";
+import { Loader2, Download } from "lucide-react";
 import logo from "@/assets/ettaqwa-profile-logo.png";
 
-interface Word {
-  text: string;
+interface Subtitle {
   start: number;
   end: number;
-}
-
-interface TranscriptionResult {
   text: string;
-  words: Word[];
 }
 
-type SubtitleSegment = { text: string; start: number; end: number };
+const subtitles: Subtitle[] = [
+  { start: 0.699, end: 3.699, text: "Gdje se kune vremenom pa kaže Svi su ljudi" },
+  { start: 4.019, end: 6.799, text: "na gubitku, osim onih koji vjeruju" },
+  { start: 7.679, end: 11.44, text: "i dobra djela čine i koji preporučuju" },
+  { start: 11.5, end: 14.639, text: "istinu, hak i istinu" },
+  { start: 14.699, end: 19.739, text: "i sabur strpljenje. Znači, vjernicima ili" },
+  { start: 19.84, end: 20.679, text: "vjernici" },
+  { start: 22.799, end: 23.76, text: "nije dozvoljeno" },
+  { start: 24.92, end: 27.44, text: "samo za sebe da bude vjernik," },
+  { start: 28.779, end: 32.0, text: "već u okviru toga da je vjernik ili" },
+  { start: 32.099, end: 32.879, text: "vjernica" },
+  { start: 34.6, end: 35.779, text: "podrazumijeva se" },
+  { start: 37.7, end: 38.579, text: "da istinu" },
+  { start: 39.659, end: 44.139, text: "prenosi drugima. Jedan od primjera koji" },
+  { start: 44.239, end: 44.739, text: "često" },
+  { start: 44.819, end: 46.799, text: "spominjemo" },
+  { start: 47.86, end: 49.42, text: "vezano za ovu temu" },
+  { start: 51.299, end: 52.059, text: "da je uzvišenija" },
+];
 
-const buildSegments = (words: Word[], chunkSize = 6): SubtitleSegment[] => {
-  const segments: SubtitleSegment[] = [];
-  for (let i = 0; i < words.length; i += chunkSize) {
-    const chunk = words.slice(i, i + chunkSize);
-    segments.push({
-      text: chunk.map((w) => w.text).join(" "),
-      start: chunk[0].start,
-      end: chunk[chunk.length - 1].end,
-    });
-  }
-  return segments;
-};
-
-const getSubtitleAtTime = (segments: SubtitleSegment[], time: number): string => {
-  return segments.find((s) => time >= s.start && time <= s.end)?.text || "";
+const getSubtitleAtTime = (time: number): string => {
+  return subtitles.find((s) => time >= s.start && time <= s.end)?.text || "";
 };
 
 const StoryVideoOverlay = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [transcription, setTranscription] = useState<TranscriptionResult | null>(null);
-  const [isTranscribing, setIsTranscribing] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
+  const [error, setError] = useState<string | null>(null);
   const logoImgRef = useRef<HTMLImageElement | null>(null);
 
   const videoSrc = "/videos/story-video.mov";
 
-  // Preload logo image for canvas drawing
   useEffect(() => {
     const img = new Image();
     img.crossOrigin = "anonymous";
@@ -53,62 +49,18 @@ const StoryVideoOverlay = () => {
     img.onload = () => { logoImgRef.current = img; };
   }, []);
 
-  const transcribeVideo = async () => {
-    setIsTranscribing(true);
-    setError(null);
-    try {
-      const videoResponse = await fetch(videoSrc);
-      const videoBlob = await videoResponse.blob();
-      const formData = new FormData();
-      formData.append("audio", videoBlob, "video.mov");
-
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-transcribe`,
-        {
-          method: "POST",
-          headers: {
-            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: formData,
-        }
-      );
-
-      if (!response.ok) throw new Error(`Fehler: ${response.status}`);
-      const data = await response.json();
-      if (data.error) throw new Error(data.error);
-      setTranscription(data);
-    } catch (err) {
-      console.error("Transcription failed:", err);
-      setError(err instanceof Error ? err.message : "Transkription fehlgeschlagen");
-    } finally {
-      setIsTranscribing(false);
-    }
-  };
-
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     const handleTimeUpdate = () => setCurrentTime(video.currentTime);
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
     video.addEventListener("timeupdate", handleTimeUpdate);
-    video.addEventListener("play", handlePlay);
-    video.addEventListener("pause", handlePause);
-    return () => {
-      video.removeEventListener("timeupdate", handleTimeUpdate);
-      video.removeEventListener("play", handlePlay);
-      video.removeEventListener("pause", handlePause);
-    };
+    return () => video.removeEventListener("timeupdate", handleTimeUpdate);
   }, []);
 
-  const segments = transcription?.words?.length ? buildSegments(transcription.words) : [];
-  const subtitle = getSubtitleAtTime(segments, currentTime);
+  const subtitle = getSubtitleAtTime(currentTime);
 
-  // Draw one frame with overlay onto a canvas
   const drawFrame = useCallback(
     (ctx: CanvasRenderingContext2D, video: HTMLVideoElement, time: number, w: number, h: number) => {
-      // Video frame
       ctx.drawImage(video, 0, 0, w, h);
 
       // Top gradient
@@ -119,17 +71,16 @@ const StoryVideoOverlay = () => {
       ctx.fillRect(0, 0, w, h * 0.15);
 
       // Bottom gradient
-      const botGrad = ctx.createLinearGradient(0, h, 0, h * 0.85);
+      const botGrad = ctx.createLinearGradient(0, h, 0, h * 0.8);
       botGrad.addColorStop(0, "rgba(0,0,0,0.7)");
       botGrad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = botGrad;
-      ctx.fillRect(0, h * 0.85, w, h * 0.15);
+      ctx.fillRect(0, h * 0.8, w, h * 0.2);
 
-      // Logo (top left)
+      // Logo
       const logoSize = Math.round(w * 0.13);
       const logoPad = Math.round(w * 0.04);
       const logoRadius = Math.round(logoSize * 0.25);
-      // White rounded rect background
       ctx.save();
       ctx.beginPath();
       ctx.roundRect(logoPad, logoPad, logoSize, logoSize, logoRadius);
@@ -138,7 +89,6 @@ const StoryVideoOverlay = () => {
       ctx.shadowBlur = 12;
       ctx.fill();
       ctx.restore();
-      // Logo image
       if (logoImgRef.current) {
         ctx.save();
         ctx.beginPath();
@@ -148,7 +98,7 @@ const StoryVideoOverlay = () => {
         ctx.restore();
       }
 
-      // Handle text (top right)
+      // Handle
       ctx.save();
       ctx.font = `bold ${Math.round(w * 0.032)}px system-ui, sans-serif`;
       ctx.fillStyle = "white";
@@ -159,39 +109,36 @@ const StoryVideoOverlay = () => {
       ctx.restore();
 
       // Subtitle
-      const sub = getSubtitleAtTime(segments, time);
+      const sub = getSubtitleAtTime(time);
       if (sub) {
         ctx.save();
-        const fontSize = Math.round(w * 0.042);
+        const fontSize = Math.round(w * 0.045);
         ctx.font = `bold ${fontSize}px system-ui, sans-serif`;
         ctx.textAlign = "center";
-
-        // Measure & draw bg
         const maxWidth = w * 0.85;
         const metrics = ctx.measureText(sub);
         const textW = Math.min(metrics.width, maxWidth);
-        const padX = Math.round(w * 0.035);
-        const padY = Math.round(w * 0.02);
-        const boxX = (w - textW) / 2 - padX;
-        const boxY = h * 0.82 - padY;
+        const padX = Math.round(w * 0.04);
+        const padY = Math.round(w * 0.025);
         const boxW = textW + padX * 2;
-        const boxH = fontSize + padY * 2;
-        const boxR = Math.round(w * 0.02);
+        const boxH = fontSize * 1.4 + padY * 2;
+        const boxX = (w - boxW) / 2;
+        const boxY = h * 0.82 - padY;
+        const boxR = Math.round(w * 0.025);
 
         ctx.beginPath();
         ctx.roundRect(boxX, boxY, boxW, boxH, boxR);
-        ctx.fillStyle = "rgba(0,0,0,0.7)";
+        ctx.fillStyle = "rgba(0,0,0,0.75)";
         ctx.fill();
 
-        // Text
         ctx.fillStyle = "white";
         ctx.shadowColor = "rgba(0,0,0,0.5)";
         ctx.shadowBlur = 4;
-        ctx.fillText(sub, w / 2, h * 0.82 + fontSize * 0.75, maxWidth);
+        ctx.fillText(sub, w / 2, h * 0.82 + fontSize * 0.8, maxWidth);
         ctx.restore();
       }
 
-      // Website (bottom center)
+      // Website
       ctx.save();
       ctx.font = `600 ${Math.round(w * 0.028)}px system-ui, sans-serif`;
       ctx.fillStyle = "rgba(255,255,255,0.8)";
@@ -201,53 +148,42 @@ const StoryVideoOverlay = () => {
       ctx.fillText("et-taqwa.com", w / 2, h * 0.97);
       ctx.restore();
     },
-    [segments]
+    []
   );
 
-  // Export video with overlay
   const exportVideo = useCallback(async () => {
-    if (!transcription || !videoRef.current) return;
-
     setIsExporting(true);
     setExportProgress(0);
+    setError(null);
 
     try {
       const W = 1080;
       const H = 1920;
-
       const canvas = document.createElement("canvas");
       canvas.width = W;
       canvas.height = H;
       const ctx = canvas.getContext("2d")!;
 
-      // Create offscreen video element for export
-      const exportVideo = document.createElement("video");
-      exportVideo.src = videoSrc;
-      exportVideo.muted = true;
-      exportVideo.playsInline = true;
-      exportVideo.crossOrigin = "anonymous";
+      const exportVid = document.createElement("video");
+      exportVid.src = videoSrc;
+      exportVid.muted = true;
+      exportVid.playsInline = true;
+      exportVid.crossOrigin = "anonymous";
 
       await new Promise<void>((resolve) => {
-        exportVideo.onloadeddata = () => resolve();
-        exportVideo.load();
+        exportVid.onloadeddata = () => resolve();
+        exportVid.load();
       });
 
-      const duration = exportVideo.duration;
-      const fps = 30;
-      const totalFrames = Math.floor(duration * fps);
+      const duration = exportVid.duration;
+      const stream = canvas.captureStream(30);
 
-      // Use MediaRecorder with canvas stream
-      const stream = canvas.captureStream(fps);
-
-      // Add audio track from original video
-      // We need to capture audio separately
+      // Audio
       const audioCtx = new AudioContext();
-      const audioSource = audioCtx.createMediaElementSource(exportVideo);
+      const audioSource = audioCtx.createMediaElementSource(exportVid);
       const audioDest = audioCtx.createMediaStreamDestination();
       audioSource.connect(audioDest);
-      audioSource.connect(audioCtx.destination); // so we can hear playback
 
-      // Merge video + audio streams
       const combinedStream = new MediaStream([
         ...stream.getVideoTracks(),
         ...audioDest.stream.getAudioTracks(),
@@ -277,88 +213,36 @@ const StoryVideoOverlay = () => {
       });
 
       mediaRecorder.start();
-
-      // Play video and capture frames
-      exportVideo.currentTime = 0;
-      await exportVideo.play();
+      exportVid.currentTime = 0;
+      await exportVid.play();
 
       const renderLoop = () => {
-        if (exportVideo.ended || exportVideo.paused) {
+        if (exportVid.ended || exportVid.paused) {
           mediaRecorder.stop();
           audioCtx.close();
           return;
         }
-
-        drawFrame(ctx, exportVideo, exportVideo.currentTime, W, H);
-        setExportProgress(Math.min(100, Math.round((exportVideo.currentTime / duration) * 100)));
+        drawFrame(ctx, exportVid, exportVid.currentTime, W, H);
+        setExportProgress(Math.min(100, Math.round((exportVid.currentTime / duration) * 100)));
         requestAnimationFrame(renderLoop);
       };
-
       renderLoop();
 
       await downloadPromise;
     } catch (err) {
       console.error("Export failed:", err);
-      setError("Export fehlgeschlagen: " + (err instanceof Error ? err.message : "Unbekannter Fehler"));
+      setError("Export fehlgeschlagen: " + (err instanceof Error ? err.message : "Unbekannt"));
     } finally {
       setIsExporting(false);
       setExportProgress(0);
     }
-  }, [transcription, drawFrame]);
+  }, [drawFrame]);
 
   return (
     <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center gap-6 p-4">
       <h1 className="text-white text-xl font-bold">Instagram Story Video – 9:16</h1>
 
-      {/* Controls */}
-      <div className="flex gap-3 flex-wrap justify-center">
-        <button
-          onClick={transcribeVideo}
-          disabled={isTranscribing || isExporting}
-          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl font-semibold text-sm transition-colors"
-        >
-          {isTranscribing ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Transkribiere...
-            </>
-          ) : transcription ? (
-            <>
-              <RefreshCw className="w-4 h-4" />
-              Neu transkribieren
-            </>
-          ) : (
-            <>
-              <Play className="w-4 h-4" />
-              Untertitel generieren
-            </>
-          )}
-        </button>
-
-        {transcription && (
-          <button
-            onClick={exportVideo}
-            disabled={isExporting}
-            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl font-semibold text-sm transition-colors"
-          >
-            {isExporting ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Exportiere... {exportProgress}%
-              </>
-            ) : (
-              <>
-                <Download className="w-4 h-4" />
-                Video herunterladen
-              </>
-            )}
-          </button>
-        )}
-      </div>
-
-      {error && <p className="text-red-400 text-sm">{error}</p>}
-
-      {/* Story Preview (9:16 aspect ratio) */}
+      {/* Story Preview */}
       <div
         className="relative overflow-hidden rounded-2xl shadow-2xl"
         style={{ width: 360, height: 640 }}
@@ -373,83 +257,72 @@ const StoryVideoOverlay = () => {
           crossOrigin="anonymous"
         />
 
-        {/* Dark gradient overlay top */}
+        {/* Top gradient */}
         <div
           className="absolute top-0 left-0 right-0 pointer-events-none"
-          style={{
-            height: 160,
-            background: "linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)",
-          }}
+          style={{ height: 160, background: "linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)" }}
         />
 
-        {/* Logo top left */}
+        {/* Logo */}
         <div className="absolute top-4 left-4 pointer-events-none">
-          <div
-            className="rounded-2xl overflow-hidden shadow-lg"
-            style={{ width: 56, height: 56, backgroundColor: "white" }}
-          >
+          <div className="rounded-2xl overflow-hidden shadow-lg" style={{ width: 56, height: 56, backgroundColor: "white" }}>
             <img src={logo} alt="Et Taqwa" className="w-full h-full object-contain" />
           </div>
         </div>
 
-        {/* Handle top right */}
+        {/* Handle */}
         <div className="absolute top-5 right-4 pointer-events-none">
-          <span
-            className="text-white font-bold text-xs"
-            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.8)" }}
-          >
+          <span className="text-white font-bold text-xs" style={{ textShadow: "0 1px 8px rgba(0,0,0,0.8)" }}>
             @dzemat_et_taqwa
           </span>
         </div>
 
-        {/* Dark gradient overlay bottom */}
+        {/* Bottom gradient */}
         <div
           className="absolute bottom-0 left-0 right-0 pointer-events-none"
-          style={{
-            height: 200,
-            background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
-          }}
+          style={{ height: 200, background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}
         />
 
         {/* Subtitle */}
         {subtitle && (
           <div className="absolute bottom-16 left-3 right-3 pointer-events-none flex justify-center">
-            <div
-              className="px-4 py-2 rounded-xl text-center"
-              style={{ backgroundColor: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }}
-            >
-              <p
-                className="text-white font-bold leading-snug"
-                style={{ fontSize: 18, textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
-              >
+            <div className="px-4 py-2.5 rounded-xl text-center" style={{ backgroundColor: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)" }}>
+              <p className="text-white font-bold leading-snug" style={{ fontSize: 17, textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
                 {subtitle}
               </p>
             </div>
           </div>
         )}
 
-        {/* Website bottom */}
+        {/* Website */}
         <div className="absolute bottom-4 left-0 right-0 pointer-events-none flex justify-center">
-          <span
-            className="text-white/80 font-semibold text-xs"
-            style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)" }}
-          >
+          <span className="text-white/80 font-semibold text-xs" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)" }}>
             et-taqwa.com
           </span>
         </div>
       </div>
 
-      {/* Full transcription text */}
-      {transcription && (
-        <div className="max-w-md mt-2">
-          <p className="text-white/50 text-xs text-center mb-1">Voller Text:</p>
-          <p className="text-white/70 text-sm text-center leading-relaxed">
-            {transcription.text}
-          </p>
-        </div>
-      )}
+      {/* Download button */}
+      <button
+        onClick={exportVideo}
+        disabled={isExporting}
+        className="flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl font-bold text-sm transition-colors"
+      >
+        {isExporting ? (
+          <>
+            <Loader2 className="w-5 h-5 animate-spin" />
+            Exportiere... {exportProgress}%
+          </>
+        ) : (
+          <>
+            <Download className="w-5 h-5" />
+            Video herunterladen
+          </>
+        )}
+      </button>
 
-      <p className="text-white/30 text-xs">1080×1920 · 9:16 · Instagram Story</p>
+      {error && <p className="text-red-400 text-sm">{error}</p>}
+      <p className="text-white/30 text-xs">1080×1920 · 9:16 · Instagram Story mit Untertiteln</p>
     </div>
   );
 };
