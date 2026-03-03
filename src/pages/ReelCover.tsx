@@ -14,11 +14,10 @@ const ReelCover = () => {
     if (!cardRef.current) return;
     setIsExporting(true);
     try {
+      const scale = 1080 / cardRef.current.offsetWidth;
       const dataUrl = await domToPng(cardRef.current, {
-        width: 1080,
-        height: 1920,
         quality: 1,
-        scale: 1080 / cardRef.current.offsetWidth,
+        scale,
       });
       const a = document.createElement("a");
       a.href = dataUrl;
