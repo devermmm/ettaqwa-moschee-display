@@ -184,7 +184,7 @@ const InstaPost = () => {
       </Button>
 
       {/* ===== IFTAR DUA STORY ===== */}
-      <h2 className="text-xl font-bold text-foreground mt-8">🤲 Iftar Dua Story</h2>
+      <h2 className="text-xl font-bold text-foreground mt-8">Iftar Dua Story</h2>
 
       <IftarDuaStory ref={iftarDuaRef} />
 
