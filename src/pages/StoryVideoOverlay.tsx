@@ -122,13 +122,14 @@ const StoryVideoOverlay = () => {
       ctx.fillStyle = botGrad;
       ctx.fillRect(0, h * 0.75, w, h * 0.25);
 
-      // Logo
+      // Logo (centered)
       const logoSize = Math.round(w * 0.13);
+      const logoX = Math.round((w - logoSize) / 2);
       const logoPad = Math.round(w * 0.04);
       const logoR = Math.round(logoSize * 0.25);
       ctx.save();
       ctx.beginPath();
-      ctx.roundRect(logoPad, logoPad, logoSize, logoSize, logoR);
+      ctx.roundRect(logoX, logoPad, logoSize, logoSize, logoR);
       ctx.fillStyle = "white";
       ctx.shadowColor = "rgba(0,0,0,0.5)";
       ctx.shadowBlur = 12;
@@ -137,21 +138,11 @@ const StoryVideoOverlay = () => {
       if (logoImgRef.current) {
         ctx.save();
         ctx.beginPath();
-        ctx.roundRect(logoPad, logoPad, logoSize, logoSize, logoR);
+        ctx.roundRect(logoX, logoPad, logoSize, logoSize, logoR);
         ctx.clip();
-        ctx.drawImage(logoImgRef.current, logoPad, logoPad, logoSize, logoSize);
+        ctx.drawImage(logoImgRef.current, logoX, logoPad, logoSize, logoSize);
         ctx.restore();
       }
-
-      // Handle
-      ctx.save();
-      ctx.font = `bold ${Math.round(w * 0.032)}px system-ui, sans-serif`;
-      ctx.fillStyle = "white";
-      ctx.textAlign = "right";
-      ctx.shadowColor = "rgba(0,0,0,0.8)";
-      ctx.shadowBlur = 8;
-      ctx.fillText("@dzemat_et_taqwa", w - logoPad, logoPad + Math.round(w * 0.04));
-      ctx.restore();
 
       // Subtitle
       const sub = getVisibleTextAtTime(time);
@@ -317,14 +308,10 @@ const StoryVideoOverlay = () => {
 
         <div className="absolute top-0 left-0 right-0 pointer-events-none" style={{ height: 160, background: "linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)" }} />
 
-        <div className="absolute top-4 left-4 pointer-events-none">
+        <div className="absolute top-4 left-0 right-0 pointer-events-none flex justify-center">
           <div className="rounded-2xl overflow-hidden shadow-lg" style={{ width: 56, height: 56, backgroundColor: "white" }}>
             <img src={logo} alt="Et Taqwa" className="w-full h-full object-contain" />
           </div>
-        </div>
-
-        <div className="absolute top-5 right-4 pointer-events-none">
-          <span className="text-white font-bold text-xs" style={{ textShadow: "0 1px 8px rgba(0,0,0,0.8)" }}>@dzemat_et_taqwa</span>
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: 200, background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }} />
