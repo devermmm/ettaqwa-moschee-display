@@ -257,6 +257,42 @@ const NewHome = () => {
       </div>
 
       {/* ═══════════════════════════════════════════════════ */}
+      {/* DZEMAT VIDEO — Fullwidth immersive */}
+      {/* ═══════════════════════════════════════════════════ */}
+      <div className="relative overflow-hidden bg-black">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-[60vh] sm:h-[75vh] object-cover opacity-70"
+        >
+          <source src="/videos/dzemat-promo.mov" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/50" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center px-6"
+          >
+            <span className="text-xs font-bold tracking-[0.25em] uppercase text-primary">
+              {language === "bs" ? "Naš dzemat" : "Unsere Gemeinde"}
+            </span>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight mt-4">
+              {language === "bs" ? "Zajedno smo jači" : "Gemeinsam sind wir stärker"}
+            </h2>
+            <p className="text-white/60 mt-4 text-base sm:text-lg max-w-xl mx-auto">
+              {language === "bs"
+                ? "Naš dzemat je mjesto susreta, duhovnosti i zajedništva."
+                : "Unsere Gemeinde ist ein Ort der Begegnung, Spiritualität und Zusammengehörigkeit."}
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════ */}
       {/* DONATION — Full-width image split */}
       {/* ═══════════════════════════════════════════════════ */}
       <div id="spenden" className="py-24 sm:py-32 bg-background relative overflow-hidden">
