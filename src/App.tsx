@@ -29,6 +29,7 @@ import Speisekarte from "./pages/Speisekarte";
 import VaktijaPrint from "./pages/VaktijaPrint";
 import InstaPost from "./pages/InstaPost";
 import TikTokOverlay from "./pages/TikTokOverlay";
+import StoryVideoOverlay from "./pages/StoryVideoOverlay";
 import AppPage from "./pages/AppPage";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
@@ -225,6 +226,10 @@ const App = () => (
           <Route
             path="/tiktok-overlay"
             element={<TikTokOverlay />}
+          />
+          <Route
+            path="/story-video"
+            element={<StoryVideoOverlay />}
           />
           <Route
             path="*"

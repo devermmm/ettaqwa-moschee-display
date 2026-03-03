@@ -1,1 +1,4 @@
 project_id = "sjkulkkgyovllhixqmlp"
+
+[functions.elevenlabs-transcribe]
+verify_jwt = false
