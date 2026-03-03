@@ -28,6 +28,7 @@ import Plakat from "./pages/Plakat";
 import Speisekarte from "./pages/Speisekarte";
 import VaktijaPrint from "./pages/VaktijaPrint";
 import InstaPost from "./pages/InstaPost";
+import TikTokOverlay from "./pages/TikTokOverlay";
 import AppPage from "./pages/AppPage";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
@@ -220,6 +221,10 @@ const App = () => (
           <Route
             path="/insta-post"
             element={<InstaPost />}
+          />
+          <Route
+            path="/tiktok-overlay"
+            element={<TikTokOverlay />}
           />
           <Route
             path="*"
