@@ -4,6 +4,7 @@ import { Download, Loader2, ChevronLeft, ChevronRight, Copy, Check } from "lucid
 import VaktijaStory from "@/components/insta/VaktijaStory";
 import JummaReminderStory from "@/components/insta/JummaReminderStory";
 import TarawihStory from "@/components/insta/TarawihStory";
+import IftarDuaStory from "@/components/insta/IftarDuaStory";
 import AppAnnouncementStory from "@/components/insta/AppAnnouncementStory";
 import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 import QuranVerseStory from "@/components/insta/QuranVerseStory";
@@ -36,6 +37,7 @@ const InstaPost = () => {
   const quranRef = useRef<HTMLDivElement>(null);
   const quranStoryRef = useRef<HTMLDivElement>(null);
   const tarawihRef = useRef<HTMLDivElement>(null);
+  const iftarDuaRef = useRef<HTMLDivElement>(null);
   const appAnnouncementRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
@@ -179,6 +181,16 @@ const InstaPost = () => {
       <Button onClick={() => handleDownload(tarawihRef, "ettaqwa-tarawih-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
         {downloading === "ettaqwa-tarawih-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
         Tarawih Story herunterladen (1080×1920)
+      </Button>
+
+      {/* ===== IFTAR DUA STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">🤲 Iftar Dua Story</h2>
+
+      <IftarDuaStory ref={iftarDuaRef} />
+
+      <Button onClick={() => handleDownload(iftarDuaRef, "ettaqwa-iftar-dua-story.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading === "ettaqwa-iftar-dua-story.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Iftar Dua Story herunterladen (1080×1920)
       </Button>
 
       {/* ===== JUMMA REMINDER STORY ===== */}
