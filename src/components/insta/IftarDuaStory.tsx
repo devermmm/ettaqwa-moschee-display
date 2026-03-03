@@ -45,7 +45,7 @@ const IftarDuaStory = forwardRef<HTMLDivElement>((_, ref) => {
 
         {/* Icon */}
         <div style={{ fontSize: "8cqi", lineHeight: 1, marginBottom: "1cqi" }}>
-          🤲
+          ☪
         </div>
 
         {/* Title */}
@@ -113,7 +113,7 @@ const IftarDuaStory = forwardRef<HTMLDivElement>((_, ref) => {
 
         {/* Footer */}
         <p style={{ fontSize: "1.8cqi", opacity: 0.3, margin: 0 }}>
-          📍 Voitgasse 21 · 1220 Wien
+          Voitgasse 21 · 1220 Wien
         </p>
         <p style={{ fontSize: "2cqi", fontWeight: 600, opacity: 0.35, margin: 0 }}>
           @dzemat_et_taqwa
