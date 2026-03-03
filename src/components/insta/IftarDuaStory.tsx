@@ -43,10 +43,7 @@ const IftarDuaStory = forwardRef<HTMLDivElement>((_, ref) => {
           Džemat Et-Taqwa · Wien
         </p>
 
-        {/* Icon */}
-        <div style={{ fontSize: "8cqi", lineHeight: 1, marginBottom: "1cqi" }}>
-          ☪
-        </div>
+
 
         {/* Title */}
         <h2 style={{
