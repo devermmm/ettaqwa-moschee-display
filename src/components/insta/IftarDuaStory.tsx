@@ -78,6 +78,13 @@ const IftarDuaStory = forwardRef<HTMLDivElement>((_, ref) => {
           }}>
             ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ
           </p>
+          <p style={{
+            fontSize: "2.6cqi", fontWeight: 500, lineHeight: 1.5,
+            opacity: 0.55, fontStyle: "italic", letterSpacing: "0.02em",
+            marginTop: "2%",
+          }}>
+            Dhehebez-zama'u webtelletil-'urūqu we thebetel-edžru inšā'allāh
+          </p>
         </div>
 
         {/* Bosnian */}
