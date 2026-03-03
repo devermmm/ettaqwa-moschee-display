@@ -112,14 +112,17 @@ const IftarDuaStory = forwardRef<HTMLDivElement>((_, ref) => {
           </p>
         </div>
 
-        {/* Spacer */}
-        <div style={{ flex: 1 }} />
+      </div>
 
-        {/* Footer */}
-        <p style={{ fontSize: "1.8cqi", opacity: 0.3, margin: 0 }}>
+      {/* Footer – absolute positioned */}
+      <div style={{
+        position: "absolute", bottom: "3%", left: 0, right: 0, zIndex: 10,
+        display: "flex", flexDirection: "column", alignItems: "center", gap: "0.3cqi",
+      }}>
+        <p style={{ fontSize: "1.8cqi", opacity: 0.3, margin: 0, color: "white" }}>
           Voitgasse 21 · 1220 Wien
         </p>
-        <p style={{ fontSize: "2cqi", fontWeight: 600, opacity: 0.35, margin: 0 }}>
+        <p style={{ fontSize: "2cqi", fontWeight: 600, opacity: 0.35, margin: 0, color: "white" }}>
           @dzemat_et_taqwa
         </p>
       </div>
