@@ -10,6 +10,7 @@ import TikTokAnnouncementStory from "@/components/insta/TikTokAnnouncementStory"
 import IslamQuizStory, { getQuizSlideCount, type QuizLevel } from "@/components/insta/IslamQuizStory";
 import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 import QuranVerseStory from "@/components/insta/QuranVerseStory";
+import CountdownStory, { countdownEvents } from "@/components/insta/CountdownStory";
 
 import instaBg from "@/assets/instagram-announcement.jpg";
 import ramadanBg from "@/assets/ramadan-story-bg.jpg";
@@ -43,7 +44,9 @@ const InstaPost = () => {
   const appAnnouncementRef = useRef<HTMLDivElement>(null);
   const tiktokRef = useRef<HTMLDivElement>(null);
   const quizRef = useRef<HTMLDivElement>(null);
+  const countdownRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
+  const [countdownIdx, setCountdownIdx] = useState(0);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [quizSlideIdx, setQuizSlideIdx] = useState(0);
   const [quizLevel, setQuizLevel] = useState<QuizLevel>("easy");
@@ -85,6 +88,29 @@ const InstaPost = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-6">
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
+
+      {/* ===== COUNTDOWN STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">⏳ Countdown Story</h2>
+
+      <div className="flex items-center gap-2 mb-2 flex-wrap justify-center">
+        {countdownEvents.map((ev, i) => (
+          <Button
+            key={ev.id}
+            variant={countdownIdx === i ? "default" : "outline"}
+            size="sm"
+            onClick={() => setCountdownIdx(i)}
+          >
+            {ev.emoji} {ev.labelDe}
+          </Button>
+        ))}
+      </div>
+
+      <CountdownStory ref={countdownRef} event={countdownEvents[countdownIdx]} />
+
+      <Button onClick={() => handleDownload(countdownRef, `ettaqwa-countdown-${countdownEvents[countdownIdx].id}.png`, 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading?.startsWith("ettaqwa-countdown") ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Countdown Story herunterladen (1080×1920)
+      </Button>
 
       {/* ===== ISLAM QUIZ STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">🕌 Islam Quiz Story</h2>
