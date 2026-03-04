@@ -88,8 +88,9 @@ const questionSets: Record<QuizLevel, QuizQuestion[]> = {
 
 const questions = easyQuestions; // default for backward compat
 
-export const getQuizSlideCount = (level: QuizLevel = "easy") => questionSets[level].length * 2;
-export const quizSlideCount = easyQuestions.length * 2; // backward compat
+export const getQuizSlideCount = (level: QuizLevel = "easy") =>
+  level === "hard" ? hardQuestions.length * 2 + 1 : easyQuestions.length * 2;
+export const quizSlideCount = easyQuestions.length * 2;
 
 interface Props {
   slideIndex: number;
@@ -98,11 +99,124 @@ interface Props {
 
 const IslamQuizStory = forwardRef<HTMLDivElement, Props>(({ slideIndex, level = "easy" }, ref) => {
   const activeQuestions = questionSets[level];
-  const questionIdx = Math.floor(slideIndex / 2);
-  const isAnswer = slideIndex % 2 === 1;
-  const q = activeQuestions[questionIdx];
+  const isIntroSlide = level === "hard" && slideIndex === 0;
+  const adjustedIndex = level === "hard" ? slideIndex - 1 : slideIndex;
+  const questionIdx = Math.floor(adjustedIndex / 2);
+  const isAnswer = adjustedIndex % 2 === 1;
+  const q = isIntroSlide ? null : activeQuestions[questionIdx];
   const total = activeQuestions.length;
   const questionNum = questionIdx + 1;
+
+  if (isIntroSlide) {
+    return (
+      <div
+        ref={ref}
+        style={{
+          width: "min(100%, 540px)",
+          aspectRatio: "9 / 16",
+          position: "relative",
+          overflow: "hidden",
+          fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif",
+          containerType: "inline-size",
+          background: "radial-gradient(ellipse at 50% 30%, #003d1f 0%, #001a0d 60%, #000d06 100%)",
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+            zIndex: 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            height: "100%",
+            padding: "10% 8%",
+            textAlign: "center",
+            color: "white",
+          }}
+        >
+          <span style={{ fontSize: "12cqi", marginBottom: "4%" }}>🔥</span>
+          <p
+            style={{
+              fontSize: "6cqi",
+              fontWeight: 800,
+              lineHeight: 1.2,
+              marginBottom: "3%",
+            }}
+          >
+            To ti je bilo
+          </p>
+          <p
+            style={{
+              fontSize: "7cqi",
+              fontWeight: 900,
+              lineHeight: 1.2,
+              marginBottom: "3%",
+              background: "linear-gradient(135deg, #34d399, #5eead4)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            PRELAKO?
+          </p>
+          <p
+            style={{
+              fontSize: "4.5cqi",
+              fontWeight: 600,
+              opacity: 0.6,
+              fontStyle: "italic",
+              marginBottom: "8%",
+            }}
+          >
+            Das war zu einfach?
+          </p>
+
+          <div
+            style={{
+              width: "60%",
+              height: 2,
+              background: "linear-gradient(90deg, transparent, rgba(52,211,153,0.5), transparent)",
+              marginBottom: "8%",
+            }}
+          />
+
+          <p
+            style={{
+              fontSize: "5cqi",
+              fontWeight: 800,
+              lineHeight: 1.3,
+              marginBottom: "2%",
+            }}
+          >
+            Sada dolaze teža pitanja! 💪
+          </p>
+          <p
+            style={{
+              fontSize: "3.8cqi",
+              fontWeight: 600,
+              opacity: 0.55,
+              fontStyle: "italic",
+            }}
+          >
+            Jetzt kommen schwierigere Fragen!
+          </p>
+
+          <p
+            style={{
+              position: "absolute",
+              bottom: "3%",
+              fontSize: "2.5cqi",
+              opacity: 0.3,
+              letterSpacing: "0.1em",
+            }}
+          >
+            @dzemat_et_taqwa
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
