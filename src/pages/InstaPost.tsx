@@ -11,6 +11,7 @@ import IslamQuizStory, { getQuizSlideCount, type QuizLevel } from "@/components/
 import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 import QuranVerseStory from "@/components/insta/QuranVerseStory";
 import CountdownStory, { countdownEvents } from "@/components/insta/CountdownStory";
+import SahabaStory, { sahabaStories, getSahabaSlideCount } from "@/components/insta/SahabaStory";
 
 import instaBg from "@/assets/instagram-announcement.jpg";
 import ramadanBg from "@/assets/ramadan-story-bg.jpg";
@@ -45,11 +46,15 @@ const InstaPost = () => {
   const tiktokRef = useRef<HTMLDivElement>(null);
   const quizRef = useRef<HTMLDivElement>(null);
   const countdownRef = useRef<HTMLDivElement>(null);
+  const sahabaRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
   const [countdownIdx, setCountdownIdx] = useState(0);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [quizSlideIdx, setQuizSlideIdx] = useState(0);
   const [quizLevel, setQuizLevel] = useState<QuizLevel>("easy");
+  const [sahabaStoryId, setSahabaStoryId] = useState(sahabaStories[0].id);
+  const [sahabaSlideIdx, setSahabaSlideIdx] = useState(0);
+  const sahabaSlideCount = getSahabaSlideCount(sahabaStoryId);
   const quizSlideCount = getQuizSlideCount(quizLevel);
   const [copied, setCopied] = useState(false);
 
@@ -111,6 +116,57 @@ const InstaPost = () => {
         {downloading?.startsWith("ettaqwa-countdown") ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
         Countdown Story herunterladen (1080×1920)
       </Button>
+
+      {/* ===== SAHABA STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">📖 Islamische Geschichte</h2>
+
+      <div className="flex items-center gap-2 mb-2 flex-wrap justify-center">
+        {sahabaStories.map((s) => (
+          <Button
+            key={s.id}
+            variant={sahabaStoryId === s.id ? "default" : "outline"}
+            size="sm"
+            onClick={() => { setSahabaStoryId(s.id); setSahabaSlideIdx(0); }}
+          >
+            {s.emoji} {s.titleDe}
+          </Button>
+        ))}
+      </div>
+
+      <div className="flex items-center gap-3 mb-2">
+        <Button variant="outline" size="icon" onClick={() => setSahabaSlideIdx((i) => (i - 1 + sahabaSlideCount) % sahabaSlideCount)}>
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
+        <span className="text-sm text-muted-foreground font-medium">
+          Slide {sahabaSlideIdx + 1} / {sahabaSlideCount} — {sahabaSlideIdx === 0 ? "Titelblatt" : `Teil ${sahabaSlideIdx}`}
+        </span>
+        <Button variant="outline" size="icon" onClick={() => setSahabaSlideIdx((i) => (i + 1) % sahabaSlideCount)}>
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+      </div>
+
+      <SahabaStory ref={sahabaRef} storyId={sahabaStoryId} slideIndex={sahabaSlideIdx} />
+
+      <div className="flex gap-3">
+        <Button onClick={() => handleDownload(sahabaRef, `ettaqwa-sahaba-${sahabaStoryId}-${sahabaSlideIdx + 1}.png`, 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+          {downloading?.startsWith("ettaqwa-sahaba") ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+          Slide herunterladen
+        </Button>
+        <Button
+          variant="outline"
+          size="lg"
+          disabled={!!downloading}
+          onClick={async () => {
+            for (let i = 0; i < sahabaSlideCount; i++) {
+              setSahabaSlideIdx(i);
+              await new Promise(r => setTimeout(r, 300));
+              await handleDownload(sahabaRef, `ettaqwa-sahaba-${sahabaStoryId}-${i + 1}.png`, 1080, 1920);
+            }
+          }}
+        >
+          Alle {sahabaSlideCount} Slides herunterladen
+        </Button>
+      </div>
 
       {/* ===== ISLAM QUIZ STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">🕌 Islam Quiz Story</h2>
