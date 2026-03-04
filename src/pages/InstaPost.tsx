@@ -7,6 +7,7 @@ import TarawihStory from "@/components/insta/TarawihStory";
 import IftarDuaStory from "@/components/insta/IftarDuaStory";
 import AppAnnouncementStory from "@/components/insta/AppAnnouncementStory";
 import TikTokAnnouncementStory from "@/components/insta/TikTokAnnouncementStory";
+import IslamQuizStory, { quizSlideCount } from "@/components/insta/IslamQuizStory";
 import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 import QuranVerseStory from "@/components/insta/QuranVerseStory";
 
@@ -41,8 +42,10 @@ const InstaPost = () => {
   const iftarDuaRef = useRef<HTMLDivElement>(null);
   const appAnnouncementRef = useRef<HTMLDivElement>(null);
   const tiktokRef = useRef<HTMLDivElement>(null);
+  const quizRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
+  const [quizSlideIdx, setQuizSlideIdx] = useState(0);
   const [copied, setCopied] = useState(false);
 
   const handleCopyCaption = async () => {
@@ -80,6 +83,50 @@ const InstaPost = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-6">
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
+
+      {/* ===== ISLAM QUIZ STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">🕌 Islam Quiz Story</h2>
+
+      <div className="flex items-center gap-3 mb-2">
+        <Button
+          variant="outline" size="icon"
+          onClick={() => setQuizSlideIdx((i) => (i - 1 + quizSlideCount) % quizSlideCount)}
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
+        <span className="text-sm text-muted-foreground font-medium">
+          Slide {quizSlideIdx + 1} / {quizSlideCount} — {quizSlideIdx % 2 === 0 ? "Frage" : "Antwort"} {Math.floor(quizSlideIdx / 2) + 1}
+        </span>
+        <Button
+          variant="outline" size="icon"
+          onClick={() => setQuizSlideIdx((i) => (i + 1) % quizSlideCount)}
+        >
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+      </div>
+
+      <IslamQuizStory ref={quizRef} slideIndex={quizSlideIdx} />
+
+      <div className="flex gap-3">
+        <Button onClick={() => handleDownload(quizRef, `ettaqwa-quiz-slide-${quizSlideIdx + 1}.png`, 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+          {downloading?.startsWith("ettaqwa-quiz") ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+          Slide herunterladen
+        </Button>
+        <Button
+          variant="outline"
+          size="lg"
+          disabled={!!downloading}
+          onClick={async () => {
+            for (let i = 0; i < quizSlideCount; i++) {
+              setQuizSlideIdx(i);
+              await new Promise(r => setTimeout(r, 300));
+              await handleDownload(quizRef, `ettaqwa-quiz-slide-${i + 1}.png`, 1080, 1920);
+            }
+          }}
+        >
+          Alle {quizSlideCount} Slides herunterladen
+        </Button>
+      </div>
 
       {/* ===== QURAN VERSE POST ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">📖 Quran-Vers Post</h2>
