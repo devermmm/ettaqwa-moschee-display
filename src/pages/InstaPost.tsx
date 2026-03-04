@@ -7,7 +7,7 @@ import TarawihStory from "@/components/insta/TarawihStory";
 import IftarDuaStory from "@/components/insta/IftarDuaStory";
 import AppAnnouncementStory from "@/components/insta/AppAnnouncementStory";
 import TikTokAnnouncementStory from "@/components/insta/TikTokAnnouncementStory";
-import IslamQuizStory, { quizSlideCount } from "@/components/insta/IslamQuizStory";
+import IslamQuizStory, { getQuizSlideCount, type QuizLevel } from "@/components/insta/IslamQuizStory";
 import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 import QuranVerseStory from "@/components/insta/QuranVerseStory";
 
@@ -46,6 +46,8 @@ const InstaPost = () => {
   const [downloading, setDownloading] = useState<string | null>(null);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [quizSlideIdx, setQuizSlideIdx] = useState(0);
+  const [quizLevel, setQuizLevel] = useState<QuizLevel>("easy");
+  const quizSlideCount = getQuizSlideCount(quizLevel);
   const [copied, setCopied] = useState(false);
 
   const handleCopyCaption = async () => {
@@ -87,6 +89,23 @@ const InstaPost = () => {
       {/* ===== ISLAM QUIZ STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">🕌 Islam Quiz Story</h2>
 
+      <div className="flex items-center gap-2 mb-2">
+        <Button
+          variant={quizLevel === "easy" ? "default" : "outline"}
+          size="sm"
+          onClick={() => { setQuizLevel("easy"); setQuizSlideIdx(0); }}
+        >
+          Anfänger
+        </Button>
+        <Button
+          variant={quizLevel === "hard" ? "default" : "outline"}
+          size="sm"
+          onClick={() => { setQuizLevel("hard"); setQuizSlideIdx(0); }}
+        >
+          Fortgeschritten
+        </Button>
+      </div>
+
       <div className="flex items-center gap-3 mb-2">
         <Button
           variant="outline" size="icon"
@@ -105,7 +124,7 @@ const InstaPost = () => {
         </Button>
       </div>
 
-      <IslamQuizStory ref={quizRef} slideIndex={quizSlideIdx} />
+      <IslamQuizStory ref={quizRef} slideIndex={quizSlideIdx} level={quizLevel} />
 
       <div className="flex gap-3">
         <Button onClick={() => handleDownload(quizRef, `ettaqwa-quiz-slide-${quizSlideIdx + 1}.png`, 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>

@@ -7,7 +7,7 @@ interface QuizQuestion {
   correctIndex: number;
 }
 
-const questions: QuizQuestion[] = [
+const easyQuestions: QuizQuestion[] = [
   {
     questionBs: "Koliko stubova ima islam?",
     questionDe: "Wie viele Säulen hat der Islam?",
@@ -43,16 +43,65 @@ const questions: QuizQuestion[] = [
   },
 ];
 
-export const quizSlideCount = questions.length * 2; // question + answer per question
+const hardQuestions: QuizQuestion[] = [
+  {
+    questionBs: "U kojoj godini po Hidžri je bila Bitka na Bedru?",
+    questionDe: "In welchem Jahr nach der Hidschra war die Schlacht von Badr?",
+    options: [
+      { label: "A", textBs: "1. godina", textDe: "1. Jahr" },
+      { label: "B", textBs: "2. godina", textDe: "2. Jahr" },
+      { label: "C", textBs: "3. godina", textDe: "3. Jahr" },
+      { label: "D", textBs: "5. godina", textDe: "5. Jahr" },
+    ],
+    correctIndex: 1,
+  },
+  {
+    questionBs: "Koji ashab je poznat kao 'Sejfullah' (Allahov mač)?",
+    questionDe: "Welcher Sahabi ist als 'Schwert Allahs' bekannt?",
+    options: [
+      { label: "A", textBs: "Omer r.a.", textDe: "Omar (r.a.)" },
+      { label: "B", textBs: "Ali r.a.", textDe: "Ali (r.a.)" },
+      { label: "C", textBs: "Halid ibn Velid r.a.", textDe: "Khalid ibn Walid (r.a.)" },
+      { label: "D", textBs: "Sa'd ibn Ebi Vekkas r.a.", textDe: "Sa'd ibn Abi Waqqas (r.a.)" },
+    ],
+    correctIndex: 2,
+  },
+  {
+    questionBs: "Koliko je trajala objava Kur'ana?",
+    questionDe: "Wie lange dauerte die Offenbarung des Qurans?",
+    options: [
+      { label: "A", textBs: "10 godina", textDe: "10 Jahre" },
+      { label: "B", textBs: "15 godina", textDe: "15 Jahre" },
+      { label: "C", textBs: "23 godine", textDe: "23 Jahre" },
+      { label: "D", textBs: "30 godina", textDe: "30 Jahre" },
+    ],
+    correctIndex: 2,
+  },
+];
+
+export type QuizLevel = "easy" | "hard";
+
+const questionSets: Record<QuizLevel, QuizQuestion[]> = {
+  easy: easyQuestions,
+  hard: hardQuestions,
+};
+
+const questions = easyQuestions; // default for backward compat
+
+export const getQuizSlideCount = (level: QuizLevel = "easy") => questionSets[level].length * 2;
+export const quizSlideCount = easyQuestions.length * 2; // backward compat
 
 interface Props {
   slideIndex: number;
+  level?: QuizLevel;
 }
 
-const IslamQuizStory = forwardRef<HTMLDivElement, Props>(({ slideIndex }, ref) => {
+const IslamQuizStory = forwardRef<HTMLDivElement, Props>(({ slideIndex, level = "easy" }, ref) => {
+  const activeQuestions = questionSets[level];
   const questionIdx = Math.floor(slideIndex / 2);
   const isAnswer = slideIndex % 2 === 1;
-  const q = questions[questionIdx];
+  const q = activeQuestions[questionIdx];
+  const total = activeQuestions.length;
   const questionNum = questionIdx + 1;
 
   return (
@@ -113,7 +162,7 @@ const IslamQuizStory = forwardRef<HTMLDivElement, Props>(({ slideIndex }, ref) =
             textTransform: "uppercase",
           }}
         >
-          {isAnswer ? `Antwort ${questionNum}/3` : `Pitanje ${questionNum}/3`}
+          {isAnswer ? `Antwort ${questionNum}/${total}` : `Pitanje ${questionNum}/${total}`}
         </p>
 
         {/* Question text */}
@@ -244,5 +293,5 @@ const IslamQuizStory = forwardRef<HTMLDivElement, Props>(({ slideIndex }, ref) =
 
 IslamQuizStory.displayName = "IslamQuizStory";
 
-export { questions as quizQuestions };
+export { easyQuestions, hardQuestions, questionSets };
 export default IslamQuizStory;
