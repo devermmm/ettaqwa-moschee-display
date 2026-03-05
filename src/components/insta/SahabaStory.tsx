@@ -53,6 +53,39 @@ const stories: SahabaStoryData[] = [
     lessonDe:
       "Diese Geschichte lehrt uns, dass der Glaube (Iman) wertvoller ist als alles Weltliche. Wahre Tapferkeit liegt nicht in körperlicher Stärke, sondern in der Standhaftigkeit des Herzens angesichts von Prüfungen. Wenn ein Mensch zur Wahrheit steht, gibt Allah ihm Kraft, die er sich nicht vorstellen kann — sogar ein Säugling spricht. Und die Belohnung bei Allah ist ewig und schöner als alles, was diese Welt bieten kann.",
   },
+  {
+    id: "tamim-dajjal",
+    titleBs: "Tamim ed-Dari i Dedžal na ostrvu",
+    titleDe: "Tamim ad-Dari und der Dajjal auf der Insel",
+    emoji: "🏝️",
+    slides: [
+      {
+        textBs:
+          "Tamim ed-Dari je ispričao Poslaniku ﷺ da je plovio morem sa grupom ljudi. Oluja ih je bacala trideset dana dok nisu pristali na nepoznato ostrvo. Tamo ih je dočekala dlakava zvijer — Džessasa — koja im je rekla: 'Idite do čovjeka u samostanu, on vas čeka.' Uplašili su se, jer su mislili da je to šejtan.",
+        textDe:
+          "Tamim ad-Dari erzählte dem Propheten ﷺ, dass er mit einer Gruppe auf dem Meer fuhr. Ein Sturm trieb sie dreißig Tage lang umher, bis sie auf einer unbekannten Insel landeten. Dort empfing sie ein haariges Tier — al-Dschassasa — das ihnen sagte: 'Geht zu dem Mann im Kloster, er wartet auf euch.' Sie hatten Angst, denn sie dachten, es sei ein Teufel.",
+        emoji: "🌊",
+      },
+      {
+        textBs:
+          "Ušli su i zatekli ogromnog čovjeka, vezanog lancima. Upitao ih je: 'Šta rade palme Bejsana — još uvijek rađaju plodove?' Rekli su: 'Da.' Pitao je: 'A jezero Taberije — ima li još vode u njemu?' Rekli su: 'Da, puno je.' Pitao je: 'A izvor Zugara?' Rekli su: 'Da, teče.' Na svaki odgovor rekao je: 'Uskoro neće.'",
+        textDe:
+          "Sie betraten das Kloster und fanden einen riesigen Mann in Ketten. Er fragte: 'Was machen die Dattelpalmen von Baysan — tragen sie noch Früchte?' Sie sagten: 'Ja.' Er fragte: 'Und der See von Tabariyya — hat er noch Wasser?' Sie sagten: 'Ja, er ist voll.' Er fragte: 'Und die Quelle von Zugar?' Sie sagten: 'Ja, sie fließt.' Bei jeder Antwort sagte er: 'Bald wird es nicht mehr so sein.'",
+        emoji: "⛓️",
+      },
+      {
+        textBs:
+          "Zatim je upitao: 'A šta je sa arapskim Poslanikom — je li se pojavio? Jesu li ga Arapi slijedili?' Rekli su: 'Da, pojavio se i Arapi su ga slijedili.' Rekao je: 'Bolje im je da ga slijede.' Zatim je rekao: 'Ja sam Mesih Dedžal. Uskoro će mi biti dozvoljeno da izađem, i proći ću svaku zemlju za četrdeset dana — osim Meke i Medine, jer su one za mene zabranjene.'",
+        textDe:
+          "Dann fragte er: 'Was ist mit dem arabischen Propheten — ist er erschienen? Folgen ihm die Araber?' Sie sagten: 'Ja, er ist erschienen und die Araber folgen ihm.' Er sagte: 'Es ist besser für sie, ihm zu folgen.' Dann sagte er: 'Ich bin der Masih ad-Dajjal. Bald wird es mir erlaubt sein, herauszukommen, und ich werde jedes Land in vierzig Tagen durchqueren — außer Mekka und Medina, denn die sind für mich verboten.'",
+        emoji: "👁️",
+      },
+    ],
+    lessonBs:
+      "Ova priča, zabilježena u Sahih Muslimu, nas podsjeća da je fitna Dedžala stvarna i da se znakovi Sudnjeg dana postepeno ispunjavaju. Poslanik ﷺ nas je upozorio da se pripremimo jačanjem imana, učenjem prvih i posljednjih deset ajeta sure El-Kehf i traženjem utočišta kod Allaha od Dedžalove smutnje.",
+    lessonDe:
+      "Diese Geschichte, überliefert in Sahih Muslim, erinnert uns daran, dass die Prüfung des Dajjal real ist und sich die Zeichen des Jüngsten Tages nach und nach erfüllen. Der Prophet ﷺ hat uns gewarnt, uns vorzubereiten — durch die Stärkung des Glaubens, das Lesen der ersten und letzten zehn Verse der Sure al-Kahf und die Zuflucht bei Allah vor der Versuchung des Dajjal.",
+  },
 ];
 
 export const sahabaStories = stories;
