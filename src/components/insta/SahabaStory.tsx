@@ -86,6 +86,39 @@ const stories: SahabaStoryData[] = [
     lessonDe:
       "Diese Geschichte, überliefert in Sahih Muslim, erinnert uns daran, dass die Prüfung des Dajjal real ist und sich die Zeichen des Jüngsten Tages nach und nach erfüllen. Der Prophet ﷺ hat uns gewarnt, uns vorzubereiten — durch die Stärkung des Glaubens, das Lesen der ersten und letzten zehn Verse der Sure al-Kahf und die Zuflucht bei Allah vor der Versuchung des Dajjal.",
   },
+  {
+    id: "bilal",
+    titleBs: "Bilal ibn Rebah — glas islama",
+    titleDe: "Bilal ibn Rabah — Die Stimme des Islam",
+    emoji: "🕌",
+    slides: [
+      {
+        textBs:
+          "Bilal ibn Rebah je bio abesinski rob koji je prihvatio islam u najranijim danima. Njegov vlasnik, Umejje ibn Halef, bio je jedan od najžešćih neprijatelja islama. Kada je saznao da je Bilal postao musliman, podvrgnuo ga je strahovitim mukama — izvlačio ga na užareni pijesak Meke u najtoplijem dijelu dana i stavljao mu ogromne kamene gromade na prsa.",
+        textDe:
+          "Bilal ibn Rabah war ein abessinischer Sklave, der den Islam in seinen frühesten Tagen annahm. Sein Besitzer, Umayya ibn Khalaf, war einer der schlimmsten Feinde des Islam. Als er erfuhr, dass Bilal Muslim geworden war, unterzog er ihn schrecklicher Folter — er schleppte ihn auf den glühenden Sand Mekkas in der größten Hitze und legte ihm riesige Felsbrocken auf die Brust.",
+        emoji: "🔥",
+      },
+      {
+        textBs:
+          "Dok je ležao pod kamenom na vrućem pijesku, Umejje mu je vikao: 'Odrekni se svog Boga!' Ali Bilal je ponavljao samo jednu riječ: 'Ehad! Ehad!' — 'Jedan! Jedan!' Nije popuštao, bez obzira na bol. Njegova vjera u Allaha Jednog bila je jača od svakog mučenja. Ebu Bekr es-Siddik je saznao za njegovu patnju i otkupio ga, oslobodivši ga ropstva.",
+        textDe:
+          "Während er unter dem Fels auf dem heißen Sand lag, schrie Umayya ihn an: 'Sage dich von deinem Gott los!' Doch Bilal wiederholte nur ein einziges Wort: 'Ahad! Ahad!' — 'Einer! Einer!' Er gab nicht nach, egal wie groß der Schmerz war. Sein Glaube an den Einen Allah war stärker als jede Folter. Abu Bakr as-Siddiq erfuhr von seinem Leiden und kaufte ihn frei.",
+        emoji: "⛓️",
+      },
+      {
+        textBs:
+          "Nakon oslobođenja, Poslanik ﷺ je odabrao upravo Bilala za prvog mujezina u islamu. Njegov prekrasni glas je odzvanjao Medinom, pozivajući vjernike na namaz. Na dan oslobođenja Meke, Bilal se popeo na Kabu i učio ezan — isto on koji je bio mučen na tom istom mjestu. Kada je Poslanik ﷺ preselio, Bilal više nije mogao učiti ezan od tuge — osim jednom, kada su ga ashabi zamolili, i svi su plakali.",
+        textDe:
+          "Nach seiner Befreiung wählte der Prophet ﷺ ausgerechnet Bilal als ersten Muezzin im Islam. Seine wunderschöne Stimme hallte durch Medina und rief die Gläubigen zum Gebet. Am Tag der Eroberung Mekkas stieg Bilal auf die Kaaba und rief den Adhan — derselbe Mann, der an diesem Ort gefoltert worden war. Als der Prophet ﷺ starb, konnte Bilal vor Trauer den Adhan nicht mehr rufen — außer einmal, als die Gefährten ihn baten, und alle weinten.",
+        emoji: "📢",
+      },
+    ],
+    lessonBs:
+      "Bilalova priča nas uči da pred Allahom nema razlike između ljudi po boji kože, porijeklu ili statusu — već samo po bogobojaznosti (takvi). Rob je postao jedan od najčasnijih ashaba. Njegova upornost pod mukama pokazuje da istinski iman ne poznaje kompromis. A Allahova nagrada dolazi — nekad na ovom, a sigurno na ahiretu.",
+    lessonDe:
+      "Bilals Geschichte lehrt uns, dass es vor Allah keinen Unterschied zwischen Menschen gibt — weder nach Hautfarbe, Herkunft noch Status — sondern nur nach Gottesfurcht (Taqwa). Ein Sklave wurde zu einem der ehrenwertesten Gefährten. Seine Standhaftigkeit unter Folter zeigt, dass wahrer Glaube keine Kompromisse kennt. Und Allahs Belohnung kommt — manchmal in diesem Leben, und gewiss im Jenseits.",
+  },
 ];
 
 export const sahabaStories = stories;
