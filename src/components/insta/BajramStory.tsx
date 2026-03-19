@@ -2,10 +2,10 @@ import { forwardRef } from "react";
 import logo from "@/assets/logo.png";
 
 const PROGRAM_ITEMS = [
-  { time: "05:30", label: "Sabah namaz", icon: "🌙" },
-  { time: "od Sabaha", label: "Učenje Kur'ana i ilahija u izvodbi Elnura Mujezinovića", icon: "📖" },
-  { time: "06:45", label: "Prvi termin Bajram namaza", icon: "🕌" },
-  { time: "07:30", label: "Drugi termin Bajram namaza", icon: "🕌" },
+  { time: "05:30", label: "Sabah namaz" },
+  { time: "od Sabaha", label: "Učenje Kur'ana i ilahija u izvodbi Elnura Mujezinovića" },
+  { time: "06:45", label: "Prvi termin Bajram namaza" },
+  { time: "07:30", label: "Drugi termin Bajram namaza" },
 ];
 
 const BajramStory = forwardRef<HTMLDivElement>((_, ref) => {
@@ -47,15 +47,10 @@ const BajramStory = forwardRef<HTMLDivElement>((_, ref) => {
         {/* Mosque name */}
         <p style={{
           fontSize: "2.2cqi", fontWeight: 500, letterSpacing: "0.22em",
-          textTransform: "uppercase", opacity: 0.45, marginBottom: "5%",
+          textTransform: "uppercase", opacity: 0.45, marginBottom: "6%",
         }}>
           Džemat Et-Taqwa · Wien
         </p>
-
-        {/* Crescent icon */}
-        <div style={{ fontSize: "7cqi", lineHeight: 1, marginBottom: "2%" }}>
-          ☪️
-        </div>
 
         {/* Title */}
         <h2 style={{
@@ -86,7 +81,7 @@ const BajramStory = forwardRef<HTMLDivElement>((_, ref) => {
         <div style={{
           width: "90%", display: "flex", flexDirection: "column", gap: "2cqi",
         }}>
-          {PROGRAM_ITEMS.map(({ time, label, icon }, i) => (
+          {PROGRAM_ITEMS.map(({ time, label }, i) => (
             <div key={i} style={{
               display: "flex", alignItems: "center", gap: "3cqi",
               padding: "2.5% 4%", borderRadius: 12,
@@ -97,14 +92,13 @@ const BajramStory = forwardRef<HTMLDivElement>((_, ref) => {
                 ? "1px solid rgba(52,211,153,0.25)"
                 : "1px solid rgba(255,255,255,0.06)",
             }}>
-              <span style={{ fontSize: "3cqi" }}>{icon}</span>
               <div style={{
                 background: "linear-gradient(135deg, #0d9b6a, #34d399)",
                 color: "white",
                 fontSize: "2.8cqi", fontWeight: 700,
-                padding: "1% 3.5%",
+                padding: "1.2% 3.5%",
                 borderRadius: 8,
-                minWidth: "24%",
+                minWidth: "26%",
                 textAlign: "center",
                 whiteSpace: "nowrap",
               }}>
@@ -152,7 +146,7 @@ const BajramStory = forwardRef<HTMLDivElement>((_, ref) => {
           Petak, 20. Mart 2026
         </p>
         <p style={{ fontSize: "2cqi", opacity: 0.3, marginBottom: "1%" }}>
-          📍 Voitgasse 21 · 1220 Wien
+          Voitgasse 21 · 1220 Wien
         </p>
       </div>
     </div>
