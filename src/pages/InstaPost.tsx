@@ -52,6 +52,7 @@ const InstaPost = () => {
   const sahabaRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
   const { toast } = useToast();
+  const [preparedExports, setPreparedExports] = useState<Record<string, { url: string; filename: string } | null>>({});
   const [countdownIdx, setCountdownIdx] = useState(0);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [quizSlideIdx, setQuizSlideIdx] = useState(0);
@@ -69,48 +70,24 @@ const InstaPost = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
+  const handlePrepareImage = async (
+    ref: React.RefObject<HTMLDivElement>,
+    exportKey: string,
+    filename: string,
+    targetW: number,
+    targetH: number,
+  ) => {
     if (!ref.current || downloading) return;
-
-    const popup = window.open("", "_blank");
-    if (popup) {
-      popup.document.write(`
-        <html>
-          <head>
-            <title>${filename}</title>
-            <style>
-              body {
-                margin: 0;
-                min-height: 100vh;
-                display: grid;
-                place-items: center;
-                background: #001a0d;
-                color: white;
-                font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-              }
-              .loading {
-                opacity: 0.8;
-                letter-spacing: 0.04em;
-              }
-            </style>
-          </head>
-          <body>
-            <div class="loading">Bild wird vorbereitet ...</div>
-          </body>
-        </html>
-      `);
-      popup.document.close();
-    }
 
     setDownloading(filename);
 
     try {
-      const { domToBlob } = await import("modern-screenshot");
+      const { domToPng } = await import("modern-screenshot");
       const el = ref.current;
       const currentWidth = el.offsetWidth;
       const scaleFactor = targetW / currentWidth;
 
-      const blob = await domToBlob(el, {
+      const dataUrl = await domToPng(el, {
         scale: scaleFactor,
         width: currentWidth,
         height: el.offsetHeight,
@@ -118,73 +95,17 @@ const InstaPost = () => {
         fetchProxyUrl: undefined,
       } as any);
 
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      setPreparedExports((prev) => ({
+        ...prev,
+        [exportKey]: { url: dataUrl, filename },
+      }));
 
-      if (popup && !popup.closed) {
-        popup.document.write(`
-          <html>
-            <head>
-              <title>${filename}</title>
-              <style>
-                body {
-                  margin: 0;
-                  background: #001a0d;
-                  color: white;
-                  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  gap: 16px;
-                  padding: 24px;
-                }
-                a {
-                  color: white;
-                  background: #0d9b6a;
-                  text-decoration: none;
-                  padding: 12px 18px;
-                  border-radius: 999px;
-                  font-weight: 600;
-                }
-                img {
-                  max-width: min(100%, 540px);
-                  height: auto;
-                  display: block;
-                  border-radius: 18px;
-                }
-                p {
-                  margin: 0;
-                  opacity: 0.8;
-                  text-align: center;
-                }
-              </style>
-            </head>
-            <body>
-              <a href="${blobUrl}" download="${filename}">Bild herunterladen</a>
-              <p>Falls der Download auf dem Handy nicht direkt startet, Bild lange drücken und speichern.</p>
-              <img src="${blobUrl}" alt="${filename}" />
-            </body>
-          </html>
-        `);
-        popup.document.close();
-      } else {
-        toast({
-          title: "Bild erstellt",
-          description: "Falls kein Download startet, bitte Popups erlauben und erneut tippen.",
-        });
-      }
-
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+      toast({
+        title: "Bild erstellt",
+        description: "Jetzt auf 'Bild öffnen' tippen und auf dem Handy speichern.",
+      });
     } catch (err) {
-      console.error("Download failed:", err);
-      if (popup && !popup.closed) {
-        popup.close();
-      }
+      console.error("Export failed:", err);
       toast({
         title: "Export fehlgeschlagen",
         description: "Das Bild konnte nicht erstellt werden.",
@@ -193,6 +114,10 @@ const InstaPost = () => {
     } finally {
       setDownloading(null);
     }
+  };
+
+  const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
+    await handlePrepareImage(ref, filename, filename, targetW, targetH);
   };
 
   return (
