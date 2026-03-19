@@ -129,10 +129,44 @@ const InstaPost = () => {
 
       <BajramStory ref={bajramRef} />
 
-      <Button onClick={() => handleDownload(bajramRef, "ettaqwa-bajram-program.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
-        {downloading === "ettaqwa-bajram-program.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
-        Bajram Story herunterladen
-      </Button>
+      <div className="flex flex-col items-center gap-3 w-full max-w-[540px]">
+        <Button onClick={() => handlePrepareImage(bajramRef, "bajram", "ettaqwa-bajram-program.png", 1080, 1920)} size="lg" className="gap-2 w-full sm:w-auto" disabled={!!downloading}>
+          {downloading === "ettaqwa-bajram-program.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+          Bild erstellen
+        </Button>
+
+        {preparedExports.bajram && (
+          <div className="w-full rounded-xl border border-border bg-card/50 p-4 flex flex-col gap-3">
+            <p className="text-sm text-muted-foreground text-center">
+              Öffne das Bild und speichere es dann auf dem Handy über langes Drücken.
+            </p>
+            <div className="overflow-hidden rounded-xl border border-border bg-background/60">
+              <img
+                src={preparedExports.bajram.url}
+                alt="Bajram Story Export"
+                className="w-full h-auto block"
+              />
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href={preparedExports.bajram.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-colors hover:opacity-90"
+              >
+                Bild öffnen
+              </a>
+              <a
+                href={preparedExports.bajram.url}
+                download={preparedExports.bajram.filename}
+                className="inline-flex h-11 items-center justify-center rounded-md border border-input bg-background px-6 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
+                Download versuchen
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* ===== COUNTDOWN STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">⏳ Countdown Story</h2>
