@@ -12,6 +12,7 @@ import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 import QuranVerseStory from "@/components/insta/QuranVerseStory";
 import CountdownStory, { countdownEvents } from "@/components/insta/CountdownStory";
 import SahabaStory, { sahabaStories, getSahabaSlideCount } from "@/components/insta/SahabaStory";
+import BajramStory from "@/components/insta/BajramStory";
 
 import instaBg from "@/assets/instagram-announcement.jpg";
 import ramadanBg from "@/assets/ramadan-story-bg.jpg";
