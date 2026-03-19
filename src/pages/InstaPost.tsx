@@ -141,13 +141,13 @@ const InstaPost = () => {
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
 
       {/* ===== BAJRAM PROGRAM STORY ===== */}
-      <h2 className="text-xl font-bold text-foreground mt-8">🕌 Bajramski Program Story</h2>
+      <h2 className="text-xl font-bold text-foreground mt-8">Bajramski Program Story</h2>
 
       <BajramStory ref={bajramRef} />
 
       <Button onClick={() => handleDownload(bajramRef, "ettaqwa-bajram-program.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
         {downloading === "ettaqwa-bajram-program.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
-        Bajram Story herunterladen (1080×1920)
+        Bajram Story herunterladen
       </Button>
 
       {/* ===== COUNTDOWN STORY ===== */}
