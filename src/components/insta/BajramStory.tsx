@@ -2,10 +2,10 @@ import { forwardRef } from "react";
 import logo from "@/assets/logo.png";
 
 const PROGRAM_ITEMS = [
-  { time: "05:30", label: "Sabah namaz" },
-  { time: "od Sabaha", label: "Učenje Kur'ana i ilahija" },
-  { time: "06:45", label: "Prvi termin Bajram namaza" },
-  { time: "07:30", label: "Drugi termin Bajram namaza" },
+  { time: "05:30", label: "Sabah namaz", icon: "🌙" },
+  { time: "od Sabaha", label: "Učenje Kur'ana i ilahija u izvodbi Elnura Mujezinovića", icon: "📖" },
+  { time: "06:45", label: "Prvi termin Bajram namaza", icon: "🕌" },
+  { time: "07:30", label: "Drugi termin Bajram namaza", icon: "🕌" },
 ];
 
 const BajramStory = forwardRef<HTMLDivElement>((_, ref) => {
@@ -19,73 +19,101 @@ const BajramStory = forwardRef<HTMLDivElement>((_, ref) => {
         overflow: "hidden",
         fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif",
         containerType: "inline-size",
-        background: "linear-gradient(180deg, #f0f5f2 0%, #e8f0ec 40%, #dfe9e3 100%)",
+        background: "radial-gradient(ellipse at 50% 20%, #003d1f 0%, #001a0d 55%, #000d06 100%)",
       }}
     >
-      {/* Subtle pattern */}
+      {/* Subtle pattern overlay */}
       <div style={{
-        position: "absolute", inset: 0, opacity: 0.04,
-        backgroundImage: "radial-gradient(circle at 30% 70%, #0d7c5c 1px, transparent 1px)",
-        backgroundSize: "40px 40px",
+        position: "absolute", inset: 0, opacity: 0.03,
+        backgroundImage: "radial-gradient(circle at 25% 25%, white 1px, transparent 1px)",
+        backgroundSize: "30px 30px",
+      }} />
+
+      {/* Decorative arc */}
+      <div style={{
+        position: "absolute", top: "-30%", left: "50%", transform: "translateX(-50%)",
+        width: "160%", aspectRatio: "1", borderRadius: "50%",
+        border: "1px solid rgba(52,211,153,0.06)",
       }} />
 
       <div style={{
         position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
         alignItems: "center", width: "100%", height: "100%",
-        padding: "10% 8%", textAlign: "center", color: "#1a3a2a",
+        padding: "8% 7%", textAlign: "center", color: "white",
       }}>
         {/* Logo */}
-        <img src={logo} alt="Et-Taqwa" style={{ width: "16%", objectFit: "contain", marginBottom: "1.5%" }} />
+        <img src={logo} alt="Et-Taqwa" style={{ width: "14%", objectFit: "contain", marginBottom: "2%" }} />
 
         {/* Mosque name */}
         <p style={{
-          fontSize: "2.2cqi", fontWeight: 600, letterSpacing: "0.08em",
-          color: "#0d7c5c", marginBottom: "6%",
+          fontSize: "2.2cqi", fontWeight: 500, letterSpacing: "0.22em",
+          textTransform: "uppercase", opacity: 0.45, marginBottom: "5%",
         }}>
-          @dzemat_et_taqwa
+          Džemat Et-Taqwa · Wien
         </p>
+
+        {/* Crescent icon */}
+        <div style={{ fontSize: "7cqi", lineHeight: 1, marginBottom: "2%" }}>
+          ☪️
+        </div>
 
         {/* Title */}
         <h2 style={{
-          fontSize: "8cqi", fontWeight: 800, lineHeight: 1.05,
-          color: "#1a3a2a", marginBottom: "1%",
-          letterSpacing: "-0.02em",
+          fontSize: "7cqi", fontWeight: 800, lineHeight: 1.05, marginBottom: "0.5%",
+          background: "linear-gradient(90deg, #34d399, #6ee7b7, #5eead4)",
+          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         }}>
-          Bajramski
+          BAJRAMSKI
         </h2>
         <h2 style={{
-          fontSize: "8cqi", fontWeight: 800, lineHeight: 1.05,
-          color: "#1a3a2a", marginBottom: "6%",
-          letterSpacing: "-0.02em",
+          fontSize: "7cqi", fontWeight: 800, lineHeight: 1.05, marginBottom: "1%",
+          background: "linear-gradient(90deg, #6ee7b7, #5eead4)",
+          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         }}>
-          program
+          PROGRAM
         </h2>
+        <p style={{ fontSize: "2.5cqi", fontWeight: 500, opacity: 0.35, letterSpacing: "0.12em", marginBottom: "5%" }}>
+          EID-PROGRAMM
+        </p>
 
-        {/* Schedule items */}
+        {/* Divider */}
         <div style={{
-          width: "92%", display: "flex", flexDirection: "column", gap: "2.5cqi",
-          alignItems: "stretch",
+          width: "16%", height: 2, marginBottom: "5%",
+          background: "linear-gradient(90deg, transparent, rgba(52,211,153,0.5), transparent)",
+        }} />
+
+        {/* Schedule */}
+        <div style={{
+          width: "90%", display: "flex", flexDirection: "column", gap: "2cqi",
         }}>
-          {PROGRAM_ITEMS.map(({ time, label }, i) => (
+          {PROGRAM_ITEMS.map(({ time, label, icon }, i) => (
             <div key={i} style={{
-              display: "flex", alignItems: "center", gap: "4cqi",
+              display: "flex", alignItems: "center", gap: "3cqi",
+              padding: "2.5% 4%", borderRadius: 12,
+              background: i === 2
+                ? "linear-gradient(135deg, rgba(52,211,153,0.15), rgba(52,211,153,0.05))"
+                : "rgba(255,255,255,0.03)",
+              border: i === 2
+                ? "1px solid rgba(52,211,153,0.25)"
+                : "1px solid rgba(255,255,255,0.06)",
             }}>
+              <span style={{ fontSize: "3cqi" }}>{icon}</span>
               <div style={{
-                background: "linear-gradient(135deg, #0d7c5c, #15a076)",
+                background: "linear-gradient(135deg, #0d9b6a, #34d399)",
                 color: "white",
-                fontSize: "3cqi", fontWeight: 700,
-                padding: "1.5% 4%",
-                borderRadius: 10,
-                minWidth: "28%",
+                fontSize: "2.8cqi", fontWeight: 700,
+                padding: "1% 3.5%",
+                borderRadius: 8,
+                minWidth: "24%",
                 textAlign: "center",
                 whiteSpace: "nowrap",
               }}>
                 {time}
               </div>
               <span style={{
-                fontSize: "3cqi", fontWeight: 500,
-                color: "#2d4a3a", textAlign: "left",
-                lineHeight: 1.3,
+                fontSize: "2.8cqi", fontWeight: 500,
+                opacity: i === 2 ? 1 : 0.75,
+                textAlign: "left", lineHeight: 1.3, flex: 1,
               }}>
                 {label}
               </span>
@@ -97,26 +125,34 @@ const BajramStory = forwardRef<HTMLDivElement>((_, ref) => {
         <div style={{ flex: 1 }} />
 
         {/* Greeting */}
-        <p style={{
-          fontSize: "4cqi", fontWeight: 700,
-          color: "#0d7c5c", marginBottom: "2%",
-          lineHeight: 1.2,
+        <div style={{
+          width: "85%", padding: "3% 5%", borderRadius: 14,
+          background: "rgba(52,211,153,0.06)",
+          border: "1px solid rgba(52,211,153,0.12)",
+          marginBottom: "4%",
         }}>
-          Bajram Šerif Mubarek Olsun
-        </p>
+          <p style={{
+            fontSize: "4cqi", fontWeight: 700, lineHeight: 1.2,
+            background: "linear-gradient(90deg, #34d399, #6ee7b7)",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            marginBottom: "1%",
+          }}>
+            Bajram Šerif Mubarek Olsun
+          </p>
+          <p style={{ fontSize: "2.5cqi", opacity: 0.4, fontWeight: 500 }}>
+            Eid Mubarak
+          </p>
+        </div>
 
         {/* Date & Location */}
         <p style={{
-          fontSize: "3cqi", fontWeight: 700,
-          color: "#1a3a2a", marginBottom: "0.5%",
+          fontSize: "3cqi", fontWeight: 700, opacity: 0.8,
+          marginBottom: "0.5%",
         }}>
           Petak, 20. Mart 2026
         </p>
-        <p style={{
-          fontSize: "2.5cqi", fontWeight: 500,
-          color: "#5a7a6a",
-        }}>
-          1220 WIEN, VOITGASSE 21
+        <p style={{ fontSize: "2cqi", opacity: 0.3, marginBottom: "1%" }}>
+          📍 Voitgasse 21 · 1220 Wien
         </p>
       </div>
     </div>

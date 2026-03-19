@@ -32,7 +32,7 @@ const PrayerTimes = () => {
   useEffect(() => {
     if (!isFullscreen) return;
 
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
     
     const handleMouseMove = () => {
       setShowFullscreenButton(true);
