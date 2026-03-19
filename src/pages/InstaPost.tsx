@@ -51,6 +51,7 @@ const InstaPost = () => {
   const countdownRef = useRef<HTMLDivElement>(null);
   const sahabaRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
+  const { toast } = useToast();
   const [countdownIdx, setCountdownIdx] = useState(0);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [quizSlideIdx, setQuizSlideIdx] = useState(0);
