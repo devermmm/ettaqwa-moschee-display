@@ -87,6 +87,8 @@ const InstaPost = () => {
       link.download = filename;
       link.href = dataUrl;
       link.click();
+    } catch (err) {
+      console.error("Download failed:", err);
     } finally {
       setDownloading(null);
     }
