@@ -71,37 +71,46 @@ const InstaPost = () => {
 
   const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
     if (!ref.current || downloading) return;
+
+    const popup = window.open("", "_blank");
+    if (popup) {
+      popup.document.write(`
+        <html>
+          <head>
+            <title>${filename}</title>
+            <style>
+              body {
+                margin: 0;
+                min-height: 100vh;
+                display: grid;
+                place-items: center;
+                background: #001a0d;
+                color: white;
+                font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+              }
+              .loading {
+                opacity: 0.8;
+                letter-spacing: 0.04em;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="loading">Bild wird vorbereitet ...</div>
+          </body>
+        </html>
+      `);
+      popup.document.close();
+    }
+
     setDownloading(filename);
+
     try {
-      const { domToBlob, domToPng } = await import("modern-screenshot");
+      const { domToBlob } = await import("modern-screenshot");
       const el = ref.current;
       const currentWidth = el.offsetWidth;
       const scaleFactor = targetW / currentWidth;
 
-      try {
-        const blob = await domToBlob(el, {
-          scale: scaleFactor,
-          width: currentWidth,
-          height: el.offsetHeight,
-          backgroundColor: "#001a0d",
-          fetchProxyUrl: undefined,
-        } as any);
-
-        const blobUrl = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = blobUrl;
-        link.download = filename;
-        link.target = "_blank";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
-        return;
-      } catch (blobError) {
-        console.warn("Blob download failed, falling back to new tab:", blobError);
-      }
-
-      const dataUrl = await domToPng(el, {
+      const blob = await domToBlob(el, {
         scale: scaleFactor,
         width: currentWidth,
         height: el.offsetHeight,
@@ -109,23 +118,73 @@ const InstaPost = () => {
         fetchProxyUrl: undefined,
       } as any);
 
-      const popup = window.open();
-      if (popup) {
-        popup.document.write(`<title>${filename}</title><img src="${dataUrl}" style="max-width:100%;height:auto;display:block;margin:0 auto;background:#001a0d;" />`);
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      if (popup && !popup.closed) {
+        popup.document.write(`
+          <html>
+            <head>
+              <title>${filename}</title>
+              <style>
+                body {
+                  margin: 0;
+                  background: #001a0d;
+                  color: white;
+                  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  gap: 16px;
+                  padding: 24px;
+                }
+                a {
+                  color: white;
+                  background: #0d9b6a;
+                  text-decoration: none;
+                  padding: 12px 18px;
+                  border-radius: 999px;
+                  font-weight: 600;
+                }
+                img {
+                  max-width: min(100%, 540px);
+                  height: auto;
+                  display: block;
+                  border-radius: 18px;
+                }
+                p {
+                  margin: 0;
+                  opacity: 0.8;
+                  text-align: center;
+                }
+              </style>
+            </head>
+            <body>
+              <a href="${blobUrl}" download="${filename}">Bild herunterladen</a>
+              <p>Falls der Download auf dem Handy nicht direkt startet, Bild lange drücken und speichern.</p>
+              <img src="${blobUrl}" alt="${filename}" />
+            </body>
+          </html>
+        `);
         popup.document.close();
-        toast({
-          title: "Bild geöffnet",
-          description: "Falls der Download nicht automatisch startet, Bild lange drücken und speichern.",
-        });
       } else {
         toast({
-          title: "Download blockiert",
-          description: "Bitte Popups erlauben oder erneut versuchen.",
-          variant: "destructive",
+          title: "Bild erstellt",
+          description: "Falls kein Download startet, bitte Popups erlauben und erneut tippen.",
         });
       }
+
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
     } catch (err) {
       console.error("Download failed:", err);
+      if (popup && !popup.closed) {
+        popup.close();
+      }
       toast({
         title: "Export fehlgeschlagen",
         description: "Das Bild konnte nicht erstellt werden.",
