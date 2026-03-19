@@ -37,6 +37,7 @@ const InstaPost = () => {
   const ramadanRef = useRef<HTMLDivElement>(null);
   const spendenRef = useRef<HTMLDivElement>(null);
   const standortRef = useRef<HTMLDivElement>(null);
+  const bajramRef = useRef<HTMLDivElement>(null);
   const vaktijaRef = useRef<HTMLDivElement>(null);
   const jummaRef = useRef<HTMLDivElement>(null);
   const quranRef = useRef<HTMLDivElement>(null);
