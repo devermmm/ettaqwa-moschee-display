@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Loader2, ChevronLeft, ChevronRight, Copy, Check } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import VaktijaStory from "@/components/insta/VaktijaStory";
 import JummaReminderStory from "@/components/insta/JummaReminderStory";
 import TarawihStory from "@/components/insta/TarawihStory";
@@ -50,6 +51,7 @@ const InstaPost = () => {
   const countdownRef = useRef<HTMLDivElement>(null);
   const sahabaRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
+  const { toast } = useToast();
   const [countdownIdx, setCountdownIdx] = useState(0);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [quizSlideIdx, setQuizSlideIdx] = useState(0);
@@ -71,11 +73,34 @@ const InstaPost = () => {
     if (!ref.current || downloading) return;
     setDownloading(filename);
     try {
-      const { domToPng } = await import("modern-screenshot");
+      const { domToBlob, domToPng } = await import("modern-screenshot");
       const el = ref.current;
       const currentWidth = el.offsetWidth;
       const scaleFactor = targetW / currentWidth;
-      
+
+      try {
+        const blob = await domToBlob(el, {
+          scale: scaleFactor,
+          width: currentWidth,
+          height: el.offsetHeight,
+          backgroundColor: "#001a0d",
+          fetchProxyUrl: undefined,
+        } as any);
+
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = filename;
+        link.target = "_blank";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        return;
+      } catch (blobError) {
+        console.warn("Blob download failed, falling back to new tab:", blobError);
+      }
+
       const dataUrl = await domToPng(el, {
         scale: scaleFactor,
         width: currentWidth,
@@ -83,12 +108,29 @@ const InstaPost = () => {
         backgroundColor: "#001a0d",
         fetchProxyUrl: undefined,
       } as any);
-      const link = document.createElement("a");
-      link.download = filename;
-      link.href = dataUrl;
-      link.click();
+
+      const popup = window.open();
+      if (popup) {
+        popup.document.write(`<title>${filename}</title><img src="${dataUrl}" style="max-width:100%;height:auto;display:block;margin:0 auto;background:#001a0d;" />`);
+        popup.document.close();
+        toast({
+          title: "Bild geöffnet",
+          description: "Falls der Download nicht automatisch startet, Bild lange drücken und speichern.",
+        });
+      } else {
+        toast({
+          title: "Download blockiert",
+          description: "Bitte Popups erlauben oder erneut versuchen.",
+          variant: "destructive",
+        });
+      }
     } catch (err) {
       console.error("Download failed:", err);
+      toast({
+        title: "Export fehlgeschlagen",
+        description: "Das Bild konnte nicht erstellt werden.",
+        variant: "destructive",
+      });
     } finally {
       setDownloading(null);
     }
@@ -99,13 +141,13 @@ const InstaPost = () => {
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
 
       {/* ===== BAJRAM PROGRAM STORY ===== */}
-      <h2 className="text-xl font-bold text-foreground mt-8">🕌 Bajramski Program Story</h2>
+      <h2 className="text-xl font-bold text-foreground mt-8">Bajramski Program Story</h2>
 
       <BajramStory ref={bajramRef} />
 
       <Button onClick={() => handleDownload(bajramRef, "ettaqwa-bajram-program.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
         {downloading === "ettaqwa-bajram-program.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
-        Bajram Story herunterladen (1080×1920)
+        Bajram Story herunterladen
       </Button>
 
       {/* ===== COUNTDOWN STORY ===== */}
