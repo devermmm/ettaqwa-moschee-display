@@ -12,6 +12,7 @@ import QuranVersePost, { quranVerses } from "@/components/insta/QuranVersePost";
 import QuranVerseStory from "@/components/insta/QuranVerseStory";
 import CountdownStory, { countdownEvents } from "@/components/insta/CountdownStory";
 import SahabaStory, { sahabaStories, getSahabaSlideCount } from "@/components/insta/SahabaStory";
+import BajramStory from "@/components/insta/BajramStory";
 
 import instaBg from "@/assets/instagram-announcement.jpg";
 import ramadanBg from "@/assets/ramadan-story-bg.jpg";
@@ -36,6 +37,7 @@ const InstaPost = () => {
   const ramadanRef = useRef<HTMLDivElement>(null);
   const spendenRef = useRef<HTMLDivElement>(null);
   const standortRef = useRef<HTMLDivElement>(null);
+  const bajramRef = useRef<HTMLDivElement>(null);
   const vaktijaRef = useRef<HTMLDivElement>(null);
   const jummaRef = useRef<HTMLDivElement>(null);
   const quranRef = useRef<HTMLDivElement>(null);
@@ -93,6 +95,16 @@ const InstaPost = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-6">
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
+
+      {/* ===== BAJRAM PROGRAM STORY ===== */}
+      <h2 className="text-xl font-bold text-foreground mt-8">🕌 Bajramski Program Story</h2>
+
+      <BajramStory ref={bajramRef} />
+
+      <Button onClick={() => handleDownload(bajramRef, "ettaqwa-bajram-program.png", 1080, 1920)} size="lg" className="gap-2" disabled={!!downloading}>
+        {downloading === "ettaqwa-bajram-program.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+        Bajram Story herunterladen (1080×1920)
+      </Button>
 
       {/* ===== COUNTDOWN STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">⏳ Countdown Story</h2>
