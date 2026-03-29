@@ -107,8 +107,8 @@ const PrayerTimes = () => {
 
   // Dzuma (Friday prayer) times - always shown
   const dzumaTimes = [
-    { name: "Džuma 1", bosnianName: t("prayerTimes.dzuma1"), time: "12:15" },
-    { name: "Džuma 2", bosnianName: t("prayerTimes.dzuma2"), time: "13:00" },
+    { name: "Džuma 1", bosnianName: t("prayerTimes.dzuma1"), time: "14:00" },
+    { name: "Džuma 2", bosnianName: t("prayerTimes.dzuma2"), time: "15:00" },
   ];
 
   useEffect(() => {
