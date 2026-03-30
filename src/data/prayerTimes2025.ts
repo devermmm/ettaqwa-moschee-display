@@ -414,22 +414,6 @@ export const prayerTimes2025: Record<number, Record<number, DailyPrayerTimes>> =
   },
 };
 
-// Check if a date is in DST (CEST) for Europe/Vienna
-const isDST = (date: Date): boolean => {
-  const jan = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
-  const jul = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
-  const stdOffset = Math.max(jan, jul);
-  return date.getTimezoneOffset() < stdOffset;
-};
-
-// Adjust a time string by +/- hours
-const adjustTime = (timeStr: string, hoursOffset: number): string => {
-  const [h, m] = timeStr.split(":").map(Number);
-  let newH = h + hoursOffset;
-  if (newH < 0) newH += 24;
-  if (newH >= 24) newH -= 24;
-  return `${newH}:${m.toString().padStart(2, "0")}`;
-};
 
 export const getPrayerTimesForDate = (date: Date): DailyPrayerTimes => {
   const month = date.getMonth() + 1;
