@@ -414,22 +414,6 @@ export const prayerTimes2025: Record<number, Record<number, DailyPrayerTimes>> =
   },
 };
 
-// Check if a date is in DST (CEST) for Europe/Vienna
-const isDST = (date: Date): boolean => {
-  const jan = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
-  const jul = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
-  const stdOffset = Math.max(jan, jul);
-  return date.getTimezoneOffset() < stdOffset;
-};
-
-// Adjust a time string by +/- hours
-const adjustTime = (timeStr: string, hoursOffset: number): string => {
-  const [h, m] = timeStr.split(":").map(Number);
-  let newH = h + hoursOffset;
-  if (newH < 0) newH += 24;
-  if (newH >= 24) newH -= 24;
-  return `${newH}:${m.toString().padStart(2, "0")}`;
-};
 
 export const getPrayerTimesForDate = (date: Date): DailyPrayerTimes => {
   const month = date.getMonth() + 1;
@@ -453,35 +437,6 @@ export const getPrayerTimesForDate = (date: Date): DailyPrayerTimes => {
       times = { ...monthData[closestDay] };
     } else {
       times = { ...prayerTimes2025[12][1] };
-    }
-  }
-
-  // If not 2025, correct for DST differences between years
-  if (date.getFullYear() !== 2025) {
-    const currentIsDST = isDST(date);
-    const equivalent2025 = new Date(2025, date.getMonth(), date.getDate());
-    const data2025IsDST = isDST(equivalent2025);
-
-    if (currentIsDST && !data2025IsDST) {
-      // Current year already in summertime, but 2025 data is still wintertime → +1h
-      times = {
-        fajr: adjustTime(times.fajr, 1),
-        sunrise: adjustTime(times.sunrise, 1),
-        dhuhr: adjustTime(times.dhuhr, 1),
-        asr: adjustTime(times.asr, 1),
-        maghrib: adjustTime(times.maghrib, 1),
-        isha: adjustTime(times.isha, 1),
-      };
-    } else if (!currentIsDST && data2025IsDST) {
-      // Current year still wintertime, but 2025 data is summertime → -1h
-      times = {
-        fajr: adjustTime(times.fajr, -1),
-        sunrise: adjustTime(times.sunrise, -1),
-        dhuhr: adjustTime(times.dhuhr, -1),
-        asr: adjustTime(times.asr, -1),
-        maghrib: adjustTime(times.maghrib, -1),
-        isha: adjustTime(times.isha, -1),
-      };
     }
   }
 
