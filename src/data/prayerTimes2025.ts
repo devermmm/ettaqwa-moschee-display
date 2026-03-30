@@ -440,34 +440,5 @@ export const getPrayerTimesForDate = (date: Date): DailyPrayerTimes => {
     }
   }
 
-  // If not 2025, correct for DST differences between years
-  if (date.getFullYear() !== 2025) {
-    const currentIsDST = isDST(date);
-    const equivalent2025 = new Date(2025, date.getMonth(), date.getDate());
-    const data2025IsDST = isDST(equivalent2025);
-
-    if (currentIsDST && !data2025IsDST) {
-      // Current year already in summertime, but 2025 data is still wintertime → +1h
-      times = {
-        fajr: adjustTime(times.fajr, 1),
-        sunrise: adjustTime(times.sunrise, 1),
-        dhuhr: adjustTime(times.dhuhr, 1),
-        asr: adjustTime(times.asr, 1),
-        maghrib: adjustTime(times.maghrib, 1),
-        isha: adjustTime(times.isha, 1),
-      };
-    } else if (!currentIsDST && data2025IsDST) {
-      // Current year still wintertime, but 2025 data is summertime → -1h
-      times = {
-        fajr: adjustTime(times.fajr, -1),
-        sunrise: adjustTime(times.sunrise, -1),
-        dhuhr: adjustTime(times.dhuhr, -1),
-        asr: adjustTime(times.asr, -1),
-        maghrib: adjustTime(times.maghrib, -1),
-        isha: adjustTime(times.isha, -1),
-      };
-    }
-  }
-
   return times;
 };
