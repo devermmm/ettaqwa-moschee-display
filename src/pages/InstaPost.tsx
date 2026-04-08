@@ -52,7 +52,7 @@ const InstaPost = () => {
   const sahabaRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
   const { toast } = useToast();
-  const [preparedExports, setPreparedExports] = useState<Record<string, { url: string; filename: string } | null>>({});
+  const [latestExport, setLatestExport] = useState<{ url: string; filename: string } | null>(null);
   const [countdownIdx, setCountdownIdx] = useState(0);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [quizSlideIdx, setQuizSlideIdx] = useState(0);
@@ -70,14 +70,34 @@ const InstaPost = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const triggerDownload = async (url: string, filename: string) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Download failed");
+
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = blobUrl;
+      anchor.download = filename;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      window.setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+      return true;
+    } catch (error) {
+      const opened = window.open(url, "_blank", "noopener,noreferrer");
+      return Boolean(opened);
+    }
+  };
+
   const handlePrepareImage = async (
     ref: React.RefObject<HTMLDivElement>,
-    exportKey: string,
     filename: string,
     targetW: number,
     targetH: number,
   ) => {
-    if (!ref.current || downloading) return;
+    if (!ref.current || downloading) return null;
 
     setDownloading(filename);
 
@@ -95,15 +115,9 @@ const InstaPost = () => {
         fetchProxyUrl: undefined,
       } as any);
 
-      setPreparedExports((prev) => ({
-        ...prev,
-        [exportKey]: { url: dataUrl, filename },
-      }));
-
-      toast({
-        title: "Bild erstellt",
-        description: "Jetzt auf 'Bild öffnen' tippen und auf dem Handy speichern.",
-      });
+      const preparedExport = { url: dataUrl, filename };
+      setLatestExport(preparedExport);
+      return preparedExport;
     } catch (err) {
       console.error("Export failed:", err);
       toast({
@@ -111,18 +125,74 @@ const InstaPost = () => {
         description: "Das Bild konnte nicht erstellt werden.",
         variant: "destructive",
       });
+      return null;
     } finally {
       setDownloading(null);
     }
   };
 
-  const handleDownload = async (ref: React.RefObject<HTMLDivElement>, filename: string, targetW: number, targetH: number) => {
-    await handlePrepareImage(ref, filename, filename, targetW, targetH);
+  const handleDownload = async (
+    ref: React.RefObject<HTMLDivElement>,
+    filename: string,
+    targetW: number,
+    targetH: number,
+  ) => {
+    const preparedExport = await handlePrepareImage(ref, filename, targetW, targetH);
+    if (!preparedExport) return;
+
+    const downloaded = await triggerDownload(preparedExport.url, preparedExport.filename);
+
+    toast({
+      title: downloaded ? "Download gestartet" : "Bild erstellt",
+      description: downloaded
+        ? "Falls nichts gespeichert wurde, nutze die Vorschau oben."
+        : "Öffne oder speichere das Bild über die Vorschau oben.",
+    });
   };
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-6">
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
+
+      {latestExport && (
+        <div className="w-full max-w-[540px] rounded-xl border border-border bg-card/50 p-4 flex flex-col gap-3">
+          <p className="text-sm text-muted-foreground text-center">
+            Falls dein Handy nichts direkt speichert, öffne das Bild und speichere es manuell.
+          </p>
+          <div className="overflow-hidden rounded-xl border border-border bg-background/60">
+            <img
+              src={latestExport.url}
+              alt={latestExport.filename}
+              className="w-full h-auto block"
+            />
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <a
+              href={latestExport.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-colors hover:opacity-90"
+            >
+              Bild öffnen
+            </a>
+            <Button
+              variant="outline"
+              className="h-11"
+              onClick={async () => {
+                const downloaded = await triggerDownload(latestExport.url, latestExport.filename);
+                if (!downloaded) {
+                  toast({
+                    title: "Download blockiert",
+                    description: "Bitte öffne das Bild und speichere es dann manuell.",
+                  });
+                }
+              }}
+            >
+              Bild speichern
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* ===== BAJRAM PROGRAM STORY ===== */}
       <h2 className="text-xl font-bold text-foreground mt-8">Bajramski Program Story</h2>
@@ -130,42 +200,10 @@ const InstaPost = () => {
       <BajramStory ref={bajramRef} />
 
       <div className="flex flex-col items-center gap-3 w-full max-w-[540px]">
-        <Button onClick={() => handlePrepareImage(bajramRef, "bajram", "ettaqwa-bajram-program.png", 1080, 1920)} size="lg" className="gap-2 w-full sm:w-auto" disabled={!!downloading}>
+        <Button onClick={() => handleDownload(bajramRef, "ettaqwa-bajram-program.png", 1080, 1920)} size="lg" className="gap-2 w-full sm:w-auto" disabled={!!downloading}>
           {downloading === "ettaqwa-bajram-program.png" ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
-          Bild erstellen
+          Bild herunterladen
         </Button>
-
-        {preparedExports.bajram && (
-          <div className="w-full rounded-xl border border-border bg-card/50 p-4 flex flex-col gap-3">
-            <p className="text-sm text-muted-foreground text-center">
-              Öffne das Bild und speichere es dann auf dem Handy über langes Drücken.
-            </p>
-            <div className="overflow-hidden rounded-xl border border-border bg-background/60">
-              <img
-                src={preparedExports.bajram.url}
-                alt="Bajram Story Export"
-                className="w-full h-auto block"
-              />
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href={preparedExports.bajram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-colors hover:opacity-90"
-              >
-                Bild öffnen
-              </a>
-              <a
-                href={preparedExports.bajram.url}
-                download={preparedExports.bajram.filename}
-                className="inline-flex h-11 items-center justify-center rounded-md border border-input bg-background px-6 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-              >
-                Download versuchen
-              </a>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* ===== COUNTDOWN STORY ===== */}
