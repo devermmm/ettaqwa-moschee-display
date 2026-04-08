@@ -26,6 +26,7 @@ import AdminPrayerTimes from "./pages/AdminPrayerTimes";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Plakat from "./pages/Plakat";
 import Speisekarte from "./pages/Speisekarte";
+import Oeffnungszeiten from "./pages/Oeffnungszeiten";
 import VaktijaPrint from "./pages/VaktijaPrint";
 import InstaPost from "./pages/InstaPost";
 import TikTokOverlay from "./pages/TikTokOverlay";
