@@ -119,6 +119,39 @@ const stories: SahabaStoryData[] = [
     lessonDe:
       "Bilals Geschichte lehrt uns, dass es vor Allah keinen Unterschied zwischen Menschen gibt — weder nach Hautfarbe, Herkunft noch Status — sondern nur nach Gottesfurcht (Taqwa). Ein Sklave wurde zu einem der ehrenwertesten Gefährten. Seine Standhaftigkeit unter Folter zeigt, dass wahrer Glaube keine Kompromisse kennt. Und Allahs Belohnung kommt — manchmal in diesem Leben, und gewiss im Jenseits.",
   },
+  {
+    id: "barsisa",
+    titleBs: "Barsisa — pobožnjak kojeg je šejtan prevario",
+    titleDe: "Barsisa — Der Mönch, den der Teufel betrog",
+    emoji: "🕯️",
+    slides: [
+      {
+        textBs:
+          "Barsisa je bio pobožni čovjek iz Benu Israila, poznat po svojoj ibadetu i odricanju od dunjaluka. Ljudi su ga poštovali i smatrali ga jednim od najpobožnijih. Jednog dana, trojica braće su krenula u džihad i trebali su nekome povjeriti svoju sestru. Izabrali su Barsisu, jer su mislili da je on najpouzdaniji. On je isprva odbijao, ali šejtan mu je šaptao: 'Ako je ne primiš, neko nepovjerljiv će je čuvati.' Tako je pristao.",
+        textDe:
+          "Barsisa war ein frommer Mann der Banu Israel, bekannt für seine Ibada und Enthaltsamkeit. Die Menschen verehrten ihn und betrachteten ihn als einen der Frömmsten. Eines Tages zogen drei Brüder in den Kampf und mussten ihre Schwester jemandem anvertrauen. Sie wählten Barsisa, da sie ihn für den Vertrauenswürdigsten hielten. Er lehnte zunächst ab, doch der Schaytan flüsterte ihm ein: 'Wenn du sie nicht aufnimmst, wird jemand Unzuverlässiges sie hüten.' So stimmte er zu.",
+        emoji: "🏠",
+      },
+      {
+        textBs:
+          "Šejtan je Barsisu vodio korak po korak. Prvo mu je šapnuo da joj hranu ostavlja pred vrata. Zatim da joj je donosi u sobu, jer je vani nesigurno. Onda da razgovaraju, jer je usamljena. Korak po korak, šejtan ga je vodio sve bliže, dok nije počinio blud (zina) sa njom. Kada je zatrudnjela, šejtan mu je šapnuo: 'Ako braća saznaju, ubit će te. Moraš je ubiti.' I Barsisa ju je ubio i zakopao.",
+        textDe:
+          "Der Schaytan führte Barsisa Schritt für Schritt. Erst flüsterte er ihm ein, das Essen vor die Tür zu stellen. Dann, es ihr ins Zimmer zu bringen, weil es draußen unsicher sei. Dann, mit ihr zu sprechen, weil sie einsam sei. Schritt für Schritt führte der Schaytan ihn immer näher, bis er Unzucht (Zina) mit ihr beging. Als sie schwanger wurde, flüsterte der Schaytan: 'Wenn die Brüder es erfahren, werden sie dich töten. Du musst sie töten.' Und Barsisa tötete sie und begrub sie.",
+        emoji: "😈",
+      },
+      {
+        textBs:
+          "Kada su se braća vratila, šejtan im je u snu pokazao gdje je njihova sestra zakopana. Pronašli su je i doveli Barsisu pred sud. Osuđen je na smrt. U tom trenutku, šejtan mu se ukazao i rekao: 'Ja sam te doveo do ovoga. Ako mi učiniš sedždu, spasit ću te.' Barsisa je, u strahu od smrti, pao na sedždu šejtanu. Čim je to učinio, šejtan se okrenuo i rekao: 'Ja nemam ništa s tobom. Ja se bojim Allaha, Gospodara svjetova.' Barsisa je pogubljen kao mušrik.",
+        textDe:
+          "Als die Brüder zurückkehrten, zeigte der Schaytan ihnen im Traum, wo ihre Schwester begraben lag. Sie fanden sie und brachten Barsisa vor Gericht. Er wurde zum Tode verurteilt. In diesem Moment erschien ihm der Schaytan und sagte: 'Ich habe dich hierher gebracht. Wenn du dich vor mir niederwirfst, werde ich dich retten.' Barsisa warf sich aus Todesangst vor dem Schaytan nieder. Sobald er es tat, wandte sich der Schaytan ab und sagte: 'Ich habe nichts mit dir zu tun. Ich fürchte Allah, den Herrn der Welten.' Barsisa wurde als Muschrik hingerichtet.",
+        emoji: "⚠️",
+      },
+    ],
+    lessonBs:
+      "Ova priča, koju spominje Ibn Kesir u tefsiru sure El-Hašr (ajet 16), nas uči da šejtan nikada ne dolazi odjednom s velikim grijehom. On vodi čovjeka korak po korak — od malog popuštanja do potpune propasti. Najveća zaštita je izbjegavanje prvih malih koraka prema haramu, držanje granica koje je Allah postavio i nikada ne oslanjati se na vlastitu pobožnost kao garanciju. Samo Allahova zaštita čuva čovjeka.",
+    lessonDe:
+      "Diese Geschichte, die Ibn Kathir im Tafsir der Sure al-Haschr (Vers 16) erwähnt, lehrt uns, dass der Schaytan niemals sofort mit einer großen Sünde kommt. Er führt den Menschen Schritt für Schritt — von kleinen Zugeständnissen bis zum völligen Verderben. Der größte Schutz ist, die ersten kleinen Schritte zum Haram zu meiden, die von Allah gesetzten Grenzen einzuhalten und sich niemals auf die eigene Frömmigkeit als Garantie zu verlassen. Nur Allahs Schutz bewahrt den Menschen.",
+  },
 ];
 
 export const sahabaStories = stories;
