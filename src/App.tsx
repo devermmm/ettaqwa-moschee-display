@@ -218,6 +218,10 @@ const App = () => (
             element={<Speisekarte />}
           />
           <Route
+            path="/öffnungszeiten"
+            element={<Oeffnungszeiten />}
+          />
+          <Route
             path="/kalender"
             element={<VaktijaPrint />}
           />
