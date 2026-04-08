@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Loader2, ChevronLeft, ChevronRight, Copy, Check } from "lucide-react";
+import { Download, Loader2, ChevronLeft, ChevronRight, Copy, Check, Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import VaktijaStory from "@/components/insta/VaktijaStory";
 import JummaReminderStory from "@/components/insta/JummaReminderStory";
@@ -53,6 +53,7 @@ const InstaPost = () => {
   const [downloading, setDownloading] = useState<string | null>(null);
   const { toast } = useToast();
   const [latestExport, setLatestExport] = useState<{ url: string; filename: string } | null>(null);
+  const latestExportPanelRef = useRef<HTMLDivElement>(null);
   const [countdownIdx, setCountdownIdx] = useState(0);
   const [quranVerseIdx, setQuranVerseIdx] = useState(0);
   const [quizSlideIdx, setQuizSlideIdx] = useState(0);
@@ -70,16 +71,64 @@ const InstaPost = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const dataUrlToBlob = (dataUrl: string) => {
+    const [meta, base64 = ""] = dataUrl.split(",");
+    const mimeType = meta.match(/data:(.*?);base64/)?.[1] ?? "image/png";
+    const bytes = atob(base64);
+    const buffer = new Uint8Array(bytes.length);
+
+    for (let i = 0; i < bytes.length; i += 1) {
+      buffer[i] = bytes.charCodeAt(i);
+    }
+
+    return new Blob([buffer], { type: mimeType });
+  };
+
+  const isTouchDevice = () =>
+    window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
+
+  const handleShareExport = async (url: string, filename: string) => {
+    if (typeof navigator.share !== "function" || typeof File === "undefined") {
+      return false;
+    }
+
+    try {
+      const file = new File([dataUrlToBlob(url)], filename, { type: "image/png" });
+
+      if (typeof navigator.canShare === "function" && !navigator.canShare({ files: [file] })) {
+        return false;
+      }
+
+      await navigator.share({
+        files: [file],
+        title: filename,
+      });
+
+      return true;
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return true;
+      }
+
+      console.error("Share failed:", error);
+      return false;
+    }
+  };
+
   const triggerDownload = async (url: string, filename: string) => {
     try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error("Download failed");
+      const blob = url.startsWith("data:")
+        ? dataUrlToBlob(url)
+        : await fetch(url).then((response) => {
+            if (!response.ok) throw new Error("Download failed");
+            return response.blob();
+          });
 
-      const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
       anchor.href = blobUrl;
       anchor.download = filename;
+      anchor.rel = "noopener";
       document.body.appendChild(anchor);
       anchor.click();
       document.body.removeChild(anchor);
@@ -117,6 +166,9 @@ const InstaPost = () => {
 
       const preparedExport = { url: dataUrl, filename };
       setLatestExport(preparedExport);
+      requestAnimationFrame(() => {
+        latestExportPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
       return preparedExport;
     } catch (err) {
       console.error("Export failed:", err);
@@ -140,10 +192,18 @@ const InstaPost = () => {
     const preparedExport = await handlePrepareImage(ref, filename, targetW, targetH);
     if (!preparedExport) return;
 
+    if (isTouchDevice()) {
+      toast({
+        title: "Bild erstellt",
+        description: "Oben kannst du es direkt öffnen oder über Teilen/Speichern sichern.",
+      });
+      return;
+    }
+
     const downloaded = await triggerDownload(preparedExport.url, preparedExport.filename);
 
     toast({
-      title: downloaded ? "Download gestartet" : "Bild erstellt",
+      title: "Bild erstellt",
       description: downloaded
         ? "Falls nichts gespeichert wurde, nutze die Vorschau oben."
         : "Öffne oder speichere das Bild über die Vorschau oben.",
@@ -155,7 +215,7 @@ const InstaPost = () => {
       <h1 className="text-2xl font-bold text-foreground">Instagram Post Preview</h1>
 
       {latestExport && (
-        <div className="w-full max-w-[540px] rounded-xl border border-border bg-card/50 p-4 flex flex-col gap-3">
+        <div ref={latestExportPanelRef} className="w-full max-w-[540px] rounded-xl border border-border bg-card/50 p-4 flex flex-col gap-3">
           <p className="text-sm text-muted-foreground text-center">
             Falls dein Handy nichts direkt speichert, öffne das Bild und speichere es manuell.
           </p>
@@ -167,6 +227,23 @@ const InstaPost = () => {
             />
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
+            {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
+              <Button
+                className="h-11 gap-2"
+                onClick={async () => {
+                  const shared = await handleShareExport(latestExport.url, latestExport.filename);
+                  if (!shared) {
+                    toast({
+                      title: "Teilen nicht möglich",
+                      description: "Nutze alternativ 'Bild öffnen' oder 'Bild speichern'.",
+                    });
+                  }
+                }}
+              >
+                <Share2 className="w-4 h-4" />
+                Teilen / Speichern
+              </Button>
+            )}
             <a
               href={latestExport.url}
               target="_blank"
