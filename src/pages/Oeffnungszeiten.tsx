@@ -1,56 +1,23 @@
+import { useRef } from "react";
 import logo from "@/assets/logo.png";
-import { Button } from "@/components/ui/button";
-import { Printer, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
+import PosterExportActions from "@/components/poster/PosterExportActions";
 
 const Oeffnungszeiten = () => {
-  const handlePrint = () => {
-    window.print();
-  };
+  const posterRef = useRef<HTMLDivElement>(null);
 
   return (
-    <>
-      <style>{`
-        @media print {
-          @page {
-            margin: 0;
-            size: A4 portrait;
-          }
-          html, body {
-            width: 210mm;
-            height: 297mm;
-            margin: 0;
-            padding: 0;
-          }
-          body {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-          }
-          .print-container {
-            width: 210mm !important;
-            height: 297mm !important;
-          }
-          .no-print {
-            display: none !important;
-          }
-          /* Hide browser header/footer (page number, URL, date) */
-          @page {
-            margin: 0;
-          }
-          header, footer, #__lovable-badge { display: none !important; }
-        }
-      `}</style>
+    <div className="min-h-screen bg-emerald-900 flex flex-col items-center justify-center p-4 gap-4">
+      <PosterExportActions
+        captureRef={posterRef}
+        filename="restaurant-oeffnungszeiten-et-taqwa.png"
+      />
 
-      <div className="min-h-screen bg-emerald-900 flex items-center justify-center p-4 print:p-0 print:m-0 print:bg-white">
-        
-        <div className="fixed top-4 right-4 z-50 no-print">
-          <Button onClick={handlePrint} className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg">
-            <Printer className="w-4 h-4 mr-2" />
-            Drucken / PDF
-          </Button>
-        </div>
-
-        <div className="print-container w-[210mm] h-[297mm] bg-gradient-to-b from-emerald-50 to-white shadow-2xl print:shadow-none relative overflow-hidden">
-          
+      <div className="w-full overflow-auto">
+        <div
+          ref={posterRef}
+          className="mx-auto w-[210mm] h-[297mm] bg-gradient-to-b from-emerald-50 to-white shadow-2xl relative overflow-hidden"
+        >
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute inset-3 border-[5px] border-emerald-700 rounded-2xl" />
             <div className="absolute inset-6 border-2 border-emerald-400/60 rounded-xl" />
@@ -95,7 +62,7 @@ const Oeffnungszeiten = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
