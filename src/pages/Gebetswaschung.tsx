@@ -58,10 +58,10 @@ const Gebetswaschung = () => {
                   key={item.lang}
                   className="flex items-center justify-between bg-white border-2 border-emerald-200 rounded-xl px-6 py-4 shadow-sm"
                 >
-                  <span className="text-base font-semibold text-emerald-500 uppercase tracking-wider min-w-[80px] text-left">
+                  <span className="text-lg font-semibold text-emerald-500 uppercase tracking-wider min-w-[90px] text-left">
                     {item.lang}
                   </span>
-                  <span className={`text-xl font-bold text-emerald-800 text-right ${item.isArabic ? "font-arabic text-3xl" : ""}`}>
+                  <span className={`text-2xl font-bold text-emerald-800 text-right ${item.isArabic ? "font-arabic text-4xl" : ""}`}>
                     {item.text}
                   </span>
                 </div>
