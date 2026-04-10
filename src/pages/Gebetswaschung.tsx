@@ -1,11 +1,19 @@
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
-import { Printer, Phone } from "lucide-react";
+import { Printer } from "lucide-react";
 
-const Oeffnungszeiten = () => {
+const Gebetswaschung = () => {
   const handlePrint = () => {
     window.print();
   };
+
+  const translations = [
+    { lang: "العربية", text: "يُمنع الوضوء هنا", isArabic: true },
+    { lang: "Türkçe", text: "BURADA ABDEST ALMAK YASAKTIR", isArabic: false },
+    { lang: "Deutsch", text: "GEBETSWASCHUNG HIER VERBOTEN", isArabic: false },
+    { lang: "Bosanski", text: "UZIMANJE ABDESTA OVDJE ZABRANJENO", isArabic: false },
+    { lang: "Shqip", text: "MARRJA E ABDESTIT KËTU ËSHTË E NDALUAR", isArabic: false },
+  ];
 
   return (
     <>
@@ -58,34 +66,35 @@ const Oeffnungszeiten = () => {
           <div className="relative z-10 h-full px-12 py-10 flex flex-col items-center text-center justify-center">
             <img src={logo} alt="Et-Taqwa" className="h-24 mb-3" />
             <h1 className="text-3xl font-bold text-emerald-800 tracking-[0.2em]">DŽEMAT ET-TAQWA</h1>
-            <p className="text-2xl font-arabic text-emerald-600 mb-2">مسجد التقوى</p>
-            <h2 className="text-5xl font-bold text-emerald-800 tracking-wide mb-6">RESTAURANT</h2>
+            <p className="text-2xl font-arabic text-emerald-600 mb-4">مسجد التقوى</p>
 
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-10">
               <div className="w-24 h-[2px] bg-gradient-to-r from-transparent to-emerald-500" />
               <span className="text-emerald-600 text-2xl">☪</span>
               <div className="w-24 h-[2px] bg-gradient-to-l from-transparent to-emerald-500" />
             </div>
 
-            <div className="bg-white border-[3px] border-emerald-500 rounded-2xl px-12 py-8 mb-8 shadow-lg w-full max-w-[150mm]">
-              <p className="text-2xl font-bold text-emerald-800 mb-2">Montag – Sonntag</p>
-              <p className="text-6xl font-bold text-emerald-700 tabular-nums">8:00 – 18:00</p>
+            {/* Main Warning */}
+            <div className="bg-red-600 rounded-2xl px-10 py-6 mb-10 w-full max-w-[160mm] shadow-lg">
+              <p className="text-4xl font-bold text-white tracking-wider leading-tight">
+                ⛔ GEBETSWASCHUNG<br />HIER VERBOTEN ⛔
+              </p>
             </div>
 
-            <div className="bg-red-50 border-2 border-red-400 rounded-2xl px-12 py-6 mb-10 w-full max-w-[150mm]">
-              <p className="text-2xl font-bold text-red-700 mb-2">Dienstag</p>
-              <p className="text-5xl font-bold text-red-600">GESCHLOSSEN</p>
+            {/* Translations */}
+            <div className="w-full max-w-[160mm] flex flex-col gap-3">
+              {translations.map((item, i) => (
+                <div key={i} className="flex items-center justify-between bg-white border-2 border-emerald-200 rounded-xl px-6 py-4 shadow-sm">
+                  <span className="text-sm font-semibold text-emerald-500 uppercase tracking-wider min-w-[80px] text-left">{item.lang}</span>
+                  <span className={`text-lg font-bold text-emerald-800 text-right ${item.isArabic ? 'font-arabic text-2xl' : ''}`}>{item.text}</span>
+                </div>
+              ))}
             </div>
 
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mt-10">
               <div className="w-16 h-[2px] bg-gradient-to-r from-transparent to-emerald-400" />
               <span className="text-emerald-500 text-lg">☪</span>
               <div className="w-16 h-[2px] bg-gradient-to-l from-transparent to-emerald-400" />
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Phone className="w-7 h-7 text-emerald-600" />
-              <p className="text-3xl font-bold text-emerald-800 tracking-wide">+43 664 486 1236</p>
             </div>
           </div>
         </div>
@@ -94,4 +103,4 @@ const Oeffnungszeiten = () => {
   );
 };
 
-export default Oeffnungszeiten;
+export default Gebetswaschung;
