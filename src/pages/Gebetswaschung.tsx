@@ -8,7 +8,6 @@ const Gebetswaschung = () => {
   const translations = [
     { lang: "العربية", text: "يُمنع الوضوء هنا", isArabic: true },
     { lang: "Türkçe", text: "BURADA ABDEST ALMAK YASAKTIR", isArabic: false },
-    { lang: "Deutsch", text: "GEBETSWASCHUNG HIER VERBOTEN", isArabic: false },
     { lang: "Bosanski", text: "UZIMANJE ABDESTA OVDJE ZABRANJENO", isArabic: false },
     { lang: "Shqip", text: "MARRJA E ABDESTIT KËTU ËSHTË E NDALUAR", isArabic: false },
   ];
