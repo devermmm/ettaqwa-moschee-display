@@ -32,6 +32,11 @@ const Oeffnungszeiten = () => {
           .no-print {
             display: none !important;
           }
+          /* Hide browser header/footer (page number, URL, date) */
+          @page {
+            margin: 0;
+          }
+          header, footer, #__lovable-badge { display: none !important; }
         }
       `}</style>
 

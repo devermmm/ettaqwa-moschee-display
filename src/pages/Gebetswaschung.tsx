@@ -40,6 +40,10 @@ const Gebetswaschung = () => {
           .no-print {
             display: none !important;
           }
+          @page {
+            margin: 0;
+          }
+          header, footer, #__lovable-badge { display: none !important; }
         }
       `}</style>
 
@@ -74,14 +78,12 @@ const Gebetswaschung = () => {
               <div className="w-24 h-[2px] bg-gradient-to-l from-transparent to-emerald-500" />
             </div>
 
-            {/* Main Warning */}
             <div className="bg-red-600 rounded-2xl px-10 py-6 mb-10 w-full max-w-[160mm] shadow-lg">
               <p className="text-4xl font-bold text-white tracking-wider leading-tight">
                 ⛔ GEBETSWASCHUNG<br />HIER VERBOTEN ⛔
               </p>
             </div>
 
-            {/* Translations */}
             <div className="w-full max-w-[160mm] flex flex-col gap-3">
               {translations.map((item, i) => (
                 <div key={i} className="flex items-center justify-between bg-white border-2 border-emerald-200 rounded-xl px-6 py-4 shadow-sm">
