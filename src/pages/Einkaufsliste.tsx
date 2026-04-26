@@ -4,7 +4,7 @@ import PosterExportActions from "@/components/poster/PosterExportActions";
 
 const brutto = [
   { artikel: "Hühnerbrustfilet 1kg vac.pack TK", preis: "€10,00" },
-  { artikel: "Global Grill Hühner Kebap TK 300g", preis: "€6,80" },
+  { artikel: "Global Grill Hühner Kebap TK 300g", preis: "€6,00" },
   { artikel: "Asia Grill Rind Kebap TK 300g", preis: "€7,00" },
   { artikel: "Chicken Wings TK 800g/pckg", preis: "€9,00" },
   { artikel: "Berto Falafel ca. 1kg – 50 Stk/pack", preis: "€10,00" },
