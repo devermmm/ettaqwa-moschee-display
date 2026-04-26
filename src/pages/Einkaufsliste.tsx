@@ -31,7 +31,7 @@ const netto = [
   { artikel: "Hühnerkeule geräuchert", preis: "€10,00" },
   { artikel: "Hühnerfilet geräuchert", preis: "€16,00" },
   { artikel: "Ganzes Huhn ca. 3–3,5kg", preis: "€8,00" },
-  { artikel: "Ganze Pute ca. 7–8kg", preis: "€19,00" },
+  { artikel: "Ganze Pute ca. 7–8kg", preis: "€11,00" },
   { artikel: "Ganze Ente ca. 2,8–3,6kg", preis: "€11,00" },
   { artikel: "Medovniczek 1700g", preis: "€20,00" },
   { artikel: "Medovniczek 800g", preis: "€13,00" },
