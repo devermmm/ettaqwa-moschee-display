@@ -47,16 +47,16 @@ const netto = [
 ];
 
 const Row = ({ artikel, preis }: { artikel: string; preis: string }) => (
-  <div className="flex items-center justify-between border-b border-emerald-200/70 py-[5px] px-3">
-    <span className="text-[13px] font-medium text-emerald-900 leading-tight pr-2">{artikel}</span>
-    <span className="text-[13px] font-bold text-emerald-700 tabular-nums whitespace-nowrap">{preis}</span>
+  <div className="flex items-center justify-between border-b border-emerald-200/70 py-[9px] px-4 last:border-b-0">
+    <span className="text-[16px] font-medium text-emerald-900 leading-tight pr-3">{artikel}</span>
+    <span className="text-[16px] font-bold text-emerald-700 tabular-nums whitespace-nowrap">{preis}</span>
   </div>
 );
 
 const SectionHeader = ({ title, label }: { title: string; label: string }) => (
-  <div className="bg-emerald-600 px-3 py-2 flex items-center justify-between rounded-t-lg">
-    <span className="text-white font-bold text-base tracking-wide">{title}</span>
-    <span className="text-emerald-100 text-xs font-semibold tracking-wider">{label}</span>
+  <div className="bg-emerald-600 px-4 py-3 flex items-center justify-between rounded-t-lg">
+    <span className="text-white font-bold text-lg tracking-wide">{title}</span>
+    <span className="text-emerald-100 text-sm font-semibold tracking-wider">{label}</span>
   </div>
 );
 
