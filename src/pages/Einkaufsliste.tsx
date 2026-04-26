@@ -60,17 +60,16 @@ const SectionHeader = ({ title, label }: { title: string; label: string }) => (
   </div>
 );
 
-const Header = ({ subtitle }: { subtitle: string }) => (
+const Header = () => (
   <div className="flex flex-col items-center text-center mb-4">
-    <img src={logo} alt="Et-Taqwa" className="h-16 mb-1" />
-    <h1 className="text-lg font-bold text-emerald-800 tracking-[0.2em]">DŽEMAT ET-TAQWA</h1>
-    <p className="text-base font-arabic text-emerald-600">مسجد التقوى</p>
-    <h2 className="text-2xl font-bold text-emerald-800 tracking-wide mt-1">EINKAUFSLISTE</h2>
-    <p className="text-sm font-semibold text-emerald-600 tracking-widest mt-0.5">{subtitle}</p>
-    <div className="flex items-center gap-2 mt-1">
-      <div className="w-16 h-[2px] bg-gradient-to-r from-transparent to-emerald-500" />
-      <span className="text-emerald-600 text-base">☪</span>
-      <div className="w-16 h-[2px] bg-gradient-to-l from-transparent to-emerald-500" />
+    <img src={logo} alt="Et-Taqwa" className="h-20 mb-1" />
+    <h1 className="text-xl font-bold text-emerald-800 tracking-[0.2em]">DŽEMAT ET-TAQWA</h1>
+    <p className="text-lg font-arabic text-emerald-600">مسجد التقوى</p>
+    <h2 className="text-3xl font-bold text-emerald-800 tracking-wide mt-1">EINKAUFSLISTE</h2>
+    <div className="flex items-center gap-2 mt-2">
+      <div className="w-20 h-[2px] bg-gradient-to-r from-transparent to-emerald-500" />
+      <span className="text-emerald-600 text-lg">☪</span>
+      <div className="w-20 h-[2px] bg-gradient-to-l from-transparent to-emerald-500" />
     </div>
   </div>
 );
