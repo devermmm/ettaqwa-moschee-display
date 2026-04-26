@@ -28,6 +28,7 @@ import Plakat from "./pages/Plakat";
 import Speisekarte from "./pages/Speisekarte";
 import Oeffnungszeiten from "./pages/Oeffnungszeiten";
 import Gebetswaschung from "./pages/Gebetswaschung";
+import Einkaufsliste from "./pages/Einkaufsliste";
 import VaktijaPrint from "./pages/VaktijaPrint";
 import InstaPost from "./pages/InstaPost";
 import TikTokOverlay from "./pages/TikTokOverlay";
@@ -225,6 +226,10 @@ const App = () => (
           <Route
             path="/gebetswaschung"
             element={<Gebetswaschung />}
+          />
+          <Route
+            path="/einkaufsliste"
+            element={<Einkaufsliste />}
           />
           <Route
             path="/kalender"
