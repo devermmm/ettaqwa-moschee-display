@@ -108,16 +108,16 @@ const Einkaufsliste = () => {
   return (
     <div className="min-h-screen bg-emerald-900 flex flex-col items-center p-4 gap-6">
       <div className="flex flex-col items-center gap-2">
-        <span className="text-emerald-100 text-sm font-semibold">Seite 1 – Netto (Vorderseite)</span>
+        <span className="text-emerald-100 text-sm font-semibold">Seite 1 – Netto</span>
         <PosterExportActions captureRef={page1Ref} filename="einkaufsliste-seite1-netto.png" />
       </div>
 
       <div className="w-full overflow-auto">
         <PageFrame pageRef={page1Ref}>
-          <Header subtitle="VORDERSEITE · NETTO" />
-          <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1">
+          <Header />
+          <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1 flex flex-col">
             <SectionHeader title="ARTIKEL" label="NETTO-PREIS" />
-            <div className="px-1 py-1">
+            <div className="px-1 py-1 flex-1 flex flex-col justify-between">
               {netto.map((item, i) => (
                 <Row key={i} {...item} />
               ))}
@@ -128,16 +128,16 @@ const Einkaufsliste = () => {
       </div>
 
       <div className="flex flex-col items-center gap-2 mt-4">
-        <span className="text-emerald-100 text-sm font-semibold">Seite 2 – Brutto (Rückseite)</span>
+        <span className="text-emerald-100 text-sm font-semibold">Seite 2 – Brutto</span>
         <PosterExportActions captureRef={page2Ref} filename="einkaufsliste-seite2-brutto.png" />
       </div>
 
       <div className="w-full overflow-auto">
         <PageFrame pageRef={page2Ref}>
-          <Header subtitle="RÜCKSEITE · BRUTTO" />
-          <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1">
+          <Header />
+          <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1 flex flex-col">
             <SectionHeader title="ARTIKEL" label="BRUTTO-PREIS" />
-            <div className="px-1 py-1">
+            <div className="px-1 py-1 flex-1 flex flex-col justify-between">
               {brutto.map((item, i) => (
                 <Row key={i} {...item} />
               ))}
