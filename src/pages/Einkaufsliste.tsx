@@ -47,9 +47,16 @@ const netto = [
 ];
 
 const Row = ({ artikel, preis }: { artikel: string; preis: string }) => (
-  <div className="flex items-center justify-between border-b border-emerald-200/70 py-[3px] px-2">
-    <span className="text-[10.5px] font-medium text-emerald-900 leading-tight pr-2">{artikel}</span>
-    <span className="text-[10.5px] font-bold text-emerald-700 tabular-nums whitespace-nowrap">{preis}</span>
+  <div className="flex items-center justify-between border-b border-emerald-200/70 py-[3px] px-3">
+    <span className="text-[11px] font-medium text-emerald-900 leading-tight pr-2">{artikel}</span>
+    <span className="text-[11px] font-bold text-emerald-700 tabular-nums whitespace-nowrap">{preis}</span>
+  </div>
+);
+
+const SectionHeader = ({ title, label }: { title: string; label: string }) => (
+  <div className="bg-emerald-600 px-3 py-1.5 flex items-center justify-between rounded-t-lg">
+    <span className="text-white font-bold text-sm tracking-wide">{title}</span>
+    <span className="text-emerald-100 text-[10px] font-semibold tracking-wider">{label}</span>
   </div>
 );
 
@@ -74,11 +81,11 @@ const Einkaufsliste = () => {
             <div className="absolute bottom-1.5 right-1.5 w-12 h-12 border-r-4 border-b-4 border-emerald-600 rounded-br-2xl" />
           </div>
 
-          <div className="relative z-10 h-full px-8 py-6 flex flex-col">
+          <div className="relative z-10 h-full px-10 py-6 flex flex-col">
             {/* Header */}
             <div className="flex flex-col items-center text-center mb-3">
               <img src={logo} alt="Et-Taqwa" className="h-14 mb-1" />
-              <h1 className="text-xl font-bold text-emerald-800 tracking-[0.2em]">DŽEMAT ET-TAQWA</h1>
+              <h1 className="text-lg font-bold text-emerald-800 tracking-[0.2em]">DŽEMAT ET-TAQWA</h1>
               <p className="text-base font-arabic text-emerald-600">مسجد التقوى</p>
               <h2 className="text-2xl font-bold text-emerald-800 tracking-wide mt-1">EINKAUFSLISTE</h2>
               <div className="flex items-center gap-2 mt-1">
@@ -88,32 +95,23 @@ const Einkaufsliste = () => {
               </div>
             </div>
 
-            {/* Two columns */}
-            <div className="grid grid-cols-2 gap-4 flex-1 min-h-0">
-              {/* Brutto-Liste */}
-              <div className="flex flex-col bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden">
-                <div className="bg-emerald-600 px-3 py-1.5 flex items-center justify-between">
-                  <span className="text-white font-bold text-sm tracking-wide">FLEISCH & TK</span>
-                  <span className="text-emerald-100 text-[10px] font-semibold">BRUTTO</span>
-                </div>
-                <div className="flex-1 px-1 py-1">
-                  {brutto.map((item, i) => (
-                    <Row key={i} {...item} />
-                  ))}
-                </div>
+            {/* Brutto */}
+            <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden mb-3">
+              <SectionHeader title="ARTIKEL" label="BRUTTO-PREIS" />
+              <div className="px-1 py-1">
+                {brutto.map((item, i) => (
+                  <Row key={i} {...item} />
+                ))}
               </div>
+            </div>
 
-              {/* Netto-Liste */}
-              <div className="flex flex-col bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden">
-                <div className="bg-emerald-600 px-3 py-1.5 flex items-center justify-between">
-                  <span className="text-white font-bold text-sm tracking-wide">WURST & HONIG</span>
-                  <span className="text-emerald-100 text-[10px] font-semibold">NETTO</span>
-                </div>
-                <div className="flex-1 px-1 py-1">
-                  {netto.map((item, i) => (
-                    <Row key={i} {...item} />
-                  ))}
-                </div>
+            {/* Netto */}
+            <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1">
+              <SectionHeader title="ARTIKEL" label="NETTO-PREIS" />
+              <div className="px-1 py-1">
+                {netto.map((item, i) => (
+                  <Row key={i} {...item} />
+                ))}
               </div>
             </div>
 
@@ -133,3 +131,4 @@ const Einkaufsliste = () => {
 };
 
 export default Einkaufsliste;
+
