@@ -47,30 +47,29 @@ const netto = [
 ];
 
 const Row = ({ artikel, preis }: { artikel: string; preis: string }) => (
-  <div className="flex items-center justify-between border-b border-emerald-200/70 py-[5px] px-3">
-    <span className="text-[13px] font-medium text-emerald-900 leading-tight pr-2">{artikel}</span>
-    <span className="text-[13px] font-bold text-emerald-700 tabular-nums whitespace-nowrap">{preis}</span>
+  <div className="flex items-center justify-between border-b border-emerald-200/70 py-[9px] px-4 last:border-b-0">
+    <span className="text-[16px] font-medium text-emerald-900 leading-tight pr-3">{artikel}</span>
+    <span className="text-[16px] font-bold text-emerald-700 tabular-nums whitespace-nowrap">{preis}</span>
   </div>
 );
 
 const SectionHeader = ({ title, label }: { title: string; label: string }) => (
-  <div className="bg-emerald-600 px-3 py-2 flex items-center justify-between rounded-t-lg">
-    <span className="text-white font-bold text-base tracking-wide">{title}</span>
-    <span className="text-emerald-100 text-xs font-semibold tracking-wider">{label}</span>
+  <div className="bg-emerald-600 px-4 py-3 flex items-center justify-between rounded-t-lg">
+    <span className="text-white font-bold text-lg tracking-wide">{title}</span>
+    <span className="text-emerald-100 text-sm font-semibold tracking-wider">{label}</span>
   </div>
 );
 
-const Header = ({ subtitle }: { subtitle: string }) => (
+const Header = () => (
   <div className="flex flex-col items-center text-center mb-4">
-    <img src={logo} alt="Et-Taqwa" className="h-16 mb-1" />
-    <h1 className="text-lg font-bold text-emerald-800 tracking-[0.2em]">DŽEMAT ET-TAQWA</h1>
-    <p className="text-base font-arabic text-emerald-600">مسجد التقوى</p>
-    <h2 className="text-2xl font-bold text-emerald-800 tracking-wide mt-1">EINKAUFSLISTE</h2>
-    <p className="text-sm font-semibold text-emerald-600 tracking-widest mt-0.5">{subtitle}</p>
-    <div className="flex items-center gap-2 mt-1">
-      <div className="w-16 h-[2px] bg-gradient-to-r from-transparent to-emerald-500" />
-      <span className="text-emerald-600 text-base">☪</span>
-      <div className="w-16 h-[2px] bg-gradient-to-l from-transparent to-emerald-500" />
+    <img src={logo} alt="Et-Taqwa" className="h-20 mb-1" />
+    <h1 className="text-xl font-bold text-emerald-800 tracking-[0.2em]">DŽEMAT ET-TAQWA</h1>
+    <p className="text-lg font-arabic text-emerald-600">مسجد التقوى</p>
+    <h2 className="text-3xl font-bold text-emerald-800 tracking-wide mt-1">EINKAUFSLISTE</h2>
+    <div className="flex items-center gap-2 mt-2">
+      <div className="w-20 h-[2px] bg-gradient-to-r from-transparent to-emerald-500" />
+      <span className="text-emerald-600 text-lg">☪</span>
+      <div className="w-20 h-[2px] bg-gradient-to-l from-transparent to-emerald-500" />
     </div>
   </div>
 );
@@ -109,16 +108,16 @@ const Einkaufsliste = () => {
   return (
     <div className="min-h-screen bg-emerald-900 flex flex-col items-center p-4 gap-6">
       <div className="flex flex-col items-center gap-2">
-        <span className="text-emerald-100 text-sm font-semibold">Seite 1 – Netto (Vorderseite)</span>
+        <span className="text-emerald-100 text-sm font-semibold">Seite 1 – Netto</span>
         <PosterExportActions captureRef={page1Ref} filename="einkaufsliste-seite1-netto.png" />
       </div>
 
       <div className="w-full overflow-auto">
         <PageFrame pageRef={page1Ref}>
-          <Header subtitle="VORDERSEITE · NETTO" />
-          <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1">
+          <Header />
+          <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1 flex flex-col">
             <SectionHeader title="ARTIKEL" label="NETTO-PREIS" />
-            <div className="px-1 py-1">
+            <div className="px-1 py-1 flex-1 flex flex-col justify-between">
               {netto.map((item, i) => (
                 <Row key={i} {...item} />
               ))}
@@ -129,16 +128,16 @@ const Einkaufsliste = () => {
       </div>
 
       <div className="flex flex-col items-center gap-2 mt-4">
-        <span className="text-emerald-100 text-sm font-semibold">Seite 2 – Brutto (Rückseite)</span>
+        <span className="text-emerald-100 text-sm font-semibold">Seite 2 – Brutto</span>
         <PosterExportActions captureRef={page2Ref} filename="einkaufsliste-seite2-brutto.png" />
       </div>
 
       <div className="w-full overflow-auto">
         <PageFrame pageRef={page2Ref}>
-          <Header subtitle="RÜCKSEITE · BRUTTO" />
-          <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1">
+          <Header />
+          <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1 flex flex-col">
             <SectionHeader title="ARTIKEL" label="BRUTTO-PREIS" />
-            <div className="px-1 py-1">
+            <div className="px-1 py-1 flex-1 flex flex-col justify-between">
               {brutto.map((item, i) => (
                 <Row key={i} {...item} />
               ))}
