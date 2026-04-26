@@ -109,17 +109,17 @@ const Einkaufsliste = () => {
   return (
     <div className="min-h-screen bg-emerald-900 flex flex-col items-center p-4 gap-6">
       <div className="flex flex-col items-center gap-2">
-        <span className="text-emerald-100 text-sm font-semibold">Seite 1 – Brutto (Vorderseite)</span>
-        <PosterExportActions captureRef={page1Ref} filename="einkaufsliste-seite1-brutto.png" />
+        <span className="text-emerald-100 text-sm font-semibold">Seite 1 – Netto (Vorderseite)</span>
+        <PosterExportActions captureRef={page1Ref} filename="einkaufsliste-seite1-netto.png" />
       </div>
 
       <div className="w-full overflow-auto">
         <PageFrame pageRef={page1Ref}>
-          <Header subtitle="VORDERSEITE · BRUTTO" />
+          <Header subtitle="VORDERSEITE · NETTO" />
           <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1">
-            <SectionHeader title="ARTIKEL" label="BRUTTO-PREIS" />
+            <SectionHeader title="ARTIKEL" label="NETTO-PREIS" />
             <div className="px-1 py-1">
-              {brutto.map((item, i) => (
+              {netto.map((item, i) => (
                 <Row key={i} {...item} />
               ))}
             </div>
@@ -129,17 +129,17 @@ const Einkaufsliste = () => {
       </div>
 
       <div className="flex flex-col items-center gap-2 mt-4">
-        <span className="text-emerald-100 text-sm font-semibold">Seite 2 – Netto (Rückseite)</span>
-        <PosterExportActions captureRef={page2Ref} filename="einkaufsliste-seite2-netto.png" />
+        <span className="text-emerald-100 text-sm font-semibold">Seite 2 – Brutto (Rückseite)</span>
+        <PosterExportActions captureRef={page2Ref} filename="einkaufsliste-seite2-brutto.png" />
       </div>
 
       <div className="w-full overflow-auto">
         <PageFrame pageRef={page2Ref}>
-          <Header subtitle="RÜCKSEITE · NETTO" />
+          <Header subtitle="RÜCKSEITE · BRUTTO" />
           <div className="bg-white rounded-xl border-2 border-emerald-500 shadow-sm overflow-hidden flex-1">
-            <SectionHeader title="ARTIKEL" label="NETTO-PREIS" />
+            <SectionHeader title="ARTIKEL" label="BRUTTO-PREIS" />
             <div className="px-1 py-1">
-              {netto.map((item, i) => (
+              {brutto.map((item, i) => (
                 <Row key={i} {...item} />
               ))}
             </div>
